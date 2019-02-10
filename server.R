@@ -11,3 +11,5 @@ shinyServer(function(input, output, session) {
     p <- plot_ly(data, x = ~x, y = ~random_y, type = 'scatter', mode = 'lines')
   })
 })
+
+# test
