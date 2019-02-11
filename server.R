@@ -33,7 +33,7 @@ shinyServer(function(input, output, session) {
     # having a comma separator causes `read.csv` to error
     tryCatch(
       {
-        df <- read.xlsx2(input$file1$datapath, sheetIndex = 1)
+        df <- read.csv(input$file1$datapath)
       },
       error = function(e) {
         # return a safeError if a parsing error occurs

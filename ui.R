@@ -39,7 +39,9 @@ shinyUI(fluidPage(title="ECOVAL",
                                 # Sidebar panel for inputs
                                   sidebarPanel(
                                     # Input: Select a file ----
-                                      fileInput("file1", "Choose XLS File", multiple = FALSE, accept = c(".xlsx", ".xls")),
+                                    fileInput("file1", "Choose CSV File",
+                                              multiple = FALSE,
+                                              accept = c(".csv")),
                                       # Horizontal line
                                       tags$hr()
                                       # Main panel for displaying outputs
