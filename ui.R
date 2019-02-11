@@ -17,6 +17,7 @@
 
 library(shiny)
 library(plotly)
+library(xlsx)
 
 # Define UI for application that draws a histogram
 shinyUI(fluidPage(title="ECOVAL",
@@ -32,7 +33,23 @@ shinyUI(fluidPage(title="ECOVAL",
                               # ACCUEIL ---------------------------------------------------
                               tabPanel(value="accueil", HTML('<h4 style="color: #005BBB; "><b>Accueil</b></h4>')),
                               # PROJET ----------------------------------------------------
-                              tabPanel(value="projet", HTML('<h4 style="color: #005BBB; "><b>Projet</b></h4>')),
+                              tabPanel(value="projet", HTML('<h4 style="color: #005BBB; "><b>Projet</b></h4>'),
+                                # Sidebar layout with input and output definitions ----
+                                sidebarLayout(
+                                # Sidebar panel for inputs
+                                  sidebarPanel(
+                                    # Input: Select a file ----
+                                      fileInput("file1", "Choose XLS File", multiple = FALSE, accept = c(".xlsx", ".xls")),
+                                      # Horizontal line
+                                      tags$hr()
+                                      # Main panel for displaying outputs
+                                  ),
+                                  mainPanel(
+                                        # Output: Data file
+                                        tableOutput("contents")
+                                  )
+                                )
+                              ),
                               # SITE IMPACTE ----------------------------------------------
                               tabPanel(value="impact", HTML('<h4 style="color: #005BBB; "><b>Site impacté</b></h4>')),
                               # SITE COMPENSATOIRE ----------------------------------------------
