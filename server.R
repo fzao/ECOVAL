@@ -22,6 +22,11 @@ library(plotly)
 # Define server logic required to draw a histogram
 shinyServer(function(input, output, session) {
 
+  projectmodel <- read.xlsx2('model/projet.xlsx', sheetIndex = 1, header = FALSE)
+  projectmodel <- cbind(projectmodel, rep(NA, dim(projectmodel)[1]))
+  colnames(projectmodel) <- NULL
+  tempmodel <- projectmodel[4:10,]
+  
   observeEvent(input$redir1, {
     updateTabsetPanel(session, "tabs", selected = "projet")
   })
@@ -50,22 +55,14 @@ shinyServer(function(input, output, session) {
     updateTabsetPanel(session, "tabs", selected = "propos")
   })
   
-  output$contents <- renderTable({
-    # input$file1 will be NULL initially. After the user selects
-    # and uploads a file, head of that data file by default,
-    # or all rows if selected, will be shown.
-    req(input$file1)
-    # when reading semicolon separated files,
-    # having a comma separator causes `read.csv` to error
-    tryCatch(
-      {
-        df <- read.csv(input$file1$datapath)
-      },
-      error = function(e) {
-        # return a safeError if a parsing error occurs
-        stop(safeError(e))
-      }
-    )
-    return(df)
+  output$projecttab <- DT::renderDataTable({
+    projectmodel[1,2] <- input$projectname
+    projectmodel[2,2] <- input$projectcontext
+    projectmodel[3,2] <- input$sitenumber
+    #for(i in 2:input$sitenumber){
+    #  projectmodel <- rbind(projectmodel, tempmodel)
+    #}
+    DT::datatable(projectmodel)
   })
+
 })

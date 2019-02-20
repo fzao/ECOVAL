@@ -17,7 +17,8 @@
 
 library(shiny)
 library(plotly)
-# library(xlsx)
+library(xlsx)
+library(DT)
 
 # Define UI for application that draws a histogram
 shinyUI(fluidPage(title="ECOVAL",
@@ -44,23 +45,24 @@ shinyUI(fluidPage(title="ECOVAL",
                                        actionLink(inputId = "redir7", label=HTML('<h4 style="color: #005BBB;" >Pour la phase d’interprétation des résultats, veuillez vous référer à la notice explicative disponible dans l’onglet «à propos»</h4>'))),
                               # PROJET ----------------------------------------------------
                               tabPanel(value="projet", HTML('<h4 style="color: #005BBB; "><b>Projet</b></h4>'),
-                                # Sidebar layout with input and output definitions ----
-                                sidebarLayout(
-                                # Sidebar panel for inputs
-                                  sidebarPanel(
-                                    # Input: Select a file ----
-                                    fileInput("file1", "Choose CSV File",
-                                              multiple = FALSE,
-                                              accept = c(".csv")),
-                                      # Horizontal line
-                                      tags$hr()
-                                      # Main panel for displaying outputs
-                                  ),
-                                  mainPanel(
-                                        # Output: Data file
-                                        tableOutput("contents")
-                                  )
-                                )
+                                       tabsetPanel(
+                                         tabPanel(HTML('<h4 style="color: #808080; "><b>Description</b></h4>'), br(),
+                                                  fluidRow(
+                                                    column(3, align = "center", textInput("projectname", "Nom du projet")),
+                                                    column(6, align = "center", textInput("projectcontext", "Contexte général", width = '100%')),
+                                                    column(3, align = "center", numericInput("sitenumber", "Nombre de site(s) impacté(s):", 1, min = 1, max = 100))), br(), br(),
+                                                  DT::dataTableOutput('projecttab')
+                                         ),
+                                         tabPanel(HTML('<h4 style="color: #808080; "><b>Enjeux</b></h4>'), br()
+                                                 
+                                         ),
+                                         tabPanel(HTML('<h4 style="color: #808080; "><b>Valeurs</b></h4>'), br()
+                                                  
+                                         ),
+                                         tabPanel(HTML('<h4 style="color: #808080; "><b>SSI</b></h4>'), br()
+                                                  
+                                         )
+                                       )
                               ),
                               # SITE IMPACTE ----------------------------------------------
                               tabPanel(value="impact", HTML('<h4 style="color: #005BBB; "><b>Site impacté</b></h4>')),
