@@ -46,6 +46,10 @@ shinyServer(function(input, output, session) {
     updateTabsetPanel(session, "tabs", selected = "synth")
   })
   
+  observeEvent(input$redir7, {
+    updateTabsetPanel(session, "tabs", selected = "propos")
+  })
+  
   output$contents <- renderTable({
     # input$file1 will be NULL initially. After the user selects
     # and uploads a file, head of that data file by default,
