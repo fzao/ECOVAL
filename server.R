@@ -54,9 +54,9 @@ shinyServer(function(input, output, session) {
   })
   
   output$projecttab <- DT::renderDataTable({
-    projectmodel[1,2] <- input$projectname
-    projectmodel[2,2] <- input$projectcontext
-    projectmodel[3,2] <- input$sitenumber
+    projectmodel[1,2] <<- input$projectname
+    projectmodel[2,2] <<- input$projectcontext
+    projectmodel[3,2] <<- input$sitenumber
     # append new fiels if necessary
     if(!is.na(input$sitenumber)){
       nsite <- input$sitenumber
@@ -65,10 +65,24 @@ shinyServer(function(input, output, session) {
       niter <- ((nsite * nprj) - nproj) / nprj
       if(niter > 0){
         for(i in 1:niter){
-          projectmodel <- rbind(projectmodel, prj)
+          projectmodel <<- rbind(projectmodel, prj)
         }
       }
       DT::datatable(projectmodel[4:dim(projectmodel)[1],], options = list(pageLength = 7, autoWidth = TRUE), rownames = FALSE)
     }
   })
+  
+  output$btn_telecharger <- downloadHandler(
+      filename = function() {
+        if(input$projectname == ""){
+          paste('Ecoval-', Sys.Date(), '.xlsx', sep='')
+        }else{
+          paste(input$projectname, '.xlsx', sep='')
+        }
+      },
+      content = function(con) {
+        write.xlsx2(projectmodel, con, sheetName = 'Caractéristiques projet', row.names = FALSE)
+      }
+  )
+  
 })

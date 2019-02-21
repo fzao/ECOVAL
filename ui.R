@@ -19,6 +19,7 @@ library(shiny)
 library(plotly)
 library(xlsx)
 library(DT)
+library(shinyjs)
 
 # Define UI for application that draws a histogram
 shinyUI(fluidPage(title="ECOVAL",
@@ -51,7 +52,8 @@ shinyUI(fluidPage(title="ECOVAL",
                                                     column(3, align = "center", textInput("projectname", "Nom du projet")),
                                                     column(6, align = "center", textInput("projectcontext", "Contexte général", width = '100%')),
                                                     column(3, align = "center", numericInput("sitenumber", "Nombre de site(s) impacté(s):", 1, min = 1, max = 100))), br(), br(),
-                                                  DT::dataTableOutput('projecttab')
+                                                  DT::dataTableOutput('projecttab'), br(),
+                                                  downloadButton("btn_telecharger", "Télécharger")
                                          ),
                                          tabPanel(HTML('<h4 style="color: #808080; "><b>Enjeux</b></h4>'), br()
                                                  
