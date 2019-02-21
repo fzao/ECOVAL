@@ -19,7 +19,6 @@ library(shiny)
 library(plotly)
 library(xlsx)
 library(DT)
-library(shinyjs)
 
 # Define UI for application that draws a histogram
 shinyUI(fluidPage(title="ECOVAL",
