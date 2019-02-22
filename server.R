@@ -25,9 +25,15 @@ shinyServer(function(input, output, session) {
   fileloaded <- ""
   projectmodel1 <- read.xlsx2('model/projet.xlsx', sheetIndex = 1, header = TRUE, stringsAsFactors = FALSE)
   projectmodel2A <- read.xlsx2('model/projet.xlsx', sheetIndex = 2, header = TRUE, stringsAsFactors = FALSE)
+  projectmodel2B <- read.xlsx2('model/projet.xlsx', sheetIndex = 3, header = TRUE, stringsAsFactors = FALSE)
+  projectmodel2C <- read.xlsx2('model/projet.xlsx', sheetIndex = 4, header = TRUE, stringsAsFactors = FALSE)
+  projectmodel2D <- read.xlsx2('model/projet.xlsx', sheetIndex = 5, header = TRUE, stringsAsFactors = FALSE)
   projectmodel4 <- read.xlsx2('model/projet.xlsx', sheetIndex = 7, header = TRUE, stringsAsFactors = FALSE)
   prj <- projectmodel1[4:10,]
   prjenjeuA <- projectmodel2A[2:6,]
+  prjenjeuB <- projectmodel2B[2:5,]
+  prjenjeuC <- projectmodel2C[2:7,]
+  prjenjeuD <- projectmodel2D[2:6,]
 
   
   observeEvent(input$redir1, {
@@ -62,7 +68,7 @@ shinyServer(function(input, output, session) {
     if(!is.null(input$userfile)){
       if(fileloaded != input$userfile$name){
         projectmodel1 <<- read.xlsx2(input$userfile$datapath, sheetIndex = 1, header = TRUE, stringsAsFactors = FALSE)
-        projectmodel4 <<- read.xlsx2(input$userfile$datapath, sheetIndex = 7, header = TRUE, stringsAsFactors = FALSE) #!!!! CORRIGER INDEX
+        projectmodel4 <<- read.xlsx2(input$userfile$datapath, sheetIndex = 6, header = TRUE, stringsAsFactors = FALSE) #!!!! CORRIGER INDEX
         updateTextInput(session, "projectname", value=projectmodel1[1,2])
         updateTextInput(session, "projectcontext", value=projectmodel1[2,2])
         updateNumericInput(session, "sitenumber", value=projectmodel1[3,2])
@@ -92,11 +98,11 @@ shinyServer(function(input, output, session) {
   })
   
   
-  output$enjeuxtab <- DT::renderDataTable({   #projectmodel2, rownames = FALSE, selection = 'none', editable = T)
+  output$enjeuxtabA <- DT::renderDataTable({
     if(!is.null(input$userfile)){
       if(fileloaded != ""){
         projectmodel2A <<- read.xlsx2(input$userfile$datapath, sheetIndex = 2, header = TRUE, stringsAsFactors = FALSE)
-        updateNumericInput(session, "nbhabimp", value=projectmodel2A[2,2])
+        updateNumericInput(session, "nbhabimp", value=projectmodel2A[1,2])
       }
     }
     projectmodel2A[1,2] <<- input$nbhabimp
@@ -118,13 +124,95 @@ shinyServer(function(input, output, session) {
       DT::datatable(projectmodel2A[2:dim(projectmodel2A)[1],], options = list(pageLength = 5, autoWidth = TRUE, server = F), rownames = FALSE, selection = 'none', editable = T )
     }
   })
-                                          
+  
+  output$enjeuxtabB <- DT::renderDataTable({
+    if(!is.null(input$userfile)){
+      if(fileloaded != ""){
+        projectmodel2B <<- read.xlsx2(input$userfile$datapath, sheetIndex = 3, header = TRUE, stringsAsFactors = FALSE)
+        updateNumericInput(session, "nbespimp", value=projectmodel2B[1,2])
+      }
+    }
+    projectmodel2B[1,2] <<- input$nbespimp
+    # append new fields or remove if necessary
+    if(!is.na(input$nbespimp)){
+      nesp <- input$nbespimp
+      nprj <- dim(prjenjeuB)[1]
+      nproj <- dim(projectmodel2B)[1] - 1
+      niter <- ((nesp * nprj) - nproj) / nprj
+      if(niter > 0){
+        for(i in 1:niter){
+          projectmodel2B <<- rbind(projectmodel2B, prjenjeuB)
+        }
+      }else if(niter < 0){
+        for(i in -1:niter){
+          projectmodel2B <<- projectmodel2B[1:(dim(projectmodel2B)[1]-nprj),]
+        }
+      }
+      DT::datatable(projectmodel2B[2:dim(projectmodel2B)[1],], options = list(pageLength = 4, autoWidth = TRUE, server = F), rownames = FALSE, selection = 'none', editable = T )
+    }
+  })
+        
+  output$enjeuxtabC <- DT::renderDataTable({
+    if(!is.null(input$userfile)){
+      if(fileloaded != ""){
+        projectmodel2C <<- read.xlsx2(input$userfile$datapath, sheetIndex = 4, header = TRUE, stringsAsFactors = FALSE)
+        updateNumericInput(session, "nbhabcomp", value=projectmodel2C[1,2])
+      }
+    }
+    projectmodel2C[1,2] <<- input$nbhabcomp
+    # append new fields or remove if necessary
+    if(!is.na(input$nbhabcomp)){
+      nhab <- input$nbhabcomp
+      nprj <- dim(prjenjeuC)[1]
+      nproj <- dim(projectmodel2C)[1] - 1
+      niter <- ((nhab * nprj) - nproj) / nprj
+      if(niter > 0){
+        for(i in 1:niter){
+          projectmodel2C <<- rbind(projectmodel2C, prjenjeuC)
+        }
+      }else if(niter < 0){
+        for(i in -1:niter){
+          projectmodel2C <<- projectmodel2C[1:(dim(projectmodel2C)[1]-nprj),]
+        }
+      }
+      DT::datatable(projectmodel2C[2:dim(projectmodel2C)[1],], options = list(pageLength = 6, autoWidth = TRUE, server = F), rownames = FALSE, selection = 'none', editable = T )
+    }
+  })
+  
+  output$enjeuxtabD <- DT::renderDataTable({
+    if(!is.null(input$userfile)){
+      if(fileloaded != ""){
+        projectmodel2D <<- read.xlsx2(input$userfile$datapath, sheetIndex = 5, header = TRUE, stringsAsFactors = FALSE)
+        updateNumericInput(session, "nbespcomp", value=projectmodel2D[1,2])
+      }
+    }
+    projectmodel2D[1,2] <<- input$nbespcomp
+    # append new fields or remove if necessary
+    if(!is.na(input$nbespcomp)){
+      nesp <- input$nbespcomp
+      nprj <- dim(prjenjeuD)[1]
+      nproj <- dim(projectmodel2D)[1] - 1
+      niter <- ((nesp * nprj) - nproj) / nprj
+      if(niter > 0){
+        for(i in 1:niter){
+          projectmodel2D <<- rbind(projectmodel2D, prjenjeuD)
+        }
+      }else if(niter < 0){
+        for(i in -1:niter){
+          projectmodel2D <<- projectmodel2D[1:(dim(projectmodel2D)[1]-nprj),]
+        }
+      }
+      DT::datatable(projectmodel2D[2:dim(projectmodel2D)[1],], options = list(pageLength = 5, autoWidth = TRUE, server = F), rownames = FALSE, selection = 'none', editable = T )
+    }
+  })
+                                    
   output$ssitab <- DT::renderDataTable(projectmodel4, rownames = FALSE, selection = 'none', editable = T)
-  
-  
-  
+
   proxy1 = dataTableProxy('projecttab')
-  proxy2A = dataTableProxy('enjeuxtab')
+  proxy2A = dataTableProxy('enjeuxtabA')
+  proxy2B = dataTableProxy('enjeuxtabB')
+  proxy2C = dataTableProxy('enjeuxtabC')
+  proxy2D = dataTableProxy('enjeuxtabD')
   proxy4 = dataTableProxy('ssitab')
 
   observeEvent(input$projecttab_cell_edit, {
@@ -136,13 +224,40 @@ shinyServer(function(input, output, session) {
     replaceData(proxy1, projectmodel1[4:dim(projectmodel1)[1],], resetPaging = FALSE, rownames = FALSE)  # important
   })
   
-  observeEvent(input$enjeuxtab_cell_edit, {
-    info = input$enjeuxtab_cell_edit
+  observeEvent(input$enjeuxtabA_cell_edit, {
+    info = input$enjeuxtabA_cell_edit
     i = info$row + 1
     j = info$col + 1
     v = info$value
     projectmodel2A[i, j] <<- DT::coerceValue(v, projectmodel2A[i, j])
     replaceData(proxy2A, projectmodel2A[2:dim(projectmodel2A)[1],], resetPaging = FALSE, rownames = FALSE)  # important
+  })
+  
+  observeEvent(input$enjeuxtabB_cell_edit, {
+    info = input$enjeuxtabB_cell_edit
+    i = info$row + 1
+    j = info$col + 1
+    v = info$value
+    projectmodel2B[i, j] <<- DT::coerceValue(v, projectmodel2B[i, j])
+    replaceData(proxy2B, projectmodel2B[2:dim(projectmodel2B)[1],], resetPaging = FALSE, rownames = FALSE)  # important
+  })
+  
+  observeEvent(input$enjeuxtabC_cell_edit, {
+    info = input$enjeuxtabC_cell_edit
+    i = info$row + 1
+    j = info$col + 1
+    v = info$value
+    projectmodel2C[i, j] <<- DT::coerceValue(v, projectmodel2C[i, j])
+    replaceData(proxy2C, projectmodel2C[2:dim(projectmodel2C)[1],], resetPaging = FALSE, rownames = FALSE)  # important
+  })
+  
+  observeEvent(input$enjeuxtabD_cell_edit, {
+    info = input$enjeuxtabD_cell_edit
+    i = info$row + 1
+    j = info$col + 1
+    v = info$value
+    projectmodel2D[i, j] <<- DT::coerceValue(v, projectmodel2D[i, j])
+    replaceData(proxy2D, projectmodel2D[2:dim(projectmodel2D)[1],], resetPaging = FALSE, rownames = FALSE)  # important
   })
   
   observeEvent(input$ssitab_cell_edit, {
@@ -165,6 +280,9 @@ shinyServer(function(input, output, session) {
       content = function(con) {
         write.xlsx2(projectmodel1, con, sheetName = 'Caractéristiques projet', row.names = FALSE)
         write.xlsx2(projectmodel2A, con, sheetName = 'Identification enjeux A', row.names = FALSE, append = TRUE)
+        write.xlsx2(projectmodel2B, con, sheetName = 'Identification enjeux B', row.names = FALSE, append = TRUE)
+        write.xlsx2(projectmodel2C, con, sheetName = 'Identification enjeux C', row.names = FALSE, append = TRUE)
+        write.xlsx2(projectmodel2D, con, sheetName = 'Identification enjeux D', row.names = FALSE, append = TRUE)
         write.xlsx2(projectmodel4, con, sheetName = 'SSI', row.names = FALSE, append = TRUE)
       }
   )

@@ -60,8 +60,24 @@ shinyUI(fluidPage(title="ECOVAL",
                                                       DT::dataTableOutput('projecttab')
                                              ),
                                              tabPanel(HTML('<h4 style="color: #808080; "><b>Enjeux</b></h4>'), br(),
-                                                      numericInput("nbhabimp", "Nombre d'habitats à enjeu site impacté:", 1, min = 1, max = 100), br(),
-                                                      DT::dataTableOutput('enjeuxtab')
+                                                      tabsetPanel(
+                                                        tabPanel(HTML('<h4 style="color: #808080; ">Habitats Site Impacté</h4>'), br(),
+                                                            numericInput("nbhabimp", "Nombre :", 1, min = 1, max = 100), br(),
+                                                            DT::dataTableOutput('enjeuxtabA')
+                                                        ),
+                                                        tabPanel(HTML('<h4 style="color: #808080; ">Espèces Site Impacté</h4>'), br(),
+                                                                 numericInput("nbespimp", "Nombre :", 1, min = 1, max = 100), br(),
+                                                                 DT::dataTableOutput('enjeuxtabB')
+                                                        ),
+                                                        tabPanel(HTML('<h4 style="color: #808080; ">Habitats Site Compensatoire</h4>'), br(),
+                                                                 numericInput("nbhabcomp", "Nombre :", 1, min = 1, max = 100), br(),
+                                                                 DT::dataTableOutput('enjeuxtabC')
+                                                        ),
+                                                        tabPanel(HTML('<h4 style="color: #808080; ">Espèces Site Compensatoire</h4>'), br(),
+                                                               numericInput("nbespcomp", "Nombre :", 1, min = 1, max = 100), br(),
+                                                               DT::dataTableOutput('enjeuxtabD')
+                                                        )
+                                                      )
                                              ),
                                              tabPanel(HTML('<h4 style="color: #808080; "><b>Valeurs</b></h4>'), br()
                                                       
