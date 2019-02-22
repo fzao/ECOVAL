@@ -23,8 +23,9 @@ library(plotly)
 shinyServer(function(input, output, session) {
 
   fileloaded <- ""
-  projectmodel <- read.xlsx2('model/projet.xlsx', sheetIndex = 1, header = TRUE, stringsAsFactors = FALSE)
-  prj <- projectmodel[4:10,]
+  projectmodel1 <- read.xlsx2('model/projet.xlsx', sheetIndex = 1, header = TRUE, stringsAsFactors = FALSE)
+  projectmodel4 <- read.xlsx2('model/projet.xlsx', sheetIndex = 4, header = TRUE, stringsAsFactors = FALSE)
+  prj <- projectmodel1[4:10,]
   
   observeEvent(input$redir1, {
     updateTabsetPanel(session, "tabs", selected = "projet")
@@ -57,40 +58,54 @@ shinyServer(function(input, output, session) {
   output$projecttab <- DT::renderDataTable({
     if(!is.null(input$userfile)){
       if(fileloaded != input$userfile$name){
-        projectmodel<<- read.xlsx2(input$userfile$datapath, sheetIndex = 1, header = TRUE, stringsAsFactors = FALSE)
-        updateTextInput(session, "projectname", value=projectmodel[1,2])
-        updateTextInput(session, "projectcontext", value=projectmodel[2,2])
-        updateNumericInput(session, "sitenumber", value=projectmodel[3,2])
+        projectmodel1 <<- read.xlsx2(input$userfile$datapath, sheetIndex = 1, header = TRUE, stringsAsFactors = FALSE)
+        projectmodel4 <<- read.xlsx2(input$userfile$datapath, sheetIndex = 2, header = TRUE, stringsAsFactors = FALSE) #!!!! CORRIGER INDEX
+        updateTextInput(session, "projectname", value=projectmodel1[1,2])
+        updateTextInput(session, "projectcontext", value=projectmodel1[2,2])
+        updateNumericInput(session, "sitenumber", value=projectmodel1[3,2])
         fileloaded <<- input$userfile$name
       }
     }
-    projectmodel[1,2] <<- input$projectname
-    projectmodel[2,2] <<- input$projectcontext
-    projectmodel[3,2] <<- input$sitenumber
+    projectmodel1[1,2] <<- input$projectname
+    projectmodel1[2,2] <<- input$projectcontext
+    projectmodel1[3,2] <<- input$sitenumber
     # append new fiels if necessary
     if(!is.na(input$sitenumber)){
       nsite <- input$sitenumber
       nprj <- dim(prj)[1]
-      nproj <- dim(projectmodel)[1] - 3
+      nproj <- dim(projectmodel1)[1] - 3
       niter <- ((nsite * nprj) - nproj) / nprj
       if(niter > 0){
         for(i in 1:niter){
-          projectmodel <<- rbind(projectmodel, prj)
+          projectmodel1 <<- rbind(projectmodel1, prj)
         }
       }
-      DT::datatable(projectmodel[4:dim(projectmodel)[1],], options = list(pageLength = 7, autoWidth = TRUE, server = F), rownames = FALSE, selection = 'none', editable = T )
+      DT::datatable(projectmodel1[4:dim(projectmodel1)[1],], options = list(pageLength = 7, autoWidth = TRUE, server = F), rownames = FALSE, selection = 'none', editable = T )
     }
   })
   
-  proxy = dataTableProxy('projecttab')
   
+  output$ssitab <- DT::renderDataTable(projectmodel4, rownames = FALSE, selection = 'none', editable = T)
+  
+  proxy1 = dataTableProxy('projecttab')
+  proxy4 = dataTableProxy('ssitab')
+
   observeEvent(input$projecttab_cell_edit, {
     info = input$projecttab_cell_edit
     i = info$row + 3
     j = info$col + 1
     v = info$value
-    projectmodel[i, j] <<- DT::coerceValue(v, projectmodel[i, j])
-    replaceData(proxy, projectmodel[4:dim(projectmodel)[1],], resetPaging = FALSE, rownames = FALSE)  # important
+    projectmodel1[i, j] <<- DT::coerceValue(v, projectmodel1[i, j])
+    replaceData(proxy1, projectmodel1[4:dim(projectmodel1)[1],], resetPaging = FALSE, rownames = FALSE)  # important
+  })
+  
+  observeEvent(input$ssitab_cell_edit, {
+    info = input$ssitab_cell_edit
+    i = info$row
+    j = info$col + 1
+    v = info$value
+    projectmodel4[i, j] <<- DT::coerceValue(v, projectmodel4[i, j])
+    replaceData(proxy4, projectmodel4, resetPaging = FALSE, rownames = FALSE)  # important
   })
   
   output$btn_telecharger <- downloadHandler(
@@ -102,7 +117,8 @@ shinyServer(function(input, output, session) {
         }
       },
       content = function(con) {
-        write.xlsx2(projectmodel, con, sheetName = 'Caractéristiques projet', row.names = FALSE)
+        write.xlsx2(projectmodel1, con, sheetName = 'Caractéristiques projet', row.names = FALSE)
+        write.xlsx2(projectmodel4, con, sheetName = 'SSI', row.names = FALSE, append = TRUE)
       }
   )
   
