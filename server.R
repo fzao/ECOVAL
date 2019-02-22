@@ -28,6 +28,7 @@ shinyServer(function(input, output, session) {
   projectmodel2B <- read.xlsx2('model/projet.xlsx', sheetIndex = 3, header = TRUE, stringsAsFactors = FALSE)
   projectmodel2C <- read.xlsx2('model/projet.xlsx', sheetIndex = 4, header = TRUE, stringsAsFactors = FALSE)
   projectmodel2D <- read.xlsx2('model/projet.xlsx', sheetIndex = 5, header = TRUE, stringsAsFactors = FALSE)
+  projectmodel3 <- read.xlsx2('model/projet.xlsx', sheetIndex = 6, header = TRUE, stringsAsFactors = FALSE)
   projectmodel4 <- read.xlsx2('model/projet.xlsx', sheetIndex = 7, header = TRUE, stringsAsFactors = FALSE)
   prj <- projectmodel1[4:10,]
   prjenjeuA <- projectmodel2A[2:6,]
@@ -68,10 +69,12 @@ shinyServer(function(input, output, session) {
     if(!is.null(input$userfile)){
       if(fileloaded != input$userfile$name){
         projectmodel1 <<- read.xlsx2(input$userfile$datapath, sheetIndex = 1, header = TRUE, stringsAsFactors = FALSE)
-        projectmodel4 <<- read.xlsx2(input$userfile$datapath, sheetIndex = 6, header = TRUE, stringsAsFactors = FALSE) #!!!! CORRIGER INDEX
+        projectmodel4 <<- read.xlsx2(input$userfile$datapath, sheetIndex = 7, header = TRUE, stringsAsFactors = FALSE)
         updateTextInput(session, "projectname", value=projectmodel1[1,2])
         updateTextInput(session, "projectcontext", value=projectmodel1[2,2])
-        updateNumericInput(session, "sitenumber", value=projectmodel1[3,2])
+        if(is.numeric(projectmodel1[3,2])){
+          updateNumericInput(session, "sitenumber", value=projectmodel1[3,2])
+        }
         fileloaded <<- input$userfile$name
       }
     }
@@ -102,7 +105,9 @@ shinyServer(function(input, output, session) {
     if(!is.null(input$userfile)){
       if(fileloaded != ""){
         projectmodel2A <<- read.xlsx2(input$userfile$datapath, sheetIndex = 2, header = TRUE, stringsAsFactors = FALSE)
-        updateNumericInput(session, "nbhabimp", value=projectmodel2A[1,2])
+        if(is.numeric(projectmodel2A[1,2])){
+          updateNumericInput(session, "nbhabimp", value=projectmodel2A[1,2])
+        }
       }
     }
     projectmodel2A[1,2] <<- input$nbhabimp
@@ -129,7 +134,9 @@ shinyServer(function(input, output, session) {
     if(!is.null(input$userfile)){
       if(fileloaded != ""){
         projectmodel2B <<- read.xlsx2(input$userfile$datapath, sheetIndex = 3, header = TRUE, stringsAsFactors = FALSE)
-        updateNumericInput(session, "nbespimp", value=projectmodel2B[1,2])
+        if(is.numeric(projectmodel2B[1,2])){
+          updateNumericInput(session, "nbespimp", value=projectmodel2B[1,2])
+        }
       }
     }
     projectmodel2B[1,2] <<- input$nbespimp
@@ -156,7 +163,9 @@ shinyServer(function(input, output, session) {
     if(!is.null(input$userfile)){
       if(fileloaded != ""){
         projectmodel2C <<- read.xlsx2(input$userfile$datapath, sheetIndex = 4, header = TRUE, stringsAsFactors = FALSE)
-        updateNumericInput(session, "nbhabcomp", value=projectmodel2C[1,2])
+        if(is.numeric(projectmodel2C[1,2])){
+          updateNumericInput(session, "nbhabcomp", value=projectmodel2C[1,2])
+        }
       }
     }
     projectmodel2C[1,2] <<- input$nbhabcomp
@@ -183,7 +192,9 @@ shinyServer(function(input, output, session) {
     if(!is.null(input$userfile)){
       if(fileloaded != ""){
         projectmodel2D <<- read.xlsx2(input$userfile$datapath, sheetIndex = 5, header = TRUE, stringsAsFactors = FALSE)
-        updateNumericInput(session, "nbespcomp", value=projectmodel2D[1,2])
+        if(is.numeric(projectmodel2D[1,2])){
+          updateNumericInput(session, "nbespcomp", value=projectmodel2D[1,2])
+        }
       }
     }
     projectmodel2D[1,2] <<- input$nbespcomp
@@ -283,6 +294,7 @@ shinyServer(function(input, output, session) {
         write.xlsx2(projectmodel2B, con, sheetName = 'Identification enjeux B', row.names = FALSE, append = TRUE)
         write.xlsx2(projectmodel2C, con, sheetName = 'Identification enjeux C', row.names = FALSE, append = TRUE)
         write.xlsx2(projectmodel2D, con, sheetName = 'Identification enjeux D', row.names = FALSE, append = TRUE)
+        write.xlsx2(projectmodel3, con, sheetName = 'Tableau synthétique', row.names = FALSE, append = TRUE)
         write.xlsx2(projectmodel4, con, sheetName = 'SSI', row.names = FALSE, append = TRUE)
       }
   )

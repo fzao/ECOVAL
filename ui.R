@@ -79,8 +79,8 @@ shinyUI(fluidPage(title="ECOVAL",
                                                         )
                                                       )
                                              ),
-                                             tabPanel(HTML('<h4 style="color: #808080; "><b>Valeurs</b></h4>'), br()
-                                                      
+                                             tabPanel(HTML('<h4 style="color: #808080; "><b>Valeurs</b></h4>'), br(),
+                                                      DT::dataTableOutput('synthtab')
                                              ),
                                              tabPanel(HTML('<h4 style="color: #808080; "><b>SSI</b></h4>'), br(),
                                                       DT::dataTableOutput('ssitab')
