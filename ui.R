@@ -44,28 +44,34 @@ shinyUI(fluidPage(title="ECOVAL",
                                        includeMarkdown("md/accueil_3.md"),
                                        actionLink(inputId = "redir7", label=HTML('<h4 style="color: #005BBB;" >Pour la phase d’interprétation des résultats, veuillez vous référer à la notice explicative disponible dans l’onglet «à propos»</h4>'))),
                               # PROJET ----------------------------------------------------
-                              tabPanel(value="projet", HTML('<h4 style="color: #005BBB; "><b>Projet</b></h4>'),
-                                       tabsetPanel(
-                                         tabPanel(HTML('<h4 style="color: #808080; "><b>Description</b></h4>'), br(),
-                                                  fluidRow(
-                                                    column(3, align = "center", fileInput("userfile", "Importer un projet ECOVAL", multiple = FALSE, accept = ".xlsx", buttonLabel = 'Parcourir...', placeholder = 'Aucun fichier importé')),
-                                                    column(2, align = "center", textInput("projectname", "Nom du projet")),
-                                                    column(5, align = "center", textInput("projectcontext", "Contexte général", width = '100%')),
-                                                    column(2, align = "center", numericInput("sitenumber", "Nombre de site(s) impacté(s):", 1, min = 1, max = 100))), br(),
-                                                  DT::dataTableOutput('projecttab'), br(),
-                                                  downloadButton("btn_telecharger", "Télécharger")
+                              tabPanel(value="projet", HTML('<h4 style="color: #005BBB; "><b>Projet</b></h4>'), br(),
+                                       sidebarLayout(
+                                         sidebarPanel(
+                                           fileInput("userfile", "Projet ECOVAL", multiple = FALSE, accept = ".xlsx", buttonLabel = 'Importer...', placeholder = 'Fichier?'),
+                                           textInput("projectname", "Nom du projet"), br(),
+                                           textInput("projectcontext", "Contexte général", width = '100%'), br(),
+                                           numericInput("sitenumber", "Nombre de site(s) impacté(s):", 1, min = 1, max = 100), br(),
+                                           downloadButton("btn_telecharger", "Exporter"),
+                                           width = 2
                                          ),
-                                         tabPanel(HTML('<h4 style="color: #808080; "><b>Enjeux</b></h4>'), br()
-                                                 
-                                         ),
-                                         tabPanel(HTML('<h4 style="color: #808080; "><b>Valeurs</b></h4>'), br()
-                                                  
-                                         ),
-                                         tabPanel(HTML('<h4 style="color: #808080; "><b>SSI</b></h4>'), br()
-                                                  
-                                         )
+                                          mainPanel(
+                                           tabsetPanel(
+                                             tabPanel(HTML('<h4 style="color: #808080; "><b>Description</b></h4>'), br(),
+                                                      DT::dataTableOutput('projecttab')
+                                             ),
+                                             tabPanel(HTML('<h4 style="color: #808080; "><b>Enjeux</b></h4>'), br()
+                                                     
+                                             ),
+                                             tabPanel(HTML('<h4 style="color: #808080; "><b>Valeurs</b></h4>'), br()
+                                                      
+                                             ),
+                                             tabPanel(HTML('<h4 style="color: #808080; "><b>SSI</b></h4>'), br()
+                                                      
+                                             )
+                                           ),
+                                           width = 10)
                                        )
-                              ),
+                                      ),
                               # SITE IMPACTE ----------------------------------------------
                               tabPanel(value="impact", HTML('<h4 style="color: #005BBB; "><b>Site impacté</b></h4>')),
                               # SITE COMPENSATOIRE ----------------------------------------------
