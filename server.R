@@ -68,8 +68,19 @@ shinyServer(function(input, output, session) {
           projectmodel <<- rbind(projectmodel, prj)
         }
       }
-      DT::datatable(projectmodel[4:dim(projectmodel)[1],], options = list(pageLength = 7, autoWidth = TRUE), rownames = FALSE)
+      DT::datatable(projectmodel[4:dim(projectmodel)[1],], options = list(pageLength = 7, autoWidth = TRUE, server = F), rownames = FALSE, selection = 'none', editable = T )
     }
+  })
+  
+  proxy = dataTableProxy('projecttab')
+  
+  observeEvent(input$projecttab_cell_edit, {
+    info = input$projecttab_cell_edit
+    i = info$row + 3
+    j = info$col + 1
+    v = info$value
+    projectmodel[i, j] <<- DT::coerceValue(v, projectmodel[i, j])
+    # replaceData(proxy, projectmodel, resetPaging = FALSE)  # important
   })
   
   output$btn_telecharger <- downloadHandler(
