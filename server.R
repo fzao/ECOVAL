@@ -22,6 +22,7 @@ library(plotly)
 # Define server logic required to draw a histogram
 shinyServer(function(input, output, session) {
 
+  fileloaded <- ""
   projectmodel <- read.xlsx2('model/projet.xlsx', sheetIndex = 1, header = TRUE, stringsAsFactors = FALSE)
   prj <- projectmodel[4:10,]
   
@@ -54,6 +55,15 @@ shinyServer(function(input, output, session) {
   })
   
   output$projecttab <- DT::renderDataTable({
+    if(!is.null(input$userfile)){
+      if(fileloaded != input$userfile$name){
+        projectmodel<<- read.xlsx2(input$userfile$datapath, sheetIndex = 1, header = TRUE, stringsAsFactors = FALSE)
+        updateTextInput(session, "projectname", value=projectmodel[1,2])
+        updateTextInput(session, "projectcontext", value=projectmodel[2,2])
+        updateNumericInput(session, "sitenumber", value=projectmodel[3,2])
+        fileloaded <<- input$userfile$name
+      }
+    }
     projectmodel[1,2] <<- input$projectname
     projectmodel[2,2] <<- input$projectcontext
     projectmodel[3,2] <<- input$sitenumber
@@ -80,7 +90,7 @@ shinyServer(function(input, output, session) {
     j = info$col + 1
     v = info$value
     projectmodel[i, j] <<- DT::coerceValue(v, projectmodel[i, j])
-    # replaceData(proxy, projectmodel, resetPaging = FALSE)  # important
+    replaceData(proxy, projectmodel[4:dim(projectmodel)[1],], resetPaging = FALSE, rownames = FALSE)  # important
   })
   
   output$btn_telecharger <- downloadHandler(

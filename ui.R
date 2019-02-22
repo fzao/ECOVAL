@@ -48,9 +48,10 @@ shinyUI(fluidPage(title="ECOVAL",
                                        tabsetPanel(
                                          tabPanel(HTML('<h4 style="color: #808080; "><b>Description</b></h4>'), br(),
                                                   fluidRow(
-                                                    column(3, align = "center", textInput("projectname", "Nom du projet")),
-                                                    column(6, align = "center", textInput("projectcontext", "Contexte général", width = '100%')),
-                                                    column(3, align = "center", numericInput("sitenumber", "Nombre de site(s) impacté(s):", 1, min = 1, max = 100))), br(), br(),
+                                                    column(3, align = "center", fileInput("userfile", "Importer un projet ECOVAL", multiple = FALSE, accept = ".xlsx", buttonLabel = 'Parcourir...', placeholder = 'Aucun fichier importé')),
+                                                    column(2, align = "center", textInput("projectname", "Nom du projet")),
+                                                    column(5, align = "center", textInput("projectcontext", "Contexte général", width = '100%')),
+                                                    column(2, align = "center", numericInput("sitenumber", "Nombre de site(s) impacté(s):", 1, min = 1, max = 100))), br(),
                                                   DT::dataTableOutput('projecttab'), br(),
                                                   downloadButton("btn_telecharger", "Télécharger")
                                          ),
