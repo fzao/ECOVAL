@@ -59,8 +59,9 @@ shinyUI(fluidPage(title="ECOVAL",
                                              tabPanel(HTML('<h4 style="color: #808080; "><b>Description</b></h4>'), br(),
                                                       DT::dataTableOutput('projecttab')
                                              ),
-                                             tabPanel(HTML('<h4 style="color: #808080; "><b>Enjeux</b></h4>'), br()
-                                                     
+                                             tabPanel(HTML('<h4 style="color: #808080; "><b>Enjeux</b></h4>'), br(),
+                                                      numericInput("nbhabimp", "Nombre d'habitats à enjeu site impacté:", 1, min = 1, max = 100), br(),
+                                                      DT::dataTableOutput('enjeuxtab')
                                              ),
                                              tabPanel(HTML('<h4 style="color: #808080; "><b>Valeurs</b></h4>'), br()
                                                       
