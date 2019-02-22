@@ -217,6 +217,8 @@ shinyServer(function(input, output, session) {
     }
   })
                                     
+  output$synthtab <- DT::renderDataTable(projectmodel3, rownames = FALSE, selection = 'none', editable = T, options=list(pageLength = 20))
+  
   output$ssitab <- DT::renderDataTable(projectmodel4, rownames = FALSE, selection = 'none', editable = T)
 
   proxy1 = dataTableProxy('projecttab')
