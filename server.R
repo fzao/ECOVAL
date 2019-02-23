@@ -15,10 +15,6 @@
 # Licence CeCILL v2.1
 #
 
-library(shiny)
-library(plotly)
-
-
 # Define server logic required to draw a histogram
 shinyServer(function(input, output, session) {
 
@@ -300,5 +296,16 @@ shinyServer(function(input, output, session) {
         write.xlsx2(projectmodel4, con, sheetName = 'SSI', row.names = FALSE, append = TRUE)
       }
   )
+  
+  output$projectmap <- renderLeaflet({
+    if(is.numeric(input$latitude) & is.numeric(input$longitude)){
+      if(input$latitude != 0. | input$longitude !=0.){
+        m <- leaflet() %>%
+          addTiles() %>%
+          addMarkers(lat=input$latitude , lng=input$longitude, popup=input$projectcontext)
+        m
+      }  
+    } 
+  })
   
 })

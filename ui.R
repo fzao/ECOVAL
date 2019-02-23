@@ -19,6 +19,7 @@ library(shiny)
 library(plotly)
 library(xlsx)
 library(DT)
+library(leaflet)
 
 # Define UI for application that draws a histogram
 shinyUI(fluidPage(title="ECOVAL",
@@ -47,11 +48,17 @@ shinyUI(fluidPage(title="ECOVAL",
                               tabPanel(value="projet", HTML('<h4 style="color: #005BBB; "><b>Projet</b></h4>'), br(),
                                        sidebarLayout(
                                          sidebarPanel(
-                                           fileInput("userfile", "Projet ECOVAL", multiple = FALSE, accept = ".xlsx", buttonLabel = 'Importer...', placeholder = 'Fichier?'),
-                                           textInput("projectname", "Nom du projet"), br(),
-                                           textInput("projectcontext", "Contexte général", width = '100%'), br(),
-                                           numericInput("sitenumber", "Nombre de site(s) impacté(s):", 1, min = 1, max = 100), br(),
-                                           downloadButton("btn_telecharger", "Exporter"),
+                                           titlePanel(HTML('<h5><b>FICHIERS</b></h5>')),
+                                           downloadButton("btn_telecharger", "Exporter"), br(), br(),
+                                           fileInput("userfile", NULL, multiple = FALSE, accept = ".xlsx", buttonLabel = 'Importer...', placeholder = 'Fichier'),
+                                           textInput("projectname", "NOM"), br(),
+                                           textInput("projectcontext", "CONTEXTE", width = '100%'), br(),
+                                           numericInput("sitenumber", "NOMBRE DE SITE(S) :", 1, min = 1, max = 100), br(),
+                                           fluidRow(
+                                             column(6,
+                                              numericInput("latitude", "LAT. :", 0.)),
+                                             column(6,
+                                              numericInput("longitude", "LONG. :", 0.))),
                                            width = 2
                                          ),
                                           mainPanel(
@@ -87,7 +94,8 @@ shinyUI(fluidPage(title="ECOVAL",
                                              )
                                            ),
                                            width = 10)
-                                       )
+                                       ),
+                                       leafletOutput("projectmap")
                                       ),
                               # SITE IMPACTE ----------------------------------------------
                               tabPanel(value="impact", HTML('<h4 style="color: #005BBB; "><b>Site impacté</b></h4>')),
