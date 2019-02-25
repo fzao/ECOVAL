@@ -59,7 +59,7 @@ shinyUI(fluidPage(title="ECOVAL",
                                               numericInput("latitude", "LAT. :", 0.)),
                                              column(6,
                                               numericInput("longitude", "LONG. :", 0.))),
-                                           width = 2
+                                           width = 3
                                          ),
                                           mainPanel(
                                            tabsetPanel(
@@ -69,19 +69,19 @@ shinyUI(fluidPage(title="ECOVAL",
                                              tabPanel(HTML('<h4 style="color: #808080; "><b>Enjeux</b></h4>'), br(),
                                                       tabsetPanel(
                                                         tabPanel(HTML('<h4 style="color: #808080; ">Habitats Site Impacté</h4>'), br(),
-                                                            numericInput("nbhabimp", "Nombre :", 1, min = 1, max = 100), br(),
+                                                            numericInput("nbhabimp", "Nombre :", 1, min = 1, max = 10), br(),
                                                             DT::dataTableOutput('enjeuxtabA')
                                                         ),
                                                         tabPanel(HTML('<h4 style="color: #808080; ">Espèces Site Impacté</h4>'), br(),
-                                                                 numericInput("nbespimp", "Nombre :", 1, min = 1, max = 100), br(),
+                                                                 numericInput("nbespimp", "Nombre :", 1, min = 1, max = 10), br(),
                                                                  DT::dataTableOutput('enjeuxtabB')
                                                         ),
                                                         tabPanel(HTML('<h4 style="color: #808080; ">Habitats Site Compensatoire</h4>'), br(),
-                                                                 numericInput("nbhabcomp", "Nombre :", 1, min = 1, max = 100), br(),
+                                                                 numericInput("nbhabcomp", "Nombre :", 1, min = 1, max = 10), br(),
                                                                  DT::dataTableOutput('enjeuxtabC')
                                                         ),
                                                         tabPanel(HTML('<h4 style="color: #808080; ">Espèces Site Compensatoire</h4>'), br(),
-                                                               numericInput("nbespcomp", "Nombre :", 1, min = 1, max = 100), br(),
+                                                               numericInput("nbespcomp", "Nombre :", 1, min = 1, max = 10), br(),
                                                                DT::dataTableOutput('enjeuxtabD')
                                                         )
                                                       )
@@ -93,7 +93,7 @@ shinyUI(fluidPage(title="ECOVAL",
                                                       DT::dataTableOutput('ssitab')
                                              )
                                            ),
-                                           width = 10)
+                                           width = 9)
                                        ),
                                        leafletOutput("projectmap")
                                       ),
