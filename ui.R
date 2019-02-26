@@ -18,7 +18,6 @@
 library(shiny)
 library(plotly)
 library(xlsx)
-library(DT)
 #library(leaflet)
 
 # Define UI for application that draws a histogram
@@ -50,41 +49,27 @@ shinyUI(fluidPage(title="ECOVAL",
                                          sidebarPanel(
                                            titlePanel(HTML('<h5><b>FICHIERS</b></h5>')),
                                            downloadButton("btn_telecharger", "Exporter"), br(), br(),
-                                           fileInput("userfile", NULL, multiple = FALSE, accept = ".xlsx", buttonLabel = 'Importer...', placeholder = 'Fichier'),
-                                           textInput("projectname", "NOM"), br(),
-                                           textInput("projectcontext", "CONTEXTE", width = '100%'), br(),
-                                           numericInput("sitenumber", "NOMBRE DE SITE(S) :", 1, min = 1, max = 100), br(),
-                                           fluidRow(
-                                             column(6,
-                                              numericInput("latitude", "LAT. :", 0.)),
-                                             column(6,
-                                              numericInput("longitude", "LONG. :", 0.))),
+                                           fileInput("userfile", NULL, multiple = FALSE, accept = ".xlsx", buttonLabel = 'Importer', placeholder = 'Fichier ECOVAL du projet...'),
+                                           textInput("projectname", "TITRE", placeholder = "Titre du projet ECOVAL..."), br(),
+                                           textAreaInput("projectcontext", "CONTEXTE", height='300px', placeholder = "Décrire le contexte du projet ici..."), br(),
+                                           selectInput("selectsite", label = "NUMERO DU SITE", 
+                                                       choices = list("Site no. 1" = 1, "Site no. 2" = 2, "Site no. 3" = 3, "Site no. 4" = 4, "Site no. 5" = 5, 
+                                                                      "Site no. 6" = 6, "Site no. 7" = 7, "Site no. 8" = 8, "Site no. 9" = 9, "Site no. 10" = 10), 
+                                                       selected = 1),
                                            width = 3
                                          ),
                                           mainPanel(
                                            tabsetPanel(
-                                             tabPanel(HTML('<h4 style="color: #808080; "><b>Description</b></h4>'), br(),
-                                                      DT::dataTableOutput('projecttab')
+                                             tabPanel(HTML('<h4 style="color: #005BBB; ">Description</h4>'), br(),
+                                                      fluidRow(column(12, align="center", htmlOutput("viewsiteno", inline = TRUE))), br(),
+                                                      textInput("sitename", "NOM", placeholder = "Nom du site..."), br(),
+                                                      selectInput("sitetype", label = "TYPE", choices = list("Impacté" = 1, "Compensatoire" = 2)), br(),
+                                                      numericInput("surface", "SURFACE (ha)", value = 0., min = 0., max = 1e6, step = 1.),
+                                                      numericInput("latitude", "LATITUDE", 0.),
+                                                      numericInput("longitude", "LONGITUDE", 0.)
                                              ),
-                                             tabPanel(HTML('<h4 style="color: #808080; "><b>Enjeux</b></h4>'), br(),
-                                                      tabsetPanel(
-                                                        tabPanel(HTML('<h4 style="color: #808080; ">Habitats Site Impacté</h4>'), br(),
-                                                            numericInput("nbhabimp", "Nombre :", 1, min = 1, max = 10), br(),
-                                                            DT::dataTableOutput('enjeuxtabA')
-                                                        ),
-                                                        tabPanel(HTML('<h4 style="color: #808080; ">Espèces Site Impacté</h4>'), br(),
-                                                                 numericInput("nbespimp", "Nombre :", 1, min = 1, max = 10), br(),
-                                                                 DT::dataTableOutput('enjeuxtabB')
-                                                        ),
-                                                        tabPanel(HTML('<h4 style="color: #808080; ">Habitats Site Compensatoire</h4>'), br(),
-                                                                 numericInput("nbhabcomp", "Nombre :", 1, min = 1, max = 10), br(),
-                                                                 DT::dataTableOutput('enjeuxtabC')
-                                                        ),
-                                                        tabPanel(HTML('<h4 style="color: #808080; ">Espèces Site Compensatoire</h4>'), br(),
-                                                               numericInput("nbespcomp", "Nombre :", 1, min = 1, max = 10), br(),
-                                                               DT::dataTableOutput('enjeuxtabD')
-                                                        )
-                                                      )
+                                             tabPanel(HTML('<h4 style="color: #005BBB; ">Enjeux</h4>'), br()
+                                                      
                                              )
 
                                            ),
