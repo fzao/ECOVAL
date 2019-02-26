@@ -85,10 +85,8 @@ shinyUI(fluidPage(title="ECOVAL",
                                                                DT::dataTableOutput('enjeuxtabD')
                                                         )
                                                       )
-                                             ),
-                                             tabPanel(HTML('<h4 style="color: #808080; "><b>Valeurs</b></h4>'), br(),
-                                                      DT::dataTableOutput('synthtab')
                                              )
+
                                            ),
                                            width = 9)
                                        )
@@ -101,7 +99,9 @@ shinyUI(fluidPage(title="ECOVAL",
                               # EQUIVALENCE ----------------------------------------------
                               tabPanel(value="equival", HTML('<h4 style="color: #005BBB; "><b>Equivalence</b></h4>')),
                               # FICHE DE SYNTHESE ----------------------------------------------
-                              tabPanel(value="synth", HTML('<h4 style="color: #005BBB; "><b>Synthèse</b></h4>')),
+                              tabPanel(value="synth", HTML('<h4 style="color: #005BBB; "><b>Synthèse</b></h4>'), br(),
+                                       DT::dataTableOutput('synthtab')
+                              ),
                               # A PROPOS ----------------------------------------------
                               tabPanel(value="propos", HTML('<h4 style="color: #005BBB; "><b>A propos</b></h4>'))
                   )
