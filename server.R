@@ -269,15 +269,6 @@ shinyServer(function(input, output, session) {
     replaceData(proxy2D, projectmodel2D[2:dim(projectmodel2D)[1],], resetPaging = FALSE, rownames = FALSE)  # important
   })
   
-  observeEvent(input$ssitab_cell_edit, {
-    info = input$ssitab_cell_edit
-    i = info$row
-    j = info$col + 1
-    v = info$value
-    projectmodel4[i, j] <<- DT::coerceValue(v, projectmodel4[i, j])
-    replaceData(proxy4, projectmodel4, resetPaging = FALSE, rownames = FALSE)  # important
-  })
-  
   output$btn_telecharger <- downloadHandler(
       filename = function() {
         if(input$projectname == ""){
@@ -297,15 +288,15 @@ shinyServer(function(input, output, session) {
       }
   )
   
-  output$projectmap <- renderLeaflet({
-    if(is.numeric(input$latitude) & is.numeric(input$longitude)){
-      if(input$latitude != 0. | input$longitude !=0.){
-        m <- leaflet() %>%
-          addTiles() %>%
-          addMarkers(lat=input$latitude , lng=input$longitude, popup=input$projectcontext)
-        m
-      }  
-    } 
-  })
+  # output$projectmap <- renderLeaflet({
+  #   if(is.numeric(input$latitude) & is.numeric(input$longitude)){
+  #     if(input$latitude != 0. | input$longitude !=0.){
+  #       m <- leaflet() %>%
+  #         addTiles() %>%
+  #         addMarkers(lat=input$latitude , lng=input$longitude, popup=input$projectcontext)
+  #       m
+  #     }  
+  #   } 
+  # })
   
 })

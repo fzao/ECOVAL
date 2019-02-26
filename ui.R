@@ -19,7 +19,7 @@ library(shiny)
 library(plotly)
 library(xlsx)
 library(DT)
-library(leaflet)
+#library(leaflet)
 
 # Define UI for application that draws a histogram
 shinyUI(fluidPage(title="ECOVAL",
@@ -88,14 +88,11 @@ shinyUI(fluidPage(title="ECOVAL",
                                              ),
                                              tabPanel(HTML('<h4 style="color: #808080; "><b>Valeurs</b></h4>'), br(),
                                                       DT::dataTableOutput('synthtab')
-                                             ),
-                                             tabPanel(HTML('<h4 style="color: #808080; "><b>SSI</b></h4>'), br(),
-                                                      DT::dataTableOutput('ssitab')
                                              )
                                            ),
                                            width = 9)
-                                       ),
-                                       leafletOutput("projectmap")
+                                       )
+                                       # leafletOutput("projectmap")
                                       ),
                               # SITE IMPACTE ----------------------------------------------
                               tabPanel(value="impact", HTML('<h4 style="color: #005BBB; "><b>Site impacté</b></h4>')),
