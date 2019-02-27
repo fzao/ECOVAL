@@ -58,9 +58,9 @@ shinyUI(fluidPage(title="ECOVAL",
                                            fluidRow(column(6, align="center", actionButton("new", "NOUVEAU")), column(6, align="center", actionButton("delete", "EFFACER"))),
                                            width = 3
                                          ),
-                                          mainPanel(
-                                           tabsetPanel(
-                                             tabPanel(HTML('<h4 style="color: #005BBB; ">Description</h4>'), br(),
+                                         mainPanel(
+                                           tabsetPanel(id="prjtabs",
+                                             tabPanel(HTML('<h4 style="color: #005BBB; ">Description</h4>'), value="description", br(),
                                                       fluidRow(column(12, align="center", htmlOutput("viewsiteno", inline = TRUE))), br(), br(),
                                                       fluidRow(column(3, align="left",
                                                                   textInput("sitename", "NOM", placeholder = "Nom du site..."), br(),              
@@ -82,10 +82,9 @@ shinyUI(fluidPage(title="ECOVAL",
                                                                   actionLink(inputId = "link3", label=h5("?"))
                                                                    ))
                                              ),
-                                             tabPanel(HTML('<h4 style="color: #005BBB; ">Enjeux</h4>'), br()
+                                             tabPanel(HTML('<h4 style="color: #005BBB; ">Enjeux</h4>'), value="enjeux", br()
                                                       
                                              )
-
                                            ),
                                            width = 9)
                                        )

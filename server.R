@@ -185,8 +185,9 @@ shinyServer(function(input, output, session) {
 
   observeEvent(input$delete, {
     newlist <- list("-" = 0)
+    numsite <<- numsite - 1
+    numsite <<- max(numsite, 0)
     if(numsite > 0){
-      numsite <<- numsite - 1
       for(i in 1:numsite){
         newlist[[paste("Site no.", as.character(i))]] <- i
       }
@@ -194,6 +195,15 @@ shinyServer(function(input, output, session) {
     updateSelectInput(session, "selectsite", choices = newlist, selected = (length(newlist) - 1))
   })
   
+  observeEvent(input$selectsite, {
+    if(as.integer(input$selectsite) == 0){
+      hideTab(inputId = "prjtabs", target = "description")
+      hideTab(inputId = "prjtabs", target = "enjeux")
+    }else{
+      showTab(inputId = "prjtabs", target = "description")
+      showTab(inputId = "prjtabs", target = "enjeux")
+    }
+  })
   # output$projectmap <- renderLeaflet({
   #   if(is.numeric(input$latitude) & is.numeric(input$longitude)){
   #     if(input$latitude != 0. | input$longitude !=0.){
