@@ -56,17 +56,29 @@ shinyUI(fluidPage(title="ECOVAL",
                                                        choices = list("Site no. 1" = 1, "Site no. 2" = 2, "Site no. 3" = 3, "Site no. 4" = 4, "Site no. 5" = 5, 
                                                                       "Site no. 6" = 6, "Site no. 7" = 7, "Site no. 8" = 8, "Site no. 9" = 9, "Site no. 10" = 10), 
                                                        selected = 1),
+                                           actionButton("save", "ENREGISTRER"),
                                            width = 3
                                          ),
                                           mainPanel(
                                            tabsetPanel(
                                              tabPanel(HTML('<h4 style="color: #005BBB; ">Description</h4>'), br(),
-                                                      fluidRow(column(12, align="center", htmlOutput("viewsiteno", inline = TRUE))), br(),
-                                                      textInput("sitename", "NOM", placeholder = "Nom du site..."), br(),
-                                                      selectInput("sitetype", label = "TYPE", choices = list("Impacté" = 1, "Compensatoire" = 2)), br(),
-                                                      numericInput("surface", "SURFACE (ha)", value = 0., min = 0., max = 1e6, step = 1.),
-                                                      numericInput("latitude", "LATITUDE", 0.),
-                                                      numericInput("longitude", "LONGITUDE", 0.)
+                                                      fluidRow(column(12, align="center", htmlOutput("viewsiteno", inline = TRUE))), br(), br(),
+                                                      fluidRow(column(3, align="left",
+                                                                  textInput("sitename", "NOM", placeholder = "Nom du site..."), br(),              
+                                                                  selectInput("sitetype", label = "TYPE", choices = list("Impacté" = 1, "Compensatoire" = 2, "Impacté et Compensatoire" = 3)), br(),
+                                                                  numericInput("surface", "SURFACE (ha)", value = 0., min = 0., max = 1e6, step = 1.), br(),
+                                                                  numericInput("latitude", "LATITUDE", 0.),
+                                                                  numericInput("longitude", "LONGITUDE", 0.)),
+                                                               column(3, align = "left",
+                                                                  textAreaInput("sitecontext", "CONTEXTE", height='400px', width='300px', placeholder = "Décrire le contexte du site ici...")),
+                                                               column(3, align = "left",
+                                                                  textAreaInput("descqual", "DESCRIPTION QUALITATIVE", height='175px', width='300px', placeholder = "Nature, emprise, effets indirects..."),
+                                                                  textAreaInput("tempo", "TEMPORALITE", height='175px', width='300px', placeholder = "Plusieurs phases? Court/long terme...")),
+                                                               column(3, align = "left",
+                                                                  tags$div(title="Durée des perturbations", selectInput("duree", label = "DUREE", choices = list("Temporaire Courte Durée" = 1, "Temporaire Longue Durée" = 2, "Permanent" = 3))), br(),
+                                                                  tags$div(title="Intensité des modifications de l'écosystème", selectInput("intensite", label = "INTENSITE", choices = list("Peu Intense" = 1, "Intense" = 2, "Très Intense" = 3))), br(),
+                                                                  tags$div(title="Portée spatiale des perturbations au sol", selectInput("portee", label = "PORTEE SPATIALE", choices = list("Ponctuelle Faible Surface" = 1, "Ponctuelle Surface Importante" = 2, "Linéaire" = 3)))
+                                                                   ))
                                              ),
                                              tabPanel(HTML('<h4 style="color: #005BBB; ">Enjeux</h4>'), br()
                                                       

@@ -49,7 +49,7 @@ shinyServer(function(input, output, session) {
     updateTabsetPanel(session, "tabs", selected = "propos")
   })
   
-  output$viewsiteno <- renderText({ paste("<font color=\"#808080\"; size=\"+1\"><b>", "SITE NUMERO", "</b></font>", "<font color=\"#808080\"; size=\"+1\"><b>", input$selectsite, "</b></font>") })
+  output$viewsiteno <- renderText({ paste("<font color=\"#000000\"; size=\"+1\"><b>", "SITE NUMERO", "</b></font>", "<font color=\"#000000\"; size=\"+1\"><b>", input$selectsite, "</b></font>") })
   
   output$btn_telecharger <- downloadHandler(
       filename = function() {
