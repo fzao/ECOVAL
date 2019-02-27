@@ -20,6 +20,7 @@ shinyServer(function(input, output, session) {
 
   fileloaded <- ""
   projectmodel1 <- read.xlsx2('model/projet.xlsx', sheetIndex = 1, header = TRUE, stringsAsFactors = FALSE)
+  numsite <- 0
 
   observeEvent(input$redir1, {
     updateTabsetPanel(session, "tabs", selected = "projet")
@@ -173,6 +174,25 @@ shinyServer(function(input, output, session) {
       h5("PORTEE DES PERTURBATIONS"), hr(), text1, text2, text3, easyClose = TRUE, footer = NULL))
   })
   
+  observeEvent(input$new, {
+    newlist <- list("-" = 0)
+    numsite <<- numsite + 1
+    for(i in 1:numsite){
+      newlist[[paste("Site no.", as.character(i))]] <- i
+    }
+    updateSelectInput(session, "selectsite", choices = newlist, selected = (length(newlist) - 1))
+  })
+
+  observeEvent(input$delete, {
+    newlist <- list("-" = 0)
+    if(numsite > 0){
+      numsite <<- numsite - 1
+      for(i in 1:numsite){
+        newlist[[paste("Site no.", as.character(i))]] <- i
+      }
+    }
+    updateSelectInput(session, "selectsite", choices = newlist, selected = (length(newlist) - 1))
+  })
   
   # output$projectmap <- renderLeaflet({
   #   if(is.numeric(input$latitude) & is.numeric(input$longitude)){

@@ -53,10 +53,9 @@ shinyUI(fluidPage(title="ECOVAL",
                                            textInput("projectname", "TITRE", placeholder = "Titre du projet ECOVAL..."), br(),
                                            textAreaInput("projectcontext", "CONTEXTE", height='300px', placeholder = "Décrire le contexte du projet ici..."), br(),
                                            selectInput("selectsite", label = "NUMERO DU SITE", 
-                                                       choices = list("Site no. 1" = 1, "Site no. 2" = 2, "Site no. 3" = 3, "Site no. 4" = 4, "Site no. 5" = 5, 
-                                                                      "Site no. 6" = 6, "Site no. 7" = 7, "Site no. 8" = 8, "Site no. 9" = 9, "Site no. 10" = 10), 
-                                                       selected = 1),
-                                           actionButton("save", "ENREGISTRER"),
+                                                       choices = list("-" = 0), 
+                                                       selected = 0),
+                                           fluidRow(column(6, align="center", actionButton("new", "NOUVEAU")), column(6, align="center", actionButton("delete", "EFFACER"))),
                                            width = 3
                                          ),
                                           mainPanel(
