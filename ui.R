@@ -75,9 +75,12 @@ shinyUI(fluidPage(title="ECOVAL",
                                                                   textAreaInput("descqual", "DESCRIPTION QUALITATIVE", height='175px', width='300px', placeholder = "Nature, emprise, effets indirects..."),
                                                                   textAreaInput("tempo", "TEMPORALITE", height='175px', width='300px', placeholder = "Plusieurs phases? Court/long terme...")),
                                                                column(3, align = "left",
-                                                                  tags$div(title="Durée des perturbations", selectInput("duree", label = "DUREE", choices = list("Temporaire Courte Durée" = 1, "Temporaire Longue Durée" = 2, "Permanent" = 3))), br(),
-                                                                  tags$div(title="Intensité des modifications de l'écosystème", selectInput("intensite", label = "INTENSITE", choices = list("Peu Intense" = 1, "Intense" = 2, "Très Intense" = 3))), br(),
-                                                                  tags$div(title="Portée spatiale des perturbations au sol", selectInput("portee", label = "PORTEE SPATIALE", choices = list("Ponctuelle Faible Surface" = 1, "Ponctuelle Surface Importante" = 2, "Linéaire" = 3)))
+                                                                  selectInput("duree", label = "DUREE", choices = list("Temporaire Courte Durée" = 1, "Temporaire Longue Durée" = 2, "Permanent" = 3)),
+                                                                  actionLink(inputId = "link1", label=h5("?")), br(), hr(),
+                                                                  selectInput("intensite", label = "INTENSITE", choices = list("Peu Intense" = 1, "Intense" = 2, "Très Intense" = 3)),
+                                                                  actionLink(inputId = "link2", label=h5("?")), br(), hr(),
+                                                                  selectInput("portee", label = "PORTEE SPATIALE", choices = list("Ponctuelle Faible Surface" = 1, "Ponctuelle Surface Importante" = 2, "Linéaire" = 3)),
+                                                                  actionLink(inputId = "link3", label=h5("?"))
                                                                    ))
                                              ),
                                              tabPanel(HTML('<h4 style="color: #005BBB; ">Enjeux</h4>'), br()
