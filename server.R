@@ -80,6 +80,19 @@ shinyServer(function(input, output, session) {
       }
   )
   
+  observeEvent(input$userfile, {
+    inFile <- input$userfile
+    if (is.null(inFile)) return(NULL)
+    ecoval[["General"]] <<- read.xlsx2(inFile$datapath, sheetIndex = 1, header = FALSE, stringsAsFactors = FALSE)
+    updateTextInput(session, "projectname", value = ecoval$General[1,2])
+    updateTextAreaInput(session, "projectcontext", value = ecoval$General[2,2])
+    updateDateInput(session, "date", value = ecoval$General[3,2])
+    numsite <<- as.integer(ecoval$General[4,2])
+    newlist <- list("-" = 0)
+    if(numsite > 0) for(i in 1:numsite) newlist[[paste("Site no.", as.character(i))]] <- i
+    updateSelectInput(session, "selectsite", choices = newlist, selected = (length(newlist) - 1))
+  })
+  
   observeEvent(input$link1, {
     if(input$duree == '1'){
       text1 <- h5(strong("-- Temporaire de courte durée --\n"))
@@ -191,9 +204,7 @@ shinyServer(function(input, output, session) {
   observeEvent(input$new, {
     newlist <- list("-" = 0)
     numsite <<- numsite + 1
-    for(i in 1:numsite){
-      newlist[[paste("Site no.", as.character(i))]] <- i
-    }
+    for(i in 1:numsite) newlist[[paste("Site no.", as.character(i))]] <- i
     updateSelectInput(session, "selectsite", choices = newlist, selected = (length(newlist) - 1))
   })
 
@@ -201,11 +212,7 @@ shinyServer(function(input, output, session) {
     newlist <- list("-" = 0)
     numsite <<- numsite - 1
     numsite <<- max(numsite, 0)
-    if(numsite > 0){
-      for(i in 1:numsite){
-        newlist[[paste("Site no.", as.character(i))]] <- i
-      }
-    }
+    if(numsite > 0) for(i in 1:numsite) newlist[[paste("Site no.", as.character(i))]] <- i
     updateSelectInput(session, "selectsite", choices = newlist, selected = (length(newlist) - 1))
   })
   
