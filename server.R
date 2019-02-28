@@ -94,9 +94,12 @@ shinyServer(function(input, output, session) {
     updateTextAreaInput(session, "projectcontext", value = ecoval$General[2,2])
     updateDateInput(session, "date", value = ecoval$General[3,2])
     numsite <<- as.integer(ecoval$General[4,2])
-    newlist <- list("-" = 0)
-    if(numsite > 0) for(i in 1:numsite) newlist[[paste("Site no.", as.character(i))]] <- i
-    updateSelectInput(session, "selectsite", choices = newlist, selected = (length(newlist) - 1))
+    if(numsite > 0) for(i in 1:numsite){
+      name <- paste("Site no.", as.character(i))
+      listsite[[name]] <<- i
+      ecoval[[name]] <<- read.xlsx2(inFile$datapath, sheetIndex = i+1, header = FALSE, stringsAsFactors = FALSE)
+    }
+    updateSelectInput(session, "selectsite", choices = listsite, selected = listsite[[length(listsite)]])
   })
   
   observeEvent(input$link1, {
