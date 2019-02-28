@@ -19,7 +19,8 @@
 shinyServer(function(input, output, session) {
 
   fileloaded <- ""
-  projectmodel1 <- read.xlsx2('model/projet.xlsx', sheetIndex = 1, header = TRUE, stringsAsFactors = FALSE)
+  ecoval <- list()
+  ecoval[["General"]] <- read.xlsx2('model/ECOVAL.xlsx', sheetIndex = 1, header = FALSE, stringsAsFactors = FALSE)
   numsite <- 0
 
   observeEvent(input$redir1, {
@@ -50,6 +51,18 @@ shinyServer(function(input, output, session) {
     updateTabsetPanel(session, "tabs", selected = "propos")
   })
   
+  observeEvent(input$projectname, {
+    ecoval$General[1,2] <<- input$projectname
+  })
+  
+  observeEvent(input$projectcontext, {
+    ecoval$General[2,2] <<- input$projectcontext
+  })
+  
+  observeEvent(input$date, {
+    ecoval$General[3,2] <<- format(input$date)
+  })
+  
   output$viewsiteno <- renderText({ paste("<font color=\"#000000\"; size=\"+1\"><b>", "SITE NUMERO", "</b></font>", "<font color=\"#000000\"; size=\"+1\"><b>", input$selectsite, "</b></font>") })
   
   output$btn_telecharger <- downloadHandler(
@@ -61,7 +74,8 @@ shinyServer(function(input, output, session) {
         }
       },
       content = function(con) {
-        write.xlsx2(projectmodel1, con, sheetName = 'Caractéristiques projet', row.names = FALSE)
+        ecoval$General[4,2] <<- numsite
+        write.xlsx2(ecoval$General, con, sheetName = 'Général', row.names = FALSE, col.names = FALSE)
         #write.xlsx2(projectmodel2A, con, sheetName = 'Identification enjeux A', row.names = FALSE, append = TRUE)
       }
   )
