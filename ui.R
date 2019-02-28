@@ -48,15 +48,17 @@ shinyUI(fluidPage(title="ECOVAL",
                                        sidebarLayout(
                                          sidebarPanel(
                                            titlePanel(HTML('<h5><b>FICHIERS</b></h5>')),
-                                           fluidRow(column(9, align="left", fileInput("userfile", NULL, multiple = FALSE, accept = ".xlsx", buttonLabel = 'Importer', placeholder = '...')),
-                                                    column(3, align="left", downloadButton("btn_telecharger", "Exporter"))),
+                                           fluidRow(column(9, align="left", tags$div(title="Importe un fichier ECOVAL .xlsx", fileInput("userfile", NULL, multiple = FALSE, accept = ".xlsx", buttonLabel = 'Importer', placeholder = '...'))),
+                                                    column(3, align="left", tags$div(title="Télécharge le projet ECOVAL en cours",downloadButton("btn_telecharger", "Exporter")))),
                                            fluidRow(column(7, align="left", textInput("projectname", "TITRE", placeholder = "Titre du projet ECOVAL...")),
-                                                    column(5, align="left", dateInput("date", label = "DATE", format = "dd-mm-yyyy", value = Sys.Date()))),
+                                                    column(5, align="left", tags$div(title="Date de réalisation du projet", dateInput("date", label = "DATE", format = "dd-mm-yyyy", value = Sys.Date())))),
                                            textAreaInput("projectcontext", "CONTEXTE", height='300px', placeholder = "Décrire le contexte du projet ici..."), br(),
                                            selectInput("selectsite", label = "SITE ECOLOGIQUE", 
                                                        choices = list("-" = 0), 
                                                        selected = 0),
-                                           fluidRow(column(3, align="center", actionButton("new", "NOUVEAU")), column(3, align="center", actionButton("enr", "SAUVER")), column(3, align="center", actionButton("delete", "EFFACER")), column(3, align="center", actionButton("destroy", "DETRUIRE"))),
+                                           fluidRow(column(4, align="center", tags$div(title="Créer un nouveau site", actionButton("new", "NOUVEAU"))),
+                                                    column(4, align="center", tags$div(title="Effacer le contenu du site en cours", actionButton("delete", "EFFACER"))),
+                                                    column(4, align="center", tags$div(title="Supprime définitivement le site en cours", actionButton("destroy", "DETRUIRE")))),
                                            width = 3
                                          ),
                                          mainPanel(

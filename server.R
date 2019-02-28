@@ -77,12 +77,12 @@ shinyServer(function(input, output, session) {
         }
       },
       content = function(con) {
-        ecoval$General[4,2] <<- numsite
+        number <- length(listsite) - 1
+        ecoval$General[4,2] <<- number
         write.xlsx2(ecoval$General, con, sheetName = 'Général', row.names = FALSE, col.names = FALSE)
-        if(numsite > 0){
-          for(i in 1:numsite) write.xlsx2(ecoval[i+1], con, sheetName = names(ecoval)[i+1], row.names = FALSE, col.names = FALSE, append = TRUE)
+        if(number > 0){
+          for(i in 1:number) write.xlsx2(ecoval[[i+1]], con, sheetName = names(ecoval)[i+1], row.names = FALSE, col.names = FALSE, append = TRUE)
         }
-        #write.xlsx2(projectmodel2A, con, sheetName = 'Identification enjeux A', row.names = FALSE, append = TRUE)
       }
   )
   
@@ -214,6 +214,8 @@ shinyServer(function(input, output, session) {
     updateSelectInput(session, "selectsite", choices = listsite, selected = numsite)
     # create new DF
     ecoval[[newname]] <<- model_site
+    # clean window
+    cleanWindow()
   })
 
   observeEvent(input$destroy, {
@@ -226,27 +228,47 @@ shinyServer(function(input, output, session) {
     }
   })
 
-  # observeEvent(input$delete, {
-  #   newlist <- list("-" = 0)
-  #   numsite <<- numsite - 1
-  #   numsite <<- max(numsite, 0)
-  #   if(numsite > 0) for(i in 1:numsite) newlist[[paste("Site no.", as.character(i))]] <- i
-  #   updateSelectInput(session, "selectsite", choices = newlist, selected = (length(newlist) - 1))
-  # })
-  
   observeEvent(input$selectsite, {
-    if(as.integer(input$selectsite) == 0){
+    numero <- as.integer(input$selectsite)
+    lastcurrent <<- numero
+    if(numero == 0){
       hideTab(inputId = "prjtabs", target = "description")
       hideTab(inputId = "prjtabs", target = "enjeux")
     }else{
       showTab(inputId = "prjtabs", target = "description")
       showTab(inputId = "prjtabs", target = "enjeux")
+      name  <- paste("Site no.", as.character(numero))
+      if(exists(name, where = ecoval)){
+        if(ecoval[[name]][1,2] != "NA"){
+          updateTextInput(session, "sitename", value = ecoval[[name]][1,2])
+          updateSelectInput(session, "sitetype", selected = as.integer(ecoval[[name]][2,2]))
+          updateNumericInput(session, "surface", value = as.numeric(ecoval[[name]][3,2]))
+          updateNumericInput(session, "latitude", value = as.numeric(ecoval[[name]][4,2]))
+          updateNumericInput(session, "longitude", value = as.numeric(ecoval[[name]][5,2]))
+          updateTextAreaInput(session, "sitecontext", value = ecoval[[name]][6,2])
+          updateTextAreaInput(session, "descqual", value = ecoval[[name]][7,2])
+          updateTextAreaInput(session, "tempo", value = ecoval[[name]][8,2])
+          updateSelectInput(session, "duree", selected = as.integer(ecoval[[name]][9,2]))
+          updateSelectInput(session, "intensite", selected = as.integer(ecoval[[name]][10,2]))
+          updateSelectInput(session, "portee", selected = as.integer(ecoval[[name]][11,2]))
+        }
+      }
     }
   })
   
-  
-  observeEvent(input$enr, {
-    numero <- as.integer(input$selectsite)
+  observeEvent(input$sitename, {saveSite(as.integer(input$selectsite))})
+  observeEvent(input$sitetype, {saveSite(as.integer(input$selectsite))})
+  observeEvent(input$surface, {saveSite(as.integer(input$selectsite))})
+  observeEvent(input$latitude, {saveSite(as.integer(input$selectsite))})
+  observeEvent(input$longitude, {saveSite(as.integer(input$selectsite))})
+  observeEvent(input$sitecontext, {saveSite(as.integer(input$selectsite))})
+  observeEvent(input$descqual, {saveSite(as.integer(input$selectsite))})
+  observeEvent(input$tempo, {saveSite(as.integer(input$selectsite))})
+  observeEvent(input$duree, {saveSite(as.integer(input$selectsite))})
+  observeEvent(input$intensite, {saveSite(as.integer(input$selectsite))})
+  observeEvent(input$portee, {saveSite(as.integer(input$selectsite))})
+
+  saveSite <- function(numero){
     if(numero > 0){
       name <- paste("Site no.", as.character(numero))
       ecoval[[name]][1,2] <<- input$sitename
@@ -260,28 +282,26 @@ shinyServer(function(input, output, session) {
       ecoval[[name]][9,2] <<- input$duree
       ecoval[[name]][10,2] <<- input$intensite
       ecoval[[name]][11,2] <<- input$portee
-      showModal(modalDialog(
-        title = "Enregistrement",
-        paste("Les informations du", name, "sont sauvegardées!") 
-      ))
     }
-  })
+  }
 
+  cleanWindow <- function(){
+    updateTextInput(session, "sitename", value = "", placeholder = "Nom du site...")
+    updateSelectInput(session, "sitetype", selected = 1)
+    updateNumericInput(session, "surface", value = 0.)
+    updateNumericInput(session, "latitude", value = 0.)
+    updateNumericInput(session, "longitude", value = 0.)
+    updateTextAreaInput(session, "sitecontext", value = "", placeholder = "Décrire le contexte du site ici...")
+    updateTextAreaInput(session, "descqual", value = "", placeholder = "Nature, emprise, effets indirects...")
+    updateTextAreaInput(session, "tempo", value = "", placeholder = "Plusieurs phases? Court/long terme...")
+    updateSelectInput(session, "duree", selected = 1)
+    updateSelectInput(session, "intensite", selected = 1)
+    updateSelectInput(session, "portee", selected = 1)
+  }
+  
   observeEvent(input$delete, {
     numero <- as.integer(input$selectsite)
-    if(numero > 0){
-      updateTextInput(session, "sitename", value = "", placeholder = "Nom du site...")
-      updateSelectInput(session, "sitetype", selected = 1)
-      updateNumericInput(session, "surface", value = 0.)
-      updateNumericInput(session, "latitude", value = 0.)
-      updateNumericInput(session, "longitude", value = 0.)
-      updateTextAreaInput(session, "sitecontext", value = "", placeholder = "Décrire le contexte du site ici...")
-      updateTextAreaInput(session, "descqual", value = "", placeholder = "Nature, emprise, effets indirects...")
-      updateTextAreaInput(session, "tempo", value = "", placeholder = "Plusieurs phases? Court/long terme...")
-      updateSelectInput(session, "duree", selected = 1)
-      updateSelectInput(session, "intensite", selected = 1)
-      updateSelectInput(session, "portee", selected = 1)
-    }
+    if(numero > 0) cleanWindow()
   })
   
   # output$projectmap <- renderLeaflet({
