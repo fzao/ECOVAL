@@ -19,10 +19,13 @@
 shinyServer(function(input, output, session) {
 
   fileloaded <- ""
+  model_info_general <- read.xlsx2('model/ECOVAL.xlsx', sheetIndex = 1, header = FALSE, stringsAsFactors = FALSE)
+  model_site <- read.xlsx2('model/ECOVAL.xlsx', sheetIndex = 2, header = FALSE, stringsAsFactors = FALSE)
   ecoval <- list()
-  ecoval[["General"]] <- read.xlsx2('model/ECOVAL.xlsx', sheetIndex = 1, header = FALSE, stringsAsFactors = FALSE)
+  ecoval[["General"]] <- model_info_general
   numsite <- 0
-
+  listsite <- list("-" = 0)
+  
   observeEvent(input$redir1, {
     updateTabsetPanel(session, "tabs", selected = "projet")
   })
@@ -76,6 +79,9 @@ shinyServer(function(input, output, session) {
       content = function(con) {
         ecoval$General[4,2] <<- numsite
         write.xlsx2(ecoval$General, con, sheetName = 'Général', row.names = FALSE, col.names = FALSE)
+        if(numsite > 0){
+          for(i in 1:numsite) write.xlsx2(ecoval[i+1], con, sheetName = names(ecoval)[i+1], row.names = FALSE, col.names = FALSE, append = TRUE)
+        }
         #write.xlsx2(projectmodel2A, con, sheetName = 'Identification enjeux A', row.names = FALSE, append = TRUE)
       }
   )
@@ -202,19 +208,31 @@ shinyServer(function(input, output, session) {
   })
   
   observeEvent(input$new, {
-    newlist <- list("-" = 0)
     numsite <<- numsite + 1
-    for(i in 1:numsite) newlist[[paste("Site no.", as.character(i))]] <- i
-    updateSelectInput(session, "selectsite", choices = newlist, selected = (length(newlist) - 1))
+    newname <- paste("Site no.", as.character(numsite))
+    listsite[[newname]] <<- numsite
+    updateSelectInput(session, "selectsite", choices = listsite, selected = numsite)
+    # create new DF
+    ecoval[[newname]] <<- model_site
   })
 
-  observeEvent(input$delete, {
-    newlist <- list("-" = 0)
-    numsite <<- numsite - 1
-    numsite <<- max(numsite, 0)
-    if(numsite > 0) for(i in 1:numsite) newlist[[paste("Site no.", as.character(i))]] <- i
-    updateSelectInput(session, "selectsite", choices = newlist, selected = (length(newlist) - 1))
+  observeEvent(input$destroy, {
+    numero <- as.integer(input$selectsite)
+    if(numero > 0){
+      name <- paste("Site no.", as.character(numero))
+      listsite[[name]] <<- NULL
+      ecoval[[name]] <<- NULL
+      updateSelectInput(session, "selectsite", choices = listsite, selected = listsite[[length(listsite)]])
+    }
   })
+
+  # observeEvent(input$delete, {
+  #   newlist <- list("-" = 0)
+  #   numsite <<- numsite - 1
+  #   numsite <<- max(numsite, 0)
+  #   if(numsite > 0) for(i in 1:numsite) newlist[[paste("Site no.", as.character(i))]] <- i
+  #   updateSelectInput(session, "selectsite", choices = newlist, selected = (length(newlist) - 1))
+  # })
   
   observeEvent(input$selectsite, {
     if(as.integer(input$selectsite) == 0){
@@ -225,6 +243,47 @@ shinyServer(function(input, output, session) {
       showTab(inputId = "prjtabs", target = "enjeux")
     }
   })
+  
+  
+  observeEvent(input$enr, {
+    numero <- as.integer(input$selectsite)
+    if(numero > 0){
+      name <- paste("Site no.", as.character(numero))
+      ecoval[[name]][1,2] <<- input$sitename
+      ecoval[[name]][2,2] <<- input$sitetype
+      ecoval[[name]][3,2] <<- input$surface
+      ecoval[[name]][4,2] <<- input$latitude
+      ecoval[[name]][5,2] <<- input$longitude
+      ecoval[[name]][6,2] <<- input$sitecontext
+      ecoval[[name]][7,2] <<- input$descqual
+      ecoval[[name]][8,2] <<- input$tempo
+      ecoval[[name]][9,2] <<- input$duree
+      ecoval[[name]][10,2] <<- input$intensite
+      ecoval[[name]][11,2] <<- input$portee
+      showModal(modalDialog(
+        title = "Enregistrement",
+        paste("Les informations du", name, "sont sauvegardées!") 
+      ))
+    }
+  })
+
+  observeEvent(input$delete, {
+    numero <- as.integer(input$selectsite)
+    if(numero > 0){
+      updateTextInput(session, "sitename", value = "", placeholder = "Nom du site...")
+      updateSelectInput(session, "sitetype", selected = 1)
+      updateNumericInput(session, "surface", value = 0.)
+      updateNumericInput(session, "latitude", value = 0.)
+      updateNumericInput(session, "longitude", value = 0.)
+      updateTextAreaInput(session, "sitecontext", value = "", placeholder = "Décrire le contexte du site ici...")
+      updateTextAreaInput(session, "descqual", value = "", placeholder = "Nature, emprise, effets indirects...")
+      updateTextAreaInput(session, "tempo", value = "", placeholder = "Plusieurs phases? Court/long terme...")
+      updateSelectInput(session, "duree", selected = 1)
+      updateSelectInput(session, "intensite", selected = 1)
+      updateSelectInput(session, "portee", selected = 1)
+    }
+  })
+  
   # output$projectmap <- renderLeaflet({
   #   if(is.numeric(input$latitude) & is.numeric(input$longitude)){
   #     if(input$latitude != 0. | input$longitude !=0.){

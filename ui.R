@@ -53,10 +53,10 @@ shinyUI(fluidPage(title="ECOVAL",
                                            fluidRow(column(7, align="left", textInput("projectname", "TITRE", placeholder = "Titre du projet ECOVAL...")),
                                                     column(5, align="left", dateInput("date", label = "DATE", format = "dd-mm-yyyy", value = Sys.Date()))),
                                            textAreaInput("projectcontext", "CONTEXTE", height='300px', placeholder = "Décrire le contexte du projet ici..."), br(),
-                                           selectInput("selectsite", label = "NUMERO DU SITE", 
+                                           selectInput("selectsite", label = "SITE ECOLOGIQUE", 
                                                        choices = list("-" = 0), 
                                                        selected = 0),
-                                           fluidRow(column(6, align="center", actionButton("new", "NOUVEAU")), column(6, align="center", actionButton("delete", "EFFACER"))),
+                                           fluidRow(column(3, align="center", actionButton("new", "NOUVEAU")), column(3, align="center", actionButton("enr", "SAUVER")), column(3, align="center", actionButton("delete", "EFFACER")), column(3, align="center", actionButton("destroy", "DETRUIRE"))),
                                            width = 3
                                          ),
                                          mainPanel(
