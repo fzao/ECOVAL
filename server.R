@@ -26,7 +26,11 @@ shinyServer(function(input, output, session) {
   ecoval <- list()
   ecoval[["General"]] <- model_info_general
   numsite <- 0
+  numspecies <- 0
+  numhabitat <- 0
   listsite <- list("-" = 0)
+  listspecies <- list("-" = 0)
+  listhabitat <- list("-" = 0)
   
   observeEvent(input$redir1, {
     updateTabsetPanel(session, "tabs", selected = "projet")
@@ -69,6 +73,7 @@ shinyServer(function(input, output, session) {
   })
   
   output$viewsiteno <- renderText({ paste("<font color=\"#000000\"; size=\"+1\"><b>", "SITE NUMERO", "</b></font>", "<font color=\"#000000\"; size=\"+1\"><b>", input$selectsite, "</b></font>") })
+  output$enjeusiteno <- renderText({ paste("<font color=\"#000000\"; size=\"+1\"><b>", "ENJEUX DU SITE NUMERO", "</b></font>", "<font color=\"#000000\"; size=\"+1\"><b>", input$selectsite, "</b></font>") })
   
   output$btn_telecharger <- downloadHandler(
       filename = function() {
@@ -235,7 +240,6 @@ shinyServer(function(input, output, session) {
 
   observeEvent(input$selectsite, {
     numero <- as.integer(input$selectsite)
-    lastcurrent <<- numero
     if(numero == 0){
       hideTab(inputId = "prjtabs", target = "description")
       hideTab(inputId = "prjtabs", target = "identification")
@@ -304,18 +308,148 @@ shinyServer(function(input, output, session) {
     updateSelectInput(session, "portee", selected = 1)
   }
   
+  cleanSpecies <- function(){
+    updateTextInput(session, "latinnamespecies", value = "")
+    updateTextInput(session, "frenchnamespecies", value = "")
+    updateSelectInput(session, "typespecies", selected = 1)
+    updateTextAreaInput(session, "justifyspecies", value = "")
+    updateSelectInput(session, "presencespecies", selected = 1)
+  }
+  
+  cleanHabitat <- function(){
+    updateTextInput(session, "namehabitat", value = "")
+    updateTextInput(session, "codecorinehabitat", value = "")
+    updateTextInput(session, "codeeunishabitat", value = "")
+    updateSelectInput(session, "typehabitat", selected = 1)
+    updateTextAreaInput(session, "justifyhabitat", value = "")
+    updateSelectInput(session, "presencehabitat", selected = 1)
+  }
+  
   observeEvent(input$delete, {
     numero <- as.integer(input$selectsite)
     if(numero > 0) cleanWindow()
   })
   
-  # observeEvent(input$hide, {
-  #   shinyjs::hide("newspecies")
-  # })
-  # 
-  # observeEvent(input$show, {
-  #   shinyjs::show("newspecies")
-  # })
+  observeEvent(input$newspecies, {
+    numspecies <<- numspecies + 1
+    newname <- paste("Espece", as.character(numspecies))
+    listspecies[[newname]] <<- numspecies
+    updateSelectInput(session, "selectspecies", choices = listspecies, selected = numspecies)
+    # create new DF
+    ##cfz ecoval[[newname]] <<- model_site
+    # clean window
+    ##cfz cleanWindow()
+  })
+  
+  observeEvent(input$deletespecies, {
+    numero <- as.integer(input$deletespecies)
+    if(numero > 0) cleanSpecies()
+  })
+  
+  observeEvent(input$destroyspecies, {
+    numero <- as.integer(input$selectspecies)
+    if(numero > 0){
+      name <- paste("Espece", as.character(numero))
+      listspecies[[name]] <<- NULL
+      ##cfz ecoval[[name]] <<- NULL
+      updateSelectInput(session, "selectspecies", choices = listspecies, selected = listspecies[[length(listspecies)]])
+    }
+  })
+  
+  observeEvent(input$selectspecies, {
+    numero <- as.integer(input$selectspecies)
+    if(numero == 0){
+      shinyjs::hide("latinnamespecies")
+      shinyjs::hide("frenchnamespecies")
+      shinyjs::hide("typespecies")
+      shinyjs::hide("justifyspecies")
+      shinyjs::hide("presencespecies")
+    }else{
+      shinyjs::show("latinnamespecies")
+      shinyjs::show("frenchnamespecies")
+      shinyjs::show("typespecies")
+      shinyjs::show("justifyspecies")
+      shinyjs::show("presencespecies")
+      #cfz name  <- paste("Site no.", as.character(numero))
+      # if(exists(name, where = ecoval)){
+      #   if(ecoval[[name]][1,2] != "NA"){
+      #     updateTextInput(session, "sitename", value = ecoval[[name]][1,2])
+      #     updateSelectInput(session, "sitetype", selected = as.integer(ecoval[[name]][2,2]))
+      #     updateNumericInput(session, "surface", value = as.numeric(ecoval[[name]][3,2]))
+      #     updateNumericInput(session, "latitude", value = as.numeric(ecoval[[name]][4,2]))
+      #     updateNumericInput(session, "longitude", value = as.numeric(ecoval[[name]][5,2]))
+      #     updateTextAreaInput(session, "sitecontext", value = ecoval[[name]][6,2])
+      #     updateTextAreaInput(session, "descqual", value = ecoval[[name]][7,2])
+      #     updateTextAreaInput(session, "tempo", value = ecoval[[name]][8,2])
+      #     updateSelectInput(session, "duree", selected = as.integer(ecoval[[name]][9,2]))
+      #     updateSelectInput(session, "intensite", selected = as.integer(ecoval[[name]][10,2]))
+      #     updateSelectInput(session, "portee", selected = as.integer(ecoval[[name]][11,2]))
+      #   }
+      # }
+    }
+  })
+  
+  
+  observeEvent(input$newhabitat, {
+    numhabitat <<- numhabitat + 1
+    newname <- paste("Habitat", as.character(numhabitat))
+    listhabitat[[newname]] <<- numhabitat
+    updateSelectInput(session, "selecthabitat", choices = listhabitat, selected = numhabitat)
+    # create new DF
+    ##cfz ecoval[[newname]] <<- model_site
+    # clean window
+    ##cfz cleanWindow()
+  })
+
+  observeEvent(input$deletehabitat, {
+    numero <- as.integer(input$deletehabitat)
+    if(numero > 0) cleanHabitat()
+  })
+    
+  observeEvent(input$destroyhabitat, {
+    numero <- as.integer(input$selecthabitat)
+    if(numero > 0){
+      name <- paste("Habitat", as.character(numero))
+      listhabitat[[name]] <<- NULL
+      ##cfz ecoval[[name]] <<- NULL
+      updateSelectInput(session, "selecthabitat", choices = listhabitat, selected = listhabitat[[length(listhabitat)]])
+    }
+  })
+  
+  observeEvent(input$selecthabitat, {
+    numero <- as.integer(input$selecthabitat)
+    if(numero == 0){
+      shinyjs::hide("namehabitat")
+      shinyjs::hide("codecorinehabitat")
+      shinyjs::hide("codeeunishabitat")
+      shinyjs::hide("typehabitat")
+      shinyjs::hide("justifyhabitat")
+      shinyjs::hide("presencehabitat")
+    }else{
+      shinyjs::show("namehabitat")
+      shinyjs::show("codecorinehabitat")
+      shinyjs::show("codeeunishabitat")
+      shinyjs::show("typehabitat")
+      shinyjs::show("justifyhabitat")
+      shinyjs::show("presencehabitat")
+      #cfz name  <- paste("Site no.", as.character(numero))
+      # if(exists(name, where = ecoval)){
+      #   if(ecoval[[name]][1,2] != "NA"){
+      #     updateTextInput(session, "sitename", value = ecoval[[name]][1,2])
+      #     updateSelectInput(session, "sitetype", selected = as.integer(ecoval[[name]][2,2]))
+      #     updateNumericInput(session, "surface", value = as.numeric(ecoval[[name]][3,2]))
+      #     updateNumericInput(session, "latitude", value = as.numeric(ecoval[[name]][4,2]))
+      #     updateNumericInput(session, "longitude", value = as.numeric(ecoval[[name]][5,2]))
+      #     updateTextAreaInput(session, "sitecontext", value = ecoval[[name]][6,2])
+      #     updateTextAreaInput(session, "descqual", value = ecoval[[name]][7,2])
+      #     updateTextAreaInput(session, "tempo", value = ecoval[[name]][8,2])
+      #     updateSelectInput(session, "duree", selected = as.integer(ecoval[[name]][9,2]))
+      #     updateSelectInput(session, "intensite", selected = as.integer(ecoval[[name]][10,2]))
+      #     updateSelectInput(session, "portee", selected = as.integer(ecoval[[name]][11,2]))
+      #   }
+      # }
+    }
+  })
   
   # output$projectmap <- renderLeaflet({
   #   if(is.numeric(input$latitude) & is.numeric(input$longitude)){

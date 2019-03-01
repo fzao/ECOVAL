@@ -59,7 +59,7 @@ shinyUI(fluidPage(title="ECOVAL",
                                                        choices = list("-" = 0), 
                                                        selected = 0),
                                            fluidRow(column(4, align="center", tags$div(title="Créer un nouveau site", actionButton("new", "AJOUTER"))),
-                                                    column(4, align="center", tags$div(title="Effacer le contenu du site en cours", actionButton("delete", "EFFACER"))),
+                                                    column(4, align="center", tags$div(title="Effacer la description du site en cours", actionButton("delete", "EFFACER"))),
                                                     column(4, align="center", tags$div(title="Supprime définitivement le site en cours", actionButton("destroy", "ENLEVER")))),
                                            width = 3
                                          ),
@@ -88,31 +88,30 @@ shinyUI(fluidPage(title="ECOVAL",
                                                                    ))
                                              ),
                                              tabPanel(HTML('<h4 style="color: #005BBB; ">Identification</h4>'), value="identification", br(),
-                                                      fluidRow(column(12, align="center", HTML('<h4 style="color: #000000; "><b>ENJEUX</b></h4>'))),
+                                                      fluidRow(column(12, align="center", htmlOutput("enjeusiteno", inline = TRUE))),
                                                       fluidRow(column(6, align="center", HTML('<h4 style="color: #878F99; "><b>ESPECES</b></h4>')), column(6, align="center", HTML('<h4 style="color: #878F99; "><b>HABITATS</b></h4>'))),
                                                       fluidPage(
                                                         column(6, align="center",
-                                                               selectInput("species", label = NULL, 
+                                                               selectInput("selectspecies", label = NULL, 
                                                                            choices = list("-" = 0), 
                                                                            selected = 0),
                                                                fluidRow(column(4, align="right", tags$div(title="Créer une nouvelle espèce", actionButton("newspecies", "AJOUTER"))),
                                                                         column(4, align="center", tags$div(title="Effacer le contenu de l'espèce en cours", actionButton("deletespecies", "EFFACER"))),
                                                                         column(4, align="left", tags$div(title="Supprime définitivement l'espèce en cours", actionButton("destroyspecies", "ENLEVER")))), br(), br(),
                                                                fluidPage(column(6, align="center", textInput("latinnamespecies", "Nom Latin"), br(), textInput("frenchnamespecies", "Nom Français"), br(), selectInput("typespecies", label = "Type", choices = list("avifaune" = 1, "chiroptère" = 2, "mammifère" = 3, "amphibien" = 4, "reptile" = 5, "insecte" = 6, "flore" = 7, "poisson" = 8, "crustacé/mollusque" = 9, "communauté faunistique" = 10))),
-                                                                         column(6, align="center", textAreaInput("justifyspecies", label = "Justification"), br(), selectInput("presencespecies", label = "Présence sur site impacté", choices = list("oui" = 1, "non" = 2)))
+                                                                         column(6, align="center", textAreaInput("justifyspecies", label = "Justification de l'enjeu"), br(), selectInput("presencespecies", label = "Présence sur site impacté", choices = list("oui" = 1, "non" = 2)))
                                                                )),
                                                         column(6, align="center",
-                                                               selectInput("habitat", label = NULL, 
+                                                               selectInput("selecthabitat", label = NULL, 
                                                                            choices = list("-" = 0), 
                                                                            selected = 0),
-                                                               fluidRow(column(4, align="right", tags$div(title="Créer un nouvel habitat", actionButton("newspecies", "AJOUTER"))),
+                                                               fluidRow(column(4, align="right", tags$div(title="Créer un nouvel habitat", actionButton("newhabitat", "AJOUTER"))),
                                                                         column(4, align="center", tags$div(title="Effacer le contenu de l'habitat en cours", actionButton("deletehabitat", "EFFACER"))),
                                                                         column(4, align="left", tags$div(title="Supprime définitivement l'habitat en cours", actionButton("destroyhabitat", "ENLEVER")))), br(), br(),
                                                                fluidPage(column(6, align="center", textInput("namehabitat", "Nom"), br(), textInput("codecorinehabitat", "Code Corine"), br(), textInput("codeeunishabitat", "Code Eunis"), br(), selectInput("typehabitat", label = "Type", choices = list("fermé" = 1, "ouvert" = 2, "buissonnant" = 3, "zone humide" = 4, "aquatique" = 5, "rocheux" = 6, "cultivé" = 7, "imperméabilisé" = 8))),
                                                                          column(6, align="center", textAreaInput("justifyhabitat", label = "Justification de l'enjeu"), br(), selectInput("presencehabitat", label = "Présence sur site impacté", choices = list("oui" = 1, "non" = 2)))
                                                                ))
                                                       )
-
                                              )
                                            ),
                                            width = 9)
