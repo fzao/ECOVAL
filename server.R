@@ -84,11 +84,16 @@ shinyServer(function(input, output, session) {
         }
       },
       content = function(con) {
-        number <- length(listsite) - 1
-        ecoval$General[4,2] <<- number
+        nbsite <- length(listsite) - 1
+        nbspecies <- length(listspecies) - 1
+        ecoval$General[4,2] <<- nbsite
+        ecoval$General[5,2] <<- nbspecies
         write.xlsx2(ecoval$General, con, sheetName = 'Général', row.names = FALSE, col.names = FALSE)
-        if(number > 0){
-          for(i in 1:number) write.xlsx2(ecoval[[i+1]], con, sheetName = names(ecoval)[i+1], row.names = FALSE, col.names = FALSE, append = TRUE)
+        if(nbsite > 0){
+          for(i in 1:nbsite) write.xlsx2(ecoval[[i+1]], con, sheetName = names(ecoval)[i+1], row.names = FALSE, col.names = FALSE, append = TRUE)
+          if(nbspecies > 0){
+            for(i in 1:nbspecies) write.xlsx2(ecoval[[nbsite+i+1]], con, sheetName = names(ecoval)[nbsite+i+1], row.names = FALSE, col.names = FALSE, append = TRUE)
+          }
         }
       }
   )
@@ -336,9 +341,9 @@ shinyServer(function(input, output, session) {
     listspecies[[newname]] <<- numspecies
     updateSelectInput(session, "selectspecies", choices = listspecies, selected = numspecies)
     # create new DF
-    ##cfz ecoval[[newname]] <<- model_site
-    # clean window
-    ##cfz cleanWindow()
+    ecoval[[newname]] <<- model_species
+    # clean species
+    cleanSpecies()
   })
   
   observeEvent(input$deletespecies, {
@@ -351,7 +356,7 @@ shinyServer(function(input, output, session) {
     if(numero > 0){
       name <- paste("Espece", as.character(numero))
       listspecies[[name]] <<- NULL
-      ##cfz ecoval[[name]] <<- NULL
+      ecoval[[name]] <<- NULL
       updateSelectInput(session, "selectspecies", choices = listspecies, selected = listspecies[[length(listspecies)]])
     }
   })
@@ -370,26 +375,36 @@ shinyServer(function(input, output, session) {
       shinyjs::show("typespecies")
       shinyjs::show("justifyspecies")
       shinyjs::show("presencespecies")
-      #cfz name  <- paste("Site no.", as.character(numero))
-      # if(exists(name, where = ecoval)){
-      #   if(ecoval[[name]][1,2] != "NA"){
-      #     updateTextInput(session, "sitename", value = ecoval[[name]][1,2])
-      #     updateSelectInput(session, "sitetype", selected = as.integer(ecoval[[name]][2,2]))
-      #     updateNumericInput(session, "surface", value = as.numeric(ecoval[[name]][3,2]))
-      #     updateNumericInput(session, "latitude", value = as.numeric(ecoval[[name]][4,2]))
-      #     updateNumericInput(session, "longitude", value = as.numeric(ecoval[[name]][5,2]))
-      #     updateTextAreaInput(session, "sitecontext", value = ecoval[[name]][6,2])
-      #     updateTextAreaInput(session, "descqual", value = ecoval[[name]][7,2])
-      #     updateTextAreaInput(session, "tempo", value = ecoval[[name]][8,2])
-      #     updateSelectInput(session, "duree", selected = as.integer(ecoval[[name]][9,2]))
-      #     updateSelectInput(session, "intensite", selected = as.integer(ecoval[[name]][10,2]))
-      #     updateSelectInput(session, "portee", selected = as.integer(ecoval[[name]][11,2]))
-      #   }
-      # }
+      name  <- paste("Espece", as.character(numero))
+      if(exists(name, where = ecoval)){
+        if(ecoval[[name]][1,2] != "NA"){
+          updateTextInput(session, "latinnamespecies", value = ecoval[[name]][1,2])
+          updateTextInput(session, "frenchnamespecies", value = ecoval[[name]][2,2])
+          updateSelectInput(session, "typespecies", selected = as.integer(ecoval[[name]][3,2]))
+          updateTextAreaInput(session, "justifyspecies", value = ecoval[[name]][4,2])
+          updateSelectInput(session, "presencespecies", selected = as.integer(ecoval[[name]][5,2]))
+        }
+      }
     }
   })
   
-  
+  observeEvent(input$latinnamespecies, {saveSpecies(as.integer(input$selectspecies))})
+  observeEvent(input$frenchnamespecies, {saveSpecies(as.integer(input$selectspecies))})
+  observeEvent(input$typespecies, {saveSpecies(as.integer(input$selectspecies))})
+  observeEvent(input$justifyspecies, {saveSpecies(as.integer(input$selectspecies))})
+  observeEvent(input$presencespecies, {saveSpecies(as.integer(input$selectspecies))})
+
+  saveSpecies <- function(numero){
+    if(numero > 0){
+      name <- paste("Espece", as.character(numero))
+      ecoval[[name]][1,2] <<- input$latinnamespecies
+      ecoval[[name]][2,2] <<- input$frenchnamespecies
+      ecoval[[name]][3,2] <<- input$typespecies
+      ecoval[[name]][4,2] <<- input$justifyspecies
+      ecoval[[name]][5,2] <<- input$presencespecies
+    }
+  }
+
   observeEvent(input$newhabitat, {
     numhabitat <<- numhabitat + 1
     newname <- paste("Habitat", as.character(numhabitat))
