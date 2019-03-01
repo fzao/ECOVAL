@@ -21,6 +21,8 @@ shinyServer(function(input, output, session) {
   fileloaded <- ""
   model_info_general <- read.xlsx2('model/ECOVAL.xlsx', sheetIndex = 1, header = FALSE, stringsAsFactors = FALSE)
   model_site <- read.xlsx2('model/ECOVAL.xlsx', sheetIndex = 2, header = FALSE, stringsAsFactors = FALSE)
+  model_species <- read.xlsx2('model/ECOVAL.xlsx', sheetIndex = 3, header = FALSE, stringsAsFactors = FALSE)
+  model_habitat <- read.xlsx2('model/ECOVAL.xlsx', sheetIndex = 4, header = FALSE, stringsAsFactors = FALSE)
   ecoval <- list()
   ecoval[["General"]] <- model_info_general
   numsite <- 0
@@ -236,10 +238,10 @@ shinyServer(function(input, output, session) {
     lastcurrent <<- numero
     if(numero == 0){
       hideTab(inputId = "prjtabs", target = "description")
-      hideTab(inputId = "prjtabs", target = "enjeux")
+      hideTab(inputId = "prjtabs", target = "identification")
     }else{
       showTab(inputId = "prjtabs", target = "description")
-      showTab(inputId = "prjtabs", target = "enjeux")
+      showTab(inputId = "prjtabs", target = "identification")
       name  <- paste("Site no.", as.character(numero))
       if(exists(name, where = ecoval)){
         if(ecoval[[name]][1,2] != "NA"){
@@ -306,6 +308,14 @@ shinyServer(function(input, output, session) {
     numero <- as.integer(input$selectsite)
     if(numero > 0) cleanWindow()
   })
+  
+  # observeEvent(input$hide, {
+  #   shinyjs::hide("newspecies")
+  # })
+  # 
+  # observeEvent(input$show, {
+  #   shinyjs::show("newspecies")
+  # })
   
   # output$projectmap <- renderLeaflet({
   #   if(is.numeric(input$latitude) & is.numeric(input$longitude)){
