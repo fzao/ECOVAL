@@ -86,14 +86,24 @@ shinyServer(function(input, output, session) {
       content = function(con) {
         nbsite <- length(listsite) - 1
         nbspecies <- length(listspecies) - 1
+        nbhabitats <- length(listhabitat) - 1
         ecoval$General[4,2] <<- nbsite
         ecoval$General[5,2] <<- nbspecies
+        ecoval$General[6,2] <<- nbhabitats
         write.xlsx2(ecoval$General, con, sheetName = 'Général', row.names = FALSE, col.names = FALSE)
         if(nbsite > 0){
-          for(i in 1:nbsite) write.xlsx2(ecoval[[i+1]], con, sheetName = names(ecoval)[i+1], row.names = FALSE, col.names = FALSE, append = TRUE)
-          if(nbspecies > 0){
-            for(i in 1:nbspecies) write.xlsx2(ecoval[[nbsite+i+1]], con, sheetName = names(ecoval)[nbsite+i+1], row.names = FALSE, col.names = FALSE, append = TRUE)
+          for(i in 1:nbsite){
+            write.xlsx2(ecoval[[i+1]], con, sheetName = paste("Site no.", as.character(i)), row.names = FALSE, col.names = FALSE, append = TRUE)
+            # write.xlsx2(ecoval[[i+1]], con, sheetName = names(ecoval)[i+1], row.names = FALSE, col.names = FALSE, append = TRUE)
           }
+          if(nbspecies > 0){
+            for(i in 1:nbspecies){
+              write.xlsx2(ecoval[[nbsite+i+1]], con, sheetName = paste("Espece", as.character(i)), row.names = FALSE, col.names = FALSE, append = TRUE)
+            } #write.xlsx2(ecoval[[nbsite+i+1]], con, sheetName = names(ecoval)[nbsite+i+1], row.names = FALSE, col.names = FALSE, append = TRUE)
+          }
+          # if(nbhabitats > 0){
+          #   for(i in 1:nbhabitats) write.xlsx2(ecoval[[nbsite+nbspecies+i+1]], con, sheetName = names(ecoval)[nbsite+nbspecies+i+1], row.names = FALSE, col.names = FALSE, append = TRUE)
+          # }
         }
       }
   )
@@ -109,9 +119,16 @@ shinyServer(function(input, output, session) {
     if(numsite > 0) for(i in 1:numsite){
       name <- paste("Site no.", as.character(i))
       listsite[[name]] <<- i
-      ecoval[[name]] <<- read.xlsx2(inFile$datapath, sheetIndex = i+1, header = FALSE, stringsAsFactors = FALSE)
+      ecoval[[name]] <<- read.xlsx2(inFile$datapath, sheetName = name, header = FALSE, stringsAsFactors = FALSE)
+    }
+    numspecies <<- as.integer(ecoval$General[5,2])
+    if(numspecies > 0) for(i in 1:numspecies){
+      name <- paste("Espece", as.character(i))
+      listspecies[[name]] <<- i
+      ecoval[[name]] <<- read.xlsx2(inFile$datapath, sheetName = name, header = FALSE, stringsAsFactors = FALSE)
     }
     updateSelectInput(session, "selectsite", choices = listsite, selected = listsite[[length(listsite)]])
+    updateSelectInput(session, "selectspecies", choices = listspecies, selected = listspecies[[length(listspecies)]])
   })
   
   observeEvent(input$link1, {
@@ -227,8 +244,10 @@ shinyServer(function(input, output, session) {
     newname <- paste("Site no.", as.character(numsite))
     listsite[[newname]] <<- numsite
     updateSelectInput(session, "selectsite", choices = listsite, selected = numsite)
+    updateSelectInput(session, "selectspecies", choices = list("-" = 0), selected = 0)
     # create new DF
     ecoval[[newname]] <<- model_site
+    ecoval[[newname]][12,2] <<- as.integer(Sys.time()) # unique ID
     # clean window
     cleanWindow()
   })
@@ -237,6 +256,21 @@ shinyServer(function(input, output, session) {
     numero <- as.integer(input$selectsite)
     if(numero > 0){
       name <- paste("Site no.", as.character(numero))
+      # destroy species
+      if(numspecies > 0){
+        for(i in 1:numspecies){
+          spname <- paste("Espece", as.character(i))
+          if(exists(spname, where = ecoval)){
+            if(ecoval[[spname]][6,2] == ecoval[[name]][12,2]){
+              listspecies[[spname]] <<- NULL
+              ecoval[[spname]] <<- NULL
+            }
+          }
+        }
+      }
+      # destroy habitat
+      
+      # destroy site
       listsite[[name]] <<- NULL
       ecoval[[name]] <<- NULL
       updateSelectInput(session, "selectsite", choices = listsite, selected = listsite[[length(listsite)]])
@@ -266,8 +300,9 @@ shinyServer(function(input, output, session) {
           updateSelectInput(session, "intensite", selected = as.integer(ecoval[[name]][10,2]))
           updateSelectInput(session, "portee", selected = as.integer(ecoval[[name]][11,2]))
         }
+        updateListSpecies(name)       
+        }
       }
-    }
   })
   
   observeEvent(input$sitename, {saveSite(as.integer(input$selectsite))})
@@ -330,6 +365,21 @@ shinyServer(function(input, output, session) {
     updateSelectInput(session, "presencehabitat", selected = 1)
   }
   
+  updateListSpecies <- function(name){
+    partialistspecies <- list("-" = 0)
+    if(numspecies > 0){
+      for(i in 1:numspecies){
+        spname <- paste("Espece", as.character(i))
+        if(exists(spname, where = ecoval)){
+          if(ecoval[[spname]][6,2] == ecoval[[name]][12,2]){
+            partialistspecies[[spname]] <- i
+          }
+        }
+      }
+      updateSelectInput(session, "selectspecies", choices = partialistspecies, selected = partialistspecies[[length(partialistspecies)]])  
+    }
+  }
+  
   observeEvent(input$delete, {
     numero <- as.integer(input$selectsite)
     if(numero > 0) cleanWindow()
@@ -342,8 +392,12 @@ shinyServer(function(input, output, session) {
     updateSelectInput(session, "selectspecies", choices = listspecies, selected = numspecies)
     # create new DF
     ecoval[[newname]] <<- model_species
+    # add site info
+    ecoval[[newname]][6,2] <<- ecoval[[paste("Site no.", input$selectsite)]][12,2]
     # clean species
     cleanSpecies()
+    # update list
+    updateListSpecies(paste("Site no.", input$selectsite)) 
   })
   
   observeEvent(input$deletespecies, {
@@ -357,7 +411,7 @@ shinyServer(function(input, output, session) {
       name <- paste("Espece", as.character(numero))
       listspecies[[name]] <<- NULL
       ecoval[[name]] <<- NULL
-      updateSelectInput(session, "selectspecies", choices = listspecies, selected = listspecies[[length(listspecies)]])
+      updateListSpecies(paste("Site no.", input$selectsite)) 
     }
   })
   
