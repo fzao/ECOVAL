@@ -136,8 +136,15 @@ shinyServer(function(input, output, session) {
       listspecies[[name]] <<- i
       ecoval[[name]] <<- read.xlsx2(inFile$datapath, sheetName = name, header = FALSE, stringsAsFactors = FALSE)
     }
+    numhabitat <<- as.integer(ecoval$General[6,2])
+    if(numhabitat > 0) for(i in 1:numhabitat){
+      name <- paste("Habitat", as.character(i))
+      listhabitat[[name]] <<- i
+      ecoval[[name]] <<- read.xlsx2(inFile$datapath, sheetName = name, header = FALSE, stringsAsFactors = FALSE)
+    }
     updateSelectInput(session, "selectsite", choices = listsite, selected = listsite[[length(listsite)]])
     updateSelectInput(session, "selectspecies", choices = listspecies, selected = listspecies[[length(listspecies)]])
+    updateSelectInput(session, "selecthabitat", choices = listhabitat, selected = listhabitat[[length(listhabitat)]])
   })
   
   observeEvent(input$link1, {
@@ -254,6 +261,7 @@ shinyServer(function(input, output, session) {
     listsite[[newname]] <<- numsite
     updateSelectInput(session, "selectsite", choices = listsite, selected = numsite)
     updateSelectInput(session, "selectspecies", choices = list("-" = 0), selected = 0)
+    updateSelectInput(session, "selecthabitat", choices = list("-" = 0), selected = 0)
     # create new DF
     ecoval[[newname]] <<- model_site
     ecoval[[newname]][12,2] <<- as.integer(Sys.time()) # unique ID
@@ -278,7 +286,17 @@ shinyServer(function(input, output, session) {
         }
       }
       # destroy habitat
-      
+      if(numhabitat > 0){
+        for(i in 1:numhabitat){
+          hname <- paste("Habitat", as.character(i))
+          if(exists(hname, where = ecoval)){
+            if(ecoval[[hname]][7,2] == ecoval[[name]][12,2]){
+              listhabitat[[hname]] <<- NULL
+              ecoval[[hname]] <<- NULL
+            }
+          }
+        }
+      }
       # destroy site
       listsite[[name]] <<- NULL
       ecoval[[name]] <<- NULL
@@ -309,7 +327,8 @@ shinyServer(function(input, output, session) {
           updateSelectInput(session, "intensite", selected = as.integer(ecoval[[name]][10,2]))
           updateSelectInput(session, "portee", selected = as.integer(ecoval[[name]][11,2]))
         }
-        updateListSpecies(name)       
+        updateListSpecies(name)
+        updateListHabitat(name)
         }
       }
   })
@@ -386,6 +405,21 @@ shinyServer(function(input, output, session) {
         }
       }
       updateSelectInput(session, "selectspecies", choices = partialistspecies, selected = partialistspecies[[length(partialistspecies)]])  
+    }
+  }
+  
+  updateListHabitat <- function(name){
+    partialisthabitat <- list("-" = 0)
+    if(numhabitat > 0){
+      for(i in 1:numhabitat){
+        hname <- paste("Habitat", as.character(i))
+        if(exists(hname, where = ecoval)){
+          if(ecoval[[hname]][7,2] == ecoval[[name]][12,2]){
+            partialisthabitat[[hname]] <- i
+          }
+        }
+      }
+      updateSelectInput(session, "selecthabitat", choices = partialisthabitat, selected = partialisthabitat[[length(partialisthabitat)]])  
     }
   }
   
@@ -474,9 +508,13 @@ shinyServer(function(input, output, session) {
     listhabitat[[newname]] <<- numhabitat
     updateSelectInput(session, "selecthabitat", choices = listhabitat, selected = numhabitat)
     # create new DF
-    ##cfz ecoval[[newname]] <<- model_site
-    # clean window
-    ##cfz cleanWindow()
+    ecoval[[newname]] <<- model_habitat
+    # add site info
+    ecoval[[newname]][7,2] <<- ecoval[[paste("Site no.", input$selectsite)]][12,2]
+    # clean habitat
+    cleanHabitat()
+    # update list
+    updateListHabitat(paste("Site no.", input$selectsite))
   })
 
   observeEvent(input$deletehabitat, {
@@ -489,8 +527,8 @@ shinyServer(function(input, output, session) {
     if(numero > 0){
       name <- paste("Habitat", as.character(numero))
       listhabitat[[name]] <<- NULL
-      ##cfz ecoval[[name]] <<- NULL
-      updateSelectInput(session, "selecthabitat", choices = listhabitat, selected = listhabitat[[length(listhabitat)]])
+      ecoval[[name]] <<- NULL
+      updateListHabitat(paste("Site no.", input$selectsite)) 
     }
   })
   
@@ -510,24 +548,39 @@ shinyServer(function(input, output, session) {
       shinyjs::show("typehabitat")
       shinyjs::show("justifyhabitat")
       shinyjs::show("presencehabitat")
-      #cfz name  <- paste("Site no.", as.character(numero))
-      # if(exists(name, where = ecoval)){
-      #   if(ecoval[[name]][1,2] != "NA"){
-      #     updateTextInput(session, "sitename", value = ecoval[[name]][1,2])
-      #     updateSelectInput(session, "sitetype", selected = as.integer(ecoval[[name]][2,2]))
-      #     updateNumericInput(session, "surface", value = as.numeric(ecoval[[name]][3,2]))
-      #     updateNumericInput(session, "latitude", value = as.numeric(ecoval[[name]][4,2]))
-      #     updateNumericInput(session, "longitude", value = as.numeric(ecoval[[name]][5,2]))
-      #     updateTextAreaInput(session, "sitecontext", value = ecoval[[name]][6,2])
-      #     updateTextAreaInput(session, "descqual", value = ecoval[[name]][7,2])
-      #     updateTextAreaInput(session, "tempo", value = ecoval[[name]][8,2])
-      #     updateSelectInput(session, "duree", selected = as.integer(ecoval[[name]][9,2]))
-      #     updateSelectInput(session, "intensite", selected = as.integer(ecoval[[name]][10,2]))
-      #     updateSelectInput(session, "portee", selected = as.integer(ecoval[[name]][11,2]))
-      #   }
-      # }
+      name  <- paste("Habitat", as.character(numero))
+      if(exists(name, where = ecoval)){
+         if(ecoval[[name]][1,2] != "NA"){
+           updateTextInput(session, "namehabitat", value = ecoval[[name]][1,2])
+           updateTextInput(session, "codecorinehabitat", value = ecoval[[name]][2,2])
+           updateTextInput(session, "codeeunishabitat", value = ecoval[[name]][3,2])
+           updateSelectInput(session, "typehabitat", selected = as.integer(ecoval[[name]][4,2]))
+           updateTextAreaInput(session, "justifyhabitat", value = ecoval[[name]][5,2])
+           updateSelectInput(session, "presencehabitat", selected = as.integer(ecoval[[name]][6,2]))
+         }
+      }
     }
   })
+  
+  observeEvent(input$namehabitat, {saveHabitat(as.integer(input$selecthabitat))})
+  observeEvent(input$codecorinehabitat, {saveHabitat(as.integer(input$selecthabitat))})
+  observeEvent(input$codeeunishabitat, {saveHabitat(as.integer(input$selecthabitat))})
+  observeEvent(input$typehabitat, {saveHabitat(as.integer(input$selecthabitat))})
+  observeEvent(input$justifyhabitat, {saveHabitat(as.integer(input$selecthabitat))})
+  observeEvent(input$presencehabitat, {saveHabitat(as.integer(input$selecthabitat))})
+  
+  
+  saveHabitat <- function(numero){
+    if(numero > 0){
+      name <- paste("Habitat", as.character(numero))
+      ecoval[[name]][1,2] <<- input$namehabitat
+      ecoval[[name]][2,2] <<- input$codecorinehabitat
+      ecoval[[name]][3,2] <<- input$codeeunishabitat
+      ecoval[[name]][4,2] <<- input$typehabitat
+      ecoval[[name]][5,2] <<- input$justifyhabitat
+      ecoval[[name]][6,2] <<- input$presencehabitat
+    }
+  }
   
   # output$projectmap <- renderLeaflet({
   #   if(is.numeric(input$latitude) & is.numeric(input$longitude)){
