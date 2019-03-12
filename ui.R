@@ -6,7 +6,7 @@
 #  | |___| |___| |__| | \  / ____ \| |____ 
 #  |______\_____\____/   \/_/    \_\______|
 #
-# Cadre méthodologique pour le calcul de l\'équivalence écologique dans le contexte de la séquence ERC en France
+# Cadre methodologique pour le calcul de l'equivalence ecologique dans le contexte de la sequence ERC en France
 #
 # # Copyright (c) EDF-IRSTEA 2019
 #
