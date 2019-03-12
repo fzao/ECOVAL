@@ -91,19 +91,28 @@ shinyServer(function(input, output, session) {
         ecoval$General[5,2] <<- nbspecies
         ecoval$General[6,2] <<- nbhabitats
         write.xlsx2(ecoval$General, con, sheetName = 'Général', row.names = FALSE, col.names = FALSE)
-        if(nbsite > 0){
-          for(i in 1:nbsite){
-            write.xlsx2(ecoval[[i+1]], con, sheetName = paste("Site no.", as.character(i)), row.names = FALSE, col.names = FALSE, append = TRUE)
-            # write.xlsx2(ecoval[[i+1]], con, sheetName = names(ecoval)[i+1], row.names = FALSE, col.names = FALSE, append = TRUE)
+        s <- 1
+        e <- 1
+        h <- 1
+        if(length(ecoval) > 1){
+          for(i in 2:length(ecoval)){
+            if(grepl("Site", names(ecoval)[i])){
+              write.xlsx2(ecoval[[i]], con, sheetName = paste("Site no.", as.character(s)), row.names = FALSE, col.names = FALSE, append = TRUE)
+              s <- s + 1
+            }
           }
-          if(nbspecies > 0){
-            for(i in 1:nbspecies){
-              write.xlsx2(ecoval[[nbsite+i+1]], con, sheetName = paste("Espece", as.character(i)), row.names = FALSE, col.names = FALSE, append = TRUE)
-            } #write.xlsx2(ecoval[[nbsite+i+1]], con, sheetName = names(ecoval)[nbsite+i+1], row.names = FALSE, col.names = FALSE, append = TRUE)
+          for(i in 2:length(ecoval)){
+            if(grepl("Espece", names(ecoval)[i])){
+              write.xlsx2(ecoval[[i]], con, sheetName = paste("Espece", as.character(e)), row.names = FALSE, col.names = FALSE, append = TRUE)
+              e <- e + 1
+            }
           }
-          # if(nbhabitats > 0){
-          #   for(i in 1:nbhabitats) write.xlsx2(ecoval[[nbsite+nbspecies+i+1]], con, sheetName = names(ecoval)[nbsite+nbspecies+i+1], row.names = FALSE, col.names = FALSE, append = TRUE)
-          # }
+          for(i in 2:length(ecoval)){
+            if(grepl("Habitat", names(ecoval)[i])){
+              write.xlsx2(ecoval[[i]], con, sheetName = paste("Habitat", as.character(h)), row.names = FALSE, col.names = FALSE, append = TRUE)
+              h <- h + 1
+            }
+          }
         }
       }
   )
