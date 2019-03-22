@@ -271,19 +271,18 @@ observeEvent(input$selectsite, {
     showTab(inputId = "prjtabs", target = "identification")
     name  <- paste("Site no.", as.character(numero))
     if(exists(name, where = ecoval)){
-      if(ecoval[[name]][1,2] != "NA"){
-        updateTextInput(session, "sitename", value = ecoval[[name]][1,2])
-        updateSelectInput(session, "sitetype", selected = as.integer(ecoval[[name]][2,2]))
-        updateNumericInput(session, "surface", value = as.numeric(ecoval[[name]][3,2]))
-        updateNumericInput(session, "latitude", value = as.numeric(ecoval[[name]][4,2]))
-        updateNumericInput(session, "longitude", value = as.numeric(ecoval[[name]][5,2]))
-        updateTextAreaInput(session, "sitecontext", value = ecoval[[name]][6,2])
-        updateTextAreaInput(session, "descqual", value = ecoval[[name]][7,2])
-        updateTextAreaInput(session, "tempo", value = ecoval[[name]][8,2])
-        updateSelectInput(session, "duree", selected = as.integer(ecoval[[name]][9,2]))
-        updateSelectInput(session, "intensite", selected = as.integer(ecoval[[name]][10,2]))
-        updateSelectInput(session, "portee", selected = as.integer(ecoval[[name]][11,2]))
-      }
+      cleanWindow()
+      if(ecoval[[name]][1,2] != "NA") updateTextInput(session, "sitename", value = ecoval[[name]][1,2])
+      if(ecoval[[name]][2,2] != "NA") updateSelectInput(session, "sitetype", selected = as.integer(ecoval[[name]][2,2]))
+      if(ecoval[[name]][3,2] != "NA") updateNumericInput(session, "surface", value = as.numeric(ecoval[[name]][3,2]))
+      if(ecoval[[name]][4,2] != "NA") updateNumericInput(session, "latitude", value = as.numeric(ecoval[[name]][4,2]))
+      if(ecoval[[name]][5,2] != "NA") updateNumericInput(session, "longitude", value = as.numeric(ecoval[[name]][5,2]))
+      if(ecoval[[name]][6,2] != "NA") updateTextAreaInput(session, "sitecontext", value = ecoval[[name]][6,2])
+      if(ecoval[[name]][7,2] != "NA") updateTextAreaInput(session, "descqual", value = ecoval[[name]][7,2])
+      if(ecoval[[name]][8,2] != "NA") updateTextAreaInput(session, "tempo", value = ecoval[[name]][8,2])
+      if(ecoval[[name]][9,2] != "NA") updateSelectInput(session, "duree", selected = as.integer(ecoval[[name]][9,2]))
+      if(ecoval[[name]][10,2] != "NA") updateSelectInput(session, "intensite", selected = as.integer(ecoval[[name]][10,2]))
+      if(ecoval[[name]][11,2] != "NA") updateSelectInput(session, "portee", selected = as.integer(ecoval[[name]][11,2]))
       updateListSpecies(name)
       updateListHabitat(name)
     }
@@ -337,12 +336,10 @@ cleanWindow <- function(){
 
 updateSiteName <- function(sitename){
   if(sitename != ""){
-    output$viewsiteno <- renderText({ paste("<font color=\"#000000\"; size=\"+1\"><b>", sitename, "</b></font>")})
-    output$enjeusiteno <- renderText({ paste("<font color=\"#000000\"; size=\"+1\"><b>", sitename, "</b></font>")})
-    #names(listsite)[as.integer(input$selecsite)] <<- sitename
-    #updateSelectInput(session, "selectsite", choices = listsite, selected = listsite[[input$selectsite]])
+    output$viewsiteno <- renderText({ paste("<font color=\"#005BBB\"; size=\"+2\"><b>", sitename, "</b></font>")})
+    output$enjeusiteno <- renderText({ paste("<font color=\"#005BBB\"; size=\"+2\"><b>", sitename, "</b></font>")})
   }else{
-    output$viewsiteno <- renderText({ paste("<font color=\"#000000\"; size=\"+1\"><b>", "SITE NUMERO", "</b></font>", "<font color=\"#000000\"; size=\"+1\"><b>", input$selectsite, "</b></font>") })
-    output$enjeusiteno <- renderText({ paste("<font color=\"#000000\"; size=\"+1\"><b>", "ENJEUX DU SITE NUMERO", "</b></font>", "<font color=\"#000000\"; size=\"+1\"><b>", input$selectsite, "</b></font>") })
+    output$viewsiteno <- renderText({ paste("<font color=\"#005BBB\"; size=\"+2\"><b>", "SITE NUMERO", "</b></font>", "<font color=\"#005BBB\"; size=\"+2\"><b>", input$selectsite, "</b></font>") })
+    output$enjeusiteno <- renderText({ paste("<font color=\"#005BBB\"; size=\"+2\"><b>", "ENJEUX DU SITE NUMERO", "</b></font>", "<font color=\"#005BBB\"; size=\"+2\"><b>", input$selectsite, "</b></font>") })
   }
 }
