@@ -27,9 +27,6 @@ observeEvent(input$date, {
   ecoval$General[3,2] <<- format(input$date)
 })
 
-output$viewsiteno <- renderText({ paste("<font color=\"#000000\"; size=\"+1\"><b>", "SITE NUMERO", "</b></font>", "<font color=\"#000000\"; size=\"+1\"><b>", input$selectsite, "</b></font>") })
-output$enjeusiteno <- renderText({ paste("<font color=\"#000000\"; size=\"+1\"><b>", "ENJEUX DU SITE NUMERO", "</b></font>", "<font color=\"#000000\"; size=\"+1\"><b>", input$selectsite, "</b></font>") })
-
 output$btn_telecharger <- downloadHandler(
   filename = function() {
     if(input$projectname == ""){
@@ -293,7 +290,9 @@ observeEvent(input$selectsite, {
   }
 })
 
-observeEvent(input$sitename, {saveSite(as.integer(input$selectsite))})
+observeEvent(input$sitename, {
+  saveSite(as.integer(input$selectsite))
+  updateSiteName(input$sitename)})
 observeEvent(input$sitetype, {saveSite(as.integer(input$selectsite))})
 observeEvent(input$surface, {saveSite(as.integer(input$selectsite))})
 observeEvent(input$latitude, {saveSite(as.integer(input$selectsite))})
@@ -334,4 +333,16 @@ cleanWindow <- function(){
   updateSelectInput(session, "duree", selected = 1)
   updateSelectInput(session, "intensite", selected = 1)
   updateSelectInput(session, "portee", selected = 1)
+}
+
+updateSiteName <- function(sitename){
+  if(sitename != ""){
+    output$viewsiteno <- renderText({ paste("<font color=\"#000000\"; size=\"+1\"><b>", sitename, "</b></font>")})
+    output$enjeusiteno <- renderText({ paste("<font color=\"#000000\"; size=\"+1\"><b>", sitename, "</b></font>")})
+    #names(listsite)[as.integer(input$selecsite)] <<- sitename
+    #updateSelectInput(session, "selectsite", choices = listsite, selected = listsite[[input$selectsite]])
+  }else{
+    output$viewsiteno <- renderText({ paste("<font color=\"#000000\"; size=\"+1\"><b>", "SITE NUMERO", "</b></font>", "<font color=\"#000000\"; size=\"+1\"><b>", input$selectsite, "</b></font>") })
+    output$enjeusiteno <- renderText({ paste("<font color=\"#000000\"; size=\"+1\"><b>", "ENJEUX DU SITE NUMERO", "</b></font>", "<font color=\"#000000\"; size=\"+1\"><b>", input$selectsite, "</b></font>") })
+  }
 }
