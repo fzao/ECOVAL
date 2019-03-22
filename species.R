@@ -84,13 +84,12 @@ observeEvent(input$selectspecies, {
     shinyjs::show("presencespecies")
     name  <- paste("Espece", as.character(numero))
     if(exists(name, where = ecoval)){
-      if(ecoval[[name]][1,2] != "NA"){
-        updateTextInput(session, "latinnamespecies", value = ecoval[[name]][1,2])
-        updateTextInput(session, "frenchnamespecies", value = ecoval[[name]][2,2])
-        updateSelectInput(session, "typespecies", selected = as.integer(ecoval[[name]][3,2]))
-        updateTextAreaInput(session, "justifyspecies", value = ecoval[[name]][4,2])
-        updateSelectInput(session, "presencespecies", selected = as.integer(ecoval[[name]][5,2]))
-      }
+      cleanSpecies
+      if(ecoval[[name]][1,2] != "NA") updateTextInput(session, "latinnamespecies", value = ecoval[[name]][1,2])
+      if(ecoval[[name]][2,2] != "NA") updateTextInput(session, "frenchnamespecies", value = ecoval[[name]][2,2])
+      if(ecoval[[name]][3,2] != "NA") updateSelectInput(session, "typespecies", selected = as.integer(ecoval[[name]][3,2]))
+      if(ecoval[[name]][4,2] != "NA") updateTextAreaInput(session, "justifyspecies", value = ecoval[[name]][4,2])
+      if(ecoval[[name]][5,2] != "NA") updateSelectInput(session, "presencespecies", selected = as.integer(ecoval[[name]][5,2]))
     }
   }
 })
