@@ -87,14 +87,13 @@ observeEvent(input$selecthabitat, {
     shinyjs::show("presencehabitat")
     name  <- paste("Habitat", as.character(numero))
     if(exists(name, where = ecoval)){
-      if(ecoval[[name]][1,2] != "NA"){
-        updateTextInput(session, "namehabitat", value = ecoval[[name]][1,2])
-        updateTextInput(session, "codecorinehabitat", value = ecoval[[name]][2,2])
-        updateTextInput(session, "codeeunishabitat", value = ecoval[[name]][3,2])
-        updateSelectInput(session, "typehabitat", selected = as.integer(ecoval[[name]][4,2]))
-        updateTextAreaInput(session, "justifyhabitat", value = ecoval[[name]][5,2])
-        updateSelectInput(session, "presencehabitat", selected = as.integer(ecoval[[name]][6,2]))
-      }
+      cleanHabitat()
+      if(ecoval[[name]][1,2] != "NA") updateTextInput(session, "namehabitat", value = ecoval[[name]][1,2])
+      if(ecoval[[name]][2,2] != "NA") updateTextInput(session, "codecorinehabitat", value = ecoval[[name]][2,2])
+      if(ecoval[[name]][3,2] != "NA") updateTextInput(session, "codeeunishabitat", value = ecoval[[name]][3,2])
+      if(ecoval[[name]][4,2] != "NA") updateSelectInput(session, "typehabitat", selected = as.integer(ecoval[[name]][4,2]))
+      if(ecoval[[name]][5,2] != "NA") updateTextAreaInput(session, "justifyhabitat", value = ecoval[[name]][5,2])
+      if(ecoval[[name]][6,2] != "NA") updateSelectInput(session, "presencehabitat", selected = as.integer(ecoval[[name]][6,2]))
     }
   }
 })
