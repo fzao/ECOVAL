@@ -75,12 +75,13 @@ shinyUI(fluidPage(title="ECOVAL",
                                                                column(4, align="left", numericInput("longitude", "LONGITUDE", 0.))),
                                                       fluidRow(column(12, align = "left", textAreaInput("descqual", "DESCRIPTION QUALITATIVE", height='90px', width='1250px', placeholder = "Nature, emprise, effets indirects..."))),
                                                       fluidRow(column(12, align = "left",textAreaInput("tempo", "TEMPORALITE", height='90px', width='1250px', placeholder = "Plusieurs phases? Court/long terme..."))),
-                                                      fluidRow(column(4, align = "left", selectInput("duree", label = "DUREE", choices = list("Temporaire Courte Durée" = 1, "Temporaire Longue Durée" = 2, "Permanent" = 3))),
-                                                                  #actionLink(inputId = "link1", label=h5("?")), br(), hr(),
-                                                               column(4, align = "left", selectInput("intensite", label = "INTENSITE", choices = list("Peu Intense" = 1, "Intense" = 2, "Très Intense" = 3))),
-                                                                  #actionLink(inputId = "link2", label=h5("?")), br(), hr(),
-                                                               column(4, align = "left",    selectInput("portee", label = "PORTEE SPATIALE", choices = list("Ponctuelle Faible Surface" = 1, "Ponctuelle Surface Importante" = 2, "Linéaire" = 3))))
-                                                                  #actionLink(inputId = "link3", label=h5("?"))
+                                                      fluidRow(column(4, align="left", actionLink(inputId = "link1", label=HTML('<h5><b>DUREE</b></h5>'))),
+                                                               column(4, align="left", actionLink(inputId = "link2", label=HTML('<h5><b>INTENSITE</b></h5>'))),
+                                                               column(4, align="left", actionLink(inputId = "link3", label=HTML('<h5><b>PORTEE SPATIALE</b></h5>')))
+                                                               ),
+                                                      fluidRow(column(4, align = "left", selectInput("duree", label = NA, choices = list("Temporaire Courte Durée" = 1, "Temporaire Longue Durée" = 2, "Permanent" = 3))),
+                                                               column(4, align = "left", selectInput("intensite", label = NA, choices = list("Peu Intense" = 1, "Intense" = 2, "Très Intense" = 3))),
+                                                               column(4, align = "left",    selectInput("portee", label = NA, choices = list("Ponctuelle Faible Surface" = 1, "Ponctuelle Surface Importante" = 2, "Linéaire" = 3))))
                                              ),
                                              tabPanel(HTML('<h4 style="color: #005BBB; ">Identification Des Enjeux</h4>'), value="identification", br(),
                                                       fluidRow(column(12, align="center", htmlOutput("enjeusiteno", inline = TRUE))),
