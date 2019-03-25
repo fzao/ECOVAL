@@ -93,9 +93,12 @@ shinyUI(fluidPage(title="ECOVAL",
                                                                fluidRow(column(4, align="right", tags$div(title="Créer une nouvelle espèce", actionButton("newspecies", "AJOUTER"))),
                                                                         column(4, align="center", tags$div(title="Effacer le contenu de l'espèce en cours", actionButton("deletespecies", "EFFACER"))),
                                                                         column(4, align="left", tags$div(title="Supprime définitivement l'espèce en cours", actionButton("destroyspecies", "ENLEVER")))), br(), br(),
-                                                               fluidPage(column(6, align="center", textInput("latinnamespecies", "Nom Latin"), br(), textInput("frenchnamespecies", "Nom Français"), br(), selectInput("typespecies", label = "Type", choices = list("Avifaune" = 1, "Chiroptère" = 2, "Mammifère" = 3, "Amphibien" = 4, "Reptile" = 5, "Insecte" = 6, "Flore" = 7, "Poisson" = 8, "Crustacé/Mollusque" = 9, "Communauté faunistique" = 10))),
-                                                                         column(6, align="center", textAreaInput("justifyspecies", label = "Justification de l'enjeu"), br(), selectInput("presencespecies", label = "Présence sur site impacté", choices = list("Oui" = 1, "Non" = 2)))
-                                                               )),
+                                                               fluidRow(column(4, align="left", textInput("latinnamespecies", "Nom Latin")), 
+                                                                        column(4, align="left", textInput("frenchnamespecies", "Nom Français")),
+                                                                        column(4, align="left", selectInput("typespecies", label = "Type", choices = list("Avifaune" = 1, "Chiroptère" = 2, "Mammifère" = 3, "Amphibien" = 4, "Reptile" = 5, "Insecte" = 6, "Flore" = 7, "Poisson" = 8, "Crustacé/Mollusque" = 9, "Communauté faunistique" = 10)))), br(),
+                                                               fluidRow(column(8, align="left", textAreaInput("justifyspecies", label = "Justification de l'enjeu", height='200px', width='390px')),
+                                                                        column(4, align="left", selectInput("presencespecies", label = "Présence sur site impacté", choices = list("Oui" = 1, "Non" = 2))))
+                                                               ),
                                                         column(6, align="center",
                                                                selectInput("selecthabitat", label = NULL, 
                                                                            choices = list("-" = 0), 
@@ -103,9 +106,13 @@ shinyUI(fluidPage(title="ECOVAL",
                                                                fluidRow(column(4, align="right", tags$div(title="Créer un nouvel habitat", actionButton("newhabitat", "AJOUTER"))),
                                                                         column(4, align="center", tags$div(title="Effacer le contenu de l'habitat en cours", actionButton("deletehabitat", "EFFACER"))),
                                                                         column(4, align="left", tags$div(title="Supprime définitivement l'habitat en cours", actionButton("destroyhabitat", "ENLEVER")))), br(), br(),
-                                                               fluidPage(column(6, align="center", textInput("namehabitat", "Nom"), br(), textInput("codecorinehabitat", "Code Corine"), br(), textInput("codeeunishabitat", "Code Eunis"), br(), selectInput("typehabitat", label = "Type", choices = list("Fermé" = 1, "Ouvert" = 2, "Buissonnant" = 3, "Zone humide" = 4, "Aquatique" = 5, "Rocheux" = 6, "Cultivé" = 7, "Imperméabilisé" = 8))),
-                                                                         column(6, align="center", textAreaInput("justifyhabitat", label = "Justification de l'enjeu"), br(), selectInput("presencehabitat", label = "Présence sur site impacté", choices = list("Oui" = 1, "Non" = 2)))
-                                                               ))
+                                                               fluidRow(column(3, align="left", textInput("namehabitat", "Nom")),
+                                                                        column(3, align="left", textInput("codecorinehabitat", "Code Corine")),
+                                                                        column(3, align="left", textInput("codeeunishabitat", "Code Eunis")),
+                                                                        column(3, align="left", selectInput("typehabitat", label = "Type", choices = list("Fermé" = 1, "Ouvert" = 2, "Buissonnant" = 3, "Zone humide" = 4, "Aquatique" = 5, "Rocheux" = 6, "Cultivé" = 7, "Imperméabilisé" = 8)))), br(),
+                                                               fluidRow(column(8, align="left", textAreaInput("justifyhabitat", label = "Justification de l'enjeu", height='200px', width='390px')),
+                                                                        column(4, align="left", selectInput("presencehabitat", label = "Présence sur site impacté", choices = list("Oui" = 1, "Non" = 2))))
+                                                               )
                                                       )
                                              )
                                            ),
