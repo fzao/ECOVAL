@@ -292,7 +292,9 @@ observeEvent(input$selectsite, {
 observeEvent(input$sitename, {
   saveSite(as.integer(input$selectsite))
   updateSiteName(input$sitename)})
-observeEvent(input$sitetype, {saveSite(as.integer(input$selectsite))})
+observeEvent(input$sitetype, {
+  saveSite(as.integer(input$selectsite))
+  updateDescTemp(input$sitetype)})
 observeEvent(input$surface, {saveSite(as.integer(input$selectsite))})
 observeEvent(input$latitude, {saveSite(as.integer(input$selectsite))})
 observeEvent(input$longitude, {saveSite(as.integer(input$selectsite))})
@@ -341,5 +343,18 @@ updateSiteName <- function(sitename){
   }else{
     output$viewsiteno <- renderText({ paste("<font color=\"#005BBB\"; size=\"+2\"><b>", "SITE NUMERO", "</b></font>", "<font color=\"#005BBB\"; size=\"+2\"><b>", input$selectsite, "</b></font>") })
     output$enjeusiteno <- renderText({ paste("<font color=\"#005BBB\"; size=\"+2\"><b>", "ENJEUX DU SITE NUMERO", "</b></font>", "<font color=\"#005BBB\"; size=\"+2\"><b>", input$selectsite, "</b></font>") })
+  }
+}
+
+updateDescTemp <- function(sitetype){
+  if(sitetype == 1){
+    updateTextAreaInput(session, "descqual", "DESCRIPTION DES IMPACTS", placeholder = "Nature, emprise, effets indirects...")
+    updateTextAreaInput(session, "tempo", "TEMPORALITE DES IMPACTS", placeholder = "Plusieurs phases? Court/long terme...")
+  }else if(sitetype == 2){
+    updateTextAreaInput(session, "descqual", "DESCRIPTION DES MESURES COMPENSATOIRES", placeholder = "Nature, emprise, effets indirects...")
+    updateTextAreaInput(session, "tempo", "TEMPORALITE DES MESURES COMPENSATOIRES", placeholder = "Plusieurs phases? Court/long terme...")
+  }else if(sitetype == 3){
+    updateTextAreaInput(session, "descqual", "DESCRIPTION DES IMPACTS ET DES MESURES COMPENSATOIRES", placeholder = "Nature, emprise, effets indirects...")
+    updateTextAreaInput(session, "tempo", "TEMPORALITE DES IMPACTS ET DES MESURES COMPENSATOIRES", placeholder = "Plusieurs phases? Court/long terme...")
   }
 }
