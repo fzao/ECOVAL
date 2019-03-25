@@ -82,7 +82,7 @@ shinyUI(fluidPage(title="ECOVAL",
                                                                column(4, align = "left",    selectInput("portee", label = "PORTEE SPATIALE", choices = list("Ponctuelle Faible Surface" = 1, "Ponctuelle Surface Importante" = 2, "Linéaire" = 3))))
                                                                   #actionLink(inputId = "link3", label=h5("?"))
                                              ),
-                                             tabPanel(HTML('<h4 style="color: #005BBB; ">Identification</h4>'), value="identification", br(),
+                                             tabPanel(HTML('<h4 style="color: #005BBB; ">Identification Des Enjeux</h4>'), value="identification", br(),
                                                       fluidRow(column(12, align="center", htmlOutput("enjeusiteno", inline = TRUE))),
                                                       fluidRow(column(6, align="center", HTML('<h4 style="color: #878F99; "><b>ESPECES</b></h4>')), column(6, align="center", HTML('<h4 style="color: #878F99; "><b>HABITATS</b></h4>'))),
                                                       fluidPage(
