@@ -84,7 +84,7 @@ observeEvent(input$selecthabitat, {
     shinyjs::show("codeeunishabitat")
     shinyjs::show("typehabitat")
     shinyjs::show("justifyhabitat")
-    shinyjs::show("presencehabitat")
+    if(input$sitetype == 2) shinyjs::show("presencehabitat")
     name  <- paste("Habitat", as.character(numero))
     if(exists(name, where = ecoval)){
       cleanHabitat()

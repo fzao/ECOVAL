@@ -81,7 +81,7 @@ observeEvent(input$selectspecies, {
     shinyjs::show("frenchnamespecies")
     shinyjs::show("typespecies")
     shinyjs::show("justifyspecies")
-    shinyjs::show("presencespecies")
+    if(input$sitetype == 2) shinyjs::show("presencespecies")
     name  <- paste("Espece", as.character(numero))
     if(exists(name, where = ecoval)){
       cleanSpecies()
