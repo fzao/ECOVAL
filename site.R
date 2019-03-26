@@ -355,10 +355,8 @@ updateDescTemp <- function(sitetype){
   }else if(sitetype == 2){
     updateTextAreaInput(session, "descqual", "DESCRIPTION DES MESURES COMPENSATOIRES", placeholder = "Nature, emprise, effets indirects...")
     updateTextAreaInput(session, "tempo", "TEMPORALITE DES MESURES COMPENSATOIRES", placeholder = "Plusieurs phases? Court/long terme...")
-    if(as.integer(input$selectspecies) > 0){
-      shinyjs::show("presencespecies")
-      shinyjs::show("presencehabitat")
-    }      
+    if(as.integer(input$selectspecies) > 0) shinyjs::show("presencespecies")
+    if(as.integer(input$selecthabitat) > 0) shinyjs::show("presencehabitat")
   }else if(sitetype == 3){
     updateTextAreaInput(session, "descqual", "DESCRIPTION DES IMPACTS ET DES MESURES COMPENSATOIRES", placeholder = "Nature, emprise, effets indirects...")
     updateTextAreaInput(session, "tempo", "TEMPORALITE DES IMPACTS ET DES MESURES COMPENSATOIRES", placeholder = "Plusieurs phases? Court/long terme...")
