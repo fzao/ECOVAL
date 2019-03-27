@@ -49,7 +49,7 @@ shinyUI(fluidPage(title="ECOVAL",
                               tabPanel(value="projet", HTML('<h4 style="color: #005BBB; "><b>Projet</b></h4>'), br(),
                                        sidebarLayout(
                                          sidebarPanel(
-                                           titlePanel(HTML('<h5><b>FICHIERS</b></h5>')),
+                                           titlePanel(HTML('<h5><b>FICHIER DU PROJET</b></h5>')),
                                            fluidRow(column(9, align="left", tags$div(title="Importe un fichier ECOVAL .xlsx", fileInput("userfile", NULL, multiple = FALSE, accept = ".xlsx", buttonLabel = 'Charger', placeholder = '...'))),
                                                     column(3, align="left", tags$div(title="Télécharge le projet ECOVAL en cours",downloadButton("btn_telecharger", "Sauver")))),
                                            fluidRow(column(7, align="left", textInput("projectname", "TITRE", placeholder = "Titre du projet ECOVAL...")),

@@ -31,7 +31,7 @@ shinyServer(function(input, output, session) {
   numsite <- 0
   numspecies <- 0
   numhabitat <- 0
-  listsite <- list("-" = 0)
+  listsite <- data.frame("site" = '-', "index" = 0, "name" = '-', stringsAsFactors=FALSE)
   listspecies <- list("-" = 0)
   listhabitat <- list("-" = 0)
   
@@ -73,5 +73,5 @@ shinyServer(function(input, output, session) {
   #     }  
   #   } 
   # })
-  
+
 })

@@ -36,7 +36,7 @@ output$btn_telecharger <- downloadHandler(
     }
   },
   content = function(con) {
-    nbsite <- length(listsite) - 1
+    nbsite <- dim(listsite)[1] - 1
     nbspecies <- length(listspecies) - 1
     nbhabitats <- length(listhabitat) - 1
     ecoval$General[4,2] <<- nbsite
@@ -79,8 +79,9 @@ observeEvent(input$userfile, {
   numsite <<- as.integer(ecoval$General[4,2])
   if(numsite > 0) for(i in 1:numsite){
     name <- paste("Site no.", as.character(i))
-    listsite[[name]] <<- i
     ecoval[[name]] <<- read.xlsx2(inFile$datapath, sheetName = name, header = FALSE, stringsAsFactors = FALSE)
+    newsite <- data.frame("site" = name, "index" = i, "name" = ecoval[[name]][1,2])
+    listsite <<- rbind(listsite, newsite)
   }
   numspecies <<- as.integer(ecoval$General[5,2])
   if(numspecies > 0) for(i in 1:numspecies){
@@ -94,7 +95,9 @@ observeEvent(input$userfile, {
     listhabitat[[name]] <<- i
     ecoval[[name]] <<- read.xlsx2(inFile$datapath, sheetName = name, header = FALSE, stringsAsFactors = FALSE)
   }
-  updateSelectInput(session, "selectsite", choices = listsite, selected = listsite[[length(listsite)]])
+  showlist <- list()
+  for(i in 1:dim(listsite)[1]) showlist[[listsite[i,3]]] <- listsite[i,2]
+  updateSelectInput(session, "selectsite", choices = showlist, selected = listsite[dim(listsite)[1],2])
   updateSelectInput(session, "selectspecies", choices = listspecies, selected = listspecies[[length(listspecies)]])
   updateSelectInput(session, "selecthabitat", choices = listhabitat, selected = listhabitat[[length(listhabitat)]])
 })
@@ -210,8 +213,11 @@ observeEvent(input$link3, {
 observeEvent(input$new, {
   numsite <<- numsite + 1
   newname <- paste("Site no.", as.character(numsite))
-  listsite[[newname]] <<- numsite
-  updateSelectInput(session, "selectsite", choices = listsite, selected = numsite)
+  newsite <- data.frame("site" = newname, "index" = numsite, "name" = newname)
+  listsite <<- rbind(listsite, newsite)
+  showlist <- list()
+  for(i in 1:dim(listsite)[1]) showlist[[listsite[i,3]]] <- listsite[i,2]
+  updateSelectInput(session, "selectsite", choices = showlist, selected = numsite)
   updateSelectInput(session, "selectspecies", choices = list("-" = 0), selected = 0)
   updateSelectInput(session, "selecthabitat", choices = list("-" = 0), selected = 0)
   # create new DF
@@ -255,9 +261,11 @@ observeEvent(input$destroy, {
       }
     }
     # destroy site
-    listsite[[name]] <<- NULL
+    listsite <<- listsite[-c(which(listsite$site == name)),]
     ecoval[[name]] <<- NULL
-    updateSelectInput(session, "selectsite", choices = listsite, selected = listsite[[length(listsite)]])
+    showlist <- list()
+    for(i in 1:dim(listsite)[1]) showlist[[listsite[i,3]]] <- listsite[i,2]
+    updateSelectInput(session, "selectsite", choices = showlist, selected = listsite[dim(listsite)[1],2])
   }
 })
 
@@ -291,7 +299,7 @@ observeEvent(input$selectsite, {
 
 observeEvent(input$sitename, {
   saveSite(as.integer(input$selectsite))
-  updateSiteName(input$sitename)})
+  updateSiteName(input$selectsite, input$sitename)})
 observeEvent(input$sitetype, {
   saveSite(as.integer(input$selectsite))
   updateDescTemp(input$sitetype)})
@@ -336,8 +344,14 @@ cleanWindow <- function(){
   updateSelectInput(session, "portee", selected = 1)
 }
 
-updateSiteName <- function(sitename){
+updateSiteName <- function(numero, sitename){
   if(sitename != ""){
+    name <- paste("Site no.", as.character(numero))
+    index <- which(listsite$site == name)
+    listsite[index, 3] <<- input$sitename
+    showlist <- list()
+    for(i in 1:dim(listsite)[1]) showlist[[listsite[i,3]]] <- listsite[i,2]
+    updateSelectInput(session, "selectsite", choices = showlist, selected = input$selectsite)
     output$viewsiteno <- renderText({ paste("<font color=\"#005BBB\"; size=\"+2\"><b>", sitename, "</b></font>")})
     output$enjeusiteno <- renderText({ paste("<font color=\"#005BBB\"; size=\"+2\"><b>", sitename, "</b></font>")})
   }else{
