@@ -49,7 +49,9 @@ output$btn_telecharger <- downloadHandler(
     if(length(ecoval) > 1){
       for(i in 2:length(ecoval)){
         if(grepl("Site", names(ecoval)[i])){
-          write.xlsx2(ecoval[[i]], con, sheetName = paste("Site no.", as.character(s)), row.names = FALSE, col.names = FALSE, append = TRUE)
+          name <- paste("Site no.", as.character(s))
+          if(ecoval[[i]][1,2] == "NA") ecoval[[i]][1,2] <<- name
+          write.xlsx2(ecoval[[i]], con, sheetName = name, row.names = FALSE, col.names = FALSE, append = TRUE)
           s <- s + 1
         }
       }
