@@ -50,7 +50,6 @@ output$btn_telecharger <- downloadHandler(
       for(i in 2:length(ecoval)){
         if(grepl("Site", names(ecoval)[i])){
           name <- paste("Site no.", as.character(s))
-          if(ecoval[[i]][1,2] == "NA") ecoval[[i]][1,2] <<- name
           write.xlsx2(ecoval[[i]], con, sheetName = name, row.names = FALSE, col.names = FALSE, append = TRUE)
           s <- s + 1
         }
@@ -98,7 +97,10 @@ observeEvent(input$userfile, {
     ecoval[[name]] <<- read.xlsx2(inFile$datapath, sheetName = name, header = FALSE, stringsAsFactors = FALSE)
   }
   showlist <- list()
-  for(i in 1:dim(listsite)[1]) showlist[[listsite[i,3]]] <- listsite[i,2]
+  for(i in 1:dim(listsite)[1]){
+    if(listsite[i,3] != "NA") showlist[[listsite[i,3]]] <- listsite[i,2]
+    else showlist[[listsite[i,1]]] <- listsite[i,2]
+  }
   updateSelectInput(session, "selectsite", choices = showlist, selected = listsite[dim(listsite)[1],2])
   updateSelectInput(session, "selectspecies", choices = listspecies, selected = listspecies[[length(listspecies)]])
   updateSelectInput(session, "selecthabitat", choices = listhabitat, selected = listhabitat[[length(listhabitat)]])
