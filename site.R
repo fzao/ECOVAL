@@ -234,6 +234,8 @@ observeEvent(input$new, {
   ecoval[[newname]][12,2] <<- as.integer(Sys.time()) # unique ID
   # clean window
   cleanWindow()
+  # back to description
+  updateTabsetPanel(session, "prjtabs", selected = "description")
 })
 
 observeEvent(input$delete, {
