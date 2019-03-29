@@ -21,18 +21,7 @@ shinyServer(function(input, output, session) {
   source('site.R', local =TRUE)
   source('species.R', local = TRUE)
   source('habitat.R', local = TRUE)
-  model_info_general <- read.xlsx2('model/ECOVAL.xlsx', sheetIndex = 1, header = FALSE, stringsAsFactors = FALSE)
-  model_site <- read.xlsx2('model/ECOVAL.xlsx', sheetIndex = 2, header = FALSE, stringsAsFactors = FALSE)
-  model_species <- read.xlsx2('model/ECOVAL.xlsx', sheetIndex = 3, header = FALSE, stringsAsFactors = FALSE)
-  model_habitat <- read.xlsx2('model/ECOVAL.xlsx', sheetIndex = 4, header = FALSE, stringsAsFactors = FALSE)
-  ecoval <- list()
-  ecoval[["General"]] <- model_info_general
-  numsite <- 0
-  numspecies <- 0
-  numhabitat <- 0
-  listsite <- data.frame("site" = '-', "index" = 0, "name" = '-', stringsAsFactors=FALSE)
-  listspecies <- data.frame("species" = '-', "index" = 0, "name" = '-', stringsAsFactors=FALSE)
-  listhabitat <- data.frame("habitat" = '-', "index" = 0, "name" = '-', stringsAsFactors=FALSE)
+  source('init.R', local = TRUE)
   
   observeEvent(input$redir1, {
     updateTabsetPanel(session, "tabs", selected = "projet")

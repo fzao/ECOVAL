@@ -73,6 +73,16 @@ output$btn_telecharger <- downloadHandler(
 observeEvent(input$userfile, {
   inFile <- input$userfile
   if (is.null(inFile)) return(NULL)
+  
+  ecoval <<- list()
+  ecoval[["General"]] <<- model_info_general
+  numsite <<- 0
+  numspecies <<- 0
+  numhabitat <<- 0
+  listsite <<- data.frame("site" = '-', "index" = 0, "name" = '-', stringsAsFactors=FALSE)
+  listspecies <<- data.frame("species" = '-', "index" = 0, "name" = '-', stringsAsFactors=FALSE)
+  listhabitat <<- data.frame("habitat" = '-', "index" = 0, "name" = '-', stringsAsFactors=FALSE)
+  
   ecoval[["General"]] <<- read.xlsx2(inFile$datapath, sheetIndex = 1, header = FALSE, stringsAsFactors = FALSE)
   updateTextInput(session, "projectname", value = ecoval$General[1,2])
   updateTextAreaInput(session, "projectcontext", value = ecoval$General[2,2])
@@ -236,11 +246,15 @@ observeEvent(input$new, {
   updateSelectInput(session, "selecthabitat", choices = list("-" = 0), selected = 0)
   # create new DF
   ecoval[[newname]] <<- model_site
-  ecoval[[newname]][12,2] <<- as.integer(Sys.time()) # unique ID
-  # clean window
-  cleanWindow()
+  # unique ID
+  tmpf <- tempfile()
+  n <- 8
+  code <- substr(tmpf, (nchar(tmpf)+1)-n, nchar(tmpf))
+  ecoval[[newname]][12,2] <<- code
   # back to description
   updateTabsetPanel(session, "prjtabs", selected = "description")
+  # clean window
+  cleanWindow()
 })
 
 observeEvent(input$delete, {
