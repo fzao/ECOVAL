@@ -24,26 +24,30 @@ cleanHabitat <- function(){
   updateSelectInput(session, "presencehabitat", selected = 1)
 }
 
-updateListHabitat <- function(name){
-  partialisthabitat <- list("-" = 0)
-  if(numhabitat > 0){
-    for(i in 1:numhabitat){
-      hname <- paste("Habitat", as.character(i))
+updateListHabitat <- function(name, inplace=FALSE){
+  showlist <- list()
+  for(i in 1:dim(listhabitat)[1]){
+    if(i == 1) showlist[[listhabitat[i,1]]] <- listhabitat[i,2]
+    else{
+      hname <- listhabitat[i,1]
       if(exists(hname, where = ecoval)){
         if(ecoval[[hname]][7,2] == ecoval[[name]][12,2]){
-          partialisthabitat[[hname]] <- i
+          if(listhabitat[i,3] != "NA" & listhabitat[i,3] != "") showlist[[listhabitat[i,3]]] <- listhabitat[i,2]
+          else showlist[[listhabitat[i,1]]] <- listhabitat[i,2]
         }
       }
     }
-    updateSelectInput(session, "selecthabitat", choices = partialisthabitat, selected = partialisthabitat[[length(partialisthabitat)]])  
   }
+  if(inplace) updateSelectInput(session, "selecthabitat", choices = showlist, selected = input$selecthabitat)
+  else updateSelectInput(session, "selecthabitat", choices = showlist, selected = showlist[[length(showlist)]])
 }
 
 observeEvent(input$newhabitat, {
   numhabitat <<- numhabitat + 1
   newname <- paste("Habitat", as.character(numhabitat))
-  listhabitat[[newname]] <<- numhabitat
-  updateSelectInput(session, "selecthabitat", choices = listhabitat, selected = numhabitat)
+  
+  newhabitat <- data.frame("habitat" = newname, "index" = numhabitat, "name" = newname)
+  listhabitat <<- rbind(listhabitat, newhabitat)
   # create new DF
   ecoval[[newname]] <<- model_habitat
   # add site info
@@ -63,7 +67,7 @@ observeEvent(input$destroyhabitat, {
   numero <- as.integer(input$selecthabitat)
   if(numero > 0){
     name <- paste("Habitat", as.character(numero))
-    listhabitat[[name]] <<- NULL
+    listhabitat <<- listhabitat[-c(which(listhabitat$habitat == name)),]
     ecoval[[name]] <<- NULL
     updateListHabitat(paste("Site no.", input$selectsite)) 
   }
@@ -98,7 +102,17 @@ observeEvent(input$selecthabitat, {
   }
 })
 
-observeEvent(input$namehabitat, {saveHabitat(as.integer(input$selecthabitat))})
+observeEvent(input$namehabitat, {
+  numero = as.integer(input$selecthabitat)
+  if(numero > 0){
+    if(input$namehabitat != "NA" & input$namehabitat != ""){
+      name <- paste("Habitat", as.character(numero))
+      listhabitat[c(which(listhabitat$habitat == name)),3] <<- input$namehabitat
+    }
+  }
+  updateListHabitat(paste("Site no.", input$selectsite), TRUE)
+  saveHabitat(as.integer(input$selecthabitat))
+})
 observeEvent(input$codecorinehabitat, {saveHabitat(as.integer(input$selecthabitat))})
 observeEvent(input$codeeunishabitat, {saveHabitat(as.integer(input$selecthabitat))})
 observeEvent(input$typehabitat, {saveHabitat(as.integer(input$selecthabitat))})

@@ -15,7 +15,7 @@
 # Licence CeCILL v2.1
 #
 
- observeEvent(input$projectname, {
+observeEvent(input$projectname, {
   ecoval$General[1,2] <<- input$projectname
 })
 
@@ -38,7 +38,7 @@ output$btn_telecharger <- downloadHandler(
   content = function(con) {
     nbsite <- dim(listsite)[1] - 1
     nbspecies <- dim(listspecies)[1] - 1
-    nbhabitats <- length(listhabitat) - 1
+    nbhabitats <- dim(listhabitat)[1] - 1
     ecoval$General[4,2] <<- nbsite
     ecoval$General[5,2] <<- nbspecies
     ecoval$General[6,2] <<- nbhabitats
@@ -94,8 +94,9 @@ observeEvent(input$userfile, {
   numhabitat <<- as.integer(ecoval$General[6,2])
   if(numhabitat > 0) for(i in 1:numhabitat){
     name <- paste("Habitat", as.character(i))
-    listhabitat[[name]] <<- i
     ecoval[[name]] <<- read.xlsx2(inFile$datapath, sheetName = name, header = FALSE, stringsAsFactors = FALSE)
+    newhabitat <- data.frame("habitat" = name, "index" = i, "name" = ecoval[[name]][1,2])
+    listhabitat <<- rbind(listhabitat, newhabitat)
   }
   showlist <- list()
   for(i in 1:dim(listsite)[1]){
@@ -109,7 +110,12 @@ observeEvent(input$userfile, {
     else showlist[[listspecies[i,1]]] <- listspecies[i,2]
   }
   updateSelectInput(session, "selectspecies", choices = showlist, selected = showlist[[length(showlist)]])
-  updateSelectInput(session, "selecthabitat", choices = listhabitat, selected = listhabitat[[length(listhabitat)]])
+  showlist <- list()
+  for(i in 1:dim(listhabitat)[1]){
+    if(listhabitat[i,3] != "NA" & listhabitat[i,3] != "") showlist[[listhabitat[i,3]]] <- listhabitat[i,2]
+    else showlist[[listhabitat[i,1]]] <- listhabitat[i,2]
+  }
+  updateSelectInput(session, "selecthabitat", choices = showlist, selected = showlist[[length(showlist)]])
 })
 
 observeEvent(input$link1, {
@@ -222,7 +228,6 @@ observeEvent(input$link3, {
 
 observeEvent(input$new, {
   numsite <<- numsite + 1
-  #cfz numsite <- dim(listsite)[1]
   newname <- paste("Site no.", as.character(numsite))
   newsite <- data.frame("site" = newname, "index" = numsite, "name" = newname)
   listsite <<- rbind(listsite, newsite)
@@ -263,17 +268,20 @@ observeEvent(input$destroy, {
     }
     listspecies <<- mylist
     # destroy habitat
-    if(numhabitat > 0){
-      for(i in 1:numhabitat){
-        hname <- paste("Habitat", as.character(i))
+    nbhabitat <- dim(listhabitat)[1] - 1
+    mylist <- listhabitat
+    if(nbhabitat > 0){
+      for(i in 1:nbhabitat){
+        hname <- paste("Habitat", as.character(listhabitat$index[i+1]))
         if(exists(hname, where = ecoval)){
           if(ecoval[[hname]][7,2] == ecoval[[name]][12,2]){
-            listhabitat[[hname]] <<- NULL
+            mylist <- mylist[-c(which(mylist$habitat == hname)),]
             ecoval[[hname]] <<- NULL
           }
         }
       }
     }
+    listhabitat <<- mylist
     # destroy site
     listsite <<- listsite[-c(which(listsite$site == name)),]
     ecoval[[name]] <<- NULL

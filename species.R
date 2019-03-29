@@ -42,7 +42,6 @@ updateListSpecies <- function(name, inplace=FALSE){
 }
 
 observeEvent(input$newspecies, {
-  #cfz numspecies <- dim(listspecies)[1]
   numspecies <<- numspecies + 1
   newname <- paste("Espece", as.character(numspecies))
   newspecies <- data.frame("species" = newname, "index" = numspecies, "name" = newname)
@@ -100,7 +99,7 @@ observeEvent(input$selectspecies, {
 
 observeEvent(input$latinnamespecies, {saveSpecies(as.integer(input$selectspecies))})
 observeEvent(input$frenchnamespecies, {
-  numero = as.integer(as.integer(input$selectspecies))
+  numero = as.integer(input$selectspecies)
   if(numero > 0){
     if(input$frenchnamespecies != "NA" & input$frenchnamespecies != ""){
       name <- paste("Espece", as.character(numero))
