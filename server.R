@@ -32,7 +32,7 @@ shinyServer(function(input, output, session) {
   numspecies <- 0
   numhabitat <- 0
   listsite <- data.frame("site" = '-', "index" = 0, "name" = '-', stringsAsFactors=FALSE)
-  listspecies <- list("-" = 0)
+  listspecies <- data.frame("species" = '-', "index" = 0, "name" = '-', stringsAsFactors=FALSE)
   listhabitat <- list("-" = 0)
   
   observeEvent(input$redir1, {

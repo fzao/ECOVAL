@@ -23,26 +23,30 @@ cleanSpecies <- function(){
   updateSelectInput(session, "presencespecies", selected = 1)
 }
 
-updateListSpecies <- function(name){
-  partialistspecies <- list("-" = 0)
-  if(numspecies > 0){
-    for(i in 1:numspecies){
-      spname <- paste("Espece", as.character(i))
+updateListSpecies <- function(name, inplace=FALSE){
+  showlist <- list()
+  for(i in 1:dim(listspecies)[1]){
+    if(i == 1) showlist[[listspecies[i,1]]] <- listspecies[i,2]
+    else{
+      spname <- listspecies[i,1]
       if(exists(spname, where = ecoval)){
         if(ecoval[[spname]][6,2] == ecoval[[name]][12,2]){
-          partialistspecies[[spname]] <- i
+          if(listspecies[i,3] != "NA" & listspecies[i,3] != "") showlist[[listspecies[i,3]]] <- listspecies[i,2]
+          else showlist[[listspecies[i,1]]] <- listspecies[i,2]
         }
       }
     }
-    updateSelectInput(session, "selectspecies", choices = partialistspecies, selected = partialistspecies[[length(partialistspecies)]])  
   }
+  if(inplace) updateSelectInput(session, "selectspecies", choices = showlist, selected = input$selectspecies)
+  else updateSelectInput(session, "selectspecies", choices = showlist, selected = showlist[[length(showlist)]])
 }
 
 observeEvent(input$newspecies, {
+  #cfz numspecies <- dim(listspecies)[1]
   numspecies <<- numspecies + 1
   newname <- paste("Espece", as.character(numspecies))
-  listspecies[[newname]] <<- numspecies
-  updateSelectInput(session, "selectspecies", choices = listspecies, selected = numspecies)
+  newspecies <- data.frame("species" = newname, "index" = numspecies, "name" = newname)
+  listspecies <<- rbind(listspecies, newspecies)
   # create new DF
   ecoval[[newname]] <<- model_species
   # add site info
@@ -62,7 +66,7 @@ observeEvent(input$destroyspecies, {
   numero <- as.integer(input$selectspecies)
   if(numero > 0){
     name <- paste("Espece", as.character(numero))
-    listspecies[[name]] <<- NULL
+    listspecies <<- listspecies[-c(which(listspecies$species == name)),]
     ecoval[[name]] <<- NULL
     updateListSpecies(paste("Site no.", input$selectsite)) 
   }
@@ -95,7 +99,17 @@ observeEvent(input$selectspecies, {
 })
 
 observeEvent(input$latinnamespecies, {saveSpecies(as.integer(input$selectspecies))})
-observeEvent(input$frenchnamespecies, {saveSpecies(as.integer(input$selectspecies))})
+observeEvent(input$frenchnamespecies, {
+  numero = as.integer(as.integer(input$selectspecies))
+  if(numero > 0){
+    if(input$frenchnamespecies != "NA" & input$frenchnamespecies != ""){
+      name <- paste("Espece", as.character(numero))
+      listspecies[c(which(listspecies$species == name)),3] <<- input$frenchnamespecies
+    }
+  }
+  updateListSpecies(paste("Site no.", input$selectsite), TRUE)
+  saveSpecies(as.integer(input$selectspecies))
+})
 observeEvent(input$typespecies, {saveSpecies(as.integer(input$selectspecies))})
 observeEvent(input$justifyspecies, {saveSpecies(as.integer(input$selectspecies))})
 observeEvent(input$presencespecies, {saveSpecies(as.integer(input$selectspecies))})
