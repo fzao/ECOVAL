@@ -38,7 +38,6 @@ output$btn_telecharger <- downloadHandler(
   content = function(con) {
     nbsite <- dim(listsite)[1] - 1
     nbspecies <- dim(listspecies)[1] - 1
-    print(listspecies)
     nbhabitats <- length(listhabitat) - 1
     ecoval$General[4,2] <<- nbsite
     ecoval$General[5,2] <<- nbspecies
