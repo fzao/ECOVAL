@@ -79,7 +79,7 @@ observeEvent(input$userfile, {
   numsite <<- 0
   numspecies <<- 0
   numhabitat <<- 0
-  listsite <<- data.frame("site" = '-', "index" = 0, "name" = '-', stringsAsFactors=FALSE)
+  listsite <<- data.frame("site" = '-', "index" = 0, "name" = '-', "type" = 0, stringsAsFactors=FALSE)
   listspecies <<- data.frame("species" = '-', "index" = 0, "name" = '-', stringsAsFactors=FALSE)
   listhabitat <<- data.frame("habitat" = '-', "index" = 0, "name" = '-', stringsAsFactors=FALSE)
   
@@ -91,7 +91,7 @@ observeEvent(input$userfile, {
   if(numsite > 0) for(i in 1:numsite){
     name <- paste("Site no.", as.character(i))
     ecoval[[name]] <<- read.xlsx2(inFile$datapath, sheetName = name, header = FALSE, stringsAsFactors = FALSE)
-    newsite <- data.frame("site" = name, "index" = i, "name" = ecoval[[name]][1,2])
+    newsite <- data.frame("site" = name, "index" = i, "name" = ecoval[[name]][1,2], "type" = as.integer(ecoval[[name]][2,2]))
     listsite <<- rbind(listsite, newsite)
   }
   numspecies <<- as.integer(ecoval$General[5,2])
@@ -239,9 +239,10 @@ observeEvent(input$link3, {
 observeEvent(input$new, {
   numsite <<- numsite + 1
   newname <- paste("Site no.", as.character(numsite))
-  newsite <- data.frame("site" = newname, "index" = numsite, "name" = newname)
+  newsite <- data.frame("site" = newname, "index" = numsite, "name" = newname, "type" = as.integer(input$sitetype))
   listsite <<- rbind(listsite, newsite)
   updateListSite()
+  updateListSiteImpactCompens()
   updateSelectInput(session, "selectspecies", choices = list("-" = 0), selected = 0)
   updateSelectInput(session, "selecthabitat", choices = list("-" = 0), selected = 0)
   # create new DF
@@ -300,6 +301,7 @@ observeEvent(input$destroy, {
     listsite <<- listsite[-c(which(listsite$site == name)),]
     ecoval[[name]] <<- NULL
     updateListSite()
+    updateListSiteImpactCompens()
   }
 })
 
@@ -380,10 +382,11 @@ cleanWindow <- function(){
 
 updateSiteName <- function(numero, sitename){
   if(sitename != ""){
-    name <- paste("Site no.", as.character(numero))
+    name <- paste("Site no.", numero)
     index <- which(listsite$site == name)
     listsite[index, 3] <<- input$sitename
     updateListSite(TRUE)
+    updateListSiteImpactCompens()
     output$viewsiteno <- renderText({ paste("<font color=\"#005BBB\"; size=\"+2\"><b>", sitename, "</b></font>")})
     output$enjeusiteno <- renderText({ paste("<font color=\"#005BBB\"; size=\"+2\"><b>", sitename, "</b></font>")})
   }else{
@@ -393,6 +396,9 @@ updateSiteName <- function(numero, sitename){
 }
 
 updateDescTemp <- function(sitetype){
+  name <- paste("Site no.", input$selectsite)
+  index <- which(listsite$site == name)
+  listsite[index, 4] <<- as.integer(input$sitetype)
   if(sitetype == 1){
     updateTextAreaInput(session, "descqual", "DESCRIPTION DES IMPACTS", placeholder = "Nature, emprise, effets indirects...")
     updateTextAreaInput(session, "tempo", "TEMPORALITE DES IMPACTS", placeholder = "Plusieurs phases? Court/long terme...")
@@ -409,6 +415,7 @@ updateDescTemp <- function(sitetype){
     shinyjs::hide("presencespecies")
     shinyjs::hide("presencehabitat")
   }
+  updateListSiteImpactCompens()
 }
 
 updateListSite <- function(inplace=FALSE){
@@ -419,4 +426,22 @@ updateListSite <- function(inplace=FALSE){
   }
   if(inplace) updateSelectInput(session, "selectsite", choices = showlist, selected = input$selectsite)
   else updateSelectInput(session, "selectsite", choices = showlist, selected = showlist[[length(showlist)]])
+}
+
+updateListSiteImpactCompens <- function(){
+  showlistimpact <- list()
+  showlistcompens <- list()
+  showlistimpact[['-']] <- 0
+  showlistcompens[['-']] <- 0
+  for(i in 1:dim(listsite)[1]){
+    if(listsite[i,3] != "NA" & listsite[i,3] != ""){
+      if(listsite[i,4] == 1 | listsite[i,4] == 3) showlistimpact[[listsite[i,3]]] <- listsite[i,2]
+      if (listsite[i,4] == 2 | listsite[i,4] == 3) showlistcompens[[listsite[i,3]]] <- listsite[i,2]
+    }else{
+      if(listsite[i,4] == 1 | listsite[i,4] == 3) showlistimpact[[listsite[i,1]]] <- listsite[i,2]
+      if (listsite[i,4] == 2 | listsite[i,4] == 3) showlistcompens[[listsite[i,1]]] <- listsite[i,2]
+    }
+  }
+  updateSelectInput(session, "selectsiteimpact", choices = showlistimpact, selected = showlistimpact[[length(showlistimpact)]])
+  updateSelectInput(session, "selectsitecompens", choices = showlistcompens, selected = showlistcompens[[length(showlistcompens)]])
 }

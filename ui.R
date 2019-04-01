@@ -122,9 +122,13 @@ shinyUI(fluidPage(title="ECOVAL",
                                        # leafletOutput("projectmap")
                                       ),
                               # SITE IMPACTE ----------------------------------------------
-                              tabPanel(value="impact", HTML('<h4 style="color: #005BBB; "><b>Site impacté</b></h4>')),
+                              tabPanel(value="siteimpact", HTML('<h4 style="color: #005BBB; "><b>Site impacté</b></h4>'), br(),
+                                       selectInput("selectsiteimpact", label = "SELECTIONNER LE SITE", choices = list("-" = 0), selected = 0), hr()
+                              ),
                               # SITE COMPENSATOIRE ----------------------------------------------
-                              tabPanel(value="compens", HTML('<h4 style="color: #005BBB; "><b>Site compensatoire</b></h4>')),
+                              tabPanel(value="compens", HTML('<h4 style="color: #005BBB; "><b>Site compensatoire</b></h4>'), br(),
+                                      selectInput("selectsitecompens", label = "SELECTIONNER LE SITE", choices = list("-" = 0), selected = 0), hr()
+                              ),
                               # EQUIVALENCE ----------------------------------------------
                               tabPanel(value="equival", HTML('<h4 style="color: #005BBB; "><b>Equivalence</b></h4>')),
                               # FICHE DE SYNTHESE ----------------------------------------------
