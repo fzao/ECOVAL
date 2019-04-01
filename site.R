@@ -445,3 +445,7 @@ updateListSiteImpactCompens <- function(){
   updateSelectInput(session, "selectsiteimpact", choices = showlistimpact, selected = showlistimpact[[length(showlistimpact)]])
   updateSelectInput(session, "selectsitecompens", choices = showlistcompens, selected = showlistcompens[[length(showlistcompens)]])
 }
+
+output$SItable1 <- renderDataTable({
+  iris
+})
