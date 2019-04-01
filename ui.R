@@ -125,28 +125,30 @@ shinyUI(fluidPage(title="ECOVAL",
                               # SITE IMPACTE ----------------------------------------------
                               tabPanel(value="siteimpact", HTML('<h4 style="color: #005BBB; "><b>Site impacté</b></h4>'), br(),
                                        selectInput("selectsiteimpact", label = "SELECTIONNER LE SITE", choices = list("-" = 0), selected = 0), hr(),
-                                       tabsetPanel(id="descrimpact",
-                                                   tabPanel(HTML('<h4 style="color: #005BBB; ">Entrée des données</h4>'), value="impactindata", br(),
-                                                            fluidRow(column(12, align="center", HTML('<h4 style="color: #A5C226; ">LISTE DES HABITATS</h4>'))), br(),
-                                                            fluidRow(column(3, algin="left", textInput("SInamehabitat", "Nom habitat")),
-                                                                     column(3, algin="left", textInput("SIcodecorine", "Code Corine")),
-                                                                     column(3, algin="left", textInput("SIcodeeunis", "Code Eunis")),
-                                                                     column(3, algin="left", numericInput("SIsurface", "Surface", value = 0., min = 0., step = 0.01))),
-                                                            fluidRow(column(3, algin="left", selectInput("SItype", label = "Type", choices = list("Fermé" = 1, "Ouvert" = 2, "Buissonnant" = 3, "Zone humide" = 4, "Aquatique" = 5, "Rocheux" = 6, "Cultivé" = 7, "Imperméabilisé" = 8))),
-                                                                     column(3, algin="left", selectInput("SIetat", label = "Etat conservation", choices = list("Bon" = 1, "Mauvais" = 2, "Moyen" = 3))),
-                                                                     column(3, algin="left", selectInput("SIinteret", label = "Intérêt communautaire", choices = list("Oui" = 1, "Non" = 2))),
-                                                                     column(3, algin="left", selectInput("SImenace", label = "En danger ou menacé localement", choices = list("Oui" = 1, "Non" = 2)))),
-                                                            fluidRow(column(3, align="left", numericInput("SIsurfacedeg", "Surface dégradée", value = 0., min = 0., step = 0.01)))
-                                                                     
-                                                   ),
-                                                   tabPanel(HTML('<h4 style="color: #005BBB; ">Indicateurs NG</h4>'), value="impactindicng", br(),fluidRow()
-                                                   ),
-                                                   tabPanel(HTML('<h4 style="color: #005BBB; ">Indicateurs NH</h4>'), value="impactindicnh", br(),fluidRow()
-                                                   ),
-                                                   tabPanel(HTML('<h4 style="color: #005BBB; ">Indicateurs NSp</h4>'), value="impactindicnsp", br(),fluidRow()
-                                                   )
-                                       ),
-                                       DT::dataTableOutput("SItable1")
+                                       conditionalPanel(condition = "input.selectsiteimpact != '0'",
+                                         tabsetPanel(id="descrimpact",
+                                                     tabPanel(HTML('<h4 style="color: #005BBB; ">Entrée des données</h4>'), value="impactindata", br(),
+                                                              fluidRow(column(12, align="center", HTML('<h4 style="color: #A5C226; ">LISTE DES HABITATS</h4>'))), br(),
+                                                              fluidRow(column(3, algin="left", textInput("SInamehabitat", "Nom habitat")),
+                                                                       column(3, algin="left", textInput("SIcodecorine", "Code Corine")),
+                                                                       column(3, algin="left", textInput("SIcodeeunis", "Code Eunis")),
+                                                                       column(3, algin="left", numericInput("SIsurface", "Surface", value = 0., min = 0., step = 0.01))),
+                                                              fluidRow(column(3, algin="left", selectInput("SItype", label = "Type", choices = list("Fermé" = 1, "Ouvert" = 2, "Buissonnant" = 3, "Zone humide" = 4, "Aquatique" = 5, "Rocheux" = 6, "Cultivé" = 7, "Imperméabilisé" = 8))),
+                                                                       column(3, algin="left", selectInput("SIetat", label = "Etat conservation", choices = list("Bon" = 1, "Mauvais" = 2, "Moyen" = 3))),
+                                                                       column(3, algin="left", selectInput("SIinteret", label = "Intérêt communautaire", choices = list("Oui" = 1, "Non" = 2))),
+                                                                       column(3, algin="left", selectInput("SImenace", label = "En danger ou menacé localement", choices = list("Oui" = 1, "Non" = 2)))),
+                                                              fluidRow(column(3, align="left", numericInput("SIsurfacedeg", "Surface dégradée", value = 0., min = 0., step = 0.01)))
+                                                                       
+                                                     ),
+                                                     tabPanel(HTML('<h4 style="color: #005BBB; ">Indicateurs NG</h4>'), value="impactindicng", br(),fluidRow()
+                                                     ),
+                                                     tabPanel(HTML('<h4 style="color: #005BBB; ">Indicateurs NH</h4>'), value="impactindicnh", br(),fluidRow()
+                                                     ),
+                                                     tabPanel(HTML('<h4 style="color: #005BBB; ">Indicateurs NSp</h4>'), value="impactindicnsp", br(),fluidRow()
+                                                     )
+                                         ),
+                                         DT::dataTableOutput("SItable1")
+                                       )
                               ),
                               # SITE COMPENSATOIRE ----------------------------------------------
                               tabPanel(value="compens", HTML('<h4 style="color: #005BBB; "><b>Site compensatoire</b></h4>'), br(),
