@@ -82,7 +82,7 @@ shinyServer(function(input, output, session) {
         paste(input$projectname, '.xlsx', sep='')
       }
     },
-    content = function(con) { # CFZ: Boucles d'ecriture a simplifier a partir de 'listesite'!!!
+    content = function(con) {
       nbsite <- dim(listsite)[1] - 1
       nbspecies <- dim(listspecies)[1] - 1
       nbhabitats <- dim(listhabitat)[1] - 1
@@ -93,35 +93,32 @@ shinyServer(function(input, output, session) {
       s <- 1
       e <- 1
       h <- 1
-      # si <- 0
-      if(length(ecoval) > 1){
-        for(i in 2:length(ecoval)){
-          if(grepl("Site", names(ecoval)[i])){
-            name <- paste("Site no.", as.character(s))
-            write.xlsx2(ecoval[[i]], con, sheetName = name, row.names = FALSE, col.names = FALSE, append = TRUE)
-            s <- s + 1
-            # if(ecoval[[i]][2,2] == "1" | ecoval[[i]][2,2] == "3") si <- si + 1
-          }
-        }
-        # if(si > 0){
-        #   for(i in 1:si){
-        #     name <- paste("SIA1 no.", as.character(i))
-        #     write.xlsx2(ecoval[[name]], con, sheetName = name, row.names = FALSE, append = TRUE)
-        #   }
-        # }
-        for(i in 2:length(ecoval)){
-          if(grepl("Espece", names(ecoval)[i])){
-            write.xlsx2(ecoval[[i]], con, sheetName = paste("Espece", as.character(e)), row.names = FALSE, col.names = FALSE, append = TRUE)
-            e <- e + 1
-          }
-        }
-        for(i in 2:length(ecoval)){
-          if(grepl("Habitat", names(ecoval)[i])){
-            write.xlsx2(ecoval[[i]], con, sheetName = paste("Habitat", as.character(h)), row.names = FALSE, col.names = FALSE, append = TRUE)
-            h <- h + 1
-          }
+      nbsite <- dim(listsite)[1] - 1
+      if(nbsite > 0){
+        for(i in 1:nbsite){
+          index <- listsite[1+i,2]
+          name <- paste("Site no.", as.character(s))
+          write.xlsx2(ecoval[[listsite[1+i,1]]], con, sheetName = name, row.names = FALSE, col.names = FALSE, append = TRUE)
+          s <- s + 1
         }
       }
+      nbspecies <- dim(listspecies)[1] - 1
+      if(nbspecies > 0){
+        for(i in 1:nbspecies){
+          name <- paste("Espece", as.character(e))
+          write.xlsx2(ecoval[[listspecies[1+i,1]]], con, sheetName = name, row.names = FALSE, col.names = FALSE, append = TRUE)
+          e <- e + 1
+        }
+      }
+      nbhabitat <- dim(listhabitat)[1] - 1
+      if(nbhabitat > 0){
+        for(i in 1:nbhabitat){
+          name <- paste("Habitat", as.character(h))
+          write.xlsx2(ecoval[[listhabitat[1+i,1]]], con, sheetName = paste("Habitat", as.character(h)), row.names = FALSE, col.names = FALSE, append = TRUE)
+          h <- h + 1
+        }
+      }
+
     }
   )
   
