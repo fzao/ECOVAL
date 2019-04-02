@@ -256,6 +256,8 @@ observeEvent(input$new, {
   #cfz updateTabsetPanel(session, "prjtabs", selected = "description")
   # clean window
   cleanWindow()
+  # SIC
+  newSICX()
 })
 
 observeEvent(input$delete, {
@@ -334,24 +336,24 @@ observeEvent(input$selectsite, {
 })
 
 observeEvent(input$sitename, {
-  saveSite(as.integer(input$selectsite))
+  saveSite(input$selectsite)
   updateSiteName(input$selectsite, input$sitename)})
 observeEvent(input$sitetype, {
-  saveSite(as.integer(input$selectsite))
+  saveSite(input$selectsite)
   updateDescTemp(input$sitetype)})
-observeEvent(input$surface, {saveSite(as.integer(input$selectsite))})
-observeEvent(input$latitude, {saveSite(as.integer(input$selectsite))})
-observeEvent(input$longitude, {saveSite(as.integer(input$selectsite))})
-observeEvent(input$sitecontext, {saveSite(as.integer(input$selectsite))})
-observeEvent(input$descqual, {saveSite(as.integer(input$selectsite))})
-observeEvent(input$tempo, {saveSite(as.integer(input$selectsite))})
-observeEvent(input$duree, {saveSite(as.integer(input$selectsite))})
-observeEvent(input$intensite, {saveSite(as.integer(input$selectsite))})
-observeEvent(input$portee, {saveSite(as.integer(input$selectsite))})
+observeEvent(input$surface, {saveSite(input$selectsite)})
+observeEvent(input$latitude, {saveSite(input$selectsite)})
+observeEvent(input$longitude, {saveSite(input$selectsite)})
+observeEvent(input$sitecontext, {saveSite(input$selectsite)})
+observeEvent(input$descqual, {saveSite(input$selectsite)})
+observeEvent(input$tempo, {saveSite(input$selectsite)})
+observeEvent(input$duree, {saveSite(input$selectsite)})
+observeEvent(input$intensite, {saveSite(input$selectsite)})
+observeEvent(input$portee, {saveSite(input$selectsite)})
 
 saveSite <- function(numero){
   if(numero > 0){
-    name <- paste("Site no.", as.character(numero))
+    name <- paste("Site no.", numero)
     ecoval[[name]][1,2] <<- input$sitename
     ecoval[[name]][2,2] <<- input$sitetype
     ecoval[[name]][3,2] <<- input$surface
@@ -446,6 +448,26 @@ updateListSiteImpactCompens <- function(){
   updateSelectInput(session, "selectsitecompens", choices = showlistcompens, selected = showlistcompens[[length(showlistcompens)]])
 }
 
+newSICX <- function(){
+  numsite <- input$selectsite
+  type <- input$sitetype
+  if(type == "1" | type == "3"){  # impacte
+    # A1
+    newname <- paste("SIA1 no.", as.character(numsite))
+    # create new DF
+    ecoval[[newname]] <<- model_A1
+  }
+  if(type == "2" | type == "3"){  # compensatoire
+    
+  }
+  
+}
+
+
+
 output$SItable1 <- renderDataTable({
-  iris
+  numsite <- input$selectsite
+  name <- paste("SIA1 no.", as.character(numsite))
+  print(ecoval[[name]])
+  ecoval[[name]]
 })

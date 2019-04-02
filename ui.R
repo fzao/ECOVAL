@@ -147,6 +147,7 @@ shinyUI(fluidPage(title="ECOVAL",
                                                      tabPanel(HTML('<h4 style="color: #005BBB; ">Indicateurs NSp</h4>'), value="impactindicnsp", br(),fluidRow()
                                                      )
                                          ),
+                                         fluidRow(column(6, align="right", actionButton("addlisthab", "AJOUTER")), column(6, align="left", actionButton("dellisthab", "SUPRRIMER"))), br(),
                                          DT::dataTableOutput("SItable1")
                                        )
                               ),
