@@ -137,7 +137,9 @@ shinyUI(fluidPage(title="ECOVAL",
                                                                        column(3, algin="left", selectInput("SIetat", label = "Etat conservation", choices = list("Bon" = 1, "Mauvais" = 2, "Moyen" = 3))),
                                                                        column(3, algin="left", selectInput("SIinteret", label = "Intérêt communautaire", choices = list("Oui" = 1, "Non" = 2))),
                                                                        column(3, algin="left", selectInput("SImenace", label = "En danger ou menacé localement", choices = list("Oui" = 1, "Non" = 2)))),
-                                                              fluidRow(column(3, align="left", numericInput("SIsurfacedeg", "Surface dégradée", value = 0., min = 0., step = 0.01)))
+                                                              fluidRow(column(3, align="left", numericInput("SIsurfacedeg", "Surface dégradée", value = 0., min = 0., step = 0.01))),
+                                                              fluidRow(column(6, align="right", actionButton("addlisthab", "AJOUTER")), column(6, align="left", actionButton("dellisthab", "SUPRRIMER"))), br(),
+                                                              DT::dataTableOutput("SItable1")
                                                                        
                                                      ),
                                                      tabPanel(HTML('<h4 style="color: #005BBB; ">Indicateurs NG</h4>'), value="impactindicng", br(),fluidRow()
@@ -146,9 +148,7 @@ shinyUI(fluidPage(title="ECOVAL",
                                                      ),
                                                      tabPanel(HTML('<h4 style="color: #005BBB; ">Indicateurs NSp</h4>'), value="impactindicnsp", br(),fluidRow()
                                                      )
-                                         ),
-                                         fluidRow(column(6, align="right", actionButton("addlisthab", "AJOUTER")), column(6, align="left", actionButton("dellisthab", "SUPRRIMER"))), br(),
-                                         DT::dataTableOutput("SItable1")
+                                         )
                                        )
                               ),
                               # SITE COMPENSATOIRE ----------------------------------------------
