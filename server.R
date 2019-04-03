@@ -183,18 +183,6 @@ shinyServer(function(input, output, session) {
     }
     updateListSite()
     updateListSiteImpactCompens()
-    # showlist <- list()
-    # for(i in 1:dim(listspecies)[1]){
-    #   if(listspecies[i,3] != "NA" & listspecies[i,3] != "") showlist[[listspecies[i,3]]] <- listspecies[i,2]
-    #   else showlist[[listspecies[i,1]]] <- listspecies[i,2]
-    # }
-    # updateSelectInput(session, "selectspecies", choices = showlist, selected = showlist[[length(showlist)]])
-    # showlist <- list()
-    # for(i in 1:dim(listhabitat)[1]){
-    #   if(listhabitat[i,3] != "NA" & listhabitat[i,3] != "") showlist[[listhabitat[i,3]]] <- listhabitat[i,2]
-    #   else showlist[[listhabitat[i,1]]] <- listhabitat[i,2]
-    # }
-    # updateSelectInput(session, "selecthabitat", choices = showlist, selected = showlist[[length(showlist)]])
   })
   
   observeEvent(input$link1, {
