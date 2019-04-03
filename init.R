@@ -18,8 +18,10 @@
 model_info_general <- read.xlsx2('model/ECOVAL.xlsx', sheetIndex = 1, header = FALSE, stringsAsFactors = FALSE)
 model_site <- read.xlsx2('model/ECOVAL.xlsx', sheetIndex = 2, header = FALSE, stringsAsFactors = FALSE)
 model_A1 <- read.xlsx2('model/ECOVAL.xlsx', sheetIndex = 3, header = TRUE, stringsAsFactors = FALSE)
-model_species <- read.xlsx2('model/ECOVAL.xlsx', sheetIndex = 4, header = FALSE, stringsAsFactors = FALSE)
-model_habitat <- read.xlsx2('model/ECOVAL.xlsx', sheetIndex = 5, header = FALSE, stringsAsFactors = FALSE)
+model_A2 <- read.xlsx2('model/ECOVAL.xlsx', sheetIndex = 4, header = TRUE, stringsAsFactors = FALSE)
+model_species <- read.xlsx2('model/ECOVAL.xlsx', sheetIndex = 5, header = FALSE, stringsAsFactors = FALSE)
+model_habitat <- read.xlsx2('model/ECOVAL.xlsx', sheetIndex = 6, header = FALSE, stringsAsFactors = FALSE)
+SSI <- readRDS('data/Species_SSI.rds')
 ecoval <- list()
 ecoval[["General"]] <- model_info_general
 numsite <- 0
@@ -28,8 +30,14 @@ numhabitat <- 0
 listsite <- data.frame("site" = '-', "index" = 0, "name" = '-', "type" = 0, stringsAsFactors=FALSE)
 listspecies <- data.frame("species" = '-', "index" = 0, "name" = '-', stringsAsFactors=FALSE)
 listhabitat <- data.frame("habitat" = '-', "index" = 0, "name" = '-', stringsAsFactors=FALSE)
-tableau <- reactiveValues(A1=NULL)
+tableau <- reactiveValues(A1=NULL, A2=NULL)
 tableau$A1 <- model_A1
 A1listtype <- list("1"="Fermé" , "2"="Ouvert", "3"="Buissonnant", "4"="Zone humide", "5"="Aquatique", "6"="Rocheux", "7"="Cultivé", "8"="Imperméabilisé")
 A1listetat <- list("1"="Bon", "2"="Mauvais", "3"="Moyen")
 A1listinter <- list("1"="Oui", "2"="Non")
+tableau$A2 <- model_A2
+A2listtype1 <- list("1"="Avifaune","2"="Chiroptère","3"="Mammifère","4"="Amphibien","5"="Reptile","6"="Insecte","7"="Flore","8"="Poisson","9"="Crustacé/Mollusque")
+A2listtype2 <- list("0"="-","1"="Cortège forestier","2"="Cortège agricole","3"="Cortège du bâti","4"="Cortège généraliste","5"="Odonate","6"="Lépidoptère","7"="Orthoptère","8"="Coléoptère")
+A2listprot <- list("1"="Oui", "2"="Non")
+A2listdir <- list("0"="-","1"="Annexe II DFFH","2"="Annexe I DO")
+A2listrepro <- list("0"="-","1"="Certaine","2"="Possible")

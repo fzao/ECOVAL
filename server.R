@@ -104,6 +104,9 @@ shinyServer(function(input, output, session) {
             name <- paste("SIA1 no.", as.character(s))
             siname <- paste("SIA1 no.", as.character(index))
             write.xlsx2(ecoval[[siname]], con, sheetName = name, row.names = FALSE, col.names = TRUE, append = TRUE)
+            name <- paste("SIA2 no.", as.character(s))
+            siname <- paste("SIA2 no.", as.character(index))
+            write.xlsx2(ecoval[[siname]], con, sheetName = name, row.names = FALSE, col.names = TRUE, append = TRUE)
           }
           s <- s + 1
         }
@@ -153,7 +156,9 @@ shinyServer(function(input, output, session) {
       listsite <<- rbind(listsite, newsite)
       if(ecoval[[name]][2,2] == "1" | ecoval[[name]][2,2] == "3"){ # site impacte
         siname <- paste("SIA1 no.", as.character(i))
-        ecoval[[siname]] <<- read.xlsx2(inFile$datapath, sheetName = siname, header = TRUE, stringsAsFactors = FALSE) 
+        ecoval[[siname]] <<- read.xlsx2(inFile$datapath, sheetName = siname, header = TRUE, stringsAsFactors = FALSE)
+        siname <- paste("SIA2 no.", as.character(i))
+        ecoval[[siname]] <<- read.xlsx2(inFile$datapath, sheetName = siname, header = TRUE, stringsAsFactors = FALSE)
       }
       
     }
@@ -495,6 +500,8 @@ shinyServer(function(input, output, session) {
     else updateSelectInput(session, "selectsite", choices = showlist, selected = showlist[[length(showlist)]])
   }
   
+  
+  ## SI
   updateListSiteImpactCompens <- function(){
     showlistimpact <- list()
     showlistcompens <- list()
@@ -516,7 +523,9 @@ shinyServer(function(input, output, session) {
   observeEvent(input$selectsiteimpact, {
     # restore ecoval
     name <- paste("SIA1 no.", as.character(input$selectsiteimpact))
-    tableau$A1 <- ecoval[[name]] 
+    tableau$A1 <- ecoval[[name]]
+    name <- paste("SIA2 no.", as.character(input$selectsiteimpact))
+    tableau$A2 <- ecoval[[name]]
   })
   
   newSICX <- function(numsite){
@@ -524,8 +533,11 @@ shinyServer(function(input, output, session) {
     if(type == "1" | type == "3"){  # impacte
       # A1
       newname <- paste("SIA1 no.", numsite)
-      # create new DF
-      ecoval[[newname]] <<- model_A1
+      ecoval[[newname]] <<- model_A1  # create new DF
+      # A2
+      newname <- paste("SIA2 no.", numsite)
+      ecoval[[newname]] <<- model_A2  # create new DF
+      
     }
     if(type == "2" | type == "3"){  # compensatoire
       
@@ -537,14 +549,17 @@ shinyServer(function(input, output, session) {
     if(type == "1" | type == "3"){  # impacte
       # A1
       newname <- paste("SIA1 no.", numsite)
-      # delete DF
-      ecoval[[newname]] <<- NULL
+      ecoval[[newname]] <<- NULL  # delete DF
+      # A2
+      newname <- paste("SIA2 no.", numsite)
+      ecoval[[newname]] <<- NULL  # delete DF
     }
     if(type == "2" | type == "3"){  # compensatoire
       
     }
   }
   
+  ## SI A1
   observeEvent(input$addlisthab,{
     # data
     newDF <- data.frame(
@@ -565,7 +580,7 @@ shinyServer(function(input, output, session) {
   })
   
   observeEvent(input$dellisthab,{
-    rs<- as.numeric(input$SItable1_rows_selected)
+    rs <- as.numeric(input$SItable1_rows_selected)
     if(length(rs) > 0){
       # update array visu
       tableau$A1 <- tableau$A1[-rs,]
@@ -579,5 +594,50 @@ shinyServer(function(input, output, session) {
      tableau$A1
   })
   
+  ## SI A2
+  observeEvent(input$addlistesp,{
+    # data
+    newDF <- data.frame(
+      "Nom.Latin"=input$SIlatinnamespecies,
+      "Nom.français"=input$SIfrenchnamespecies,
+      "Type.1"=as.character(A2listtype1[input$SItype1]),
+      "Type.2"=as.character(A2listtype2[input$SItype2]),
+      "Protection.nationale.ou.régionale"=as.character(A2listprot[input$SIprotect]),
+      "Liste.rouge..CR.VU.EN..France"=as.character(A2listprot[input$SIrougeF]),
+      "Liste.rouge..CR.VU.EN..Régional"=as.character(A2listprot[input$SIrougeR]),
+      "Directives.Européennes"=as.character(A2listdir[input$SIdirect]),
+      "Reproduction"=as.character(A2listrepro[input$SIreprod]),
+      "Indice.spécialisation"=SSI[as.integer(input$SIindssi)],
+      "TVB"=as.character(A2listprot[input$SItvb]),
+      "Déterminant.Znieff.dans.le.PE"=as.character(A2listprot[input$SIdet]),
+      "Espèce.Exotique.Envahissante"=as.character(A2listprot[input$SIexo]))
+    # array visu
+    tableau$A2 <- rbind(tableau$A2, newDF)
+    # save ecoval
+    name <- paste("SIA2 no.", as.character(input$selectsiteimpact))
+    ecoval[[name]] <<- tableau$A2
+  })
+  
+  observeEvent(input$dellistesp,{
+    rs <- as.numeric(input$SItable2_rows_selected)
+    if(length(rs) > 0){
+      # update array visu
+      tableau$A2 <- tableau$A2[-rs,]
+      # save ecoval
+      name <- paste("SIA2 no.", as.character(input$selectsiteimpact))
+      ecoval[[name]] <<- tableau$A2
+    }
+  })
+
+   output$SItable2 <- renderDataTable({
+     tableau$A2
+   })
+  
+  observeEvent(input$SItype1,{
+    if(input$SItype1 == "1") ltype2 <- list("Cortège forestier" = 1, "Cortège agricole" = 2, "Cortège du bâti" = 3, "Cortège généraliste" = 4)
+    else if(input$SItype1 == "6") ltype2 <- list("Odonate" = 5, "Lépidoptère" = 6, "Orthoptère" = 7, "Coléoptère" = 8)
+    else ltype2 <- list("-" = 0)
+    updateSelectInput(session, "SItype2", choices = ltype2, selected = ltype2[[1]])
+  })
   
 })
