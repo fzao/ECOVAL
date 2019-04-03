@@ -22,6 +22,8 @@ library(xlsx)
 library(DT)
 #library(leaflet)
 
+Species <- readRDS("model/Species_names.rds")
+
 # Define UI for application that draws a histogram
 shinyUI(fluidPage(title="ECOVAL",
                   useShinyjs(),
@@ -129,18 +131,37 @@ shinyUI(fluidPage(title="ECOVAL",
                                          tabsetPanel(id="descrimpact",
                                                      tabPanel(HTML('<h4 style="color: #005BBB; ">Entrée des données</h4>'), value="impactindata", br(),
                                                               fluidRow(column(12, align="center", HTML('<h4 style="color: #A5C226; ">LISTE DES HABITATS</h4>'))), br(),
-                                                              fluidRow(column(3, algin="left", textInput("SInamehabitat", "Nom habitat")),
-                                                                       column(3, algin="left", textInput("SIcodecorine", "Code Corine")),
-                                                                       column(3, algin="left", textInput("SIcodeeunis", "Code Eunis")),
-                                                                       column(3, algin="left", numericInput("SIsurface", "Surface", value = 0., min = 0., step = 0.01))),
-                                                              fluidRow(column(3, algin="left", selectInput("SItype", label = "Type", choices = list("Fermé" = 1, "Ouvert" = 2, "Buissonnant" = 3, "Zone humide" = 4, "Aquatique" = 5, "Rocheux" = 6, "Cultivé" = 7, "Imperméabilisé" = 8))),
-                                                                       column(3, algin="left", selectInput("SIetat", label = "Etat conservation", choices = list("Bon" = 1, "Mauvais" = 2, "Moyen" = 3))),
-                                                                       column(3, algin="left", selectInput("SIinteret", label = "Intérêt communautaire", choices = list("Oui" = 1, "Non" = 2))),
-                                                                       column(3, algin="left", selectInput("SImenace", label = "En danger ou menacé localement", choices = list("Oui" = 1, "Non" = 2)))),
+                                                              fluidRow(column(3, align="left", textInput("SInamehabitat", "Nom habitat")),
+                                                                       column(3, align="left", textInput("SIcodecorine", "Code Corine")),
+                                                                       column(3, align="left", textInput("SIcodeeunis", "Code Eunis")),
+                                                                       column(3, align="left", numericInput("SIsurface", "Surface", value = 0., min = 0., step = 0.01))),
+                                                              fluidRow(column(3, align="left", selectInput("SItype", label = "Type", choices = list("Fermé" = 1, "Ouvert" = 2, "Buissonnant" = 3, "Zone humide" = 4, "Aquatique" = 5, "Rocheux" = 6, "Cultivé" = 7, "Imperméabilisé" = 8))),
+                                                                       column(3, align="left", selectInput("SIetat", label = "Etat conservation", choices = list("Bon" = 1, "Mauvais" = 2, "Moyen" = 3))),
+                                                                       column(3, align="left", selectInput("SIinteret", label = "Intérêt communautaire", choices = list("Oui" = 1, "Non" = 2))),
+                                                                       column(3, align="left", selectInput("SImenace", label = "En danger ou menacé localement", choices = list("Oui" = 1, "Non" = 2)))),
                                                               fluidRow(column(3, align="left", numericInput("SIsurfacedeg", "Surface dégradée", value = 0., min = 0., step = 0.01))),
                                                               fluidRow(column(6, align="right", actionButton("addlisthab", "AJOUTER")), column(6, align="left", actionButton("dellisthab", "SUPRRIMER"))), br(),
-                                                              DT::dataTableOutput("SItable1")
+                                                              DT::dataTableOutput("SItable1"), br(), hr(), br(), 
+                                                              fluidRow(column(12, align="center", HTML('<h4 style="color: #A5C226; ">LISTE DES ESPECES</h4>'))), br(),
+                                                              fluidRow(column(2, align="left", textInput("SIlatinnamespecies", "Nom latin")),
+                                                                       column(2, align="left", textInput("SIfrenchnamespecies", "Nom français")),
+                                                                       column(2, align="left", selectInput("SItype1", label = "Type 1", choices = list("Avifaune" = 1, "Chiroptère" = 2, "Mammifère" = 3, "Amphibien" = 4, "Reptile" = 5, "Insecte" = 6, "Flore" = 7, "Poisson" = 8, "Crustacé/Mollusque" = 9))),
+                                                                       column(2, align="left", selectInput("SItype2", label = "Type 2", choices = list("Cortège forestier" = 1, "Cortège agricole" = 2, "Cortège du bâti" = 3, "Cortège généraliste" = 4, "Odonate" = 5, "Lépidoptère" = 6, "Orthoptère" = 7, "Coléoptère" = 8))),
+                                                                       column(2, align="left", selectInput("SIprotect", label = "Protection nationale ou régionale", choices = list("Oui" = 1, "Non" = 2))),
+                                                                       column(2, align="left", selectInput("SIrougeF", label = "Liste rouge (CR,VU,EN) France", choices = list("Oui" = 1, "Non" = 2)))),
+                                                              fluidRow(column(2, align="left", selectInput("SIrougeR", label = "Liste rouge (CR,VU,EN) Régional", choices = list("Oui" = 1, "Non" = 2))),
+                                                                       column(2, align="left", selectInput("SIdirect", label = "Directives Européennes", choices = list("-" = 0, "Annexe II DFFH" = 1, "Annexe I DO" = 2))),
+                                                                       column(2, align="left", selectInput("SIreprod", label = "Reproduction", choices = list("-" = 0, "Certaine" = 1, "Possible" = 2))),
+                                                                       column(2, align="left", selectInput("SIindssi", label = "Indice spécialisation", choices = split(seq_along(Species), Species))),
+                                                                       column(2, align="left", selectInput("SItvb", label = "TVB", choices = list("Oui" = 1, "Non" = 2))),
+                                                                       column(2, align="left", selectInput("SIdet", label = "Déterminant Znieff dans le PE", choices = list("Oui" = 1, "Non" = 2)))),
+                                                              fluidRow(column(2, align="left", selectInput("SIexo", label = "Espèce Exotique Envahissante", choices = list("Oui" = 1, "Non" = 2)))),
+                                                              fluidRow(column(6, align="right", actionButton("addlistesp", "AJOUTER")), column(6, align="left", actionButton("dellistesp", "SUPRRIMER"))), br(),
+                                                              DT::dataTableOutput("SItable2"), br(), hr(), br()
                                                                        
+                                                                       
+                                                                       
+                                                                               
                                                      ),
                                                      tabPanel(HTML('<h4 style="color: #005BBB; ">Indicateurs NG</h4>'), value="impactindicng", br(),fluidRow()
                                                      ),
