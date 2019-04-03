@@ -93,12 +93,18 @@ shinyServer(function(input, output, session) {
       s <- 1
       e <- 1
       h <- 1
+      si <- 0
       nbsite <- dim(listsite)[1] - 1
       if(nbsite > 0){
         for(i in 1:nbsite){
           index <- listsite[1+i,2]
           name <- paste("Site no.", as.character(s))
           write.xlsx2(ecoval[[listsite[1+i,1]]], con, sheetName = name, row.names = FALSE, col.names = FALSE, append = TRUE)
+          if(ecoval[[listsite[1+i,1]]][2,2] == "1" | ecoval[[listsite[1+i,1]]][2,2] == "3"){ # info specifique site impacte
+            name <- paste("SIA1 no.", as.character(s))
+            siname <- paste("SIA1 no.", as.character(index))
+            write.xlsx2(ecoval[[siname]], con, sheetName = name, row.names = FALSE, col.names = TRUE, append = TRUE)
+          }
           s <- s + 1
         }
       }
@@ -145,6 +151,11 @@ shinyServer(function(input, output, session) {
       ecoval[[name]] <<- read.xlsx2(inFile$datapath, sheetName = name, header = FALSE, stringsAsFactors = FALSE)
       newsite <- data.frame("site" = name, "index" = i, "name" = ecoval[[name]][1,2], "type" = as.integer(ecoval[[name]][2,2]))
       listsite <<- rbind(listsite, newsite)
+      if(ecoval[[name]][2,2] == "1" | ecoval[[name]][2,2] == "3"){ # site impacte
+        siname <- paste("SIA1 no.", as.character(i))
+        ecoval[[siname]] <<- read.xlsx2(inFile$datapath, sheetName = siname, header = TRUE, stringsAsFactors = FALSE) 
+      }
+      
     }
     numspecies <<- as.integer(ecoval$General[5,2])
     if(numspecies > 0) for(i in 1:numspecies){
@@ -373,16 +384,16 @@ shinyServer(function(input, output, session) {
       if(exists(name, where = ecoval)){
         cleanWindow()
         if(ecoval[[name]][1,2] != "NA") updateTextInput(session, "sitename", value = ecoval[[name]][1,2])
-        if(ecoval[[name]][2,2] != "NA") updateSelectInput(session, "sitetype", selected = as.integer(ecoval[[name]][2,2]))
+        if(ecoval[[name]][2,2] != "NA") updateSelectInput(session, "sitetype", selected = ecoval[[name]][2,2])
         if(ecoval[[name]][3,2] != "NA") updateNumericInput(session, "surface", value = as.numeric(ecoval[[name]][3,2]))
         if(ecoval[[name]][4,2] != "NA") updateNumericInput(session, "latitude", value = as.numeric(ecoval[[name]][4,2]))
         if(ecoval[[name]][5,2] != "NA") updateNumericInput(session, "longitude", value = as.numeric(ecoval[[name]][5,2]))
         if(ecoval[[name]][6,2] != "NA") updateTextAreaInput(session, "sitecontext", value = ecoval[[name]][6,2])
         if(ecoval[[name]][7,2] != "NA") updateTextAreaInput(session, "descqual", value = ecoval[[name]][7,2])
         if(ecoval[[name]][8,2] != "NA") updateTextAreaInput(session, "tempo", value = ecoval[[name]][8,2])
-        if(ecoval[[name]][9,2] != "NA") updateSelectInput(session, "duree", selected = as.integer(ecoval[[name]][9,2]))
-        if(ecoval[[name]][10,2] != "NA") updateSelectInput(session, "intensite", selected = as.integer(ecoval[[name]][10,2]))
-        if(ecoval[[name]][11,2] != "NA") updateSelectInput(session, "portee", selected = as.integer(ecoval[[name]][11,2]))
+        if(ecoval[[name]][9,2] != "NA") updateSelectInput(session, "duree", selected = ecoval[[name]][9,2])
+        if(ecoval[[name]][10,2] != "NA") updateSelectInput(session, "intensite", selected = ecoval[[name]][10,2])
+        if(ecoval[[name]][11,2] != "NA") updateSelectInput(session, "portee", selected = ecoval[[name]][11,2])
         updateListSpecies(name)
         updateListHabitat(name)
       }
