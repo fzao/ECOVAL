@@ -132,8 +132,8 @@ shinyUI(fluidPage(title="ECOVAL",
                                                      tabPanel(HTML('<h4 style="color: #005BBB; ">Entrée des données</h4>'), value="impactindata", br(),
                                                               fluidRow(column(12, align="center", HTML('<h4 style="color: #A5C226; ">LISTE DES HABITATS</h4>'))), br(),
                                                               fluidRow(column(3, align="left", textInput("SInamehabitat", "Nom habitat")),
-                                                                       column(3, align="left", textInput("SIcodecorine", "Code Corine")),
-                                                                       column(3, align="left", textInput("SIcodeeunis", "Code Eunis")),
+                                                                       column(3, align="left", textInput("SIcodecorine", "Code Corine", placeholder = "ex. : 41.12")),
+                                                                       column(3, align="left", textInput("SIcodeeunis", "Code Eunis", placeholder = "ex. : G1.21")),
                                                                        column(3, align="left", numericInput("SIsurface", "Surface", value = 0., min = 0., step = 0.01))),
                                                               fluidRow(column(3, align="left", selectInput("SItype", label = "Type", choices = list("Fermé" = 1, "Ouvert" = 2, "Buissonnant" = 3, "Zone humide" = 4, "Aquatique" = 5, "Rocheux" = 6, "Cultivé" = 7, "Imperméabilisé" = 8))),
                                                                        column(3, align="left", selectInput("SIetat", label = "Etat conservation", choices = list("Bon" = 1, "Mauvais" = 2, "Moyen" = 3))),
@@ -157,11 +157,14 @@ shinyUI(fluidPage(title="ECOVAL",
                                                                        column(2, align="left", selectInput("SIdet", label = "Déterminant Znieff dans le PE", choices = list("Oui" = 1, "Non" = 2)))),
                                                               fluidRow(column(2, align="left", selectInput("SIexo", label = "Espèce Exotique Envahissante", choices = list("Oui" = 1, "Non" = 2)))),
                                                               fluidRow(column(6, align="right", actionButton("addlistesp", "AJOUTER")), column(6, align="left", actionButton("dellistesp", "SUPRRIMER"))), br(),
-                                                              DT::dataTableOutput("SItable2"), br(), hr(), br()
-                                                                       
-                                                                       
-                                                                       
-                                                                               
+                                                              DT::dataTableOutput("SItable2"), br(), hr(), br(),
+                                                              fluidRow(column(12, align="center", HTML('<h4 style="color: #A5C226; ">PERIMETRE ELARGI</h4>'))), br(),
+                                                              fluidRow(column(3, align="left", selectInput("SIpertype", label = "Type", choices = list("Fermé" = 1, "Ouvert" = 2, "Buissonnant" = 3, "Zone Humide" =4))),
+                                                                       column(3, align="left", textInput("SIpercouche", "Couche SIG EUNIS", placeholder = "ex. : 41 (forêt décidue)")),
+                                                                       column(3, align="left", textInput("SIpercode", "Code SIG OSO", placeholder = "ex. : 34 (pelouse)")),
+                                                                       column(3, align="left", numericInput("SIpersurf", "Surface", value = 0., min = 0., step = 0.01))),
+                                                              fluidRow(column(6, align="right", actionButton("addlistper", "AJOUTER")), column(6, align="left", actionButton("dellistper", "SUPRRIMER"))), br(),
+                                                              DT::dataTableOutput("SItable3")
                                                      ),
                                                      tabPanel(HTML('<h4 style="color: #005BBB; ">Indicateurs NG</h4>'), value="impactindicng", br(),fluidRow()
                                                      ),
