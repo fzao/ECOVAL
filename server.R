@@ -107,6 +107,9 @@ shinyServer(function(input, output, session) {
             name <- paste("SIA2 no.", as.character(s))
             siname <- paste("SIA2 no.", as.character(index))
             write.xlsx2(ecoval[[siname]], con, sheetName = name, row.names = FALSE, col.names = TRUE, append = TRUE)
+            name <- paste("SIA3 no.", as.character(s))
+            siname <- paste("SIA3 no.", as.character(index))
+            write.xlsx2(ecoval[[siname]], con, sheetName = name, row.names = FALSE, col.names = TRUE, append = TRUE)
           }
           s <- s + 1
         }
@@ -159,6 +162,8 @@ shinyServer(function(input, output, session) {
         ecoval[[siname]] <<- read.xlsx2(inFile$datapath, sheetName = siname, header = TRUE, stringsAsFactors = FALSE)
         siname <- paste("SIA2 no.", as.character(i))
         ecoval[[siname]] <<- read.xlsx2(inFile$datapath, sheetName = siname, header = TRUE, stringsAsFactors = FALSE)
+        siname <- paste("SIA3 no.", as.character(i))
+        ecoval[[siname]] <<- read.xlsx2(inFile$datapath, sheetName = siname, header = TRUE, stringsAsFactors = FALSE)
       }
       
     }
@@ -176,24 +181,20 @@ shinyServer(function(input, output, session) {
       newhabitat <- data.frame("habitat" = name, "index" = i, "name" = ecoval[[name]][1,2])
       listhabitat <<- rbind(listhabitat, newhabitat)
     }
-    showlist <- list()
-    for(i in 1:dim(listsite)[1]){
-      if(listsite[i,3] != "NA" & listsite[i,3] != "") showlist[[listsite[i,3]]] <- listsite[i,2]
-      else showlist[[listsite[i,1]]] <- listsite[i,2]
-    }
-    updateSelectInput(session, "selectsite", choices = showlist, selected = showlist[[length(showlist)]])
-    showlist <- list()
-    for(i in 1:dim(listspecies)[1]){
-      if(listspecies[i,3] != "NA" & listspecies[i,3] != "") showlist[[listspecies[i,3]]] <- listspecies[i,2]
-      else showlist[[listspecies[i,1]]] <- listspecies[i,2]
-    }
-    updateSelectInput(session, "selectspecies", choices = showlist, selected = showlist[[length(showlist)]])
-    showlist <- list()
-    for(i in 1:dim(listhabitat)[1]){
-      if(listhabitat[i,3] != "NA" & listhabitat[i,3] != "") showlist[[listhabitat[i,3]]] <- listhabitat[i,2]
-      else showlist[[listhabitat[i,1]]] <- listhabitat[i,2]
-    }
-    updateSelectInput(session, "selecthabitat", choices = showlist, selected = showlist[[length(showlist)]])
+    updateListSite()
+    updateListSiteImpactCompens()
+    # showlist <- list()
+    # for(i in 1:dim(listspecies)[1]){
+    #   if(listspecies[i,3] != "NA" & listspecies[i,3] != "") showlist[[listspecies[i,3]]] <- listspecies[i,2]
+    #   else showlist[[listspecies[i,1]]] <- listspecies[i,2]
+    # }
+    # updateSelectInput(session, "selectspecies", choices = showlist, selected = showlist[[length(showlist)]])
+    # showlist <- list()
+    # for(i in 1:dim(listhabitat)[1]){
+    #   if(listhabitat[i,3] != "NA" & listhabitat[i,3] != "") showlist[[listhabitat[i,3]]] <- listhabitat[i,2]
+    #   else showlist[[listhabitat[i,1]]] <- listhabitat[i,2]
+    # }
+    # updateSelectInput(session, "selecthabitat", choices = showlist, selected = showlist[[length(showlist)]])
   })
   
   observeEvent(input$link1, {
@@ -526,6 +527,8 @@ shinyServer(function(input, output, session) {
     tableau$A1 <- ecoval[[name]]
     name <- paste("SIA2 no.", as.character(input$selectsiteimpact))
     tableau$A2 <- ecoval[[name]]
+    name <- paste("SIA3 no.", as.character(input$selectsiteimpact))
+    tableau$A3 <- ecoval[[name]]
   })
   
   newSICX <- function(numsite){
@@ -537,6 +540,9 @@ shinyServer(function(input, output, session) {
       # A2
       newname <- paste("SIA2 no.", numsite)
       ecoval[[newname]] <<- model_A2  # create new DF
+      # A3
+      newname <- paste("SIA3 no.", numsite)
+      ecoval[[newname]] <<- model_A3  # create new DF
       
     }
     if(type == "2" | type == "3"){  # compensatoire
@@ -552,6 +558,9 @@ shinyServer(function(input, output, session) {
       ecoval[[newname]] <<- NULL  # delete DF
       # A2
       newname <- paste("SIA2 no.", numsite)
+      ecoval[[newname]] <<- NULL  # delete DF
+      # A3
+      newname <- paste("SIA3 no.", numsite)
       ecoval[[newname]] <<- NULL  # delete DF
     }
     if(type == "2" | type == "3"){  # compensatoire
@@ -638,6 +647,37 @@ shinyServer(function(input, output, session) {
     else if(input$SItype1 == "6") ltype2 <- list("Odonate" = 5, "Lépidoptère" = 6, "Orthoptère" = 7, "Coléoptère" = 8)
     else ltype2 <- list("-" = 0)
     updateSelectInput(session, "SItype2", choices = ltype2, selected = ltype2[[1]])
+  })
+  
+  ## SI A3
+  observeEvent(input$addlistper,{
+    # data
+    newDF <- data.frame(
+      "Type"=as.character(A3listtype[input$SIpertype]),
+      "Couche.SIG.EUNIS"=input$SIpercouche,
+      "Code.SIG.OSO"=input$SIpercode,
+      "Surface"=input$SIpersurf
+      )
+    # array visu
+    tableau$A3 <- rbind(tableau$A3, newDF)
+    # save ecoval
+    name <- paste("SIA3 no.", as.character(input$selectsiteimpact))
+    ecoval[[name]] <<- tableau$A3
+  })
+  
+  observeEvent(input$dellistper,{
+    rs <- as.numeric(input$SItable3_rows_selected)
+    if(length(rs) > 0){
+      # update array visu
+      tableau$A3 <- tableau$A3[-rs,]
+      # save ecoval
+      name <- paste("SIA3 no.", as.character(input$selectsiteimpact))
+      ecoval[[name]] <<- tableau$A3
+    }
+  })
+
+  output$SItable3 <- renderDataTable({
+    tableau$A3
   })
   
 })
