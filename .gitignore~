@@ -1,0 +1,5 @@
+.gitignore
+.Rhistory
+.Rproj.user
+ECOVAL.Rproj
+Data

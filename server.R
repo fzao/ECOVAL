@@ -51,16 +51,19 @@ shinyServer(function(input, output, session) {
     updateTabsetPanel(session, "tabs", selected = "propos")
   })
   
-  # output$projectmap <- renderLeaflet({
-  #   if(is.numeric(input$latitude) & is.numeric(input$longitude)){
-  #     if(input$latitude != 0. | input$longitude !=0.){
-  #       m <- leaflet() %>%
-  #         addTiles() %>%
-  #         addMarkers(lat=input$latitude , lng=input$longitude, popup=input$projectcontext)
-  #       m
-  #     }  
-  #   } 
-  # })
+  output$projectmap <- renderLeaflet({
+    if(input$latitude != 0 | input$longitude != 0){
+        m <- leaflet() %>%
+          addTiles() %>%
+          addMarkers(lat=input$latitude , lng=input$longitude, popup=input$sitename)
+        m
+    }else{
+      pk <- sample(1:dim(park)[1], 1) 
+      m <- leaflet() %>%
+        addTiles() %>%
+        addMarkers(lat=park[pk, 2] , lng=park[pk,3], popup=park[pk,1])
+    }
+  })
 
   observeEvent(input$projectname, {
     ecoval$General[1,2] <<- input$projectname

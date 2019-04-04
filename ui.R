@@ -63,7 +63,8 @@ shinyUI(fluidPage(title="ECOVAL",
                                                        selected = 0),
                                            fluidRow(column(4, align="center", tags$div(title="Créer un nouveau site", actionButton("new", "AJOUTER"))),
                                                     column(4, align="center", tags$div(title="Effacer la description du site en cours", actionButton("delete", "EFFACER"))),
-                                                    column(4, align="center", tags$div(title="Supprime définitivement le site en cours", actionButton("destroy", "ENLEVER")))),
+                                                    column(4, align="center", tags$div(title="Supprime définitivement le site en cours", actionButton("destroy", "ENLEVER")))), br(),
+                                           leafletOutput("projectmap"),
                                            width = 3
                                          ),
                                          mainPanel(

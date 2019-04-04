@@ -23,6 +23,7 @@ model_A3 <- read.xlsx2('model/ECOVAL.xlsx', sheetIndex = 5, header = TRUE, strin
 model_species <- read.xlsx2('model/ECOVAL.xlsx', sheetIndex = 6, header = FALSE, stringsAsFactors = FALSE)
 model_habitat <- read.xlsx2('model/ECOVAL.xlsx', sheetIndex = 7, header = FALSE, stringsAsFactors = FALSE)
 SSI <- readRDS('data/Species_SSI.rds')
+park <- readRDS('data/Park.rds')
 ecoval <- list()
 ecoval[["General"]] <- model_info_general
 numsite <- 0
