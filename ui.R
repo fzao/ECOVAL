@@ -20,7 +20,7 @@ library(shinyjs)
 library(plotly)
 library(xlsx)
 library(DT)
-#library(leaflet)
+library(leaflet)
 
 Species <- readRDS("model/Species_names.rds")
 
