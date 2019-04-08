@@ -153,10 +153,10 @@ shinyUI(fluidPage(title="ECOVAL",
                                                               fluidRow(column(2, align="left", selectInput("SIrougeR", label = "Liste rouge (CR,VU,EN) Régional", choices = list("Oui" = 1, "Non" = 2))),
                                                                        column(2, align="left", selectInput("SIdirect", label = "Directives Européennes", choices = list("-" = 0, "Annexe II DFFH" = 1, "Annexe I DO" = 2))),
                                                                        column(2, align="left", selectInput("SIreprod", label = "Reproduction", choices = list("-" = 0, "Certaine" = 1, "Possible" = 2))),
-                                                                       column(2, align="left", selectInput("SIindssi", label = "Indice spécialisation", choices = split(seq_along(Species), Species))),
+                                                                       column(2, align="left", selectInput("SIexo", label = "Espèce Exotique Envahissante", choices = list("Oui" = 1, "Non" = 2))),
                                                                        column(2, align="left", selectInput("SItvb", label = "TVB", choices = list("Oui" = 1, "Non" = 2))),
                                                                        column(2, align="left", selectInput("SIdet", label = "Déterminant Znieff dans le PE", choices = list("Oui" = 1, "Non" = 2)))),
-                                                              fluidRow(column(2, align="left", selectInput("SIexo", label = "Espèce Exotique Envahissante", choices = list("Oui" = 1, "Non" = 2)))),
+                                                              fluidRow(column(2, align="left", selectInput("SIindssi", label = "Indice spécialisation", choices = split(seq_along(Species), Species)))),
                                                               fluidRow(column(6, align="right", actionButton("addlistesp", "AJOUTER")), column(6, align="left", actionButton("dellistesp", "SUPRRIMER"))), br(),
                                                               DT::dataTableOutput("SItable2"), br(), br(), br(), hr(), br(), br(), br(),
                                                               fluidRow(column(12, align="center", HTML('<h4 style="color: #A5C226; ">PERIMETRE ELARGI</h4>'))), br(),
@@ -167,11 +167,11 @@ shinyUI(fluidPage(title="ECOVAL",
                                                               fluidRow(column(6, align="right", actionButton("addlistper", "AJOUTER")), column(6, align="left", actionButton("dellistper", "SUPRRIMER"))), br(),
                                                               DT::dataTableOutput("SItable3")
                                                      ),
-                                                     tabPanel(HTML('<h4 style="color: #005BBB; ">Indicateurs NG</h4>'), value="impactindicng", br(),fluidRow()
+                                                     tabPanel(HTML('<h4 style="color: #005BBB; ">Niveau Général</h4>'), value="impactindicng", br(),fluidRow()
                                                      ),
-                                                     tabPanel(HTML('<h4 style="color: #005BBB; ">Indicateurs NH</h4>'), value="impactindicnh", br(),fluidRow()
+                                                     tabPanel(HTML('<h4 style="color: #005BBB; ">Niveaux Habitats</h4>'), value="impactindicnh", br(),fluidRow()
                                                      ),
-                                                     tabPanel(HTML('<h4 style="color: #005BBB; ">Indicateurs NSp</h4>'), value="impactindicnsp", br(),fluidRow()
+                                                     tabPanel(HTML('<h4 style="color: #005BBB; ">Niveaux Espèces</h4>'), value="impactindicnsp", br(),fluidRow()
                                                      )
                                          )
                                        )

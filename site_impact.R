@@ -119,6 +119,8 @@ output$SItable1 <- renderDataTable({
 ## SI A2
 observeEvent(input$addlistesp,{
   # data
+  if(input$SItype1 == "1") ssival = SSI[as.integer(input$SIindssi)]
+  else ssival = NA
   newDF <- data.frame(
     "Nom.Latin"=input$SIlatinnamespecies,
     "Nom.français"=input$SIfrenchnamespecies,
@@ -129,7 +131,7 @@ observeEvent(input$addlistesp,{
     "Liste.rouge..CR.VU.EN..Régional"=as.character(A2listprot[input$SIrougeR]),
     "Directives.Européennes"=as.character(A2listdir[input$SIdirect]),
     "Reproduction"=as.character(A2listrepro[input$SIreprod]),
-    "Indice.spécialisation"=SSI[as.integer(input$SIindssi)],
+    "Indice.spécialisation"=ssival,
     "TVB"=as.character(A2listprot[input$SItvb]),
     "Déterminant.Znieff.dans.le.PE"=as.character(A2listprot[input$SIdet]),
     "Espèce.Exotique.Envahissante"=as.character(A2listprot[input$SIexo]))
@@ -156,7 +158,11 @@ output$SItable2 <- renderDataTable({
 })
 
 observeEvent(input$SItype1,{
-  if(input$SItype1 == "1") ltype2 <- list("Cortège forestier" = 1, "Cortège agricole" = 2, "Cortège du bâti" = 3, "Cortège généraliste" = 4)
+  shinyjs::hide("SIindssi")
+  if(input$SItype1 == "1"){
+    ltype2 <- list("Cortège forestier" = 1, "Cortège agricole" = 2, "Cortège du bâti" = 3, "Cortège généraliste" = 4)
+    shinyjs::show("SIindssi")
+  }
   else if(input$SItype1 == "6") ltype2 <- list("Odonate" = 5, "Lépidoptère" = 6, "Orthoptère" = 7, "Coléoptère" = 8)
   else ltype2 <- list("-" = 0)
   updateSelectInput(session, "SItype2", choices = ltype2, selected = ltype2[[1]])
