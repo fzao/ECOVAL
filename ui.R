@@ -167,11 +167,26 @@ shinyUI(fluidPage(title="ECOVAL",
                                                               fluidRow(column(6, align="right", actionButton("addlistper", "AJOUTER")), column(6, align="left", actionButton("dellistper", "SUPRRIMER"))), br(),
                                                               DT::dataTableOutput("SItable3")
                                                      ),
-                                                     tabPanel(HTML('<h4 style="color: #005BBB; ">Niveau Général</h4>'), value="impactindicng", br(),fluidRow()
+                                                     tabPanel(HTML('<h4 style="color: #005BBB; ">Niveau Général</h4>'), value="impactindicng", br(),
+                                                              fluidRow(column(6, align="center", HTML('<h4 style="color: #A5C226; ">COURT TERME</h4>')), column(6, align="center", HTML('<h4 style="color: #A5C226; ">LONG TERME</h4>'))), br(),
+                                                              fluidRow(column(2, align="left", textAreaInput("SIjustifCT", "Justification de l'estimation", height='250px', placeholder = "justification de la prédiction faite")),
+                                                                       column(2, align="left", checkboxGroupInput("SIdegincCT", "Degré d'incertitude",
+                                                                                          c("Influence du projet : la prédiction de la valeur de l'indicateur dépend-elle essentiellement des actions réalisées par le maître d'ouvrage ? Y a-t-il une part qu'il ne peut pas maîtriser ?" = "1",
+                                                                                            "Comportement de l'espèce faune ou flore : le comportement (capacité de recolonisation) des espèces sur lesquelles porte l'indicateur est-il bien connu ?" = "2",
+                                                                                            "Définition de l'emprise de l'impact : l'emprise impactée est-elle en lien direct avec la valeur prédite de l'indicateur ?" = "3"))),
+                                                                       column(2, align="left", numericInput("SIvalCT", "Valeur après impact", value = 0.)),
+                                                                       column(2, align="left", textAreaInput("SIjustifLT", "Justification de l'estimation", height='250px', placeholder = "justification de la prédiction faite")),
+                                                                       column(2, align="left", checkboxGroupInput("SIdegincLT", "Degré d'incertitude",
+                                                                                                                   c("Influence du projet : la prédiction de la valeur de l'indicateur dépend-elle essentiellement des actions réalisées par le maître d'ouvrage ? Y a-t-il une part qu'il ne peut pas maîtriser ?" = "1",
+                                                                                                                     "Comportement de l'espèce faune ou flore : le comportement (capacité de recolonisation) des espèces sur lesquelles porte l'indicateur est-il bien connu ?" = "2",
+                                                                                                                     "Définition de l'emprise de l'impact : l'emprise impactée est-elle en lien direct avec la valeur prédite de l'indicateur ?" = "3"))),
+                                                                       column(2, align="left", numericInput("SIvalLT", "Valeur après impact", value = 0.))), br(),
+                                                              fluidRow(column(12, align="center", actionButton("renseigner", "RENSEIGNER"))), br(),
+                                                              DT::dataTableOutput("SItable4")
                                                      ),
-                                                     tabPanel(HTML('<h4 style="color: #005BBB; ">Niveaux Habitats</h4>'), value="impactindicnh", br(),fluidRow()
+                                                     tabPanel(HTML('<h4 style="color: #005BBB; ">Niveau Habitat</h4>'), value="impactindicnh", br(),fluidRow()
                                                      ),
-                                                     tabPanel(HTML('<h4 style="color: #005BBB; ">Niveaux Espèces</h4>'), value="impactindicnsp", br(),fluidRow()
+                                                     tabPanel(HTML('<h4 style="color: #005BBB; ">Niveau Espèce</h4>'), value="impactindicnsp", br(),fluidRow()
                                                      )
                                          )
                                        )

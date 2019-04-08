@@ -20,8 +20,9 @@ model_site <- read.xlsx2('model/ECOVAL.xlsx', sheetIndex = 2, header = FALSE, st
 model_A1 <- read.xlsx2('model/ECOVAL.xlsx', sheetIndex = 3, header = TRUE, stringsAsFactors = FALSE)
 model_A2 <- read.xlsx2('model/ECOVAL.xlsx', sheetIndex = 4, header = TRUE, stringsAsFactors = FALSE)
 model_A3 <- read.xlsx2('model/ECOVAL.xlsx', sheetIndex = 5, header = TRUE, stringsAsFactors = FALSE)
-model_species <- read.xlsx2('model/ECOVAL.xlsx', sheetIndex = 6, header = FALSE, stringsAsFactors = FALSE)
-model_habitat <- read.xlsx2('model/ECOVAL.xlsx', sheetIndex = 7, header = FALSE, stringsAsFactors = FALSE)
+model_B <- read.xlsx2('model/ECOVAL.xlsx', sheetIndex = 6, header = TRUE, stringsAsFactors = FALSE)
+model_species <- read.xlsx2('model/ECOVAL.xlsx', sheetIndex = 7, header = FALSE, stringsAsFactors = FALSE)
+model_habitat <- read.xlsx2('model/ECOVAL.xlsx', sheetIndex = 8, header = FALSE, stringsAsFactors = FALSE)
 SSI <- readRDS('data/Species_SSI.rds')
 park <- readRDS('data/Park.rds')
 ecoval <- list()
@@ -32,7 +33,7 @@ numhabitat <- 0
 listsite <- data.frame("site" = '-', "index" = 0, "name" = '-', "type" = 0, stringsAsFactors=FALSE)
 listspecies <- data.frame("species" = '-', "index" = 0, "name" = '-', stringsAsFactors=FALSE)
 listhabitat <- data.frame("habitat" = '-', "index" = 0, "name" = '-', stringsAsFactors=FALSE)
-tableau <- reactiveValues(A1=NULL, A2=NULL, A3=NULL)
+tableau <- reactiveValues(A1=NULL, A2=NULL, A3=NULL, B=NULL)
 tableau$A1 <- model_A1
 A1listtype <- list("1"="Fermé" , "2"="Ouvert", "3"="Buissonnant", "4"="Zone humide", "5"="Aquatique", "6"="Rocheux", "7"="Cultivé", "8"="Imperméabilisé")
 A1listetat <- list("1"="Bon", "2"="Mauvais", "3"="Moyen")
@@ -45,3 +46,4 @@ A2listdir <- list("0"="-","1"="Annexe II DFFH","2"="Annexe I DO")
 A2listrepro <- list("0"="-","1"="Certaine","2"="Possible")
 tableau$A3 <- model_A3
 A3listtype <- list("1"="Fermé", "2"="Ouvert","3"="Buissonnant","4"="Zone Humide")
+tableau$B <- model_B

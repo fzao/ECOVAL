@@ -42,6 +42,9 @@ observeEvent(input$selectsiteimpact, {
   tableau$A2 <- ecoval[[name]]
   name <- paste("SIA3 no.", as.character(input$selectsiteimpact))
   tableau$A3 <- ecoval[[name]]
+  name <- paste("SIB no.", as.character(input$selectsiteimpact))
+  tableau$B <- ecoval[[name]]
+  
 })
 
 newSICX <- function(numsite){
@@ -56,7 +59,9 @@ newSICX <- function(numsite){
     # A3
     newname <- paste("SIA3 no.", numsite)
     ecoval[[newname]] <<- model_A3  # create new DF
-    
+    # B
+    newname <- paste("SIB no.", numsite)
+    ecoval[[newname]] <<- model_B  # create new DF
   }
   if(type == "2" | type == "3"){  # compensatoire
     
@@ -74,6 +79,9 @@ delSICX <- function(numsite){
     ecoval[[newname]] <<- NULL  # delete DF
     # A3
     newname <- paste("SIA3 no.", numsite)
+    ecoval[[newname]] <<- NULL  # delete DF
+    # B
+    newname <- paste("SIB no.", numsite)
     ecoval[[newname]] <<- NULL  # delete DF
   }
   if(type == "2" | type == "3"){  # compensatoire
@@ -199,3 +207,36 @@ output$SItable3 <- renderDataTable({
   tableau$A3
 })
 
+## SI B
+observeEvent(input$renseigner,{
+  rs <- as.numeric(input$SItable4_rows_selected)
+  if(length(rs) == 1){
+    # update array visu CT
+    tableau$B[rs,5] <- input$SIjustifCT
+    if(is.null(input$SIdegincCT)) tableau$B[rs,6] <- ""
+    else{
+      dimselect <- length(input$SIdegincCT)
+      if(dimselect == 1) tableau$B[rs,6] <- "*"
+      else if(dimselect == 2) tableau$B[rs,6] <- "**"
+      else if(dimselect == 3) tableau$B[rs,6] <- "***"
+    }
+    tableau$B[rs,7] <- input$SIvalCT
+    # update array visu LT
+    tableau$B[rs,8] <- input$SIjustifLT
+    if(is.null(input$SIdegincLT)) tableau$B[rs,9] <- ""
+    else{
+      dimselect <- length(input$SIdegincLT)
+      if(dimselect == 1) tableau$B[rs,9] <- "*"
+      else if(dimselect == 2) tableau$B[rs,9] <- "**"
+      else if(dimselect == 3) tableau$B[rs,9] <- "***"
+    }
+    tableau$B[rs,10] <- input$SIvalLT
+    # save ecoval
+    name <- paste("SIB no.", as.character(input$selectsiteimpact))
+    ecoval[[name]] <<- tableau$B
+  }
+})
+
+output$SItable4 <- renderDataTable({
+  tableau$B
+})

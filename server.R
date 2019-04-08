@@ -64,4 +64,5 @@ shinyServer(function(input, output, session) {
         addMarkers(lat=park[pk, 2] , lng=park[pk,3], popup=park[pk,1])
     }
   })
+
 })

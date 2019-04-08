@@ -65,6 +65,9 @@ output$btn_telecharger <- downloadHandler(
           name <- paste("SIA3 no.", as.character(s))
           siname <- paste("SIA3 no.", as.character(index))
           write.xlsx2(ecoval[[siname]], con, sheetName = name, row.names = FALSE, col.names = TRUE, append = TRUE)
+          name <- paste("SIB no.", as.character(s))
+          siname <- paste("SIB no.", as.character(index))
+          write.xlsx2(ecoval[[siname]], con, sheetName = name, row.names = FALSE, col.names = TRUE, append = TRUE)
         }
         s <- s + 1
       }
@@ -118,6 +121,8 @@ observeEvent(input$userfile, {
       siname <- paste("SIA2 no.", as.character(i))
       ecoval[[siname]] <<- read.xlsx2(inFile$datapath, sheetName = siname, header = TRUE, stringsAsFactors = FALSE)
       siname <- paste("SIA3 no.", as.character(i))
+      ecoval[[siname]] <<- read.xlsx2(inFile$datapath, sheetName = siname, header = TRUE, stringsAsFactors = FALSE)
+      siname <- paste("SIB no.", as.character(i))
       ecoval[[siname]] <<- read.xlsx2(inFile$datapath, sheetName = siname, header = TRUE, stringsAsFactors = FALSE)
     }
     
