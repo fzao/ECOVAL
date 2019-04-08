@@ -15,6 +15,8 @@
 # Licence CeCILL v2.1
 #
 
+source('site_impact.R', local =TRUE)
+
 observeEvent(input$projectname, {
   ecoval$General[1,2] <<- input$projectname
 })
@@ -46,27 +48,44 @@ output$btn_telecharger <- downloadHandler(
     s <- 1
     e <- 1
     h <- 1
-    if(length(ecoval) > 1){
-      for(i in 2:length(ecoval)){
-        if(grepl("Site", names(ecoval)[i])){
-          name <- paste("Site no.", as.character(s))
-          write.xlsx2(ecoval[[i]], con, sheetName = name, row.names = FALSE, col.names = FALSE, append = TRUE)
-          s <- s + 1
+    si <- 0
+    nbsite <- dim(listsite)[1] - 1
+    if(nbsite > 0){
+      for(i in 1:nbsite){
+        index <- listsite[1+i,2]
+        name <- paste("Site no.", as.character(s))
+        write.xlsx2(ecoval[[listsite[1+i,1]]], con, sheetName = name, row.names = FALSE, col.names = FALSE, append = TRUE)
+        if(ecoval[[listsite[1+i,1]]][2,2] == "1" | ecoval[[listsite[1+i,1]]][2,2] == "3"){ # info specifique site impacte
+          name <- paste("SIA1 no.", as.character(s))
+          siname <- paste("SIA1 no.", as.character(index))
+          write.xlsx2(ecoval[[siname]], con, sheetName = name, row.names = FALSE, col.names = TRUE, append = TRUE)
+          name <- paste("SIA2 no.", as.character(s))
+          siname <- paste("SIA2 no.", as.character(index))
+          write.xlsx2(ecoval[[siname]], con, sheetName = name, row.names = FALSE, col.names = TRUE, append = TRUE)
+          name <- paste("SIA3 no.", as.character(s))
+          siname <- paste("SIA3 no.", as.character(index))
+          write.xlsx2(ecoval[[siname]], con, sheetName = name, row.names = FALSE, col.names = TRUE, append = TRUE)
         }
-      }
-      for(i in 2:length(ecoval)){
-        if(grepl("Espece", names(ecoval)[i])){
-          write.xlsx2(ecoval[[i]], con, sheetName = paste("Espece", as.character(e)), row.names = FALSE, col.names = FALSE, append = TRUE)
-          e <- e + 1
-        }
-      }
-      for(i in 2:length(ecoval)){
-        if(grepl("Habitat", names(ecoval)[i])){
-          write.xlsx2(ecoval[[i]], con, sheetName = paste("Habitat", as.character(h)), row.names = FALSE, col.names = FALSE, append = TRUE)
-          h <- h + 1
-        }
+        s <- s + 1
       }
     }
+    nbspecies <- dim(listspecies)[1] - 1
+    if(nbspecies > 0){
+      for(i in 1:nbspecies){
+        name <- paste("Espece", as.character(e))
+        write.xlsx2(ecoval[[listspecies[1+i,1]]], con, sheetName = name, row.names = FALSE, col.names = FALSE, append = TRUE)
+        e <- e + 1
+      }
+    }
+    nbhabitat <- dim(listhabitat)[1] - 1
+    if(nbhabitat > 0){
+      for(i in 1:nbhabitat){
+        name <- paste("Habitat", as.character(h))
+        write.xlsx2(ecoval[[listhabitat[1+i,1]]], con, sheetName = paste("Habitat", as.character(h)), row.names = FALSE, col.names = FALSE, append = TRUE)
+        h <- h + 1
+      }
+    }
+    
   }
 )
 
@@ -93,6 +112,15 @@ observeEvent(input$userfile, {
     ecoval[[name]] <<- read.xlsx2(inFile$datapath, sheetName = name, header = FALSE, stringsAsFactors = FALSE)
     newsite <- data.frame("site" = name, "index" = i, "name" = ecoval[[name]][1,2], "type" = as.integer(ecoval[[name]][2,2]))
     listsite <<- rbind(listsite, newsite)
+    if(ecoval[[name]][2,2] == "1" | ecoval[[name]][2,2] == "3"){ # site impacte
+      siname <- paste("SIA1 no.", as.character(i))
+      ecoval[[siname]] <<- read.xlsx2(inFile$datapath, sheetName = siname, header = TRUE, stringsAsFactors = FALSE)
+      siname <- paste("SIA2 no.", as.character(i))
+      ecoval[[siname]] <<- read.xlsx2(inFile$datapath, sheetName = siname, header = TRUE, stringsAsFactors = FALSE)
+      siname <- paste("SIA3 no.", as.character(i))
+      ecoval[[siname]] <<- read.xlsx2(inFile$datapath, sheetName = siname, header = TRUE, stringsAsFactors = FALSE)
+    }
+    
   }
   numspecies <<- as.integer(ecoval$General[5,2])
   if(numspecies > 0) for(i in 1:numspecies){
@@ -108,24 +136,8 @@ observeEvent(input$userfile, {
     newhabitat <- data.frame("habitat" = name, "index" = i, "name" = ecoval[[name]][1,2])
     listhabitat <<- rbind(listhabitat, newhabitat)
   }
-  showlist <- list()
-  for(i in 1:dim(listsite)[1]){
-    if(listsite[i,3] != "NA" & listsite[i,3] != "") showlist[[listsite[i,3]]] <- listsite[i,2]
-    else showlist[[listsite[i,1]]] <- listsite[i,2]
-  }
-  updateSelectInput(session, "selectsite", choices = showlist, selected = showlist[[length(showlist)]])
-  showlist <- list()
-  for(i in 1:dim(listspecies)[1]){
-    if(listspecies[i,3] != "NA" & listspecies[i,3] != "") showlist[[listspecies[i,3]]] <- listspecies[i,2]
-    else showlist[[listspecies[i,1]]] <- listspecies[i,2]
-  }
-  updateSelectInput(session, "selectspecies", choices = showlist, selected = showlist[[length(showlist)]])
-  showlist <- list()
-  for(i in 1:dim(listhabitat)[1]){
-    if(listhabitat[i,3] != "NA" & listhabitat[i,3] != "") showlist[[listhabitat[i,3]]] <- listhabitat[i,2]
-    else showlist[[listhabitat[i,1]]] <- listhabitat[i,2]
-  }
-  updateSelectInput(session, "selecthabitat", choices = showlist, selected = showlist[[length(showlist)]])
+  updateListSite()
+  updateListSiteImpactCompens()
 })
 
 observeEvent(input$link1, {
@@ -257,7 +269,7 @@ observeEvent(input$new, {
   # clean window
   cleanWindow()
   # SIC
-  newSICX()
+  newSICX(numsite)
 })
 
 observeEvent(input$delete, {
@@ -266,9 +278,9 @@ observeEvent(input$delete, {
 })
 
 observeEvent(input$destroy, {
-  numero <- as.integer(input$selectsite)
-  if(numero > 0){
-    name <- paste("Site no.", as.character(numero))
+  numero <- input$selectsite
+  if(numero != "0"){
+    name <- paste("Site no.", numero)
     # destroy species
     nbspecies <- dim(listspecies)[1] - 1
     mylist <- listspecies
@@ -304,6 +316,8 @@ observeEvent(input$destroy, {
     ecoval[[name]] <<- NULL
     updateListSite()
     updateListSiteImpactCompens()
+    # destroy tabs sicx
+    delSICX(numero)
   }
 })
 
@@ -319,16 +333,16 @@ observeEvent(input$selectsite, {
     if(exists(name, where = ecoval)){
       cleanWindow()
       if(ecoval[[name]][1,2] != "NA") updateTextInput(session, "sitename", value = ecoval[[name]][1,2])
-      if(ecoval[[name]][2,2] != "NA") updateSelectInput(session, "sitetype", selected = as.integer(ecoval[[name]][2,2]))
+      if(ecoval[[name]][2,2] != "NA") updateSelectInput(session, "sitetype", selected = ecoval[[name]][2,2])
       if(ecoval[[name]][3,2] != "NA") updateNumericInput(session, "surface", value = as.numeric(ecoval[[name]][3,2]))
       if(ecoval[[name]][4,2] != "NA") updateNumericInput(session, "latitude", value = as.numeric(ecoval[[name]][4,2]))
       if(ecoval[[name]][5,2] != "NA") updateNumericInput(session, "longitude", value = as.numeric(ecoval[[name]][5,2]))
       if(ecoval[[name]][6,2] != "NA") updateTextAreaInput(session, "sitecontext", value = ecoval[[name]][6,2])
       if(ecoval[[name]][7,2] != "NA") updateTextAreaInput(session, "descqual", value = ecoval[[name]][7,2])
       if(ecoval[[name]][8,2] != "NA") updateTextAreaInput(session, "tempo", value = ecoval[[name]][8,2])
-      if(ecoval[[name]][9,2] != "NA") updateSelectInput(session, "duree", selected = as.integer(ecoval[[name]][9,2]))
-      if(ecoval[[name]][10,2] != "NA") updateSelectInput(session, "intensite", selected = as.integer(ecoval[[name]][10,2]))
-      if(ecoval[[name]][11,2] != "NA") updateSelectInput(session, "portee", selected = as.integer(ecoval[[name]][11,2]))
+      if(ecoval[[name]][9,2] != "NA") updateSelectInput(session, "duree", selected = ecoval[[name]][9,2])
+      if(ecoval[[name]][10,2] != "NA") updateSelectInput(session, "intensite", selected = ecoval[[name]][10,2])
+      if(ecoval[[name]][11,2] != "NA") updateSelectInput(session, "portee", selected = ecoval[[name]][11,2])
       updateListSpecies(name)
       updateListHabitat(name)
     }
@@ -370,16 +384,16 @@ saveSite <- function(numero){
 
 cleanWindow <- function(){
   updateTextInput(session, "sitename", value = "", placeholder = "Nom du site...")
-  updateSelectInput(session, "sitetype", selected = 1)
+  updateSelectInput(session, "sitetype", selected = "1")
   updateNumericInput(session, "surface", value = 0.)
   updateNumericInput(session, "latitude", value = 0.)
   updateNumericInput(session, "longitude", value = 0.)
   updateTextAreaInput(session, "sitecontext", value = "", placeholder = "Décrire le contexte du site ici...")
   updateTextAreaInput(session, "descqual", value = "", placeholder = "Nature, emprise, effets indirects...")
   updateTextAreaInput(session, "tempo", value = "", placeholder = "Plusieurs phases? Court/long terme...")
-  updateSelectInput(session, "duree", selected = 1)
-  updateSelectInput(session, "intensite", selected = 1)
-  updateSelectInput(session, "portee", selected = 1)
+  updateSelectInput(session, "duree", selected = "1")
+  updateSelectInput(session, "intensite", selected = "1")
+  updateSelectInput(session, "portee", selected = "1")
 }
 
 updateSiteName <- function(numero, sitename){
@@ -429,45 +443,3 @@ updateListSite <- function(inplace=FALSE){
   if(inplace) updateSelectInput(session, "selectsite", choices = showlist, selected = input$selectsite)
   else updateSelectInput(session, "selectsite", choices = showlist, selected = showlist[[length(showlist)]])
 }
-
-updateListSiteImpactCompens <- function(){
-  showlistimpact <- list()
-  showlistcompens <- list()
-  showlistimpact[['-']] <- 0
-  showlistcompens[['-']] <- 0
-  for(i in 1:dim(listsite)[1]){
-    if(listsite[i,3] != "NA" & listsite[i,3] != ""){
-      if(listsite[i,4] == 1 | listsite[i,4] == 3) showlistimpact[[listsite[i,3]]] <- listsite[i,2]
-      if (listsite[i,4] == 2 | listsite[i,4] == 3) showlistcompens[[listsite[i,3]]] <- listsite[i,2]
-    }else{
-      if(listsite[i,4] == 1 | listsite[i,4] == 3) showlistimpact[[listsite[i,1]]] <- listsite[i,2]
-      if (listsite[i,4] == 2 | listsite[i,4] == 3) showlistcompens[[listsite[i,1]]] <- listsite[i,2]
-    }
-  }
-  updateSelectInput(session, "selectsiteimpact", choices = showlistimpact, selected = showlistimpact[[length(showlistimpact)]])
-  updateSelectInput(session, "selectsitecompens", choices = showlistcompens, selected = showlistcompens[[length(showlistcompens)]])
-}
-
-newSICX <- function(){
-  numsite <- input$selectsite
-  type <- input$sitetype
-  if(type == "1" | type == "3"){  # impacte
-    # A1
-    newname <- paste("SIA1 no.", as.character(numsite))
-    # create new DF
-    ecoval[[newname]] <<- model_A1
-  }
-  if(type == "2" | type == "3"){  # compensatoire
-    
-  }
-  
-}
-
-
-
-output$SItable1 <- renderDataTable({
-  numsite <- input$selectsite
-  name <- paste("SIA1 no.", as.character(numsite))
-  print(ecoval[[name]])
-  ecoval[[name]]
-})
