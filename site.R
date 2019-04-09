@@ -96,6 +96,7 @@ observeEvent(input$userfile, {
   inFile <- input$userfile
   if (is.null(inFile)) return(NULL)
   
+  # re-init
   ecoval <<- list()
   ecoval[["General"]] <<- model_info_general
   numsite <<- 0
@@ -104,6 +105,11 @@ observeEvent(input$userfile, {
   listsite <<- data.frame("site" = '-', "index" = 0, "name" = '-', "type" = 0, stringsAsFactors=FALSE)
   listspecies <<- data.frame("species" = '-', "index" = 0, "name" = '-', stringsAsFactors=FALSE)
   listhabitat <<- data.frame("habitat" = '-', "index" = 0, "name" = '-', stringsAsFactors=FALSE)
+  #tableau <<- reactiveValues(A1=NULL, A2=NULL, A3=NULL, B=NULL)
+  tableau$A1 <- model_A1
+  tableau$A2 <- model_A2
+  tableau$A3 <- model_A3
+  tableau$B <- model_B
   
   ecoval[["General"]] <<- read.xlsx2(inFile$datapath, sheetIndex = 1, header = FALSE, stringsAsFactors = FALSE)
   updateTextInput(session, "projectname", value = ecoval$General[1,2])
@@ -118,14 +124,17 @@ observeEvent(input$userfile, {
     if(ecoval[[name]][2,2] == "1" | ecoval[[name]][2,2] == "3"){ # site impacte
       siname <- paste("SIA1 no.", as.character(i))
       ecoval[[siname]] <<- read.xlsx2(inFile$datapath, sheetName = siname, header = TRUE, stringsAsFactors = FALSE)
+      tableau$A1 <- ecoval[[siname]]
       siname <- paste("SIA2 no.", as.character(i))
       ecoval[[siname]] <<- read.xlsx2(inFile$datapath, sheetName = siname, header = TRUE, stringsAsFactors = FALSE)
+      tableau$A2 <- ecoval[[siname]]
       siname <- paste("SIA3 no.", as.character(i))
       ecoval[[siname]] <<- read.xlsx2(inFile$datapath, sheetName = siname, header = TRUE, stringsAsFactors = FALSE)
+      tableau$A3 <- ecoval[[siname]]
       siname <- paste("SIB no.", as.character(i))
       ecoval[[siname]] <<- read.xlsx2(inFile$datapath, sheetName = siname, header = TRUE, stringsAsFactors = FALSE)
+      tableau$B <- ecoval[[siname]]
     }
-    
   }
   numspecies <<- as.integer(ecoval$General[5,2])
   if(numspecies > 0) for(i in 1:numspecies){
@@ -141,7 +150,7 @@ observeEvent(input$userfile, {
     newhabitat <- data.frame("habitat" = name, "index" = i, "name" = ecoval[[name]][1,2])
     listhabitat <<- rbind(listhabitat, newhabitat)
   }
-  updateListSite()
+  updateListSite(0)
   updateListSiteImpactCompens()
 })
 
@@ -258,7 +267,7 @@ observeEvent(input$new, {
   newname <- paste("Site no.", as.character(numsite))
   newsite <- data.frame("site" = newname, "index" = numsite, "name" = newname, "type" = as.integer(input$sitetype))
   listsite <<- rbind(listsite, newsite)
-  updateListSite()
+  updateListSite(2)
   updateListSiteImpactCompens()
   updateSelectInput(session, "selectspecies", choices = list("-" = 0), selected = 0)
   updateSelectInput(session, "selecthabitat", choices = list("-" = 0), selected = 0)
@@ -319,7 +328,7 @@ observeEvent(input$destroy, {
     # destroy site
     listsite <<- listsite[-c(which(listsite$site == name)),]
     ecoval[[name]] <<- NULL
-    updateListSite()
+    updateListSite(2)
     updateListSiteImpactCompens()
     # destroy tabs sicx
     delSICX(numero)
@@ -406,7 +415,7 @@ updateSiteName <- function(numero, sitename){
     name <- paste("Site no.", numero)
     index <- which(listsite$site == name)
     listsite[index, 3] <<- input$sitename
-    updateListSite(TRUE)
+    updateListSite(1)
     updateListSiteImpactCompens()
     output$viewsiteno <- renderText({ paste("<font color=\"#005BBB\"; size=\"+2\"><b>", sitename, "</b></font>")})
     output$enjeusiteno <- renderText({ paste("<font color=\"#005BBB\"; size=\"+2\"><b>", sitename, "</b></font>")})
@@ -439,12 +448,13 @@ updateDescTemp <- function(sitetype){
   updateListSiteImpactCompens()
 }
 
-updateListSite <- function(inplace=FALSE){
+updateListSite <- function(place){
   showlist <- list()
   for(i in 1:dim(listsite)[1]){
     if(listsite[i,3] != "NA" & listsite[i,3] != "") showlist[[listsite[i,3]]] <- listsite[i,2]
     else showlist[[listsite[i,1]]] <- listsite[i,2]
   }
-  if(inplace) updateSelectInput(session, "selectsite", choices = showlist, selected = input$selectsite)
-  else updateSelectInput(session, "selectsite", choices = showlist, selected = showlist[[length(showlist)]])
+  if(place==0) updateSelectInput(session, "selectsite", choices = showlist, selected = "0")
+  else if(place==1) updateSelectInput(session, "selectsite", choices = showlist, selected = input$selectsite)
+  else if(place==2) updateSelectInput(session, "selectsite", choices = showlist, selected = showlist[[length(showlist)]])
 }
