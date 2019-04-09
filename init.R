@@ -45,5 +45,5 @@ A2listprot <- list("1"="Oui", "2"="Non")
 A2listdir <- list("0"="-","1"="Annexe II DFFH","2"="Annexe I DO")
 A2listrepro <- list("0"="-","1"="Certaine","2"="Possible")
 tableau$A3 <- model_A3
-A3listtype <- list("1"="Fermé", "2"="Ouvert","3"="Buissonnant","4"="Zone Humide")
+A3listtype <- list("1"="Fermé", "2"="Ouvert", "3"="Buissonnant", "4"="Zone humide", "5"="Aquatique", "6"="Rocheux", "7"="Cultivé", "8"="Imperméabilisé")
 tableau$B <- model_B
