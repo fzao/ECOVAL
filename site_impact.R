@@ -231,4 +231,4 @@ observeEvent(input$renseigner,{
   }
 })
 
-output$SItable4 <- DT::renderDataTable(tableau$B, rownames=FALSE)
+output$SItable4 <- DT::renderDataTable(tableau$B, rownames=FALSE, selection='single')
