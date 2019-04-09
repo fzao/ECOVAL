@@ -120,9 +120,7 @@ observeEvent(input$dellisthab,{
   }
 })
 
-output$SItable1 <- renderDataTable({
-  tableau$A1
-})
+output$SItable1 <- renderDataTable(tableau$A1, rownames=FALSE)
 
 ## SI A2
 observeEvent(input$addlistesp,{
@@ -161,9 +159,7 @@ observeEvent(input$dellistesp,{
   }
 })
 
-output$SItable2 <- renderDataTable({
-  tableau$A2
-})
+output$SItable2 <- renderDataTable(tableau$A2, rownames=FALSE)
 
 observeEvent(input$SItype1,{
   shinyjs::hide("SIindssi")
@@ -203,9 +199,7 @@ observeEvent(input$dellistper,{
   }
 })
 
-output$SItable3 <- renderDataTable({
-  tableau$A3
-})
+output$SItable3 <- renderDataTable(tableau$A3, rownames=FALSE)
 
 ## SI B
 observeEvent(input$renseigner,{
@@ -237,6 +231,4 @@ observeEvent(input$renseigner,{
   }
 })
 
-output$SItable4 <- renderDataTable({
-  tableau$B
-})
+output$SItable4 <- DT::renderDataTable(tableau$B, rownames=FALSE)
