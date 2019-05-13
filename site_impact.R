@@ -486,4 +486,18 @@ updateTabB <- function(){
   ecoval[[name]] <<- tableau$B
 }
 
-output$SItable4 <- DT::renderDataTable(tableau$B, rownames=FALSE, selection='single')
+#output$SItable4 <- DT::renderDataTable(tableau$B, rownames=FALSE, selection='single')
+output$SItable4<- DT::renderDataTable({ 
+  dat <- datatable(tableau$B, rownames=TRUE, selection='single') %>%
+    formatStyle(4, 3, backgroundColor = styleEqual(c('Longueur de lisière (Km) / surface de milieu forestier (Ha)',
+                                                     'Proportion des chiroptères spécialistes',
+                                                     'Nombre de patchs d\\\'EEE',
+                                                     '% recouvrement des EEE',
+                                                     'Longueur de linéaire de transport (Km)',
+                                                     'Longueur de linéaire de haie (PS et PE)',
+                                                     'Surface (Ha) de corridor traversant le site',
+                                                     'Nombre d\\\'espaces protégé ou à enjeu (au moins 1/3 de la surface dans le PE)',
+                                                     'Surface d\\\'EEE à proximité immédiate du PS'),
+                                                    c(rep('#FFA02F', 9))))
+  return(dat)
+})

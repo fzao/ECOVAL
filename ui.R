@@ -181,7 +181,8 @@ shinyUI(fluidPage(title="ECOVAL",
                                                                                                                      "Comportement de l'espèce faune ou flore : le comportement (capacité de recolonisation) des espèces sur lesquelles porte l'indicateur est-il bien connu ?" = "2",
                                                                                                                      "Définition de l'emprise de l'impact : l'emprise impactée est-elle en lien direct avec la valeur prédite de l'indicateur ?" = "3"))),
                                                                        column(2, align="left", numericInput("SIvalLT", "Valeur après impact", value = 0.))), br(),
-                                                              fluidRow(column(12, align="center", actionButton("renseigner", "RENSEIGNER"))), br(),
+                                                              fluidRow(column(6, align="right", actionButton("renseigner", "RENSEIGNER")),
+                                                                       column(6, align="left", tags$style("#Manuel {background-color:#FFA02F;}"), numericInput("Manuel", NA, value = 0.))), br(),
                                                               DT::dataTableOutput("SItable4")
                                                      ),
                                                      tabPanel(HTML('<h4 style="color: #005BBB; ">Niveau Habitat</h4>'), value="impactindicnh", br(),fluidRow()
