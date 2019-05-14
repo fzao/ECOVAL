@@ -122,7 +122,12 @@ observeEvent(input$dellisthab,{
   }
 })
 
-output$SItable1 <- renderDataTable(tableau$A1, rownames=FALSE)
+output$SItable1 <- DT::renderDataTable({
+  dat <- datatable(tableau$A1, rownames = TRUE,
+                   colnames = c("Nom habitat" = 2, "Code Corine" = 3, "Code Eunis" = 4, "Etat conservation" = 7, "Intérêt communautaire" = 8, "En danger ou menacé localement" = 9, "Surface dégradée" = 10),
+                   options = list(pageLength = dim.data.frame(tableau$A1)[1], searching = FALSE, dom = 'ft'))
+  return(dat)
+})
 
 ## SI A2
 observeEvent(input$addlistesp,{
@@ -163,7 +168,12 @@ observeEvent(input$dellistesp,{
   }
 })
 
-output$SItable2 <- renderDataTable(tableau$A2, rownames=FALSE)
+output$SItable2 <- DT::renderDataTable({
+  dat <- datatable(tableau$A2, rownames = TRUE,
+                   colnames = c("Nom Latin" = 2, "Nom français" = 3, "Type 1" = 4, "Type 2" = 5, "Protection nationale ou régionale" = 6, "Liste rouge (CR,VU,EN) France" = 7, "Liste rouge (CR,VU,EN) Régional" = 8, "Directives Européennes" = 9, "Indice spécialisation" = 11, "Déterminant Znieff dans le PE" = 13, "Espèce Exotique Envahissante" = 14),
+                   options = list(pageLength = dim.data.frame(tableau$A2)[1], searching = FALSE, dom = 'ft'))
+  return(dat)
+})
 
 observeEvent(input$SItype1,{
   shinyjs::hide("SIindssi")
@@ -206,6 +216,13 @@ observeEvent(input$dellistper,{
 })
 
 output$SItable3 <- renderDataTable(tableau$A3, rownames=FALSE)
+output$SItable3 <- DT::renderDataTable({
+  dat <- datatable(tableau$A3, rownames = TRUE,
+                   colnames = c("Couche SIG EUNIS" = 3, "Couche SIG OSO" = 4),
+                   options = list(pageLength = dim.data.frame(tableau$A3)[1], searching = FALSE, dom = 'ft'))
+  return(dat)
+})
+
 
 ## SI B
 observeEvent(input$renseigner,{
@@ -490,9 +507,10 @@ updateTabB <- function(){
   ecoval[[name]] <<- tableau$B
 }
 
-#output$SItable4 <- DT::renderDataTable(tableau$B, rownames=FALSE, selection='single')
-output$SItable4<- DT::renderDataTable({ 
-  dat <- datatable(tableau$B, rownames=TRUE, selection='single') %>%
+output$SItable4<- DT::renderDataTable({
+  dat <- datatable(tableau$B, rownames = TRUE,
+                   colnames = c("Valeur à l'état initial" = 5, "Justification de l'estimation CT" = 6, "Degré d'incertitude CT" = 7, "Valeur après impact CT" = 8, "Justification de l'estimation LT" = 9, "Degré d'incertitude LT" = 10, "Valeur après impact LT" = 11),
+                   selection = 'single', options = list(pageLength = dim.data.frame(tableau$B)[1], searching = FALSE, dom = 'ft')) %>%
     formatStyle(4, 3, backgroundColor = styleEqual(c('Longueur de lisière (Km) / surface de milieu forestier (Ha)',
                                                      'Proportion des chiroptères spécialistes',
                                                      'Nombre de patchs d\\\'EEE',
