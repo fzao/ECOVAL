@@ -211,6 +211,10 @@ output$SItable3 <- renderDataTable(tableau$A3, rownames=FALSE)
 observeEvent(input$renseigner,{
   rs <- as.numeric(input$SItable4_rows_selected)
   if(length(rs) == 1){
+    # initial state
+    if(rs %in% c(13,44,45,46,47,48,61)){
+      tableau$B[rs,4] <- input$Manuel
+    }
     # update array visu CT
     tableau$B[rs,5] <- input$SIjustifCT
     if(is.null(input$SIdegincCT)) tableau$B[rs,6] <- ""
