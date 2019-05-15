@@ -185,9 +185,11 @@ shinyUI(fluidPage(title="ECOVAL",
                                                                        column(6, align="left", tags$style("#Manuel {background-color:#FFA02F;}"), numericInput("Manuel", NA, value = 0.))), br(),
                                                               DT::dataTableOutput("SItable4")
                                                      ),
-                                                     tabPanel(HTML('<h4 style="color: #005BBB; ">Niveau Habitat</h4>'), value="impactindicnh", br(),fluidRow()
+                                                     tabPanel(HTML('<h4 style="color: #005BBB; ">Niveau Habitat</h4>'), value="impactindicnh", br(),
+                                                              selectInput("selecthabitatSI", label = "SELECTIONNER L'HABITAT", choices = list("-" = 0), selected = 0), hr()
                                                      ),
-                                                     tabPanel(HTML('<h4 style="color: #005BBB; ">Niveau Espèce</h4>'), value="impactindicnsp", br(),fluidRow()
+                                                     tabPanel(HTML('<h4 style="color: #005BBB; ">Niveau Espèce</h4>'), value="impactindicnsp", br(),
+                                                              selectInput("selectspeciesSI", label = "SELECTIONNER L'ESPECE", choices = list("-" = 0), selected = 0), hr()
                                                      )
                                          )
                                        )
