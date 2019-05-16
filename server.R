@@ -640,7 +640,7 @@ shinyServer(function(input, output, session) {
       "Etat.conservation"=as.character(A1listetat[input$SIetat]),
       "Intérêt.communautaire"=as.character(A1listinter[input$SIinteret]),
       "En.danger.ou.menacé.localement"=as.character(A1listinter[input$SImenace]),
-      "Surface.dégradée"=as.character(input$SIsurfacedeg))
+      "Surface.dégradée"=as.character(input$SIsurfacedeg), stringsAsFactors=FALSE)
     # array visu
     tableau$A1 <- rbind(tableau$A1, newDF)
     # save ecoval
@@ -686,7 +686,7 @@ shinyServer(function(input, output, session) {
       "Indice.spécialisation"=ssival,
       "TVB"=as.character(A2listprot[input$SItvb]),
       "Déterminant.Znieff.dans.le.PE"=as.character(A2listprot[input$SIdet]),
-      "Espèce.Exotique.Envahissante"=as.character(A2listprot[input$SIexo]))
+      "Espèce.Exotique.Envahissante"=as.character(A2listprot[input$SIexo]),stringsAsFactors=FALSE)
     # array visu
     tableau$A2 <- rbind(tableau$A2, newDF)
     # save ecoval
@@ -732,7 +732,7 @@ shinyServer(function(input, output, session) {
       "Type"=as.character(A3listtype[input$SIpertype]),
       "Couche.SIG.EUNIS"=input$SIpercouche,
       "Code.SIG.OSO"=input$SIpercode,
-      "Surface"=as.character(input$SIpersurf)
+      "Surface"=as.character(input$SIpersurf),stringsAsFactors=FALSE
     )
     # array visu
     tableau$A3 <- rbind(tableau$A3, newDF)
@@ -864,23 +864,23 @@ shinyServer(function(input, output, session) {
         if(tableau$A1[i,5] == "Zone humide") val54num <- val54num + as.numeric(tableau$A1[i,4])
         if(tableau$A1[i,5] == "Aquatique") val55num <- val55num + as.numeric(tableau$A1[i,4])
       }
-      tableau$B[1,4] <- as.character(val1)
-      tableau$B[2,4] <- as.character(val2)
-      tableau$B[3,4] <- as.character(val3)
-      tableau$B[4,4] <- as.character(val4)
-      tableau$B[5,4] <- as.character(val5)
-      tableau$B[6,4] <- as.character(val6)
-      tableau$B[7,4] <- as.character(val7)
-      tableau$B[8,4] <- as.character(val8)
-      tableau$B[9,4] <- as.character(val9)
-      tableau$B[10,4] <- as.character(val10)
-      tableau$B[11,4] <- as.character(val11)
-      tableau$B[12,4] <- as.character(val12)
-      tableau$B[25,4] <- as.character(val25 * 100. / valsurf)
-      tableau$B[26,4] <- as.character(val26 * 100. / valsurf)
-      tableau$B[40,4] <- as.character(val40num * 100. / val40den)
-      tableau$B[41,4] <- as.character(val41num * 100. / val41den)
-      tableau$B[42,4] <- as.character(val42num * 100. / val42den)
+      tableau$B[1,4] <- as.character(round(val1,2))
+      tableau$B[2,4] <- as.character(round(val2,2))
+      tableau$B[3,4] <- as.character(round(val3,2))
+      tableau$B[4,4] <- as.character(round(val4,2))
+      tableau$B[5,4] <- as.character(round(val5,2))
+      tableau$B[6,4] <- as.character(round(val6,2))
+      tableau$B[7,4] <- as.character(round(val7,2))
+      tableau$B[8,4] <- as.character(round(val8,2))
+      tableau$B[9,4] <- as.character(round(val9,2))
+      tableau$B[10,4] <- as.character(round(val10,2))
+      tableau$B[11,4] <- as.character(round(val11,2))
+      tableau$B[12,4] <- as.character(round(val12,2))
+      tableau$B[25,4] <- as.character(round(val25 * 100. / valsurf,2))
+      tableau$B[26,4] <- as.character(round(val26 * 100. / valsurf,2))
+      tableau$B[40,4] <- as.character(round(val40num * 100. / val40den,2))
+      tableau$B[41,4] <- as.character(round(val41num * 100. / val41den,2))
+      tableau$B[42,4] <- as.character(round(val42num * 100. / val42den,2))
     }
     # from A2
     n <- dim(tableau$A2)[1]
@@ -983,33 +983,33 @@ shinyServer(function(input, output, session) {
         if(tableau$A2[i,12] == "Oui" & tableau$A2[i,3] != "Flore") val57 <- val57 + 1
         if(tableau$A2[i,12] == "Oui" & tableau$A2[i,3] == "Flore") val58 <- val58 + 1
       }
-      tableau$B[14,4] <- as.character(val14)
-      tableau$B[15,4] <- as.character(val15)
-      tableau$B[16,4] <- as.character(val16)
-      tableau$B[17,4] <- as.character(val17)
-      tableau$B[18,4] <- as.character(val18)
-      tableau$B[19,4] <- as.character(val19)
-      tableau$B[20,4] <- as.character(val20)
-      tableau$B[21,4] <- as.character(val21)
-      tableau$B[22,4] <- as.character(val22)
-      tableau$B[23,4] <- as.character(val23)
-      tableau$B[24,4] <- as.character(val24)
-      tableau$B[27,4] <- as.character(val27num * 100 / val27den)
-      tableau$B[28,4] <- as.character(val28num * 100 / val28den)
-      tableau$B[29,4] <- as.character(val29num * 100 / val29den)
-      tableau$B[30,4] <- as.character(val30num * 100 / val30den)
-      tableau$B[31,4] <- as.character(val31num * 100 / val31den)
-      tableau$B[32,4] <- as.character(val32num * 100 / val32den)
-      tableau$B[33,4] <- as.character(val33num * 100 / val33den)
-      tableau$B[34,4] <- as.character(val34num * 100 / val34den)
-      tableau$B[35,4] <- as.character(val35num * 100 / val35den)
-      tableau$B[36,4] <- as.character(val36num * 100 / val36den)
-      tableau$B[37,4] <- as.character(val37num * 100 / val37den)
-      tableau$B[38,4] <- as.character(val38num / val38den)
-      tableau$B[43,4] <- as.character(val43)
-      tableau$B[49,4] <- as.character(val49)
-      tableau$B[57,4] <- as.character(val57)
-      tableau$B[58,4] <- as.character(val58)
+      tableau$B[14,4] <- as.character(round(val14,2))
+      tableau$B[15,4] <- as.character(round(val15,2))
+      tableau$B[16,4] <- as.character(round(val16,2))
+      tableau$B[17,4] <- as.character(round(val17,2))
+      tableau$B[18,4] <- as.character(round(val18,2))
+      tableau$B[19,4] <- as.character(round(val19,2))
+      tableau$B[20,4] <- as.character(round(val20,2))
+      tableau$B[21,4] <- as.character(round(val21,2))
+      tableau$B[22,4] <- as.character(round(val22,2))
+      tableau$B[23,4] <- as.character(round(val23,2))
+      tableau$B[24,4] <- as.character(round(val24,2))
+      tableau$B[27,4] <- as.character(round(val27num * 100 / val27den,2))
+      tableau$B[28,4] <- as.character(round(val28num * 100 / val28den,2))
+      tableau$B[29,4] <- as.character(round(val29num * 100 / val29den,2))
+      tableau$B[30,4] <- as.character(round(val30num * 100 / val30den,2))
+      tableau$B[31,4] <- as.character(round(val31num * 100 / val31den,2))
+      tableau$B[32,4] <- as.character(round(val32num * 100 / val32den,2))
+      tableau$B[33,4] <- as.character(round(val33num * 100 / val33den,2))
+      tableau$B[34,4] <- as.character(round(val34num * 100 / val34den,2))
+      tableau$B[35,4] <- as.character(round(val35num * 100 / val35den,2))
+      tableau$B[36,4] <- as.character(round(val36num * 100 / val36den,2))
+      tableau$B[37,4] <- as.character(round(val37num * 100 / val37den,2))
+      tableau$B[38,4] <- as.character(round(val38num / val38den,2))
+      tableau$B[43,4] <- as.character(round(val43,2))
+      tableau$B[49,4] <- as.character(round(val49,2))
+      tableau$B[57,4] <- as.character(round(val57,2))
+      tableau$B[58,4] <- as.character(round(val58,2))
     }
     # from A3
     n <- dim(tableau$A3)[1]
@@ -1032,14 +1032,14 @@ shinyServer(function(input, output, session) {
         if(tableau$A3[i,1] == "Zone humide") val54den <- val54den + as.numeric(tableau$A3[i,4])
         if(tableau$A3[i,1] == "Aquatique") val55den <- val55den + as.numeric(tableau$A3[i,4])
       }
-      tableau$B[59,4] <- as.character(val59)
-      tableau$B[60,4] <- as.character(val60)
-      tableau$B[50,4] <- as.character(val50num * 100. / val50den)
-      tableau$B[51,4] <- as.character(val51num * 100. / val51den)
-      tableau$B[52,4] <- as.character(val52num * 100. / val52den)
-      tableau$B[53,4] <- as.character(val53num * 100. / val53den)
-      tableau$B[54,4] <- as.character(val54num * 100. / val54den)
-      tableau$B[55,4] <- as.character(val55num * 100. / val55den)
+      tableau$B[59,4] <- as.character(round(val59,2))
+      tableau$B[60,4] <- as.character(round(val60,2))
+      tableau$B[50,4] <- as.character(round(val50num * 100. / val50den,2))
+      tableau$B[51,4] <- as.character(round(val51num * 100. / val51den,2))
+      tableau$B[52,4] <- as.character(round(val52num * 100. / val52den,2))
+      tableau$B[53,4] <- as.character(round(val53num * 100. / val53den,2))
+      tableau$B[54,4] <- as.character(round(val54num * 100. / val54den,2))
+      tableau$B[55,4] <- as.character(round(val55num * 100. / val55den,2))
     }
     # save ecoval
     name <- paste("SIB no.", input$selectsiteimpact)
