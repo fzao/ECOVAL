@@ -647,6 +647,16 @@ shinyServer(function(input, output, session) {
     name <- paste("SIA1 no.", input$selectsiteimpact)
     ecoval[[name]] <<- tableau$A1
     updateTabB()
+    # clean widgets
+    updateTextInput(session, "SInamehabitat", value = "")
+    updateTextInput(session, "SIcodecorine", value = "")
+    updateTextInput(session, "SIcodeeunis", value = "")
+    updateNumericInput(session, "SIsurface", value = 0.)
+    updateSelectInput(session, "SItype", selected = "1")
+    updateSelectInput(session, "SIetat", selected = "1")
+    updateSelectInput(session, "SIinteret", selected = "1")
+    updateSelectInput(session, "SImenace", selected = "1")
+    updateNumericInput(session, "SIsurfacedeg", value = 0.)
   })
   
   observeEvent(input$dellisthab,{
@@ -693,6 +703,20 @@ shinyServer(function(input, output, session) {
     name <- paste("SIA2 no.", input$selectsiteimpact)
     ecoval[[name]] <<- tableau$A2
     updateTabB()
+    # clean widgets
+    updateTextInput(session, "SIlatinnamespecies", value = "")
+    updateTextInput(session, "SIfrenchnamespecies", value = "")
+    updateSelectInput(session, "SItype1", selected = "1")
+    updateSelectInput(session, "SItype2", selected = "1")
+    updateSelectInput(session, "SIprotect", selected = "1")
+    updateSelectInput(session, "SIrougeF", selected = "1")
+    updateSelectInput(session, "SIrougeR", selected = "1")
+    updateSelectInput(session, "SIdirect", selected = "0")
+    updateSelectInput(session, "SIreprod", selected = "0")
+    updateSelectInput(session, "SIexo", selected = "1")
+    updateSelectInput(session, "SItvb", selected = "1")
+    updateSelectInput(session, "SIdet", selected = "1")
+    updateSelectInput(session, "SIindssi", selected = "0")
   })
   
   observeEvent(input$dellistesp,{
@@ -740,6 +764,11 @@ shinyServer(function(input, output, session) {
     name <- paste("SIA3 no.", input$selectsiteimpact)
     ecoval[[name]] <<- tableau$A3
     updateTabB()
+    # clean widgets
+    updateSelectInput(session, "SIpertype", selected = "1")
+    updateTextInput(session, "SIpercouche", value = "")
+    updateTextInput(session, "SIpercode", value = "")
+    updateNumericInput(session, "SIpersurf", value = 0.)
   })
   
   observeEvent(input$dellistper,{
