@@ -768,7 +768,7 @@ shinyServer(function(input, output, session) {
     rs <- as.numeric(input$SItable4_rows_selected)
     if(length(rs) == 1){
       # initial state
-      if(rs %in% c(13,44,45,46,47,48,61)){
+      if(rs %in% c(13,39,44,45,46,47,48,56,61)){
         tableau$B[rs,4] <- input$Manuel
       }
       # update array visu CT
