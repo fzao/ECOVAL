@@ -50,6 +50,7 @@ observeEvent(input$newspecies, {
   ecoval[[newname]] <<- model_species
   # add site info
   ecoval[[newname]][6,2] <<- ecoval[[paste("Site no.", input$selectsite)]][12,2]
+  ecoval[[newname]][2,2] <<- newname #default french name
   # clean species
   cleanSpecies()
   # update list
@@ -117,7 +118,7 @@ saveSpecies <- function(numero){
   if(numero > 0){
     name <- paste("Espece", as.character(numero))
     ecoval[[name]][1,2] <<- input$latinnamespecies
-    ecoval[[name]][2,2] <<- input$frenchnamespecies
+    if(input$frenchnamespecies != "NA" & input$frenchnamespecies != "") ecoval[[name]][2,2] <<- input$frenchnamespecies
     ecoval[[name]][3,2] <<- input$typespecies
     ecoval[[name]][4,2] <<- input$justifyspecies
     ecoval[[name]][5,2] <<- input$presencespecies

@@ -52,6 +52,7 @@ observeEvent(input$newhabitat, {
   ecoval[[newname]] <<- model_habitat
   # add site info
   ecoval[[newname]][7,2] <<- ecoval[[paste("Site no.", input$selectsite)]][12,2]
+  ecoval[[newname]][1,2] <<- newname #default name
   # clean habitat
   cleanHabitat()
   # update list
@@ -122,7 +123,7 @@ observeEvent(input$presencehabitat, {saveHabitat(as.integer(input$selecthabitat)
 saveHabitat <- function(numero){
   if(numero > 0){
     name <- paste("Habitat", as.character(numero))
-    ecoval[[name]][1,2] <<- input$namehabitat
+    if(input$namehabitat != "NA" & input$namehabitat != "") ecoval[[name]][1,2] <<- input$namehabitat
     ecoval[[name]][2,2] <<- input$codecorinehabitat
     ecoval[[name]][3,2] <<- input$codeeunishabitat
     ecoval[[name]][4,2] <<- input$typehabitat
