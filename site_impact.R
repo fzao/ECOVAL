@@ -667,19 +667,22 @@ observeEvent(input$renseignerNH,{
 })
 
 output$SItable5<- DT::renderDataTable({
-  partial_select <- c(1,2,3,4,5,6,7,8,9,17,18,19,20,21,25,26,27)
-  name  <- paste("Habitat", as.character(input$selecthabitatSI))
-  if(ecoval[[name]][4,2] == "1"){ # Fermé
-    partial_select <- c(partial_select, c(10,11,12,13,14,22))
-  }else if(ecoval[[name]][4,2] == "2"){ # Ouvert
-    partial_select <- c(partial_select, c(15, 23))
-  }else if(ecoval[[name]][4,2] == "4"){ # Zone humide
-    partial_select <- c(partial_select, c(16, 24))
+  dat <- NULL
+  if(input$selecthabitatSI != "0"){
+    partial_select <- c(1,2,3,4,5,6,7,8,9,17,18,19,20,21,25,26,27)
+    name  <- paste("Habitat", input$selecthabitatSI)
+    if(ecoval[[name]][4,2] == "1"){ # Fermé
+      partial_select <- c(partial_select, c(10,11,12,13,14,22))
+    }else if(ecoval[[name]][4,2] == "2"){ # Ouvert
+      partial_select <- c(partial_select, c(15, 23))
+    }else if(ecoval[[name]][4,2] == "4"){ # Zone humide
+      partial_select <- c(partial_select, c(16, 24))
+    }
+    viewTabC <- tableau$C[partial_select,]
+    dat <- datatable(viewTabC, rownames = TRUE,
+                     colnames = c("Valeur à l'état initial" = 5, "Justification prédiction CT" = 6, "Incertitudes CT" = 7, "Valeur après impact MC CT" = 8, "Justification prédiction LT" = 9, "Incertitudes LT" = 10, "Valeur après impact MC LT" = 11),
+                     selection = 'single', options = list(pageLength = dim.data.frame(tableau$C)[1], searching = TRUE, dom = 'ft', ordering = FALSE), filter = "top")%>%
+      formatStyle(4, 3, backgroundColor = '#FFA02F')
   }
-  viewTabC <- tableau$C[partial_select,]
-  dat <- datatable(viewTabC, rownames = TRUE,
-                   colnames = c("Valeur à l'état initial" = 5, "Justification prédiction CT" = 6, "Incertitudes CT" = 7, "Valeur après impact MC CT" = 8, "Justification prédiction LT" = 9, "Incertitudes LT" = 10, "Valeur après impact MC LT" = 11),
-                   selection = 'single', options = list(pageLength = dim.data.frame(tableau$C)[1], searching = TRUE, dom = 'ft', ordering = FALSE), filter = "top")%>%
-    formatStyle(4, 3, backgroundColor = '#FFA02F')
   return(dat)
 })
