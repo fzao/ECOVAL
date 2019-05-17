@@ -53,6 +53,9 @@ observeEvent(input$newhabitat, {
   # add site info
   ecoval[[newname]][7,2] <<- ecoval[[paste("Site no.", input$selectsite)]][12,2]
   ecoval[[newname]][1,2] <<- newname #default name
+  # create new DF
+  newname <- paste("SIC no.", as.character(numhabitat))
+  ecoval[[newname]] <<- model_C
   # clean habitat
   cleanHabitat()
   # update list
@@ -70,7 +73,9 @@ observeEvent(input$destroyhabitat, {
     name <- paste("Habitat", as.character(numero))
     listhabitat <<- listhabitat[-c(which(listhabitat$habitat == name)),]
     ecoval[[name]] <<- NULL
-    updateListHabitat(paste("Site no.", input$selectsite)) 
+    updateListHabitat(paste("Site no.", input$selectsite))
+    newname <- paste("SIC no.", as.character(numero))
+    ecoval[[newname]] <<- NULL
   }
 })
 

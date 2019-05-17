@@ -134,8 +134,11 @@ shinyServer(function(input, output, session) {
       nbhabitat <- dim(listhabitat)[1] - 1
       if(nbhabitat > 0){
         for(i in 1:nbhabitat){
+          index <- listhabitat[1+i,2]
           name <- paste("Habitat", as.character(h))
           write.xlsx2(ecoval[[listhabitat[1+i,1]]], con, sheetName = paste("Habitat", as.character(h)), row.names = FALSE, col.names = FALSE, append = TRUE)
+          scname <- paste("SIC no.", as.character(index))
+          write.xlsx2(ecoval[[scname]], con, sheetName = paste("SIC no.", as.character(h)), row.names = FALSE, col.names = TRUE, append = TRUE)
           h <- h + 1
         }
       }
@@ -200,6 +203,9 @@ shinyServer(function(input, output, session) {
       ecoval[[name]] <<- read.xlsx2(inFile$datapath, sheetName = name, header = FALSE, stringsAsFactors = FALSE)
       newhabitat <- data.frame("habitat" = name, "index" = i, "name" = ecoval[[name]][1,2])
       listhabitat <<- rbind(listhabitat, newhabitat)
+      scname <- paste("SIC no.", as.character(i))
+      ecoval[[scname]] <<- read.xlsx2(inFile$datapath, sheetName = scname, header = TRUE, stringsAsFactors = FALSE)
+      tableau$C <- ecoval[[scname]]
     }
     updateListSite(0)
     updateListSiteImpactCompens()
@@ -783,7 +789,6 @@ shinyServer(function(input, output, session) {
     }
   })
   
-  output$SItable3 <- renderDataTable(tableau$A3, rownames=FALSE)
   output$SItable3 <- DT::renderDataTable({
     dat <- datatable(tableau$A3, rownames = TRUE,
                      colnames = c("Couche SIG EUNIS" = 3, "Couche SIG OSO" = 4),
@@ -1092,5 +1097,78 @@ shinyServer(function(input, output, session) {
     return(dat)
   })
   
+  ## SI C
+  observeEvent(input$selecthabitatSI, {
+    if(input$selecthabitatSI != '0'){
+      name <- paste("SIC no.", input$selecthabitatSI)
+      tableau$C <- ecoval[[name]]
+      shinyjs::show("SIjustifCTNH")
+      shinyjs::show("SIdegincCTNH")
+      shinyjs::show("SIvalCTNH")
+      shinyjs::show("SIjustifLTNH")
+      shinyjs::show("SIdegincLTNH")
+      shinyjs::show("SIvalLTNH")
+      shinyjs::show("renseignerNH")
+      shinyjs::show("ManuelNH")
+      shinyjs::show("SItable5")
+    }else{
+      shinyjs::hide("SIjustifCTNH")
+      shinyjs::hide("SIdegincCTNH")
+      shinyjs::hide("SIvalCTNH")
+      shinyjs::hide("SIjustifLTNH")
+      shinyjs::hide("SIdegincLTNH")
+      shinyjs::hide("SIvalLTNH")
+      shinyjs::hide("renseignerNH")
+      shinyjs::hide("ManuelNH")
+      shinyjs::hide("SItable5")
+    }
+  })
   
+  observeEvent(input$renseignerNH,{
+    rs <- as.numeric(input$SItable5_rows_selected)
+    if(length(rs) == 1){
+      tableau$C[rs,4] <- input$ManuelNH
+      # update array visu CT
+      tableau$C[rs,5] <- input$SIjustifCTNH
+      if(is.null(input$SIdegincCTNH)) tableau$C[rs,6] <- ""
+      else{
+        dimselect <- length(input$SIdegincCTNH)
+        if(dimselect == 1) tableau$C[rs,6] <- "*"
+        else if(dimselect == 2) tableau$C[rs,6] <- "**"
+        else if(dimselect == 3) tableau$C[rs,6] <- "***"
+      }
+      tableau$C[rs,7] <- input$SIvalCTNH
+      # update array visu LT
+      tableau$C[rs,8] <- input$SIjustifLTNH
+      if(is.null(input$SIdegincLTNH)) tableau$C[rs,9] <- ""
+      else{
+        dimselect <- length(input$SIdegincLTNH)
+        if(dimselect == 1) tableau$C[rs,9] <- "*"
+        else if(dimselect == 2) tableau$C[rs,9] <- "**"
+        else if(dimselect == 3) tableau$C[rs,9] <- "***"
+      }
+      tableau$C[rs,10] <- input$SIvalLTNH
+      # save ecoval
+      name <- paste("SIC no.", input$selecthabitatSI)
+      ecoval[[name]] <<- tableau$C
+    }
+  })
+  
+  output$SItable5<- DT::renderDataTable({
+    partial_select <- c(1,2,3,4,5,6,7,8,9,17,18,19,20,21,25,26,27)
+    name  <- paste("Habitat", as.character(input$selecthabitatSI))
+    if(ecoval[[name]][4,2] == "1"){ # Fermé
+      partial_select <- c(partial_select, c(10,11,12,13,14,22))
+    }else if(ecoval[[name]][4,2] == "2"){ # Ouvert
+      partial_select <- c(partial_select, c(15, 23))
+    }else if(ecoval[[name]][4,2] == "4"){ # Zone humide
+      partial_select <- c(partial_select, c(16, 24))
+    }
+    viewTabC <- tableau$C[partial_select,]
+    dat <- datatable(viewTabC, rownames = TRUE,
+                     colnames = c("Valeur à l'état initial" = 5, "Justification prédiction CT" = 6, "Incertitudes CT" = 7, "Valeur après impact MC CT" = 8, "Justification prédiction LT" = 9, "Incertitudes LT" = 10, "Valeur après impact MC LT" = 11),
+                     selection = 'single', options = list(pageLength = dim.data.frame(tableau$C)[1], searching = TRUE, dom = 'ft', ordering = FALSE), filter = "top")%>%
+                      formatStyle(4, 3, backgroundColor = '#FFA02F')
+    return(dat)
+  })
 })
