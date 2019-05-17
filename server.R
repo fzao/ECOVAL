@@ -828,6 +828,14 @@ shinyServer(function(input, output, session) {
       # save ecoval
       name <- paste("SIB no.", input$selectsiteimpact)
       ecoval[[name]] <<- tableau$B
+      # clean widgets
+      updateTextAreaInput(session, "SIjustifCT", value ="")
+      updateCheckboxGroupInput(session, "SIdegincCT", selected = character(0))
+      updateNumericInput(session, "SIvalCT", value = 0.)
+      updateTextAreaInput(session, "SIjustifLT", value ="")
+      updateCheckboxGroupInput(session, "SIdegincLT", selected = character(0))
+      updateNumericInput(session, "SIvalLT", value = 0.)
+      updateNumericInput(session, "Manuel", value = 0.)
     }
   })
   
@@ -1151,6 +1159,14 @@ shinyServer(function(input, output, session) {
       # save ecoval
       name <- paste("SIC no.", input$selecthabitatSI)
       ecoval[[name]] <<- tableau$C
+      # clean widgets
+      updateTextAreaInput(session, "SIjustifCTNH", value ="")
+      updateCheckboxGroupInput(session, "SIdegincCTNH", selected = character(0))
+      updateNumericInput(session, "SIvalCTNH", value = 0.)
+      updateTextAreaInput(session, "SIjustifLTNH", value ="")
+      updateCheckboxGroupInput(session, "SIdegincLTNH", selected = character(0))
+      updateNumericInput(session, "SIvalLTNH", value = 0.)
+      updateNumericInput(session, "ManuelNH", value = 0.)
     }
   })
   
