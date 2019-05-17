@@ -34,17 +34,58 @@ updateListSiteImpactCompens <- function(){
   updateSelectInput(session, "selectsitecompens", choices = showlistcompens, selected = showlistcompens[[length(showlistcompens)]])
 }
 
+updateListHabitatSiteImpact <- function(){
+  showlisthabitatimpact <- list()
+  showlisthabitatimpact[['-']] <- 0
+  name <- paste("Site no.", input$selectsiteimpact)
+  nbhabitat <- dim(listhabitat)[1] - 1
+  if(nbhabitat > 0){
+    for(i in 1:nbhabitat){
+      hname <- listhabitat$habitat[i+1]
+      if(exists(hname, where = ecoval)){
+        if(ecoval[[hname]][7,2] == ecoval[[name]][12,2]){
+          showlisthabitatimpact[[listhabitat$name[i+1]]] <- listhabitat$index[i+1]
+        }
+      }
+    }
+  }
+  updateSelectInput(session, "selecthabitatSI", choices = showlisthabitatimpact, selected = showlisthabitatimpact[[length(showlisthabitatimpact)]])
+}
+
+updateListSpeciesSiteImpact <- function(){
+  showlistspeciesimpact <- list()
+  showlistspeciesimpact[['-']] <- 0
+  name <- paste("Site no.", input$selectsiteimpact)
+  nbspecies <- dim(listspecies)[1] - 1
+  if(nbspecies > 0){
+    for(i in 1:nbspecies){
+      spname <- listspecies$species[i+1]
+      if(exists(spname, where = ecoval)){
+        if(ecoval[[spname]][6,2] == ecoval[[name]][12,2]){
+          showlistspeciesimpact[[listspecies$name[i+1]]] <- listspecies$index[i+1]
+        }
+      }
+    }
+  }
+  updateSelectInput(session, "selectspeciesSI", choices = showlistspeciesimpact, selected = showlistspeciesimpact[[length(showlistspeciesimpact)]])
+}
+
 observeEvent(input$selectsiteimpact, {
-  # restore ecoval
-  name <- paste("SIA1 no.", as.character(input$selectsiteimpact))
-  tableau$A1 <- ecoval[[name]]
-  name <- paste("SIA2 no.", as.character(input$selectsiteimpact))
-  tableau$A2 <- ecoval[[name]]
-  name <- paste("SIA3 no.", as.character(input$selectsiteimpact))
-  tableau$A3 <- ecoval[[name]]
-  name <- paste("SIB no.", as.character(input$selectsiteimpact))
-  tableau$B <- ecoval[[name]]
-  
+  if(input$selectsiteimpact != '0'){
+    # habitat
+    updateListHabitatSiteImpact()
+    # species
+    updateListSpeciesSiteImpact()
+    # restore ecoval
+    name <- paste("SIA1 no.", input$selectsiteimpact)
+    tableau$A1 <- ecoval[[name]]
+    name <- paste("SIA2 no.", input$selectsiteimpact)
+    tableau$A2 <- ecoval[[name]]
+    name <- paste("SIA3 no.", input$selectsiteimpact)
+    tableau$A3 <- ecoval[[name]]
+    name <- paste("SIB no.", input$selectsiteimpact)
+    tableau$B <- ecoval[[name]]
+  }
 })
 
 newSICX <- function(numsite){
@@ -101,13 +142,23 @@ observeEvent(input$addlisthab,{
     "Etat.conservation"=as.character(A1listetat[input$SIetat]),
     "Intérêt.communautaire"=as.character(A1listinter[input$SIinteret]),
     "En.danger.ou.menacé.localement"=as.character(A1listinter[input$SImenace]),
-    "Surface.dégradée"=as.character(input$SIsurfacedeg))
+    "Surface.dégradée"=as.character(input$SIsurfacedeg), stringsAsFactors=FALSE)
   # array visu
   tableau$A1 <- rbind(tableau$A1, newDF)
   # save ecoval
-  name <- paste("SIA1 no.", as.character(input$selectsiteimpact))
+  name <- paste("SIA1 no.", input$selectsiteimpact)
   ecoval[[name]] <<- tableau$A1
   updateTabB()
+  # clean widgets
+  updateTextInput(session, "SInamehabitat", value = "")
+  updateTextInput(session, "SIcodecorine", value = "")
+  updateTextInput(session, "SIcodeeunis", value = "")
+  updateNumericInput(session, "SIsurface", value = 0.)
+  updateSelectInput(session, "SItype", selected = "1")
+  updateSelectInput(session, "SIetat", selected = "1")
+  updateSelectInput(session, "SIinteret", selected = "1")
+  updateSelectInput(session, "SImenace", selected = "1")
+  updateNumericInput(session, "SIsurfacedeg", value = 0.)
 })
 
 observeEvent(input$dellisthab,{
@@ -116,7 +167,7 @@ observeEvent(input$dellisthab,{
     # update array visu
     tableau$A1 <- tableau$A1[-rs,]
     # save ecoval
-    name <- paste("SIA1 no.", as.character(input$selectsiteimpact))
+    name <- paste("SIA1 no.", input$selectsiteimpact)
     ecoval[[name]] <<- tableau$A1
     updateTabB()
   }
@@ -147,13 +198,27 @@ observeEvent(input$addlistesp,{
     "Indice.spécialisation"=ssival,
     "TVB"=as.character(A2listprot[input$SItvb]),
     "Déterminant.Znieff.dans.le.PE"=as.character(A2listprot[input$SIdet]),
-    "Espèce.Exotique.Envahissante"=as.character(A2listprot[input$SIexo]))
+    "Espèce.Exotique.Envahissante"=as.character(A2listprot[input$SIexo]),stringsAsFactors=FALSE)
   # array visu
   tableau$A2 <- rbind(tableau$A2, newDF)
   # save ecoval
-  name <- paste("SIA2 no.", as.character(input$selectsiteimpact))
+  name <- paste("SIA2 no.", input$selectsiteimpact)
   ecoval[[name]] <<- tableau$A2
   updateTabB()
+  # clean widgets
+  updateTextInput(session, "SIlatinnamespecies", value = "")
+  updateTextInput(session, "SIfrenchnamespecies", value = "")
+  updateSelectInput(session, "SItype1", selected = "1")
+  updateSelectInput(session, "SItype2", selected = "1")
+  updateSelectInput(session, "SIprotect", selected = "1")
+  updateSelectInput(session, "SIrougeF", selected = "1")
+  updateSelectInput(session, "SIrougeR", selected = "1")
+  updateSelectInput(session, "SIdirect", selected = "0")
+  updateSelectInput(session, "SIreprod", selected = "0")
+  updateSelectInput(session, "SIexo", selected = "1")
+  updateSelectInput(session, "SItvb", selected = "1")
+  updateSelectInput(session, "SIdet", selected = "1")
+  updateSelectInput(session, "SIindssi", selected = "0")
 })
 
 observeEvent(input$dellistesp,{
@@ -162,7 +227,7 @@ observeEvent(input$dellistesp,{
     # update array visu
     tableau$A2 <- tableau$A2[-rs,]
     # save ecoval
-    name <- paste("SIA2 no.", as.character(input$selectsiteimpact))
+    name <- paste("SIA2 no.", input$selectsiteimpact)
     ecoval[[name]] <<- tableau$A2
     updateTabB()
   }
@@ -193,14 +258,19 @@ observeEvent(input$addlistper,{
     "Type"=as.character(A3listtype[input$SIpertype]),
     "Couche.SIG.EUNIS"=input$SIpercouche,
     "Code.SIG.OSO"=input$SIpercode,
-    "Surface"=as.character(input$SIpersurf)
+    "Surface"=as.character(input$SIpersurf),stringsAsFactors=FALSE
   )
   # array visu
   tableau$A3 <- rbind(tableau$A3, newDF)
   # save ecoval
-  name <- paste("SIA3 no.", as.character(input$selectsiteimpact))
+  name <- paste("SIA3 no.", input$selectsiteimpact)
   ecoval[[name]] <<- tableau$A3
   updateTabB()
+  # clean widgets
+  updateSelectInput(session, "SIpertype", selected = "1")
+  updateTextInput(session, "SIpercouche", value = "")
+  updateTextInput(session, "SIpercode", value = "")
+  updateNumericInput(session, "SIpersurf", value = 0.)
 })
 
 observeEvent(input$dellistper,{
@@ -209,13 +279,12 @@ observeEvent(input$dellistper,{
     # update array visu
     tableau$A3 <- tableau$A3[-rs,]
     # save ecoval
-    name <- paste("SIA3 no.", as.character(input$selectsiteimpact))
+    name <- paste("SIA3 no.", input$selectsiteimpact)
     ecoval[[name]] <<- tableau$A3
     updateTabB()
   }
 })
 
-output$SItable3 <- renderDataTable(tableau$A3, rownames=FALSE)
 output$SItable3 <- DT::renderDataTable({
   dat <- datatable(tableau$A3, rownames = TRUE,
                    colnames = c("Couche SIG EUNIS" = 3, "Couche SIG OSO" = 4),
@@ -229,7 +298,7 @@ observeEvent(input$renseigner,{
   rs <- as.numeric(input$SItable4_rows_selected)
   if(length(rs) == 1){
     # initial state
-    if(rs %in% c(13,44,45,46,47,48,61)){
+    if(rs %in% c(13,39,44,45,46,47,48,56,61)){
       tableau$B[rs,4] <- input$Manuel
     }
     # update array visu CT
@@ -253,8 +322,16 @@ observeEvent(input$renseigner,{
     }
     tableau$B[rs,10] <- input$SIvalLT
     # save ecoval
-    name <- paste("SIB no.", as.character(input$selectsiteimpact))
+    name <- paste("SIB no.", input$selectsiteimpact)
     ecoval[[name]] <<- tableau$B
+    # clean widgets
+    updateTextAreaInput(session, "SIjustifCT", value ="")
+    updateCheckboxGroupInput(session, "SIdegincCT", selected = character(0))
+    updateNumericInput(session, "SIvalCT", value = 0.)
+    updateTextAreaInput(session, "SIjustifLT", value ="")
+    updateCheckboxGroupInput(session, "SIdegincLT", selected = character(0))
+    updateNumericInput(session, "SIvalLT", value = 0.)
+    updateNumericInput(session, "Manuel", value = 0.)
   }
 })
 
@@ -325,23 +402,23 @@ updateTabB <- function(){
       if(tableau$A1[i,5] == "Zone humide") val54num <- val54num + as.numeric(tableau$A1[i,4])
       if(tableau$A1[i,5] == "Aquatique") val55num <- val55num + as.numeric(tableau$A1[i,4])
     }
-    tableau$B[1,4] <- as.character(val1)
-    tableau$B[2,4] <- as.character(val2)
-    tableau$B[3,4] <- as.character(val3)
-    tableau$B[4,4] <- as.character(val4)
-    tableau$B[5,4] <- as.character(val5)
-    tableau$B[6,4] <- as.character(val6)
-    tableau$B[7,4] <- as.character(val7)
-    tableau$B[8,4] <- as.character(val8)
-    tableau$B[9,4] <- as.character(val9)
-    tableau$B[10,4] <- as.character(val10)
-    tableau$B[11,4] <- as.character(val11)
-    tableau$B[12,4] <- as.character(val12)
-    tableau$B[25,4] <- as.character(val25 * 100. / valsurf)
-    tableau$B[26,4] <- as.character(val26 * 100. / valsurf)
-    tableau$B[40,4] <- as.character(val40num * 100. / val40den)
-    tableau$B[41,4] <- as.character(val41num * 100. / val41den)
-    tableau$B[42,4] <- as.character(val42num * 100. / val42den)
+    tableau$B[1,4] <- as.character(round(val1,2))
+    tableau$B[2,4] <- as.character(round(val2,2))
+    tableau$B[3,4] <- as.character(round(val3,2))
+    tableau$B[4,4] <- as.character(round(val4,2))
+    tableau$B[5,4] <- as.character(round(val5,2))
+    tableau$B[6,4] <- as.character(round(val6,2))
+    tableau$B[7,4] <- as.character(round(val7,2))
+    tableau$B[8,4] <- as.character(round(val8,2))
+    tableau$B[9,4] <- as.character(round(val9,2))
+    tableau$B[10,4] <- as.character(round(val10,2))
+    tableau$B[11,4] <- as.character(round(val11,2))
+    tableau$B[12,4] <- as.character(round(val12,2))
+    tableau$B[25,4] <- as.character(round(val25 * 100. / valsurf,2))
+    tableau$B[26,4] <- as.character(round(val26 * 100. / valsurf,2))
+    tableau$B[40,4] <- as.character(round(val40num * 100. / val40den,2))
+    tableau$B[41,4] <- as.character(round(val41num * 100. / val41den,2))
+    tableau$B[42,4] <- as.character(round(val42num * 100. / val42den,2))
   }
   # from A2
   n <- dim(tableau$A2)[1]
@@ -444,33 +521,33 @@ updateTabB <- function(){
       if(tableau$A2[i,12] == "Oui" & tableau$A2[i,3] != "Flore") val57 <- val57 + 1
       if(tableau$A2[i,12] == "Oui" & tableau$A2[i,3] == "Flore") val58 <- val58 + 1
     }
-    tableau$B[14,4] <- as.character(val14)
-    tableau$B[15,4] <- as.character(val15)
-    tableau$B[16,4] <- as.character(val16)
-    tableau$B[17,4] <- as.character(val17)
-    tableau$B[18,4] <- as.character(val18)
-    tableau$B[19,4] <- as.character(val19)
-    tableau$B[20,4] <- as.character(val20)
-    tableau$B[21,4] <- as.character(val21)
-    tableau$B[22,4] <- as.character(val22)
-    tableau$B[23,4] <- as.character(val23)
-    tableau$B[24,4] <- as.character(val24)
-    tableau$B[27,4] <- as.character(val27num * 100 / val27den)
-    tableau$B[28,4] <- as.character(val28num * 100 / val28den)
-    tableau$B[29,4] <- as.character(val29num * 100 / val29den)
-    tableau$B[30,4] <- as.character(val30num * 100 / val30den)
-    tableau$B[31,4] <- as.character(val31num * 100 / val31den)
-    tableau$B[32,4] <- as.character(val32num * 100 / val32den)
-    tableau$B[33,4] <- as.character(val33num * 100 / val33den)
-    tableau$B[34,4] <- as.character(val34num * 100 / val34den)
-    tableau$B[35,4] <- as.character(val35num * 100 / val35den)
-    tableau$B[36,4] <- as.character(val36num * 100 / val36den)
-    tableau$B[37,4] <- as.character(val37num * 100 / val37den)
-    tableau$B[38,4] <- as.character(val38num / val38den)
-    tableau$B[43,4] <- as.character(val43)
-    tableau$B[49,4] <- as.character(val49)
-    tableau$B[57,4] <- as.character(val57)
-    tableau$B[58,4] <- as.character(val58)
+    tableau$B[14,4] <- as.character(round(val14,2))
+    tableau$B[15,4] <- as.character(round(val15,2))
+    tableau$B[16,4] <- as.character(round(val16,2))
+    tableau$B[17,4] <- as.character(round(val17,2))
+    tableau$B[18,4] <- as.character(round(val18,2))
+    tableau$B[19,4] <- as.character(round(val19,2))
+    tableau$B[20,4] <- as.character(round(val20,2))
+    tableau$B[21,4] <- as.character(round(val21,2))
+    tableau$B[22,4] <- as.character(round(val22,2))
+    tableau$B[23,4] <- as.character(round(val23,2))
+    tableau$B[24,4] <- as.character(round(val24,2))
+    tableau$B[27,4] <- as.character(round(val27num * 100 / val27den,2))
+    tableau$B[28,4] <- as.character(round(val28num * 100 / val28den,2))
+    tableau$B[29,4] <- as.character(round(val29num * 100 / val29den,2))
+    tableau$B[30,4] <- as.character(round(val30num * 100 / val30den,2))
+    tableau$B[31,4] <- as.character(round(val31num * 100 / val31den,2))
+    tableau$B[32,4] <- as.character(round(val32num * 100 / val32den,2))
+    tableau$B[33,4] <- as.character(round(val33num * 100 / val33den,2))
+    tableau$B[34,4] <- as.character(round(val34num * 100 / val34den,2))
+    tableau$B[35,4] <- as.character(round(val35num * 100 / val35den,2))
+    tableau$B[36,4] <- as.character(round(val36num * 100 / val36den,2))
+    tableau$B[37,4] <- as.character(round(val37num * 100 / val37den,2))
+    tableau$B[38,4] <- as.character(round(val38num / val38den,2))
+    tableau$B[43,4] <- as.character(round(val43,2))
+    tableau$B[49,4] <- as.character(round(val49,2))
+    tableau$B[57,4] <- as.character(round(val57,2))
+    tableau$B[58,4] <- as.character(round(val58,2))
   }
   # from A3
   n <- dim(tableau$A3)[1]
@@ -493,24 +570,24 @@ updateTabB <- function(){
       if(tableau$A3[i,1] == "Zone humide") val54den <- val54den + as.numeric(tableau$A3[i,4])
       if(tableau$A3[i,1] == "Aquatique") val55den <- val55den + as.numeric(tableau$A3[i,4])
     }
-    tableau$B[59,4] <- as.character(val59)
-    tableau$B[60,4] <- as.character(val60)
-    tableau$B[50,4] <- as.character(val50num * 100. / val50den)
-    tableau$B[51,4] <- as.character(val51num * 100. / val51den)
-    tableau$B[52,4] <- as.character(val52num * 100. / val52den)
-    tableau$B[53,4] <- as.character(val53num * 100. / val53den)
-    tableau$B[54,4] <- as.character(val54num * 100. / val54den)
-    tableau$B[55,4] <- as.character(val55num * 100. / val55den)
+    tableau$B[59,4] <- as.character(round(val59,2))
+    tableau$B[60,4] <- as.character(round(val60,2))
+    tableau$B[50,4] <- as.character(round(val50num * 100. / val50den,2))
+    tableau$B[51,4] <- as.character(round(val51num * 100. / val51den,2))
+    tableau$B[52,4] <- as.character(round(val52num * 100. / val52den,2))
+    tableau$B[53,4] <- as.character(round(val53num * 100. / val53den,2))
+    tableau$B[54,4] <- as.character(round(val54num * 100. / val54den,2))
+    tableau$B[55,4] <- as.character(round(val55num * 100. / val55den,2))
   }
   # save ecoval
-  name <- paste("SIB no.", as.character(input$selectsiteimpact))
+  name <- paste("SIB no.", input$selectsiteimpact)
   ecoval[[name]] <<- tableau$B
 }
 
 output$SItable4<- DT::renderDataTable({
   dat <- datatable(tableau$B, rownames = TRUE,
                    colnames = c("Valeur à l'état initial" = 5, "Justification de l'estimation CT" = 6, "Degré d'incertitude CT" = 7, "Valeur après impact CT" = 8, "Justification de l'estimation LT" = 9, "Degré d'incertitude LT" = 10, "Valeur après impact LT" = 11),
-                   selection = 'single', options = list(pageLength = dim.data.frame(tableau$B)[1], searching = FALSE, dom = 'ft', ordering = FALSE)) %>%
+                   selection = 'single', options = list(pageLength = dim.data.frame(tableau$B)[1], searching = TRUE, dom = 'ft', ordering = FALSE), filter = "top") %>%
     formatStyle(4, 3, backgroundColor = styleEqual(c('Longueur de lisière (Km) / surface de milieu forestier (Ha)',
                                                      'Proportion des chiroptères spécialistes',
                                                      'Nombre de patchs d\\\'EEE',
@@ -520,6 +597,89 @@ output$SItable4<- DT::renderDataTable({
                                                      'Surface (Ha) de corridor traversant le site',
                                                      'Nombre d\\\'espaces protégé ou à enjeu (au moins 1/3 de la surface dans le PE)',
                                                      'Surface d\\\'EEE à proximité immédiate du PS'),
-                                                    c(rep('#FFA02F', 9))))
+                                                   c(rep('#FFA02F', 9))))
+  return(dat)
+})
+
+## SI C
+observeEvent(input$selecthabitatSI, {
+  if(input$selecthabitatSI != '0'){
+    name <- paste("SIC no.", input$selecthabitatSI)
+    tableau$C <- ecoval[[name]]
+    shinyjs::show("SIjustifCTNH")
+    shinyjs::show("SIdegincCTNH")
+    shinyjs::show("SIvalCTNH")
+    shinyjs::show("SIjustifLTNH")
+    shinyjs::show("SIdegincLTNH")
+    shinyjs::show("SIvalLTNH")
+    shinyjs::show("renseignerNH")
+    shinyjs::show("ManuelNH")
+    shinyjs::show("SItable5")
+  }else{
+    shinyjs::hide("SIjustifCTNH")
+    shinyjs::hide("SIdegincCTNH")
+    shinyjs::hide("SIvalCTNH")
+    shinyjs::hide("SIjustifLTNH")
+    shinyjs::hide("SIdegincLTNH")
+    shinyjs::hide("SIvalLTNH")
+    shinyjs::hide("renseignerNH")
+    shinyjs::hide("ManuelNH")
+    shinyjs::hide("SItable5")
+  }
+})
+
+observeEvent(input$renseignerNH,{
+  rs <- as.numeric(input$SItable5_rows_selected)
+  if(length(rs) == 1){
+    tableau$C[rs,4] <- input$ManuelNH
+    # update array visu CT
+    tableau$C[rs,5] <- input$SIjustifCTNH
+    if(is.null(input$SIdegincCTNH)) tableau$C[rs,6] <- ""
+    else{
+      dimselect <- length(input$SIdegincCTNH)
+      if(dimselect == 1) tableau$C[rs,6] <- "*"
+      else if(dimselect == 2) tableau$C[rs,6] <- "**"
+      else if(dimselect == 3) tableau$C[rs,6] <- "***"
+    }
+    tableau$C[rs,7] <- input$SIvalCTNH
+    # update array visu LT
+    tableau$C[rs,8] <- input$SIjustifLTNH
+    if(is.null(input$SIdegincLTNH)) tableau$C[rs,9] <- ""
+    else{
+      dimselect <- length(input$SIdegincLTNH)
+      if(dimselect == 1) tableau$C[rs,9] <- "*"
+      else if(dimselect == 2) tableau$C[rs,9] <- "**"
+      else if(dimselect == 3) tableau$C[rs,9] <- "***"
+    }
+    tableau$C[rs,10] <- input$SIvalLTNH
+    # save ecoval
+    name <- paste("SIC no.", input$selecthabitatSI)
+    ecoval[[name]] <<- tableau$C
+    # clean widgets
+    updateTextAreaInput(session, "SIjustifCTNH", value ="")
+    updateCheckboxGroupInput(session, "SIdegincCTNH", selected = character(0))
+    updateNumericInput(session, "SIvalCTNH", value = 0.)
+    updateTextAreaInput(session, "SIjustifLTNH", value ="")
+    updateCheckboxGroupInput(session, "SIdegincLTNH", selected = character(0))
+    updateNumericInput(session, "SIvalLTNH", value = 0.)
+    updateNumericInput(session, "ManuelNH", value = 0.)
+  }
+})
+
+output$SItable5<- DT::renderDataTable({
+  partial_select <- c(1,2,3,4,5,6,7,8,9,17,18,19,20,21,25,26,27)
+  name  <- paste("Habitat", as.character(input$selecthabitatSI))
+  if(ecoval[[name]][4,2] == "1"){ # Fermé
+    partial_select <- c(partial_select, c(10,11,12,13,14,22))
+  }else if(ecoval[[name]][4,2] == "2"){ # Ouvert
+    partial_select <- c(partial_select, c(15, 23))
+  }else if(ecoval[[name]][4,2] == "4"){ # Zone humide
+    partial_select <- c(partial_select, c(16, 24))
+  }
+  viewTabC <- tableau$C[partial_select,]
+  dat <- datatable(viewTabC, rownames = TRUE,
+                   colnames = c("Valeur à l'état initial" = 5, "Justification prédiction CT" = 6, "Incertitudes CT" = 7, "Valeur après impact MC CT" = 8, "Justification prédiction LT" = 9, "Incertitudes LT" = 10, "Valeur après impact MC LT" = 11),
+                   selection = 'single', options = list(pageLength = dim.data.frame(tableau$C)[1], searching = TRUE, dom = 'ft', ordering = FALSE), filter = "top")%>%
+    formatStyle(4, 3, backgroundColor = '#FFA02F')
   return(dat)
 })

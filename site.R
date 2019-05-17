@@ -83,8 +83,11 @@ output$btn_telecharger <- downloadHandler(
     nbhabitat <- dim(listhabitat)[1] - 1
     if(nbhabitat > 0){
       for(i in 1:nbhabitat){
+        index <- listhabitat[1+i,2]
         name <- paste("Habitat", as.character(h))
         write.xlsx2(ecoval[[listhabitat[1+i,1]]], con, sheetName = paste("Habitat", as.character(h)), row.names = FALSE, col.names = FALSE, append = TRUE)
+        scname <- paste("SIC no.", as.character(index))
+        write.xlsx2(ecoval[[scname]], con, sheetName = paste("SIC no.", as.character(h)), row.names = FALSE, col.names = TRUE, append = TRUE)
         h <- h + 1
       }
     }
@@ -149,6 +152,9 @@ observeEvent(input$userfile, {
     ecoval[[name]] <<- read.xlsx2(inFile$datapath, sheetName = name, header = FALSE, stringsAsFactors = FALSE)
     newhabitat <- data.frame("habitat" = name, "index" = i, "name" = ecoval[[name]][1,2])
     listhabitat <<- rbind(listhabitat, newhabitat)
+    scname <- paste("SIC no.", as.character(i))
+    ecoval[[scname]] <<- read.xlsx2(inFile$datapath, sheetName = scname, header = TRUE, stringsAsFactors = FALSE)
+    tableau$C <- ecoval[[scname]]
   }
   updateListSite(0)
   updateListSiteImpactCompens()
