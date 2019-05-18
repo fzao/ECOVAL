@@ -156,7 +156,8 @@ observeEvent(input$userfile, {
     ecoval[[scname]] <<- read.xlsx2(inFile$datapath, sheetName = scname, header = TRUE, stringsAsFactors = FALSE)
     tableau$C <- ecoval[[scname]]
   }
-  updateListSite(0)
+  if(numsite == 0) updateListSite(0)
+  else updateListSite(2)
   updateListSiteImpactCompens()
 })
 
