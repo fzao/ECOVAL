@@ -60,6 +60,9 @@ observeEvent(input$newhabitat, {
   cleanHabitat()
   # update list
   updateListHabitat(paste("Site no.", input$selectsite))
+  # force default choice to NULL (auto update for "selecthabitatSI")
+  updateSelectInput(session, "selectsiteimpact", selected = "0")
+  updateSelectInput(session, "selectsitecompens", selected = "0")
 })
 
 observeEvent(input$deletehabitat, {
@@ -76,6 +79,9 @@ observeEvent(input$destroyhabitat, {
     updateListHabitat(paste("Site no.", input$selectsite))
     newname <- paste("SIC no.", as.character(numero))
     ecoval[[newname]] <<- NULL
+    # force default choice to NULL (auto update for "selecthabitatSI")
+    updateSelectInput(session, "selectsiteimpact", selected = "0")
+    updateSelectInput(session, "selectsitecompens", selected = "0")
   }
 })
 

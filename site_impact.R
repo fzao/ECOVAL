@@ -30,8 +30,8 @@ updateListSiteImpactCompens <- function(){
       if (listsite[i,4] == 2 | listsite[i,4] == 3) showlistcompens[[listsite[i,1]]] <- listsite[i,2]
     }
   }
-  updateSelectInput(session, "selectsiteimpact", choices = showlistimpact, selected = showlistimpact[[length(showlistimpact)]])
-  updateSelectInput(session, "selectsitecompens", choices = showlistcompens, selected = showlistcompens[[length(showlistcompens)]])
+  updateSelectInput(session, "selectsiteimpact", choices = showlistimpact, selected = "0") #showlistimpact[[length(showlistimpact)]])
+  updateSelectInput(session, "selectsitecompens", choices = showlistcompens, selected = "0") #= showlistcompens[[length(showlistcompens)]])
 }
 
 updateListHabitatSiteImpact <- function(){

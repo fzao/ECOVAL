@@ -55,6 +55,9 @@ observeEvent(input$newspecies, {
   cleanSpecies()
   # update list
   updateListSpecies(paste("Site no.", input$selectsite)) 
+  # force default choice to NULL (auto update for "selecthabitatSI")
+  updateSelectInput(session, "selectsiteimpact", selected = "0")
+  updateSelectInput(session, "selectsitecompens", selected = "0")
 })
 
 observeEvent(input$deletespecies, {
@@ -69,6 +72,9 @@ observeEvent(input$destroyspecies, {
     listspecies <<- listspecies[-c(which(listspecies$species == name)),]
     ecoval[[name]] <<- NULL
     updateListSpecies(paste("Site no.", input$selectsite)) 
+    # force default choice to NULL (auto update for "selecthabitatSI")
+    updateSelectInput(session, "selectsiteimpact", selected = "0")
+    updateSelectInput(session, "selectsitecompens", selected = "0")
   }
 })
 
