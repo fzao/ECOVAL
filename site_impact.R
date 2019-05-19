@@ -337,8 +337,8 @@ observeEvent(input$renseigner,{
 
 updateTabB <- function(){
   # from A1
-  n <- dim(tableau$A1)[1]
-  if(n > 0){
+  n1 <- dim(tableau$A1)[1]
+  if(n1 > 0){
     val1 <- 0 # Nombre d'habitat forestier
     val2 <- 0. # Surface (ha) d'habitat forestier
     val3 <- 0 # Nombre d'habitat ouvert
@@ -366,7 +366,7 @@ updateTabB <- function(){
     val53num <- 0.
     val54num <- 0.
     val55num <- 0.
-    for(i in 1:n){
+    for(i in 1:n1){
       if(tableau$A1[i,5] == "Fermé"){
         val1 <-val1 + 1
         val2 <- val2 + as.numeric(tableau$A1[i,4])
@@ -402,27 +402,10 @@ updateTabB <- function(){
       if(tableau$A1[i,5] == "Zone humide") val54num <- val54num + as.numeric(tableau$A1[i,4])
       if(tableau$A1[i,5] == "Aquatique") val55num <- val55num + as.numeric(tableau$A1[i,4])
     }
-    tableau$B[1,4] <- as.character(round(val1,2))
-    tableau$B[2,4] <- as.character(round(val2,2))
-    tableau$B[3,4] <- as.character(round(val3,2))
-    tableau$B[4,4] <- as.character(round(val4,2))
-    tableau$B[5,4] <- as.character(round(val5,2))
-    tableau$B[6,4] <- as.character(round(val6,2))
-    tableau$B[7,4] <- as.character(round(val7,2))
-    tableau$B[8,4] <- as.character(round(val8,2))
-    tableau$B[9,4] <- as.character(round(val9,2))
-    tableau$B[10,4] <- as.character(round(val10,2))
-    tableau$B[11,4] <- as.character(round(val11,2))
-    tableau$B[12,4] <- as.character(round(val12,2))
-    tableau$B[25,4] <- as.character(round(val25 * 100. / valsurf,2))
-    tableau$B[26,4] <- as.character(round(val26 * 100. / valsurf,2))
-    tableau$B[40,4] <- as.character(round(val40num * 100. / val40den,2))
-    tableau$B[41,4] <- as.character(round(val41num * 100. / val41den,2))
-    tableau$B[42,4] <- as.character(round(val42num * 100. / val42den,2))
   }
   # from A2
-  n <- dim(tableau$A2)[1]
-  if(n > 0){
+  n2 <- dim(tableau$A2)[1]
+  if(n2 > 0){
     val14 <- 0 # Diversité avifaune
     val15 <- 0 # Diversité chiroptères 
     val16 <- 0 # Diversité reptiles
@@ -462,7 +445,7 @@ updateTabB <- function(){
     val49 <- 0
     val57 <- 0
     val58 <- 0
-    for(i in 1:n){
+    for(i in 1:n2){
       if(tableau$A2[i,3] == "Avifaune") val14 <- val14 + 1
       else if(tableau$A2[i,3] == "Chiroptère") val15 <- val15 + 1
       else if(tableau$A2[i,3] == "Reptile") val16 <- val16 + 1
@@ -521,6 +504,47 @@ updateTabB <- function(){
       if(tableau$A2[i,12] == "Oui" & tableau$A2[i,3] != "Flore") val57 <- val57 + 1
       if(tableau$A2[i,12] == "Oui" & tableau$A2[i,3] == "Flore") val58 <- val58 + 1
     }
+  }
+  # from A3
+  n3 <- dim(tableau$A3)[1]
+  if(n3 > 0){
+    val59 <- 0.
+    val60 <- 0.
+    val50den <- 0.
+    val51den <- 0.
+    val52den <- 0.
+    val53den <- 0.
+    val54den <- 0.
+    val55den <- 0.
+    for(i in 1:n3){
+      if(tableau$A3[i,1] == "Cultivé") val59 <- val59 + as.numeric(tableau$A3[i,4])
+      if(tableau$A3[i,1] == "Imperméabilisé") val60 <- val60 + as.numeric(tableau$A3[i,4])
+      if(tableau$A3[i,1] == "Fermé") val50den <- val50den + as.numeric(tableau$A3[i,4])
+      if(tableau$A3[i,1] == "Ouvert") val51den <- val51den + as.numeric(tableau$A3[i,4])
+      if(tableau$A3[i,1] == "Buissonnant") val52den <- val52den + as.numeric(tableau$A3[i,4])
+      if(tableau$A3[i,1] == "Rocheux") val53den <- val53den + as.numeric(tableau$A3[i,4])
+      if(tableau$A3[i,1] == "Zone humide") val54den <- val54den + as.numeric(tableau$A3[i,4])
+      if(tableau$A3[i,1] == "Aquatique") val55den <- val55den + as.numeric(tableau$A3[i,4])
+    }
+  }
+  if(n1 > 0 & n2 > 0 & n3 > 0){
+    tableau$B[1,4] <- as.character(round(val1,2))
+    tableau$B[2,4] <- as.character(round(val2,2))
+    tableau$B[3,4] <- as.character(round(val3,2))
+    tableau$B[4,4] <- as.character(round(val4,2))
+    tableau$B[5,4] <- as.character(round(val5,2))
+    tableau$B[6,4] <- as.character(round(val6,2))
+    tableau$B[7,4] <- as.character(round(val7,2))
+    tableau$B[8,4] <- as.character(round(val8,2))
+    tableau$B[9,4] <- as.character(round(val9,2))
+    tableau$B[10,4] <- as.character(round(val10,2))
+    tableau$B[11,4] <- as.character(round(val11,2))
+    tableau$B[12,4] <- as.character(round(val12,2))
+    tableau$B[25,4] <- as.character(round(val25 * 100. / valsurf,2))
+    tableau$B[26,4] <- as.character(round(val26 * 100. / valsurf,2))
+    tableau$B[40,4] <- as.character(round(val40num * 100. / val40den,2))
+    tableau$B[41,4] <- as.character(round(val41num * 100. / val41den,2))
+    tableau$B[42,4] <- as.character(round(val42num * 100. / val42den,2))
     tableau$B[14,4] <- as.character(round(val14,2))
     tableau$B[15,4] <- as.character(round(val15,2))
     tableau$B[16,4] <- as.character(round(val16,2))
@@ -548,28 +572,6 @@ updateTabB <- function(){
     tableau$B[49,4] <- as.character(round(val49,2))
     tableau$B[57,4] <- as.character(round(val57,2))
     tableau$B[58,4] <- as.character(round(val58,2))
-  }
-  # from A3
-  n <- dim(tableau$A3)[1]
-  if(n > 0){
-    val59 <- 0.
-    val60 <- 0.
-    val50den <- 0.
-    val51den <- 0.
-    val52den <- 0.
-    val53den <- 0.
-    val54den <- 0.
-    val55den <- 0.
-    for(i in 1:n){
-      if(tableau$A3[i,1] == "Cultivé") val59 <- val59 + as.numeric(tableau$A3[i,4])
-      if(tableau$A3[i,1] == "Imperméabilisé") val60 <- val60 + as.numeric(tableau$A3[i,4])
-      if(tableau$A3[i,1] == "Fermé") val50den <- val50den + as.numeric(tableau$A3[i,4])
-      if(tableau$A3[i,1] == "Ouvert") val51den <- val51den + as.numeric(tableau$A3[i,4])
-      if(tableau$A3[i,1] == "Buissonnant") val52den <- val52den + as.numeric(tableau$A3[i,4])
-      if(tableau$A3[i,1] == "Rocheux") val53den <- val53den + as.numeric(tableau$A3[i,4])
-      if(tableau$A3[i,1] == "Zone humide") val54den <- val54den + as.numeric(tableau$A3[i,4])
-      if(tableau$A3[i,1] == "Aquatique") val55den <- val55den + as.numeric(tableau$A3[i,4])
-    }
     tableau$B[59,4] <- as.character(round(val59,2))
     tableau$B[60,4] <- as.character(round(val60,2))
     tableau$B[50,4] <- as.character(round(val50num * 100. / val50den,2))
@@ -578,10 +580,12 @@ updateTabB <- function(){
     tableau$B[53,4] <- as.character(round(val53num * 100. / val53den,2))
     tableau$B[54,4] <- as.character(round(val54num * 100. / val54den,2))
     tableau$B[55,4] <- as.character(round(val55num * 100. / val55den,2))
+    # save ecoval
+    name <- paste("SIB no.", input$selectsiteimpact)
+    ecoval[[name]] <<- tableau$B
+  }else{
+    tableau$B[1:60,4] <- "0"
   }
-  # save ecoval
-  name <- paste("SIB no.", input$selectsiteimpact)
-  ecoval[[name]] <<- tableau$B
 }
 
 output$SItable4<- DT::renderDataTable({
