@@ -49,11 +49,18 @@ observeEvent(input$newspecies, {
   # create new DF
   ecoval[[newname]] <<- model_species
   # add site info
-  ecoval[[newname]][6,2] <<- ecoval[[paste("Site no.", input$selectsite)]][12,2]
+  ecoval[[newname]][6,2] <<- ecoval[[paste("Site no.", input$selectsite)]][12,2] # ID
+  ecoval[[newname]][7,2] <<- ecoval[[paste("Site no.", input$selectsite)]][2,2] # type
   ecoval[[newname]][2,2] <<- newname #default french name
   # create new DF
-  newname <- paste("SID no.", as.character(numspecies))
-  ecoval[[newname]] <<- model_D
+  if(ecoval[[newname]][7,2] == '1' | ecoval[[newname]][7,2] == '3'){
+    newname <- paste("DI no.", as.character(numspecies))
+    ecoval[[newname]] <<- model_D
+  }
+  if(ecoval[[newname]][7,2] == '2' | ecoval[[newname]][7,2] == '3'){
+    newname <- paste("DC no.", as.character(numspecies))
+    ecoval[[newname]] <<- model_D
+  }
   # clean species
   cleanSpecies()
   # update list
@@ -73,10 +80,17 @@ observeEvent(input$destroyspecies, {
   if(numero > 0){
     name <- paste("Espece", as.character(numero))
     listspecies <<- listspecies[-c(which(listspecies$species == name)),]
+    type <- ecoval[[name]][7,2]
     ecoval[[name]] <<- NULL
     updateListSpecies(paste("Site no.", input$selectsite))
-    newname <- paste("SID no.", as.character(numero))
-    ecoval[[newname]] <<- NULL
+    if(type == '1' | type == '3'){
+      newname <- paste("DI no.", as.character(numero))
+      ecoval[[newname]] <<- NULL
+    }
+    if(type == '2' | type == '3'){
+      newname <- paste("DC no.", as.character(numero))
+      ecoval[[newname]] <<- NULL
+    }
     # force default choice to NULL (auto update for "selecthabitatSI")
     updateSelectInput(session, "selectsiteimpact", selected = "0")
     updateSelectInput(session, "selectsitecompens", selected = "0")

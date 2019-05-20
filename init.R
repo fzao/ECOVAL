@@ -35,7 +35,7 @@ numhabitat <- 0
 listsite <- data.frame("site" = '-', "index" = 0, "name" = '-', "type" = 0, stringsAsFactors=FALSE)
 listspecies <- data.frame("species" = '-', "index" = 0, "name" = '-', stringsAsFactors=FALSE)
 listhabitat <- data.frame("habitat" = '-', "index" = 0, "name" = '-', stringsAsFactors=FALSE)
-tableau <- reactiveValues(A1=NULL, A2=NULL, A3=NULL, B=NULL, C=NULL)
+tableau <- reactiveValues(A1=NULL, A2=NULL, A3=NULL, B=NULL, C=NULL, D=NULL)
 tableau$A1 <- model_A1
 A1listtype <- list("1"="Fermé" , "2"="Ouvert", "3"="Buissonnant", "4"="Zone humide", "5"="Aquatique", "6"="Rocheux", "7"="Cultivé", "8"="Imperméabilisé")
 A1listetat <- list("1"="Bon", "2"="Mauvais", "3"="Moyen")

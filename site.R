@@ -69,6 +69,20 @@ output$btn_telecharger <- downloadHandler(
           siname <- paste("SIB no.", as.character(index))
           write.xlsx2(ecoval[[siname]], con, sheetName = name, row.names = FALSE, col.names = TRUE, append = TRUE)
         }
+        if(ecoval[[listsite[1+i,1]]][2,2] == "2" | ecoval[[listsite[1+i,1]]][2,2] == "3"){ # info specifique site compensatoire
+          name <- paste("SCA1 no.", as.character(s))
+          scname <- paste("SCA1 no.", as.character(index))
+          write.xlsx2(ecoval[[scname]], con, sheetName = name, row.names = FALSE, col.names = TRUE, append = TRUE)
+          name <- paste("SCA2 no.", as.character(s))
+          scname <- paste("SCA2 no.", as.character(index))
+          write.xlsx2(ecoval[[scname]], con, sheetName = name, row.names = FALSE, col.names = TRUE, append = TRUE)
+          name <- paste("SCA3 no.", as.character(s))
+          scname <- paste("SCA3 no.", as.character(index))
+          write.xlsx2(ecoval[[scname]], con, sheetName = name, row.names = FALSE, col.names = TRUE, append = TRUE)
+          name <- paste("SCB no.", as.character(s))
+          scname <- paste("SCB no.", as.character(index))
+          write.xlsx2(ecoval[[scname]], con, sheetName = name, row.names = FALSE, col.names = TRUE, append = TRUE)
+        }
         s <- s + 1
       }
     }
@@ -78,8 +92,15 @@ output$btn_telecharger <- downloadHandler(
         index <- listspecies[1+i,2]
         name <- paste("Espece", as.character(e))
         write.xlsx2(ecoval[[listspecies[1+i,1]]], con, sheetName = name, row.names = FALSE, col.names = FALSE, append = TRUE)
-        sdname <- paste("SID no.", as.character(index))
-        write.xlsx2(ecoval[[sdname]], con, sheetName = paste("SID no.", as.character(e)), row.names = FALSE, col.names = TRUE, append = TRUE)
+        type <- ecoval[[listspecies[1+i,1]]][7,2]
+        if(type == '1' | type == '3'){
+          sdname <- paste("DI no.", as.character(index))
+          write.xlsx2(ecoval[[sdname]], con, sheetName = paste("DI no.", as.character(e)), row.names = FALSE, col.names = TRUE, append = TRUE)
+        }
+        if(type == '2' | type == '3'){
+          sdname <- paste("DC no.", as.character(index))
+          write.xlsx2(ecoval[[sdname]], con, sheetName = paste("DC no.", as.character(e)), row.names = FALSE, col.names = TRUE, append = TRUE)
+        }
         e <- e + 1
       }
     }
@@ -89,12 +110,18 @@ output$btn_telecharger <- downloadHandler(
         index <- listhabitat[1+i,2]
         name <- paste("Habitat", as.character(h))
         write.xlsx2(ecoval[[listhabitat[1+i,1]]], con, sheetName = paste("Habitat", as.character(h)), row.names = FALSE, col.names = FALSE, append = TRUE)
-        scname <- paste("SIC no.", as.character(index))
-        write.xlsx2(ecoval[[scname]], con, sheetName = paste("SIC no.", as.character(h)), row.names = FALSE, col.names = TRUE, append = TRUE)
+        type <- ecoval[[listhabitat[1+i,1]]][8,2]
+        if(type == '1' | type == '3'){
+          scname <- paste("CI no.", as.character(index))
+          write.xlsx2(ecoval[[scname]], con, sheetName = paste("CI no.", as.character(h)), row.names = FALSE, col.names = TRUE, append = TRUE)
+        }
+        if(type == '2' | type == '3'){
+          scname <- paste("CC no.", as.character(index))
+          write.xlsx2(ecoval[[scname]], con, sheetName = paste("CC no.", as.character(h)), row.names = FALSE, col.names = TRUE, append = TRUE)
+        }
         h <- h + 1
       }
     }
-    
   }
 )
 
@@ -130,16 +157,30 @@ observeEvent(input$userfile, {
     if(ecoval[[name]][2,2] == "1" | ecoval[[name]][2,2] == "3"){ # site impacte
       siname <- paste("SIA1 no.", as.character(i))
       ecoval[[siname]] <<- read.xlsx2(inFile$datapath, sheetName = siname, header = TRUE, stringsAsFactors = FALSE)
-      tableau$A1 <- ecoval[[siname]]
+      #tableau$A1 <- ecoval[[siname]]
       siname <- paste("SIA2 no.", as.character(i))
       ecoval[[siname]] <<- read.xlsx2(inFile$datapath, sheetName = siname, header = TRUE, stringsAsFactors = FALSE)
-      tableau$A2 <- ecoval[[siname]]
+      #tableau$A2 <- ecoval[[siname]]
       siname <- paste("SIA3 no.", as.character(i))
       ecoval[[siname]] <<- read.xlsx2(inFile$datapath, sheetName = siname, header = TRUE, stringsAsFactors = FALSE)
-      tableau$A3 <- ecoval[[siname]]
+      #tableau$A3 <- ecoval[[siname]]
       siname <- paste("SIB no.", as.character(i))
       ecoval[[siname]] <<- read.xlsx2(inFile$datapath, sheetName = siname, header = TRUE, stringsAsFactors = FALSE)
-      tableau$B <- ecoval[[siname]]
+      #tableau$B <- ecoval[[siname]]
+    }
+    if(ecoval[[name]][2,2] == "2" | ecoval[[name]][2,2] == "3"){ # site compensatoire
+      scname <- paste("SCA1 no.", as.character(i))
+      ecoval[[scname]] <<- read.xlsx2(inFile$datapath, sheetName = scname, header = TRUE, stringsAsFactors = FALSE)
+      #tableau$A1c <- ecoval[[scname]]
+      scname <- paste("SCA2 no.", as.character(i))
+      ecoval[[scname]] <<- read.xlsx2(inFile$datapath, sheetName = scname, header = TRUE, stringsAsFactors = FALSE)
+      #tableau$A2c <- ecoval[[scname]]
+      scname <- paste("SCA3 no.", as.character(i))
+      ecoval[[scname]] <<- read.xlsx2(inFile$datapath, sheetName = scname, header = TRUE, stringsAsFactors = FALSE)
+      #tableau$A3c <- ecoval[[scname]]
+      scname <- paste("SCB no.", as.character(i))
+      ecoval[[scname]] <<- read.xlsx2(inFile$datapath, sheetName = scname, header = TRUE, stringsAsFactors = FALSE)
+      #tableau$Bc <- ecoval[[scname]]
     }
   }
   numspecies <<- as.integer(ecoval$General[5,2])
@@ -148,9 +189,16 @@ observeEvent(input$userfile, {
     ecoval[[name]] <<- read.xlsx2(inFile$datapath, sheetName = name, header = FALSE, stringsAsFactors = FALSE)
     newspecies <- data.frame("species" = name, "index" = i, "name" = ecoval[[name]][2,2])
     listspecies <<- rbind(listspecies, newspecies)
-    sdname <- paste("SID no.", as.character(i))
-    ecoval[[sdname]] <<- read.xlsx2(inFile$datapath, sheetName = sdname, header = TRUE, stringsAsFactors = FALSE)
-    tableau$D <- ecoval[[sdname]]
+    if( ecoval[[name]][7,2] == '1' |  ecoval[[name]][7,2] == '3'){
+      sdname <- paste("DI no.", as.character(i))
+      ecoval[[sdname]] <<- read.xlsx2(inFile$datapath, sheetName = sdname, header = TRUE, stringsAsFactors = FALSE)
+    }
+    #tableau$D <- ecoval[[sdname]]
+    if( ecoval[[name]][7,2] == '2' |  ecoval[[name]][7,2] == '3'){
+      sdname <- paste("DC no.", as.character(i))
+      ecoval[[sdname]] <<- read.xlsx2(inFile$datapath, sheetName = sdname, header = TRUE, stringsAsFactors = FALSE)
+    }
+    #tableau$Dc <- ecoval[[sdname]]
   }
   numhabitat <<- as.integer(ecoval$General[6,2])
   if(numhabitat > 0) for(i in 1:numhabitat){
@@ -158,9 +206,16 @@ observeEvent(input$userfile, {
     ecoval[[name]] <<- read.xlsx2(inFile$datapath, sheetName = name, header = FALSE, stringsAsFactors = FALSE)
     newhabitat <- data.frame("habitat" = name, "index" = i, "name" = ecoval[[name]][1,2])
     listhabitat <<- rbind(listhabitat, newhabitat)
-    scname <- paste("SIC no.", as.character(i))
-    ecoval[[scname]] <<- read.xlsx2(inFile$datapath, sheetName = scname, header = TRUE, stringsAsFactors = FALSE)
-    tableau$C <- ecoval[[scname]]
+    if( ecoval[[name]][8,2] == '1' |  ecoval[[name]][8,2] == '3'){
+      scname <- paste("CI no.", as.character(i))
+      ecoval[[scname]] <<- read.xlsx2(inFile$datapath, sheetName = scname, header = TRUE, stringsAsFactors = FALSE)
+    }
+    #tableau$C <- ecoval[[scname]]
+    if( ecoval[[name]][8,2] == '2' |  ecoval[[name]][8,2] == '3'){
+      scname <- paste("CC no.", as.character(i))
+      ecoval[[scname]] <<- read.xlsx2(inFile$datapath, sheetName = scname, header = TRUE, stringsAsFactors = FALSE)
+    }
+    #tableau$Cc <- ecoval[[scname]]
   }
   if(numsite == 0) updateListSite(0)
   else updateListSite(2)
@@ -381,7 +436,47 @@ observeEvent(input$sitename, {
   updateSiteName(input$selectsite, input$sitename)})
 observeEvent(input$sitetype, {
   saveSite(input$selectsite)
-  updateDescTemp(input$sitetype)})
+  updateDescTemp(input$sitetype)
+  delSICX(input$selectsite)
+  newSICX(input$selectsite)
+  # MAJ appartenance habitat / species
+  numero <- input$selectsite
+  name <- paste("Site no.", numero)
+  nbspecies <- dim(listspecies)[1] - 1
+  if(nbspecies > 0){
+    for(i in 1:nbspecies){
+      spname <- paste("Espece", as.character(listspecies$index[i+1]))
+      if(exists(spname, where = ecoval)){
+        if(ecoval[[spname]][6,2] == ecoval[[name]][12,2]) ecoval[[spname]][7,2] <<- ecoval[[name]][2,2]
+        if(ecoval[[spname]][7,2] == '1' | ecoval[[spname]][7,2] == '3'){
+          newname <- paste("DI no.", as.character(numspecies))
+          ecoval[[newname]] <<- model_D
+        }
+        if(ecoval[[spname]][7,2] == '2' | ecoval[[spname]][7,2] == '3'){
+          newname <- paste("DC no.", as.character(numspecies))
+          ecoval[[newname]] <<- model_D
+        }
+      }
+    }
+  }
+  nbhabitat <- dim(listhabitat)[1] - 1
+  if(nbhabitat > 0){
+    for(i in 1:nbhabitat){
+      hname <- paste("Habitat", as.character(listhabitat$index[i+1]))
+      if(exists(hname, where = ecoval)){
+        if(ecoval[[hname]][7,2] == ecoval[[name]][12,2]) ecoval[[hname]][8,2] <<- ecoval[[name]][2,2]
+        if(ecoval[[hname]][8,2] == '1' | ecoval[[hname]][8,2] == '3'){
+          newname <- paste("CI no.", as.character(numhabitat))
+          ecoval[[newname]] <<- model_C
+        }
+        if(ecoval[[hname]][8,2] == '2' | ecoval[[hname]][8,2] == '3'){
+          newname <- paste("CC no.", as.character(numhabitat))
+          ecoval[[newname]] <<- model_C
+        }
+      }
+    }
+  }
+})
 observeEvent(input$surface, {saveSite(input$selectsite)})
 observeEvent(input$latitude, {saveSite(input$selectsite)})
 observeEvent(input$longitude, {saveSite(input$selectsite)})
@@ -507,7 +602,18 @@ newSICX <- function(numsite){
     ecoval[[newname]] <<- model_B  # create new DF
   }
   if(type == "2" | type == "3"){  # compensatoire
-    
+    # A1
+    newname <- paste("SCA1 no.", numsite)
+    ecoval[[newname]] <<- model_A1  # create new DF
+    # A2
+    newname <- paste("SCA2 no.", numsite)
+    ecoval[[newname]] <<- model_A2  # create new DF
+    # A3
+    newname <- paste("SCA3 no.", numsite)
+    ecoval[[newname]] <<- model_A3  # create new DF
+    # B
+    newname <- paste("SCB no.", numsite)
+    ecoval[[newname]] <<- model_B  # create new DF
   }
 }
 
@@ -528,6 +634,17 @@ delSICX <- function(numsite){
     ecoval[[newname]] <<- NULL  # delete DF
   }
   if(type == "2" | type == "3"){  # compensatoire
-    
+    # A1
+    newname <- paste("SCA1 no.", numsite)
+    ecoval[[newname]] <<- NULL  # delete DF
+    # A2
+    newname <- paste("SCA2 no.", numsite)
+    ecoval[[newname]] <<- NULL  # delete DF
+    # A3
+    newname <- paste("SCA3 no.", numsite)
+    ecoval[[newname]] <<- NULL  # delete DF
+    # B
+    newname <- paste("SCB no.", numsite)
+    ecoval[[newname]] <<- NULL  # delete DF
   }
 }

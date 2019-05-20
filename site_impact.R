@@ -548,7 +548,7 @@ output$SItable4<- DT::renderDataTable({
 ## SI C
 observeEvent(input$selecthabitatSI, {
   if(input$selecthabitatSI != '0'){
-    name <- paste("SIC no.", input$selecthabitatSI)
+    name <- paste("CI no.", input$selecthabitatSI)
     tableau$C <- ecoval[[name]]
     shinyjs::show("SIjustifCTNH")
     shinyjs::show("SIdegincCTNH")
@@ -597,7 +597,7 @@ observeEvent(input$renseignerNH,{
     }
     tableau$C[rs,10] <- input$SIvalLTNH
     # save ecoval
-    name <- paste("SIC no.", input$selecthabitatSI)
+    name <- paste("CI no.", input$selecthabitatSI)
     ecoval[[name]] <<- tableau$C
     # clean widgets
     updateTextAreaInput(session, "SIjustifCTNH", value ="")
@@ -634,7 +634,7 @@ output$SItable5<- DT::renderDataTable({
 ## SI D
 observeEvent(input$selectspeciesSI, {
   if(input$selectspeciesSI != '0'){
-    name <- paste("SID no.", input$selectspeciesSI)
+    name <- paste("DI no.", input$selectspeciesSI)
     tableau$D <- ecoval[[name]]
     shinyjs::show("SIjustifCTNSP")
     shinyjs::show("SIdegincCTNSP")
@@ -683,7 +683,7 @@ observeEvent(input$renseignerNSP,{
     }
     tableau$D[rs,10] <- input$SIvalLTNSP
     # save ecoval
-    name <- paste("SID no.", input$selectspeciesSI)
+    name <- paste("DI no.", input$selectspeciesSI)
     ecoval[[name]] <<- tableau$D
     # clean widgets
     updateTextAreaInput(session, "SIjustifCTNSP", value ="")
