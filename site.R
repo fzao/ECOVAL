@@ -471,3 +471,63 @@ updateListSite <- function(place){
   else if(place==1) updateSelectInput(session, "selectsite", choices = showlist, selected = input$selectsite)
   else if(place==2) updateSelectInput(session, "selectsite", choices = showlist, selected = showlist[[length(showlist)]])
 }
+
+updateListSiteImpactCompens <- function(){
+  showlistimpact <- list()
+  showlistcompens <- list()
+  showlistimpact[['-']] <- 0
+  showlistcompens[['-']] <- 0
+  for(i in 1:dim(listsite)[1]){
+    if(listsite[i,3] != "NA" & listsite[i,3] != ""){
+      if(listsite[i,4] == 1 | listsite[i,4] == 3) showlistimpact[[listsite[i,3]]] <- listsite[i,2]
+      if (listsite[i,4] == 2 | listsite[i,4] == 3) showlistcompens[[listsite[i,3]]] <- listsite[i,2]
+    }else{
+      if(listsite[i,4] == 1 | listsite[i,4] == 3) showlistimpact[[listsite[i,1]]] <- listsite[i,2]
+      if (listsite[i,4] == 2 | listsite[i,4] == 3) showlistcompens[[listsite[i,1]]] <- listsite[i,2]
+    }
+  }
+  updateSelectInput(session, "selectsiteimpact", choices = showlistimpact, selected = "0") #showlistimpact[[length(showlistimpact)]])
+  updateSelectInput(session, "selectsitecompens", choices = showlistcompens, selected = "0") #= showlistcompens[[length(showlistcompens)]])
+}
+
+newSICX <- function(numsite){
+  type <- input$sitetype
+  if(type == "1" | type == "3"){  # impacte
+    # A1
+    newname <- paste("SIA1 no.", numsite)
+    ecoval[[newname]] <<- model_A1  # create new DF
+    # A2
+    newname <- paste("SIA2 no.", numsite)
+    ecoval[[newname]] <<- model_A2  # create new DF
+    # A3
+    newname <- paste("SIA3 no.", numsite)
+    ecoval[[newname]] <<- model_A3  # create new DF
+    # B
+    newname <- paste("SIB no.", numsite)
+    ecoval[[newname]] <<- model_B  # create new DF
+  }
+  if(type == "2" | type == "3"){  # compensatoire
+    
+  }
+}
+
+delSICX <- function(numsite){
+  type <- input$sitetype
+  if(type == "1" | type == "3"){  # impacte
+    # A1
+    newname <- paste("SIA1 no.", numsite)
+    ecoval[[newname]] <<- NULL  # delete DF
+    # A2
+    newname <- paste("SIA2 no.", numsite)
+    ecoval[[newname]] <<- NULL  # delete DF
+    # A3
+    newname <- paste("SIA3 no.", numsite)
+    ecoval[[newname]] <<- NULL  # delete DF
+    # B
+    newname <- paste("SIB no.", numsite)
+    ecoval[[newname]] <<- NULL  # delete DF
+  }
+  if(type == "2" | type == "3"){  # compensatoire
+    
+  }
+}
