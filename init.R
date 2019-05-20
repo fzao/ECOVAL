@@ -24,6 +24,7 @@ model_B <- read.xlsx2('model/ECOVAL.xlsx', sheetIndex = 6, header = TRUE, string
 model_species <- read.xlsx2('model/ECOVAL.xlsx', sheetIndex = 7, header = FALSE, stringsAsFactors = FALSE)
 model_habitat <- read.xlsx2('model/ECOVAL.xlsx', sheetIndex = 8, header = FALSE, stringsAsFactors = FALSE)
 model_C <- read.xlsx2('model/ECOVAL.xlsx', sheetIndex = 9, header = TRUE, stringsAsFactors = FALSE)
+model_D <- read.xlsx2('model/ECOVAL.xlsx', sheetIndex = 10, header = TRUE, stringsAsFactors = FALSE)
 SSI <- readRDS('data/Species_SSI.rds')
 park <- readRDS('data/Park.rds')
 ecoval <- list()
@@ -49,3 +50,4 @@ tableau$A3 <- model_A3
 A3listtype <- list("1"="Fermé", "2"="Ouvert", "3"="Buissonnant", "4"="Zone humide", "5"="Aquatique", "6"="Rocheux", "7"="Cultivé", "8"="Imperméabilisé")
 tableau$B <- model_B
 tableau$C <- model_C
+tableau$D <- model_D

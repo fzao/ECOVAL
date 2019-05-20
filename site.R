@@ -75,8 +75,11 @@ output$btn_telecharger <- downloadHandler(
     nbspecies <- dim(listspecies)[1] - 1
     if(nbspecies > 0){
       for(i in 1:nbspecies){
+        index <- listspecies[1+i,2]
         name <- paste("Espece", as.character(e))
         write.xlsx2(ecoval[[listspecies[1+i,1]]], con, sheetName = name, row.names = FALSE, col.names = FALSE, append = TRUE)
+        sdname <- paste("SID no.", as.character(index))
+        write.xlsx2(ecoval[[sdname]], con, sheetName = paste("SID no.", as.character(e)), row.names = FALSE, col.names = TRUE, append = TRUE)
         e <- e + 1
       }
     }
@@ -145,6 +148,9 @@ observeEvent(input$userfile, {
     ecoval[[name]] <<- read.xlsx2(inFile$datapath, sheetName = name, header = FALSE, stringsAsFactors = FALSE)
     newspecies <- data.frame("species" = name, "index" = i, "name" = ecoval[[name]][2,2])
     listspecies <<- rbind(listspecies, newspecies)
+    sdname <- paste("SID no.", as.character(i))
+    ecoval[[sdname]] <<- read.xlsx2(inFile$datapath, sheetName = sdname, header = TRUE, stringsAsFactors = FALSE)
+    tableau$D <- ecoval[[sdname]]
   }
   numhabitat <<- as.integer(ecoval$General[6,2])
   if(numhabitat > 0) for(i in 1:numhabitat){

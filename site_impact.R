@@ -690,3 +690,98 @@ output$SItable5<- DT::renderDataTable({
   }
   return(dat)
 })
+
+## SI D
+observeEvent(input$selectspeciesSI, {
+  if(input$selectspeciesSI != '0'){
+    name <- paste("SID no.", input$selectspeciesSI)
+    tableau$D <- ecoval[[name]]
+    shinyjs::show("SIjustifCTNSP")
+    shinyjs::show("SIdegincCTNSP")
+    shinyjs::show("SIvalCTNSP")
+    shinyjs::show("SIjustifLTNSP")
+    shinyjs::show("SIdegincLTNSP")
+    shinyjs::show("SIvalLTNSP")
+    shinyjs::show("renseignerNSP")
+    shinyjs::show("ManuelNSP")
+    shinyjs::show("SItable6")
+  }else{
+    shinyjs::hide("SIjustifCTNSP")
+    shinyjs::hide("SIdegincCTNSP")
+    shinyjs::hide("SIvalCTNSP")
+    shinyjs::hide("SIjustifLTNSP")
+    shinyjs::hide("SIdegincLTNSP")
+    shinyjs::hide("SIvalLTNSP")
+    shinyjs::hide("renseignerNSP")
+    shinyjs::hide("ManuelNSP")
+    shinyjs::hide("SItable6")
+  }
+})
+
+observeEvent(input$renseignerNSP,{
+  rs <- as.numeric(input$SItable6_rows_selected)
+  if(length(rs) == 1){
+    tableau$D[rs,4] <- input$ManuelNSP
+    # update array visu CT
+    tableau$D[rs,5] <- input$SIjustifCTNSP
+    if(is.null(input$SIdegincCTNSP)) tableau$D[rs,6] <- ""
+    else{
+      dimselect <- length(input$SIdegincCTNSP)
+      if(dimselect == 1) tableau$D[rs,6] <- "*"
+      else if(dimselect == 2) tableau$D[rs,6] <- "**"
+      else if(dimselect == 3) tableau$D[rs,6] <- "***"
+    }
+    tableau$D[rs,7] <- input$SIvalCTNSP
+    # update array visu LT
+    tableau$D[rs,8] <- input$SIjustifLTNSP
+    if(is.null(input$SIdegincLTNSP)) tableau$D[rs,9] <- ""
+    else{
+      dimselect <- length(input$SIdegincLTNSP)
+      if(dimselect == 1) tableau$D[rs,9] <- "*"
+      else if(dimselect == 2) tableau$D[rs,9] <- "**"
+      else if(dimselect == 3) tableau$D[rs,9] <- "***"
+    }
+    tableau$D[rs,10] <- input$SIvalLTNSP
+    # save ecoval
+    name <- paste("SID no.", input$selectspeciesSI)
+    ecoval[[name]] <<- tableau$D
+    # clean widgets
+    updateTextAreaInput(session, "SIjustifCTNSP", value ="")
+    updateCheckboxGroupInput(session, "SIdegincCTNSP", selected = character(0))
+    updateNumericInput(session, "SIvalCTNSP", value = 0.)
+    updateTextAreaInput(session, "SIjustifLTNSP", value ="")
+    updateCheckboxGroupInput(session, "SIdegincLTNSP", selected = character(0))
+    updateNumericInput(session, "SIvalLTNSP", value = 0.)
+    updateNumericInput(session, "ManuelNSP", value = 0.)
+  }
+})
+
+output$SItable6<- DT::renderDataTable({
+  dat <- NULL
+  if(input$selectspeciesSI != "0"){
+    partial_select <- c(1,2,16,17,18,19,20)
+    name  <- paste("Espece", input$selectspeciesSI)
+    if(ecoval[[name]][3,2] != "7"){ # Faune
+      partial_select <- c(partial_select, c(3))
+    }
+    if(ecoval[[name]][3,2] == "1"){ # Avifaune
+      partial_select <- c(partial_select, c(4,5,6))
+    }else if(ecoval[[name]][3,2] == "2"){ # Chiroptere
+      partial_select <- c(partial_select, c(7,8))
+    }else if(ecoval[[name]][3,2] == "4"){ # Amphibien
+      partial_select <- c(partial_select, c(9,10,11))
+    }else if(ecoval[[name]][3,2] == "6"){ # Insecte
+      partial_select <- c(partial_select, c(12))
+    }else if(ecoval[[name]][3,2] == "7"){ # Flore
+      partial_select <- c(partial_select, c(13))
+    }else if(ecoval[[name]][3,2] == "10"){ # Communaute faunistique
+      partial_select <- c(partial_select, c(14,15))
+    }
+    viewTabD <- tableau$D[partial_select,]
+    dat <- datatable(viewTabD, rownames = TRUE,
+                     colnames = c("Valeur à l'état initial" = 5, "Justification prédiction CT" = 6, "Incertitudes CT" = 7, "Valeur après impact MC CT" = 8, "Justification prédiction LT" = 9, "Incertitudes LT" = 10, "Valeur après impact MC LT" = 11),
+                     selection = 'single', options = list(pageLength = dim.data.frame(tableau$D)[1], searching = TRUE, dom = 'ft', ordering = FALSE), filter = "top")%>%
+      formatStyle(4, 3, backgroundColor = '#FFA02F')
+  }
+  return(dat)
+})
