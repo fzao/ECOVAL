@@ -138,7 +138,6 @@ observeEvent(input$userfile, {
   listsite <<- data.frame("site" = '-', "index" = 0, "name" = '-', "type" = 0, stringsAsFactors=FALSE)
   listspecies <<- data.frame("species" = '-', "index" = 0, "name" = '-', stringsAsFactors=FALSE)
   listhabitat <<- data.frame("habitat" = '-', "index" = 0, "name" = '-', stringsAsFactors=FALSE)
-  #tableau <<- reactiveValues(A1=NULL, A2=NULL, A3=NULL, B=NULL)
   tableau$A1 <- model_A1
   tableau$A2 <- model_A2
   tableau$A3 <- model_A3
@@ -157,30 +156,22 @@ observeEvent(input$userfile, {
     if(ecoval[[name]][2,2] == "1" | ecoval[[name]][2,2] == "3"){ # site impacte
       siname <- paste("SIA1 no.", as.character(i))
       ecoval[[siname]] <<- read.xlsx2(inFile$datapath, sheetName = siname, header = TRUE, stringsAsFactors = FALSE)
-      #tableau$A1 <- ecoval[[siname]]
       siname <- paste("SIA2 no.", as.character(i))
       ecoval[[siname]] <<- read.xlsx2(inFile$datapath, sheetName = siname, header = TRUE, stringsAsFactors = FALSE)
-      #tableau$A2 <- ecoval[[siname]]
       siname <- paste("SIA3 no.", as.character(i))
       ecoval[[siname]] <<- read.xlsx2(inFile$datapath, sheetName = siname, header = TRUE, stringsAsFactors = FALSE)
-      #tableau$A3 <- ecoval[[siname]]
       siname <- paste("SIB no.", as.character(i))
       ecoval[[siname]] <<- read.xlsx2(inFile$datapath, sheetName = siname, header = TRUE, stringsAsFactors = FALSE)
-      #tableau$B <- ecoval[[siname]]
     }
     if(ecoval[[name]][2,2] == "2" | ecoval[[name]][2,2] == "3"){ # site compensatoire
       scname <- paste("SCA1 no.", as.character(i))
       ecoval[[scname]] <<- read.xlsx2(inFile$datapath, sheetName = scname, header = TRUE, stringsAsFactors = FALSE)
-      #tableau$A1c <- ecoval[[scname]]
       scname <- paste("SCA2 no.", as.character(i))
       ecoval[[scname]] <<- read.xlsx2(inFile$datapath, sheetName = scname, header = TRUE, stringsAsFactors = FALSE)
-      #tableau$A2c <- ecoval[[scname]]
       scname <- paste("SCA3 no.", as.character(i))
       ecoval[[scname]] <<- read.xlsx2(inFile$datapath, sheetName = scname, header = TRUE, stringsAsFactors = FALSE)
-      #tableau$A3c <- ecoval[[scname]]
       scname <- paste("SCB no.", as.character(i))
       ecoval[[scname]] <<- read.xlsx2(inFile$datapath, sheetName = scname, header = TRUE, stringsAsFactors = FALSE)
-      #tableau$Bc <- ecoval[[scname]]
     }
   }
   numspecies <<- as.integer(ecoval$General[5,2])
@@ -193,12 +184,10 @@ observeEvent(input$userfile, {
       sdname <- paste("DI no.", as.character(i))
       ecoval[[sdname]] <<- read.xlsx2(inFile$datapath, sheetName = sdname, header = TRUE, stringsAsFactors = FALSE)
     }
-    #tableau$D <- ecoval[[sdname]]
     if( ecoval[[name]][7,2] == '2' |  ecoval[[name]][7,2] == '3'){
       sdname <- paste("DC no.", as.character(i))
       ecoval[[sdname]] <<- read.xlsx2(inFile$datapath, sheetName = sdname, header = TRUE, stringsAsFactors = FALSE)
     }
-    #tableau$Dc <- ecoval[[sdname]]
   }
   numhabitat <<- as.integer(ecoval$General[6,2])
   if(numhabitat > 0) for(i in 1:numhabitat){
@@ -210,12 +199,10 @@ observeEvent(input$userfile, {
       scname <- paste("CI no.", as.character(i))
       ecoval[[scname]] <<- read.xlsx2(inFile$datapath, sheetName = scname, header = TRUE, stringsAsFactors = FALSE)
     }
-    #tableau$C <- ecoval[[scname]]
     if( ecoval[[name]][8,2] == '2' |  ecoval[[name]][8,2] == '3'){
       scname <- paste("CC no.", as.character(i))
       ecoval[[scname]] <<- read.xlsx2(inFile$datapath, sheetName = scname, header = TRUE, stringsAsFactors = FALSE)
     }
-    #tableau$Cc <- ecoval[[scname]]
   }
   if(numsite == 0) updateListSite(0)
   else updateListSite(2)
