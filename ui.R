@@ -205,7 +205,24 @@ shinyUI(fluidPage(title="ECOVAL",
                                                               DT::dataTableOutput("SItable5")
                                                      ),
                                                      tabPanel(HTML('<h4 style="color: #005BBB; ">Niveau Espèce</h4>'), value="impactindicnsp", br(),
-                                                              selectInput("selectspeciesSI", label = "SELECTIONNER L'ESPECE", choices = list("-" = 0), selected = 0), hr()
+                                                              selectInput("selectspeciesSI", label = "SELECTIONNER L'ESPECE", choices = list("-" = 0), selected = 0), br(),
+                                                              fluidRow(column(6, align="center", HTML('<h4 style="color: #A5C226; ">COURT TERME</h4>')), column(6, align="center", HTML('<h4 style="color: #A5C226; ">LONG TERME</h4>'))), br(),
+                                                              fluidRow(column(2, align="left", textAreaInput("SIjustifCTNSP", "Justification de prédiction", height='250px', placeholder = "justification de la prédiction court terme")),
+                                                                       column(2, align="left", checkboxGroupInput("SIdegincCTNSP", "Incertitudes",
+                                                                                                                  c("Incertitude 1" = "1",
+                                                                                                                    "Incertitude 2" = "2",
+                                                                                                                    "Incertitude 3" = "3"))),
+                                                                       column(2, align="left", numericInput("SIvalCTNSP", "Valeur après impact/MC CT", value = 0.)),
+                                                                       column(2, align="left", textAreaInput("SIjustifLTNSP", "Justification de prédiction", height='250px', placeholder = "justification de la prédiction long terme")),
+                                                                       column(2, align="left", checkboxGroupInput("SIdegincLTNSP", "Incertitudes",
+                                                                                                                  c("Incertitude 1" = "1",
+                                                                                                                    "Incertitude 2" = "2",
+                                                                                                                    "Incertitude 3" = "3"))),
+                                                                       column(2, align="left", numericInput("SIvalLTNSP", "Valeur après impact/MC LT", value = 0.))), br(),
+                                                              fluidRow(column(6, align="right", actionButton("renseignerNSP", "RENSEIGNER")),
+                                                                       column(6, align="left", tags$style("#ManuelNSP {background-color:#FFA02F;}"), numericInput("ManuelNSP", NA, value = 0.))), br(),
+                                                              DT::dataTableOutput("SItable6")
+                                                              
                                                      )
                                          )
                                        )
