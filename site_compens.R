@@ -68,8 +68,7 @@ observeEvent(input$selectsitecompens, {
     name <- paste("SCB no.", input$selectsitecompens)
     tableau$B <- ecoval[[name]]
   }
-  #cfz
-  updateSelectInput(session, "selectsiteimpact", selected = "0")
+  if(input$tabs == "compens") updateSelectInput(session, "selectsiteimpact", selected = "0")
 })
 
 ## SC A1
@@ -572,8 +571,7 @@ observeEvent(input$selecthabitatSC, {
     shinyjs::hide("ManuelNH2")
     shinyjs::hide("SCtable5")
   }
-  #cfz
-  updateSelectInput(session, "selectspeciesSC", selected = "0")
+  if(input$descrcompens == "compensindicnh") updateSelectInput(session, "selecthabitatSI", selected = "0")
 })
 
 observeEvent(input$renseignerNH2,{
@@ -660,8 +658,7 @@ observeEvent(input$selectspeciesSC, {
     shinyjs::hide("ManuelNSP2")
     shinyjs::hide("SCtable6")
   }
-  #cfz
-  updateSelectInput(session, "selecthabitatSC", selected = "0")
+  if(input$descrcompens == "compensindicnsp") updateSelectInput(session, "selectspeciesSI", selected = "0")
 })
 
 observeEvent(input$renseignerNSP2,{
