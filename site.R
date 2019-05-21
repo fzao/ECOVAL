@@ -143,7 +143,15 @@ observeEvent(input$userfile, {
   tableau$A2 <- model_A2
   tableau$A3 <- model_A3
   tableau$B <- model_B
-  
+  # list of Sheets
+  wb <- loadWorkbook(inFile$datapath)
+  listSheets <- names(getSheets(wb))
+  print(listSheets)
+  # Reading part
+  if(! "Général" %in% listSheets){
+    showModal(modalDialog(h5("ERREUR DE LECTURE DU FICHIER"), hr(), "L'onglet 'General' n'est pas présent", easyClose = TRUE, footer = NULL))
+    return(-1)
+  }
   ecoval[["General"]] <<- read.xlsx2(inFile$datapath, sheetIndex = 1, header = FALSE, stringsAsFactors = FALSE)
   updateTextInput(session, "projectname", value = ecoval$General[1,2])
   updateTextAreaInput(session, "projectcontext", value = ecoval$General[2,2])
@@ -151,57 +159,117 @@ observeEvent(input$userfile, {
   numsite <<- as.integer(ecoval$General[4,2])
   if(numsite > 0) for(i in 1:numsite){
     name <- paste("Site no.", as.character(i))
+    if(! name %in% listSheets){
+      showModal(modalDialog(h5("ERREUR DE LECTURE DU FICHIER"), hr(), paste("L'onglet",name,"n'est pas présent"), easyClose = TRUE, footer = NULL))
+      return(-1)
+    }
     ecoval[[name]] <<- read.xlsx2(inFile$datapath, sheetName = name, header = FALSE, stringsAsFactors = FALSE)
     newsite <- data.frame("site" = name, "index" = i, "name" = ecoval[[name]][1,2], "type" = as.integer(ecoval[[name]][2,2]))
     listsite <<- rbind(listsite, newsite)
     if(ecoval[[name]][2,2] == "1" | ecoval[[name]][2,2] == "3"){ # site impacte
       siname <- paste("SIA1 no.", as.character(i))
+      if(! siname %in% listSheets){
+        showModal(modalDialog(h5("ERREUR DE LECTURE DU FICHIER"), hr(), paste("L'onglet",siname,"n'est pas présent"), easyClose = TRUE, footer = NULL))
+        return(-1)
+      }
       ecoval[[siname]] <<- read.xlsx2(inFile$datapath, sheetName = siname, header = TRUE, stringsAsFactors = FALSE)
       siname <- paste("SIA2 no.", as.character(i))
+      if(! siname %in% listSheets){
+        showModal(modalDialog(h5("ERREUR DE LECTURE DU FICHIER"), hr(), paste("L'onglet",siname,"n'est pas présent"), easyClose = TRUE, footer = NULL))
+        return(-1)
+      }
       ecoval[[siname]] <<- read.xlsx2(inFile$datapath, sheetName = siname, header = TRUE, stringsAsFactors = FALSE)
       siname <- paste("SIA3 no.", as.character(i))
+      if(! siname %in% listSheets){
+        showModal(modalDialog(h5("ERREUR DE LECTURE DU FICHIER"), hr(), paste("L'onglet",siname,"n'est pas présent"), easyClose = TRUE, footer = NULL))
+        return(-1)
+      }
       ecoval[[siname]] <<- read.xlsx2(inFile$datapath, sheetName = siname, header = TRUE, stringsAsFactors = FALSE)
       siname <- paste("SIB no.", as.character(i))
+      if(! siname %in% listSheets){
+        showModal(modalDialog(h5("ERREUR DE LECTURE DU FICHIER"), hr(), paste("L'onglet",siname,"n'est pas présent"), easyClose = TRUE, footer = NULL))
+        return(-1)
+      }
       ecoval[[siname]] <<- read.xlsx2(inFile$datapath, sheetName = siname, header = TRUE, stringsAsFactors = FALSE)
     }
     if(ecoval[[name]][2,2] == "2" | ecoval[[name]][2,2] == "3"){ # site compensatoire
       scname <- paste("SCA1 no.", as.character(i))
+      if(! scname %in% listSheets){
+        showModal(modalDialog(h5("ERREUR DE LECTURE DU FICHIER"), hr(), paste("L'onglet",scname,"n'est pas présent"), easyClose = TRUE, footer = NULL))
+        return(-1)
+      }
       ecoval[[scname]] <<- read.xlsx2(inFile$datapath, sheetName = scname, header = TRUE, stringsAsFactors = FALSE)
       scname <- paste("SCA2 no.", as.character(i))
+      if(! scname %in% listSheets){
+        showModal(modalDialog(h5("ERREUR DE LECTURE DU FICHIER"), hr(), paste("L'onglet",scname,"n'est pas présent"), easyClose = TRUE, footer = NULL))
+        return(-1)
+      }
       ecoval[[scname]] <<- read.xlsx2(inFile$datapath, sheetName = scname, header = TRUE, stringsAsFactors = FALSE)
       scname <- paste("SCA3 no.", as.character(i))
+      if(! scname %in% listSheets){
+        showModal(modalDialog(h5("ERREUR DE LECTURE DU FICHIER"), hr(), paste("L'onglet",scname,"n'est pas présent"), easyClose = TRUE, footer = NULL))
+        return(-1)
+      }
       ecoval[[scname]] <<- read.xlsx2(inFile$datapath, sheetName = scname, header = TRUE, stringsAsFactors = FALSE)
       scname <- paste("SCB no.", as.character(i))
+      if(! scname %in% listSheets){
+        showModal(modalDialog(h5("ERREUR DE LECTURE DU FICHIER"), hr(), paste("L'onglet",scname,"n'est pas présent"), easyClose = TRUE, footer = NULL))
+        return(-1)
+      }
       ecoval[[scname]] <<- read.xlsx2(inFile$datapath, sheetName = scname, header = TRUE, stringsAsFactors = FALSE)
     }
   }
   numspecies <<- as.integer(ecoval$General[5,2])
   if(numspecies > 0) for(i in 1:numspecies){
     name <- paste("Espece", as.character(i))
+    if(! name %in% listSheets){
+      showModal(modalDialog(h5("ERREUR DE LECTURE DU FICHIER"), hr(), paste("L'onglet",name,"n'est pas présent"), easyClose = TRUE, footer = NULL))
+      return(-1)
+    }
     ecoval[[name]] <<- read.xlsx2(inFile$datapath, sheetName = name, header = FALSE, stringsAsFactors = FALSE)
     newspecies <- data.frame("species" = name, "index" = i, "name" = ecoval[[name]][2,2])
     listspecies <<- rbind(listspecies, newspecies)
     if( ecoval[[name]][7,2] == '1' |  ecoval[[name]][7,2] == '3'){
       sdname <- paste("DI no.", as.character(i))
+      if(! sdname %in% listSheets){
+        showModal(modalDialog(h5("ERREUR DE LECTURE DU FICHIER"), hr(), paste("L'onglet",sdname,"n'est pas présent"), easyClose = TRUE, footer = NULL))
+        return(-1)
+      }
       ecoval[[sdname]] <<- read.xlsx2(inFile$datapath, sheetName = sdname, header = TRUE, stringsAsFactors = FALSE)
     }
     if( ecoval[[name]][7,2] == '2' |  ecoval[[name]][7,2] == '3'){
       sdname <- paste("DC no.", as.character(i))
+      if(! sdname %in% listSheets){
+        showModal(modalDialog(h5("ERREUR DE LECTURE DU FICHIER"), hr(), paste("L'onglet",sdname,"n'est pas présent"), easyClose = TRUE, footer = NULL))
+        return(-1)
+      }
       ecoval[[sdname]] <<- read.xlsx2(inFile$datapath, sheetName = sdname, header = TRUE, stringsAsFactors = FALSE)
     }
   }
   numhabitat <<- as.integer(ecoval$General[6,2])
   if(numhabitat > 0) for(i in 1:numhabitat){
     name <- paste("Habitat", as.character(i))
+    if(! name %in% listSheets){
+      showModal(modalDialog(h5("ERREUR DE LECTURE DU FICHIER"), hr(), paste("L'onglet",name,"n'est pas présent"), easyClose = TRUE, footer = NULL))
+      return(-1)
+    }
     ecoval[[name]] <<- read.xlsx2(inFile$datapath, sheetName = name, header = FALSE, stringsAsFactors = FALSE)
     newhabitat <- data.frame("habitat" = name, "index" = i, "name" = ecoval[[name]][1,2])
     listhabitat <<- rbind(listhabitat, newhabitat)
     if( ecoval[[name]][8,2] == '1' |  ecoval[[name]][8,2] == '3'){
       scname <- paste("CI no.", as.character(i))
+      if(! scname %in% listSheets){
+        showModal(modalDialog(h5("ERREUR DE LECTURE DU FICHIER"), hr(), paste("L'onglet",scname,"n'est pas présent"), easyClose = TRUE, footer = NULL))
+        return(-1)
+      }
       ecoval[[scname]] <<- read.xlsx2(inFile$datapath, sheetName = scname, header = TRUE, stringsAsFactors = FALSE)
     }
     if( ecoval[[name]][8,2] == '2' |  ecoval[[name]][8,2] == '3'){
       scname <- paste("CC no.", as.character(i))
+      if(! scname %in% listSheets){
+        showModal(modalDialog(h5("ERREUR DE LECTURE DU FICHIER"), hr(), paste("L'onglet",scname,"n'est pas présent"), easyClose = TRUE, footer = NULL))
+        return(-1)
+      }
       ecoval[[scname]] <<- read.xlsx2(inFile$datapath, sheetName = scname, header = TRUE, stringsAsFactors = FALSE)
     }
   }
