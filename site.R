@@ -16,6 +16,7 @@
 #
 
 source('site_impact.R', local =TRUE)
+source('site_compens.R', local =TRUE)
 
 observeEvent(input$projectname, {
   ecoval$General[1,2] <<- input$projectname
@@ -421,6 +422,7 @@ observeEvent(input$selectsite, {
 observeEvent(input$sitename, {
   saveSite(input$selectsite)
   updateSiteName(input$selectsite, input$sitename)})
+
 observeEvent(input$sitetype, {
   saveSite(input$selectsite)
   updateDescTemp(input$sitetype)
