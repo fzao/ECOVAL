@@ -68,6 +68,8 @@ observeEvent(input$selectsiteimpact, {
     name <- paste("SIB no.", input$selectsiteimpact)
     tableau$B <- ecoval[[name]]
   }
+  #cfz
+  updateSelectInput(session, "selectsitecompens", selected = "0")
 })
 
 ## SI A1
@@ -570,6 +572,8 @@ observeEvent(input$selecthabitatSI, {
     shinyjs::hide("ManuelNH")
     shinyjs::hide("SItable5")
   }
+  #cfz
+  updateSelectInput(session, "selectspeciesSI", selected = "0")
 })
 
 observeEvent(input$renseignerNH,{
@@ -656,6 +660,8 @@ observeEvent(input$selectspeciesSI, {
     shinyjs::hide("ManuelNSP")
     shinyjs::hide("SItable6")
   }
+  #cfz
+  updateSelectInput(session, "selecthabitatSI", selected = "0")
 })
 
 observeEvent(input$renseignerNSP,{

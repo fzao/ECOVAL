@@ -66,7 +66,11 @@ shinyServer(function(input, output, session) {
   })
 
   # observe({
-  #   if(input$descrimpact == "impactindicnh") updateSelectInput(session, "selecthabitatSI", selected = "0")
-  #   if(input$descrimpact == "impactindicnsp") updateSelectInput(session, "selectspeciesSI", selected = "0")
-  # })
+  #   #if(input$tabs == "siteimpact") updateSelectInput(session, "selectsitecompens", selected = "0")
+  #   #else if(input$tabs == "compens") updateSelectInput(session, "selectsiteimpact", selected = "0")
+  #   if(input$descrimpact == "impactindicnh") updateSelectInput(session, "selecthabitatSC", selected = "0")
+  #   else if(input$descrimpact == "impactindicnsp") updateSelectInput(session, "selectspeciesSC", selected = "0")
+  #   if(input$descrcompens == "compensindicnh") updateSelectInput(session, "selecthabitatSI", selected = "0")
+  #   else if(input$descrcompens == "compensindicnsp") updateSelectInput(session, "selectspeciesSI", selected = "0")
+  #  })
 })
