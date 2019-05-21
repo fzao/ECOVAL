@@ -146,7 +146,6 @@ observeEvent(input$userfile, {
   # list of Sheets
   wb <- loadWorkbook(inFile$datapath)
   listSheets <- names(getSheets(wb))
-  print(listSheets)
   # Reading part
   if(! "Général" %in% listSheets){
     showModal(modalDialog(h5("ERREUR DE LECTURE DU FICHIER"), hr(), "L'onglet 'General' n'est pas présent", easyClose = TRUE, footer = NULL))
