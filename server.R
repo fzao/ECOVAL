@@ -64,4 +64,9 @@ shinyServer(function(input, output, session) {
         addMarkers(lat=park[pk, 2] , lng=park[pk,3], popup=park[pk,1])
     }
   })
+
+  # observe({
+  #   if(input$descrimpact == "impactindicnh") updateSelectInput(session, "selecthabitatSI", selected = "0")
+  #   if(input$descrimpact == "impactindicnsp") updateSelectInput(session, "selectspeciesSI", selected = "0")
+  # })
 })
