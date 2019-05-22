@@ -89,7 +89,7 @@ observeEvent(input$addlisthab2,{
   # save ecoval
   name <- paste("SCA1 no.", input$selectsitecompens)
   ecoval[[name]] <<- tableau$A1
-  updateTabB()
+  updateTabB2()
   # clean widgets
   updateTextInput(session, "SCnamehabitat", value = "")
   updateTextInput(session, "SCcodecorine", value = "")
@@ -110,7 +110,7 @@ observeEvent(input$dellisthab2,{
     # save ecoval
     name <- paste("SCA1 no.", input$selectsitecompens)
     ecoval[[name]] <<- tableau$A1
-    updateTabB()
+    updateTabB2()
   }
 })
 
@@ -145,7 +145,7 @@ observeEvent(input$addlistesp2,{
   # save ecoval
   name <- paste("SCA2 no.", input$selectsitecompens)
   ecoval[[name]] <<- tableau$A2
-  updateTabB()
+  updateTabB2()
   # clean widgets
   updateTextInput(session, "SClatinnamespecies", value = "")
   updateTextInput(session, "SCfrenchnamespecies", value = "")
@@ -170,7 +170,7 @@ observeEvent(input$dellistesp2,{
     # save ecoval
     name <- paste("SCA2 no.", input$selectsitecompens)
     ecoval[[name]] <<- tableau$A2
-    updateTabB()
+    updateTabB2()
   }
 })
 
@@ -206,7 +206,7 @@ observeEvent(input$addlistper2,{
   # save ecoval
   name <- paste("SCA3 no.", input$selectsitecompens)
   ecoval[[name]] <<- tableau$A3
-  updateTabB()
+  updateTabB2()
   # clean widgets
   updateSelectInput(session, "SCpertype", selected = "1")
   updateTextInput(session, "SCpercouche", value = "")
@@ -222,7 +222,7 @@ observeEvent(input$dellistper2,{
     # save ecoval
     name <- paste("SCA3 no.", input$selectsitecompens)
     ecoval[[name]] <<- tableau$A3
-    updateTabB()
+    updateTabB2()
   }
 })
 
@@ -276,7 +276,7 @@ observeEvent(input$renseigner2,{
   }
 })
 
-updateTabB <- function(){
+updateTabB2 <- function(){
   # from A1
   n1 <- dim(tableau$A1)[1]
   if(n1 > 0){
@@ -457,7 +457,9 @@ updateTabB <- function(){
     val53den <- 0.
     val54den <- 0.
     val55den <- 0.
+    valsurf <- 0. # Surface global
     for(i in 1:n3){
+      valsurf <- valsurf + as.numeric(tableau$A3[i,4]) # surface totale
       if(tableau$A3[i,1] == "Cultivé") val59 <- val59 + as.numeric(tableau$A3[i,4])
       if(tableau$A3[i,1] == "Imperméabilisé") val60 <- val60 + as.numeric(tableau$A3[i,4])
       if(tableau$A3[i,1] == "Fermé") val50den <- val50den + as.numeric(tableau$A3[i,4])
@@ -513,8 +515,8 @@ updateTabB <- function(){
     tableau$B[49,4] <- as.character(round(val49,2))
     tableau$B[57,4] <- as.character(round(val57,2))
     tableau$B[58,4] <- as.character(round(val58,2))
-    tableau$B[59,4] <- as.character(round(val59,2))
-    tableau$B[60,4] <- as.character(round(val60,2))
+    tableau$B[59,4] <- as.character(round(val59 * 100. / valsurf,2))
+    tableau$B[60,4] <- as.character(round(val60 * 100. / valsurf,2))
     tableau$B[50,4] <- as.character(round(val50num * 100. / val50den,2))
     tableau$B[51,4] <- as.character(round(val51num * 100. / val51den,2))
     tableau$B[52,4] <- as.character(round(val52num * 100. / val52den,2))

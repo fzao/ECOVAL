@@ -457,7 +457,9 @@ updateTabB <- function(){
     val53den <- 0.
     val54den <- 0.
     val55den <- 0.
+    valsurf <- 0. # Surface global
     for(i in 1:n3){
+      valsurf <- valsurf + as.numeric(tableau$A3[i,4]) # surface totale
       if(tableau$A3[i,1] == "Cultivé") val59 <- val59 + as.numeric(tableau$A3[i,4])
       if(tableau$A3[i,1] == "Imperméabilisé") val60 <- val60 + as.numeric(tableau$A3[i,4])
       if(tableau$A3[i,1] == "Fermé") val50den <- val50den + as.numeric(tableau$A3[i,4])
@@ -513,8 +515,8 @@ updateTabB <- function(){
     tableau$B[49,4] <- as.character(round(val49,2))
     tableau$B[57,4] <- as.character(round(val57,2))
     tableau$B[58,4] <- as.character(round(val58,2))
-    tableau$B[59,4] <- as.character(round(val59,2))
-    tableau$B[60,4] <- as.character(round(val60,2))
+    tableau$B[59,4] <- as.character(round(val59 * 100. / valsurf,2))
+    tableau$B[60,4] <- as.character(round(val60 * 100. / valsurf,2))
     tableau$B[50,4] <- as.character(round(val50num * 100. / val50den,2))
     tableau$B[51,4] <- as.character(round(val51num * 100. / val51den,2))
     tableau$B[52,4] <- as.character(round(val52num * 100. / val52den,2))
