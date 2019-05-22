@@ -330,7 +330,17 @@ shinyUI(fluidPage(title="ECOVAL",
                                       )
                               ),
                               # EQUIVALENCE ----------------------------------------------
-                              tabPanel(value="equival", HTML('<h4 style="color: #005BBB; "><b>Equivalence</b></h4>')),
+                              tabPanel(value="calculs", HTML('<h4 style="color: #005BBB; "><b>Calculs</b></h4>'),
+                                       tabsetPanel(id="descrcompens",
+                                                   tabPanel(HTML('<h4 style="color: #005BBB; ">Pertes</h4>'), br(),
+                                                            selectInput("selectsiteimpact2", label = "SELECTIONNER LE SITE IMPACT\u00C9", choices = list("-" = 0), selected = 0), hr()
+                                                   ),
+                                                   tabPanel(HTML('<h4 style="color: #005BBB; ">Gains</h4>'), br(),
+                                                            selectInput("selectsitecompens2", label = "SELECTIONNER LE SITE COMPENSATOIRE", choices = list("-" = 0), selected = 0), hr()
+                                                   ),
+                                                   tabPanel(HTML('<h4 style="color: #005BBB; ">Equivalence</h4>'))
+                                       )
+                              ),
                               # FICHE DE SYNTHESE ----------------------------------------------
                               tabPanel(value="synth", HTML('<h4 style="color: #005BBB; "><b>Synthèse</b></h4>'), br(),
                                        DT::dataTableOutput('synthtab')

@@ -646,7 +646,9 @@ updateListSiteImpactCompens <- function(){
     }
   }
   updateSelectInput(session, "selectsiteimpact", choices = showlistimpact, selected = "0") #showlistimpact[[length(showlistimpact)]])
+  updateSelectInput(session, "selectsiteimpact2", choices = showlistimpact, selected = "0")
   updateSelectInput(session, "selectsitecompens", choices = showlistcompens, selected = "0") #= showlistcompens[[length(showlistcompens)]])
+  updateSelectInput(session, "selectsitecompens2", choices = showlistcompens, selected = "0") #= showlistcompens[[length(showlistcompens)]])
 }
 
 newSICX <- function(numsite){

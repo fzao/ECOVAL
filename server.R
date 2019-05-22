@@ -40,7 +40,7 @@ shinyServer(function(input, output, session) {
   })
   
   observeEvent(input$redir5, {
-    updateTabsetPanel(session, "tabs", selected = "equival")
+    updateTabsetPanel(session, "tabs", selected = "calculs")
   })
   
   observeEvent(input$redir6, {
