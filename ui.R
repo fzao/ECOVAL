@@ -25,7 +25,15 @@ library(leaflet)
 Species <- readRDS("model/Species_names.rds")
 
 # Define UI for application that draws a histogram
-shinyUI(fluidPage(title="ECOVAL",
+shinyUI(fluidPage(HTML("<!DOCTYPE html>
+                    <html>
+                    <head>
+                    <link type=\"text/css\" rel=\"stylesheet\" href=\"carousel.css\"/>
+                    </head>
+                    <body>
+                    </body>
+                    </html>"),
+                  title="ECOVAL",
                   useShinyjs(),
                   fluidRow(
                     column(10, align="left",
@@ -193,13 +201,13 @@ shinyUI(fluidPage(title="ECOVAL",
                                                                                                                   c("Influence du projet : la prédiction de la valeur de l'indicateur dépend-elle essentiellement des actions réalisées par le maître d'ouvrage ? Y a-t-il une part qu'il ne peut pas maîtriser ?" = "1",
                                                                                                                     "Comportement de l'espèce faune ou flore : le comportement (capacité de recolonisation) des espèces sur lesquelles porte l'indicateur est-il bien connu ?" = "2",
                                                                                                                     "Définition de l'emprise de l'impact : l'emprise impactée est-elle en lien direct avec la valeur prédite de l'indicateur ?" = "3"))),
-                                                                       column(2, align="left", numericInput("SIvalCTNH", "Valeur après impact/MC CT", value = 0.)),
+                                                                       column(2, align="left", numericInput("SIvalCTNH", "Valeur après impact CT", value = 0.)),
                                                                        column(2, align="left", textAreaInput("SIjustifLTNH", "Justification de prédiction", height='250px', placeholder = "justification de la prédiction long terme")),
                                                                        column(2, align="left", checkboxGroupInput("SIdegincLTNH", "Incertitudes",
                                                                                                                   c("Influence du projet : la prédiction de la valeur de l'indicateur dépend-elle essentiellement des actions réalisées par le maître d'ouvrage ? Y a-t-il une part qu'il ne peut pas maîtriser ?" = "1",
                                                                                                                     "Comportement de l'espèce faune ou flore : le comportement (capacité de recolonisation) des espèces sur lesquelles porte l'indicateur est-il bien connu ?" = "2",
                                                                                                                     "Définition de l'emprise de l'impact : l'emprise impactée est-elle en lien direct avec la valeur prédite de l'indicateur ?" = "3"))),
-                                                                       column(2, align="left", numericInput("SIvalLTNH", "Valeur après impact/MC LT", value = 0.))), br(),
+                                                                       column(2, align="left", numericInput("SIvalLTNH", "Valeur après impact LT", value = 0.))), br(),
                                                               fluidRow(column(6, align="right", actionButton("renseignerNH", "RENSEIGNER")),
                                                                        column(6, align="left", tags$style("#ManuelNH {background-color:#FFA02F;}"), numericInput("ManuelNH", NA, value = 0.))), br(),
                                                               DT::dataTableOutput("SItable5")
@@ -212,13 +220,13 @@ shinyUI(fluidPage(title="ECOVAL",
                                                                                                                   c("Influence du projet : la prédiction de la valeur de l'indicateur dépend-elle essentiellement des actions réalisées par le maître d'ouvrage ? Y a-t-il une part qu'il ne peut pas maîtriser ?" = "1",
                                                                                                                     "Comportement de l'espèce faune ou flore : le comportement (capacité de recolonisation) des espèces sur lesquelles porte l'indicateur est-il bien connu ?" = "2",
                                                                                                                     "Définition de l'emprise de l'impact : l'emprise impactée est-elle en lien direct avec la valeur prédite de l'indicateur ?" = "3"))),
-                                                                       column(2, align="left", numericInput("SIvalCTNSP", "Valeur après impact/MC CT", value = 0.)),
+                                                                       column(2, align="left", numericInput("SIvalCTNSP", "Valeur après impact CT", value = 0.)),
                                                                        column(2, align="left", textAreaInput("SIjustifLTNSP", "Justification de prédiction", height='250px', placeholder = "justification de la prédiction long terme")),
                                                                        column(2, align="left", checkboxGroupInput("SIdegincLTNSP", "Incertitudes",
                                                                                                                   c("Influence du projet : la prédiction de la valeur de l'indicateur dépend-elle essentiellement des actions réalisées par le maître d'ouvrage ? Y a-t-il une part qu'il ne peut pas maîtriser ?" = "1",
                                                                                                                     "Comportement de l'espèce faune ou flore : le comportement (capacité de recolonisation) des espèces sur lesquelles porte l'indicateur est-il bien connu ?" = "2",
                                                                                                                     "Définition de l'emprise de l'impact : l'emprise impactée est-elle en lien direct avec la valeur prédite de l'indicateur ?" = "3"))),
-                                                                       column(2, align="left", numericInput("SIvalLTNSP", "Valeur après impact/MC LT", value = 0.))), br(),
+                                                                       column(2, align="left", numericInput("SIvalLTNSP", "Valeur après impact LT", value = 0.))), br(),
                                                               fluidRow(column(6, align="right", actionButton("renseignerNSP", "RENSEIGNER")),
                                                                        column(6, align="left", tags$style("#ManuelNSP {background-color:#FFA02F;}"), numericInput("ManuelNSP", NA, value = 0.))), br(),
                                                               DT::dataTableOutput("SItable6")
@@ -295,13 +303,13 @@ shinyUI(fluidPage(title="ECOVAL",
                                                                                                                                 c("Influence du projet : la prédiction de la valeur de l'indicateur dépend-elle essentiellement des actions réalisées par le maître d'ouvrage ? Y a-t-il une part qu'il ne peut pas maîtriser ?" = "1",
                                                                                                                                   "Comportement de l'espèce faune ou flore : le comportement (capacité de recolonisation) des espèces sur lesquelles porte l'indicateur est-il bien connu ?" = "2",
                                                                                                                                   "Risque d'échec associé à la mesure compensatoire : les résultats de l'action de compensation sont-ils bien maîtrisés?" = "3"))),
-                                                                                     column(2, align="left", numericInput("SCvalCTNH", "Valeur après compensation/MC CT", value = 0.)),
+                                                                                     column(2, align="left", numericInput("SCvalCTNH", "Valeur après compensation CT", value = 0.)),
                                                                                      column(2, align="left", textAreaInput("SCjustifLTNH", "Justification de prédiction", height='250px', placeholder = "justification de la prédiction long terme")),
                                                                                      column(2, align="left", checkboxGroupInput("SCdegincLTNH", "Incertitudes",
                                                                                                                                 c("Influence du projet : la prédiction de la valeur de l'indicateur dépend-elle essentiellement des actions réalisées par le maître d'ouvrage ? Y a-t-il une part qu'il ne peut pas maîtriser ?" = "1",
                                                                                                                                   "Comportement de l'espèce faune ou flore : le comportement (capacité de recolonisation) des espèces sur lesquelles porte l'indicateur est-il bien connu ?" = "2",
                                                                                                                                   "Risque d'échec associé à la mesure compensatoire : les résultats de l'action de compensation sont-ils bien maîtrisés?" = "3"))),
-                                                                                     column(2, align="left", numericInput("SCvalLTNH", "Valeur après compensation/MC LT", value = 0.))), br(),
+                                                                                     column(2, align="left", numericInput("SCvalLTNH", "Valeur après compensation LT", value = 0.))), br(),
                                                                             fluidRow(column(6, align="right", actionButton("renseignerNH2", "RENSEIGNER")),
                                                                                      column(6, align="left", tags$style("#ManuelNH2 {background-color:#FFA02F;}"), numericInput("ManuelNH2", NA, value = 0.))), br(),
                                                                             DT::dataTableOutput("SCtable5")
@@ -314,13 +322,13 @@ shinyUI(fluidPage(title="ECOVAL",
                                                                                                                                 c("Influence du projet : la prédiction de la valeur de l'indicateur dépend-elle essentiellement des actions réalisées par le maître d'ouvrage ? Y a-t-il une part qu'il ne peut pas maîtriser ?" = "1",
                                                                                                                                   "Comportement de l'espèce faune ou flore : le comportement (capacité de recolonisation) des espèces sur lesquelles porte l'indicateur est-il bien connu ?" = "2",
                                                                                                                                   "Risque d'échec associé à la mesure compensatoire : les résultats de l'action de compensation sont-ils bien maîtrisés?" = "3"))),
-                                                                                     column(2, align="left", numericInput("SCvalCTNSP", "Valeur après compensation/MC CT", value = 0.)),
+                                                                                     column(2, align="left", numericInput("SCvalCTNSP", "Valeur après compensation CT", value = 0.)),
                                                                                      column(2, align="left", textAreaInput("SCjustifLTNSP", "Justification de prédiction", height='250px', placeholder = "justification de la prédiction long terme")),
                                                                                      column(2, align="left", checkboxGroupInput("SCdegincLTNSP", "Incertitudes",
                                                                                                                                 c("Influence du projet : la prédiction de la valeur de l'indicateur dépend-elle essentiellement des actions réalisées par le maître d'ouvrage ? Y a-t-il une part qu'il ne peut pas maîtriser ?" = "1",
                                                                                                                                   "Comportement de l'espèce faune ou flore : le comportement (capacité de recolonisation) des espèces sur lesquelles porte l'indicateur est-il bien connu ?" = "2",
                                                                                                                                   "Risque d'échec associé à la mesure compensatoire : les résultats de l'action de compensation sont-ils bien maîtrisés?" = "3"))),
-                                                                                     column(2, align="left", numericInput("SCvalLTNSP", "Valeur après compensation/MC LT", value = 0.))), br(),
+                                                                                     column(2, align="left", numericInput("SCvalLTNSP", "Valeur après compensation LT", value = 0.))), br(),
                                                                             fluidRow(column(6, align="right", actionButton("renseignerNSP2", "RENSEIGNER")),
                                                                                      column(6, align="left", tags$style("#ManuelNSP2 {background-color:#FFA02F;}"), numericInput("ManuelNSP2", NA, value = 0.))), br(),
                                                                             DT::dataTableOutput("SCtable6")

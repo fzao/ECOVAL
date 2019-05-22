@@ -626,7 +626,7 @@ output$SItable5<- DT::renderDataTable({
     }
     viewTabC <- tableau$C[partial_select,]
     dat <- datatable(viewTabC, rownames = TRUE,
-                     colnames = c("Valeur à l'état initial" = 5, "Justification prédiction CT" = 6, "Incertitudes CT" = 7, "Valeur après impact MC CT" = 8, "Justification prédiction LT" = 9, "Incertitudes LT" = 10, "Valeur après impact MC LT" = 11),
+                     colnames = c("Valeur à l'état initial" = 5, "Justification prédiction CT" = 6, "Incertitudes CT" = 7, "Valeur après impact CT" = 8, "Justification prédiction LT" = 9, "Incertitudes LT" = 10, "Valeur après impact LT" = 11),
                      selection = 'single', options = list(pageLength = dim.data.frame(tableau$C)[1], searching = TRUE, dom = 'ft', ordering = FALSE), filter = "top")%>%
       formatStyle(4, 3, backgroundColor = '#FFA02F')
   }
@@ -722,7 +722,7 @@ output$SItable6<- DT::renderDataTable({
     }
     viewTabD <- tableau$D[partial_select,]
     dat <- datatable(viewTabD, rownames = TRUE,
-                     colnames = c("Valeur à l'état initial" = 5, "Justification prédiction CT" = 6, "Incertitudes CT" = 7, "Valeur après impact MC CT" = 8, "Justification prédiction LT" = 9, "Incertitudes LT" = 10, "Valeur après impact MC LT" = 11),
+                     colnames = c("Valeur à l'état initial" = 5, "Justification prédiction CT" = 6, "Incertitudes CT" = 7, "Valeur après impact CT" = 8, "Justification prédiction LT" = 9, "Incertitudes LT" = 10, "Valeur après impact LT" = 11),
                      selection = 'single', options = list(pageLength = dim.data.frame(tableau$D)[1], searching = TRUE, dom = 'ft', ordering = FALSE), filter = "top")%>%
       formatStyle(4, 3, backgroundColor = '#FFA02F')
   }
