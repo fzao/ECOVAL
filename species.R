@@ -68,6 +68,8 @@ observeEvent(input$newspecies, {
   # force default choice to NULL (auto update for "selecthabitatSI")
   updateSelectInput(session, "selectsiteimpact", selected = "0")
   updateSelectInput(session, "selectsitecompens", selected = "0")
+  updateSelectInput(session, "selectsiteimpact2", selected = "0")
+  updateSelectInput(session, "selectsitecompens2", selected = "0")
 })
 
 observeEvent(input$deletespecies, {
@@ -94,6 +96,8 @@ observeEvent(input$destroyspecies, {
     # force default choice to NULL (auto update for "selecthabitatSI")
     updateSelectInput(session, "selectsiteimpact", selected = "0")
     updateSelectInput(session, "selectsitecompens", selected = "0")
+    updateSelectInput(session, "selectsiteimpact2", selected = "0")
+    updateSelectInput(session, "selectsitecompens2", selected = "0")
   }
 })
 
