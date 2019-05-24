@@ -73,6 +73,11 @@ observeEvent(input$selectsitecompens, {
 
 ## SC A1
 observeEvent(input$addlisthab2,{
+  # test validation
+  if(input$SCsurfacedeg > input$SCsurface){
+    showModal(modalDialog(h5("ERREUR SUR LES SURFACES"), hr(), "La surface dégradée ne peut pas être plus grande que la surface initiale", easyClose = TRUE, footer = NULL))
+    return(-1)
+  }
   # data
   newDF <- data.frame(
     "Nom.habitat"=input$SCnamehabitat,

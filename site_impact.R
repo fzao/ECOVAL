@@ -73,6 +73,11 @@ observeEvent(input$selectsiteimpact, {
 
 ## SI A1
 observeEvent(input$addlisthab,{
+  # test validation
+  if(input$SIsurfacedeg > input$SIsurface){
+    showModal(modalDialog(h5("ERREUR SUR LES SURFACES"), hr(), "La surface dégradée ne peut pas être plus grande que la surface initiale", easyClose = TRUE, footer = NULL))
+    return(-1)
+  }
   # data
   newDF <- data.frame(
     "Nom.habitat"=input$SInamehabitat,
