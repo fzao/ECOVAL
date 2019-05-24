@@ -73,9 +73,25 @@ observeEvent(input$selectsitecompens, {
 
 ## SC A1
 observeEvent(input$addlisthab2,{
-  # test validation
+  # test validation 1
   if(input$SCsurfacedeg > input$SCsurface){
     showModal(modalDialog(h5("ERREUR SUR LES SURFACES"), hr(), "La surface dégradée ne peut pas être plus grande que la surface initiale", easyClose = TRUE, footer = NULL))
+    return(-1)
+  }
+  # test validation 2
+  name <- paste("Site no.", input$selectsitecompens)
+  surfacesite <- as.numeric(ecoval[[name]][3,2])
+  surfsomme <- 0.
+  name <- paste("SCA1 no.", input$selectsitecompens)
+  dimrow <- dim(ecoval[[name]])[1]
+  if(dimrow > 0){
+    for(i in 1:dimrow){
+      surfsomme <- surfsomme + as.numeric(ecoval[[name]][i,4])
+    }
+  }
+  surfsomme <- surfsomme + input$SCsurface
+  if(surfsomme > surfacesite){
+    showModal(modalDialog(h5("ERREUR SUR LES SURFACES"), hr(), "La surface totale du site ne doit pas être inférieure à la somme des surfaces d'habitats", easyClose = TRUE, footer = NULL))
     return(-1)
   }
   # data
@@ -92,7 +108,6 @@ observeEvent(input$addlisthab2,{
   # array visu
   tableau$A1 <- rbind(tableau$A1, newDF)
   # save ecoval
-  name <- paste("SCA1 no.", input$selectsitecompens)
   ecoval[[name]] <<- tableau$A1
   updateTabB2()
   # clean widgets
