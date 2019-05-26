@@ -73,6 +73,11 @@ observeEvent(input$selectsiteimpact, {
 
 ## SI A1
 observeEvent(input$addlisthab,{
+  # test validation 0
+  if(is.na(input$SIsurface) | is.na(input$SIsurfacedeg)){
+    showModal(modalDialog(h5("ERREUR SUR LES SURFACES"), hr(), "Une valeur numérique n'est pas correcte", easyClose = TRUE, footer = NULL))
+    return(-1)
+  }
   # test validation 1
   if(input$SIsurfacedeg > input$SIsurface){
     showModal(modalDialog(h5("ERREUR SUR LES SURFACES"), hr(), "La surface dégradée ne peut pas être plus grande que la surface initiale", easyClose = TRUE, footer = NULL))
