@@ -81,6 +81,7 @@ observeEvent(input$addlisthab2,{
   # test validation 2
   name <- paste("Site no.", input$selectsitecompens)
   surfacesite <- as.numeric(ecoval[[name]][3,2])
+  if(is.na(surfacesite)) surfacesite <- 0.
   surfsomme <- 0.
   name <- paste("SCA1 no.", input$selectsitecompens)
   dimrow <- dim(ecoval[[name]])[1]
