@@ -96,21 +96,27 @@ output$plot_gains <- renderPlotly({
         p <- ggplot(data=dat1, aes(x=criteres, y=valeurs, fill=indicateurs)) + theme(legend.position="none") +
           geom_bar(stat="identity", position=position_dodge(), colour="black")
       }else if(input$selecttypegraphgain == '2'){
-        # Pertes CT
+        # Gains CT
         dat1 <- data.frame(
           indicateurs = ecoval[[name]][[3]],
           criteres = factor(ecoval[[name]][[2]], levels=c("Diversité habitat","Diversité Espèce","Patrimonialité_PS","Fonctionnalité","Pression_PS","Connectivité","Représentativité","Patrimonialité_PE","Pression_PE")),
           valeurs = as.numeric(ecoval[[name]][[7]]))
         p <- ggplot(data=dat1, aes(x=criteres, y=valeurs, fill=indicateurs)) + theme(legend.position="none") + coord_flip() +
           geom_bar(stat="identity", position=position_dodge(), colour="black")
+        dat1$incertitudes <- ecoval[[name]][[6]]
+        dat1["gains brutes"] <- as.numeric(ecoval[[name]][[7]]) - as.numeric(ecoval[[name]][[4]])
+        dat1["gains relatifs"] <- as.numeric(ecoval[[name]][[7]]) - as.numeric(ecoval[[name]][[4]]) * 100 / as.numeric(ecoval[[name]][[4]])
       }else if(input$selecttypegraphgain == '3'){
-        # Pertes LT
+        # Gains LT
         dat1 <- data.frame(
           indicateurs = ecoval[[name]][[3]],
           criteres = factor(ecoval[[name]][[2]], levels=c("Diversité habitat","Diversité Espèce","Patrimonialité_PS","Fonctionnalité","Pression_PS","Connectivité","Représentativité","Patrimonialité_PE","Pression_PE")),
           valeurs = as.numeric(ecoval[[name]][[10]]))
         p <- ggplot(data=dat1, aes(x=criteres, y=valeurs, fill=indicateurs)) + theme(legend.position="none") + coord_flip() +
           geom_bar(stat="identity", position=position_dodge(), colour="black")
+        dat1$incertitudes <- ecoval[[name]][[9]]
+        dat1["gains brutes"] <- as.numeric(ecoval[[name]][[10]]) - as.numeric(ecoval[[name]][[4]])
+        dat1["gains relatifs"] <- as.numeric(ecoval[[name]][[10]]) - as.numeric(ecoval[[name]][[4]]) * 100 / as.numeric(ecoval[[name]][[4]])
       }
       p <- ggplotly(p)
     }else if(input$selectniveaugain == '2'){
@@ -127,21 +133,27 @@ output$plot_gains <- renderPlotly({
           p <- ggplot(data=dat1, aes(x=criteres, y=valeurs, fill=indicateurs)) + theme(legend.position="none") +
             geom_bar(stat="identity", position=position_dodge(), colour="black")
         }else if(input$selecttypegraphgain == '2'){
-          # Pertes CT
+          # Gains CT
           dat1 <- data.frame(
             indicateurs = ecoval[[name]][[3]],
             criteres = factor(ecoval[[name]][[2]], levels=c("Diversité espèce", "Fonctionnalité", "Structure", "Pression", "Connectivité", "Représentativité")),
             valeurs = as.numeric(ecoval[[name]][[7]]))
           p <- ggplot(data=dat1, aes(x=criteres, y=valeurs, fill=indicateurs)) + theme(legend.position="none") + coord_flip() +
             geom_bar(stat="identity", position=position_dodge(), colour="black")
+          dat1$incertitudes <- ecoval[[name]][[6]]
+          dat1["gains brutes"] <- as.numeric(ecoval[[name]][[7]]) - as.numeric(ecoval[[name]][[4]])
+          dat1["gains relatifs"] <- as.numeric(ecoval[[name]][[7]]) - as.numeric(ecoval[[name]][[4]]) * 100 / as.numeric(ecoval[[name]][[4]])
         }else if(input$selecttypegraphgain == '3'){
-          # Pertes LT
+          # Gains LT
           dat1 <- data.frame(
             indicateurs = ecoval[[name]][[3]],
             criteres = factor(ecoval[[name]][[2]], levels=c("Diversité espèce", "Fonctionnalité", "Structure", "Pression", "Connectivité", "Représentativité")),
             valeurs = as.numeric(ecoval[[name]][[10]]))
           p <- ggplot(data=dat1, aes(x=criteres, y=valeurs, fill=indicateurs)) + theme(legend.position="none") + coord_flip() +
             geom_bar(stat="identity", position=position_dodge(), colour="black")
+          dat1$incertitudes <- ecoval[[name]][[9]]
+          dat1["gains brutes"] <- as.numeric(ecoval[[name]][[10]]) - as.numeric(ecoval[[name]][[4]])
+          dat1["gains relatifs"] <- as.numeric(ecoval[[name]][[10]]) - as.numeric(ecoval[[name]][[4]]) * 100 / as.numeric(ecoval[[name]][[4]])
         }
       }else{
         shinyjs::hide("dwnlgains")
@@ -163,21 +175,27 @@ output$plot_gains <- renderPlotly({
           p <- ggplot(data=dat1, aes(x=criteres, y=valeurs, fill=indicateurs)) + theme(legend.position="none") +
             geom_bar(stat="identity", position=position_dodge(), colour="black")
         }else if(input$selecttypegraphgain == '2'){
-          # Pertes CT
+          # Gains CT
           dat1 <- data.frame(
             indicateurs = ecoval[[name]][[3]],
             criteres = factor(ecoval[[name]][[2]], levels=c("Diversité espèce", "Fonctionnalité", "Pression", "Connectivité", "Représentativité")),
             valeurs = as.numeric(ecoval[[name]][[7]]))
           p <- ggplot(data=dat1, aes(x=criteres, y=valeurs, fill=indicateurs)) + theme(legend.position="none") + coord_flip() +
             geom_bar(stat="identity", position=position_dodge(), colour="black")
+          dat1$incertitudes <- ecoval[[name]][[6]]
+          dat1["gains brutes"] <- as.numeric(ecoval[[name]][[7]]) - as.numeric(ecoval[[name]][[4]])
+          dat1["gains relatifs"] <- as.numeric(ecoval[[name]][[7]]) - as.numeric(ecoval[[name]][[4]]) * 100 / as.numeric(ecoval[[name]][[4]])
         }else if(input$selecttypegraphgain == '3'){
-          # Pertes LT
+          # Gains LT
           dat1 <- data.frame(
             indicateurs = ecoval[[name]][[3]],
             criteres = factor(ecoval[[name]][[2]], levels=c("Diversité espèce", "Fonctionnalité", "Pression", "Connectivité", "Représentativité")),
             valeurs = as.numeric(ecoval[[name]][[10]]))
           p <- ggplot(data=dat1, aes(x=criteres, y=valeurs, fill=indicateurs)) + theme(legend.position="none") + coord_flip() +
             geom_bar(stat="identity", position=position_dodge(), colour="black")
+          dat1$incertitudes <- ecoval[[name]][[9]]
+          dat1["gains brutes"] <- as.numeric(ecoval[[name]][[10]]) - as.numeric(ecoval[[name]][[4]])
+          dat1["gains relatifs"] <- as.numeric(ecoval[[name]][[10]]) - as.numeric(ecoval[[name]][[4]]) * 100 / as.numeric(ecoval[[name]][[4]])
         }
       }else{
         shinyjs::hide("dwnlgains")

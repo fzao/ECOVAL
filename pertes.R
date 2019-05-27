@@ -103,6 +103,9 @@ output$plot_pertes <- renderPlotly({
           valeurs = as.numeric(ecoval[[name]][[7]]))
         p <- ggplot(data=dat1, aes(x=criteres, y=valeurs, fill=indicateurs)) + theme(legend.position="none") + coord_flip() +
           geom_bar(stat="identity", position=position_dodge(), colour="black")
+        dat1$incertitudes <- ecoval[[name]][[6]]
+        dat1["pertes brutes"] <- as.numeric(ecoval[[name]][[7]]) - as.numeric(ecoval[[name]][[4]])
+        dat1["pertes relatives"] <- as.numeric(ecoval[[name]][[7]]) - as.numeric(ecoval[[name]][[4]]) * 100 / as.numeric(ecoval[[name]][[4]])
       }else if(input$selecttypegraphperte == '3'){
         # Pertes LT
         dat1 <- data.frame(
@@ -111,6 +114,9 @@ output$plot_pertes <- renderPlotly({
           valeurs = as.numeric(ecoval[[name]][[10]]))
         p <- ggplot(data=dat1, aes(x=criteres, y=valeurs, fill=indicateurs)) + theme(legend.position="none") + coord_flip() +
           geom_bar(stat="identity", position=position_dodge(), colour="black")
+        dat1$incertitudes <- ecoval[[name]][[9]]
+        dat1["pertes brutes"] <- as.numeric(ecoval[[name]][[10]]) - as.numeric(ecoval[[name]][[4]])
+        dat1["pertes relatives"] <- as.numeric(ecoval[[name]][[10]]) - as.numeric(ecoval[[name]][[4]]) * 100 / as.numeric(ecoval[[name]][[4]])
       }
       p <- ggplotly(p)
     }else if(input$selectniveauperte == '2'){
@@ -134,6 +140,9 @@ output$plot_pertes <- renderPlotly({
             valeurs = as.numeric(ecoval[[name]][[7]]))
           p <- ggplot(data=dat1, aes(x=criteres, y=valeurs, fill=indicateurs)) + theme(legend.position="none") + coord_flip() +
             geom_bar(stat="identity", position=position_dodge(), colour="black")
+          dat1$incertitudes <- ecoval[[name]][[6]]
+          dat1["pertes brutes"] <- as.numeric(ecoval[[name]][[7]]) - as.numeric(ecoval[[name]][[4]])
+          dat1["pertes relatives"] <- as.numeric(ecoval[[name]][[7]]) - as.numeric(ecoval[[name]][[4]]) * 100 / as.numeric(ecoval[[name]][[4]])
         }else if(input$selecttypegraphperte == '3'){
         # Pertes LT
           dat1 <- data.frame(
@@ -142,6 +151,9 @@ output$plot_pertes <- renderPlotly({
             valeurs = as.numeric(ecoval[[name]][[10]]))
           p <- ggplot(data=dat1, aes(x=criteres, y=valeurs, fill=indicateurs)) + theme(legend.position="none") + coord_flip() +
             geom_bar(stat="identity", position=position_dodge(), colour="black")
+          dat1$incertitudes <- ecoval[[name]][[9]]
+          dat1["pertes brutes"] <- as.numeric(ecoval[[name]][[10]]) - as.numeric(ecoval[[name]][[4]])
+          dat1["pertes relatives"] <- as.numeric(ecoval[[name]][[10]]) - as.numeric(ecoval[[name]][[4]]) * 100 / as.numeric(ecoval[[name]][[4]])
         }
       }else{
         shinyjs::hide("dwnlpertes")
@@ -170,6 +182,9 @@ output$plot_pertes <- renderPlotly({
             valeurs = as.numeric(ecoval[[name]][[7]]))
           p <- ggplot(data=dat1, aes(x=criteres, y=valeurs, fill=indicateurs)) + theme(legend.position="none") + coord_flip() +
             geom_bar(stat="identity", position=position_dodge(), colour="black")
+          dat1$incertitudes <- ecoval[[name]][[6]]
+          dat1["pertes brutes"] <- as.numeric(ecoval[[name]][[7]]) - as.numeric(ecoval[[name]][[4]])
+          dat1["pertes relatives"] <- as.numeric(ecoval[[name]][[7]]) - as.numeric(ecoval[[name]][[4]]) * 100 / as.numeric(ecoval[[name]][[4]])
         }else if(input$selecttypegraphperte == '3'){
           # Pertes LT
           dat1 <- data.frame(
@@ -178,6 +193,9 @@ output$plot_pertes <- renderPlotly({
             valeurs = as.numeric(ecoval[[name]][[10]]))
           p <- ggplot(data=dat1, aes(x=criteres, y=valeurs, fill=indicateurs)) + theme(legend.position="none") + coord_flip() +
             geom_bar(stat="identity", position=position_dodge(), colour="black")
+          dat1$incertitudes <- ecoval[[name]][[9]]
+          dat1["pertes brutes"] <- as.numeric(ecoval[[name]][[10]]) - as.numeric(ecoval[[name]][[4]])
+          dat1["pertes relatives"] <- as.numeric(ecoval[[name]][[10]]) - as.numeric(ecoval[[name]][[4]]) * 100 / as.numeric(ecoval[[name]][[4]])
         }
       }else{
         shinyjs::hide("dwnlpertes")
@@ -202,7 +220,6 @@ output$SIcalcul <- DT::renderDataTable({
 
 output$dwnlpertes  <- downloadHandler(
   filename = function() {
-    print(listsite)
     paste(listsite[as.numeric(input$selectsiteimpact2)+1, 1], "_pertes", ".csv", sep = "")
   },
   content = function(file) {
