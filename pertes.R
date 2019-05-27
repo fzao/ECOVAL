@@ -60,8 +60,12 @@ observeEvent(input$selectsiteimpact2, {
   updateListSpeciesSiteImpact2()
   if(input$selectsiteimpact2 == '0'){
     shinyjs::hide("plot_pertes")
+    shinyjs::hide("SIcalcul")
+    shinyjs::hide("dwnlpertes")
   }else{
     shinyjs::show("plot_pertes")
+    shinyjs::show("SIcalcul")
+    shinyjs::show("dwnlpertes")
   }
 })
 
@@ -79,75 +83,15 @@ observeEvent(input$selectniveauperte, {
 })
 
 output$plot_pertes <- renderPlotly({
-  # Niveau General
-  if(input$selectniveauperte == '1'){
-    name <- paste("SIB no.", input$selectsiteimpact2)
-    # Etat initial
-    if(input$selecttypegraphperte == '1'){
-      dat1 <- data.frame(
-        indicateurs = ecoval[[name]][[3]],
-        criteres = factor(ecoval[[name]][[2]], levels=c("Diversité habitat","Diversité Espèce","Patrimonialité_PS","Fonctionnalité","Pression_PS","Connectivité","Représentativité","Patrimonialité_PE","Pression_PE")),
-        valeurs = as.numeric(ecoval[[name]][[4]]))
-      p <- ggplot(data=dat1, aes(x=criteres, y=valeurs, fill=indicateurs)) + theme(legend.position="none") +
-        geom_bar(stat="identity", position=position_dodge(), colour="black")
-    }else if(input$selecttypegraphperte == '2'){
-      # Pertes CT
-      dat1 <- data.frame(
-        indicateurs = ecoval[[name]][[3]],
-        criteres = factor(ecoval[[name]][[2]], levels=c("Diversité habitat","Diversité Espèce","Patrimonialité_PS","Fonctionnalité","Pression_PS","Connectivité","Représentativité","Patrimonialité_PE","Pression_PE")),
-        valeurs = as.numeric(ecoval[[name]][[7]]))
-      p <- ggplot(data=dat1, aes(x=criteres, y=valeurs, fill=indicateurs)) + theme(legend.position="none") + coord_flip() +
-        geom_bar(stat="identity", position=position_dodge(), colour="black")
-    }else if(input$selecttypegraphperte == '3'){
-      # Pertes LT
-      dat1 <- data.frame(
-        indicateurs = ecoval[[name]][[3]],
-        criteres = factor(ecoval[[name]][[2]], levels=c("Diversité habitat","Diversité Espèce","Patrimonialité_PS","Fonctionnalité","Pression_PS","Connectivité","Représentativité","Patrimonialité_PE","Pression_PE")),
-        valeurs = as.numeric(ecoval[[name]][[10]]))
-      p <- ggplot(data=dat1, aes(x=criteres, y=valeurs, fill=indicateurs)) + theme(legend.position="none") + coord_flip() +
-        geom_bar(stat="identity", position=position_dodge(), colour="black")
-    }
-    p <- ggplotly(p)
-  }else if(input$selectniveauperte == '2'){
-    # Niveau Habitat  
-    if(input$selecthabitatSI2 != '0'){
-    # Etat initial
-      name <- paste("CI no.", input$selecthabitatSI2)
-      if(input$selecttypegraphperte == '1'){
-        dat1 <- data.frame(
-          indicateurs = ecoval[[name]][[3]],
-          criteres = factor(ecoval[[name]][[2]], levels=c("Diversité espèce", "Fonctionnalité", "Structure", "Pression", "Connectivité", "Représentativité")),
-          valeurs = as.numeric(ecoval[[name]][[4]]))
-        p <- ggplot(data=dat1, aes(x=criteres, y=valeurs, fill=indicateurs)) + theme(legend.position="none") +
-          geom_bar(stat="identity", position=position_dodge(), colour="black")
-      }else if(input$selecttypegraphperte == '2'){
-      # Pertes CT
-        dat1 <- data.frame(
-          indicateurs = ecoval[[name]][[3]],
-          criteres = factor(ecoval[[name]][[2]], levels=c("Diversité espèce", "Fonctionnalité", "Structure", "Pression", "Connectivité", "Représentativité")),
-          valeurs = as.numeric(ecoval[[name]][[7]]))
-        p <- ggplot(data=dat1, aes(x=criteres, y=valeurs, fill=indicateurs)) + theme(legend.position="none") + coord_flip() +
-          geom_bar(stat="identity", position=position_dodge(), colour="black")
-      }else if(input$selecttypegraphperte == '3'){
-      # Pertes LT
-        dat1 <- data.frame(
-          indicateurs = ecoval[[name]][[3]],
-          criteres = factor(ecoval[[name]][[2]], levels=c("Diversité espèce", "Fonctionnalité", "Structure", "Pression", "Connectivité", "Représentativité")),
-          valeurs = as.numeric(ecoval[[name]][[10]]))
-        p <- ggplot(data=dat1, aes(x=criteres, y=valeurs, fill=indicateurs)) + theme(legend.position="none") + coord_flip() +
-          geom_bar(stat="identity", position=position_dodge(), colour="black")
-      }
-    }else p <- plotly_empty(type = "scatter", mode = "markers")
-    p <- ggplotly(p)
-  }else if(input$selectniveauperte == '3'){
-    # Niveau Espece
-    if(input$selectspeciesSI2 != '0'){
+  if(input$selectsiteimpact2 != '0'){
+    # Niveau General
+    if(input$selectniveauperte == '1'){
+      name <- paste("SIB no.", input$selectsiteimpact2)
       # Etat initial
-      name <- paste("DI no.", input$selectspeciesSI2)
       if(input$selecttypegraphperte == '1'){
         dat1 <- data.frame(
           indicateurs = ecoval[[name]][[3]],
-          criteres = factor(ecoval[[name]][[2]], levels=c("Diversité espèce", "Fonctionnalité", "Pression", "Connectivité", "Représentativité")),
+          criteres = factor(ecoval[[name]][[2]], levels=c("Diversité habitat","Diversité Espèce","Patrimonialité_PS","Fonctionnalité","Pression_PS","Connectivité","Représentativité","Patrimonialité_PE","Pression_PE")),
           valeurs = as.numeric(ecoval[[name]][[4]]))
         p <- ggplot(data=dat1, aes(x=criteres, y=valeurs, fill=indicateurs)) + theme(legend.position="none") +
           geom_bar(stat="identity", position=position_dodge(), colour="black")
@@ -155,7 +99,7 @@ output$plot_pertes <- renderPlotly({
         # Pertes CT
         dat1 <- data.frame(
           indicateurs = ecoval[[name]][[3]],
-          criteres = factor(ecoval[[name]][[2]], levels=c("Diversité espèce", "Fonctionnalité", "Pression", "Connectivité", "Représentativité")),
+          criteres = factor(ecoval[[name]][[2]], levels=c("Diversité habitat","Diversité Espèce","Patrimonialité_PS","Fonctionnalité","Pression_PS","Connectivité","Représentativité","Patrimonialité_PE","Pression_PE")),
           valeurs = as.numeric(ecoval[[name]][[7]]))
         p <- ggplot(data=dat1, aes(x=criteres, y=valeurs, fill=indicateurs)) + theme(legend.position="none") + coord_flip() +
           geom_bar(stat="identity", position=position_dodge(), colour="black")
@@ -163,13 +107,95 @@ output$plot_pertes <- renderPlotly({
         # Pertes LT
         dat1 <- data.frame(
           indicateurs = ecoval[[name]][[3]],
-          criteres = factor(ecoval[[name]][[2]], levels=c("Diversité espèce", "Fonctionnalité", "Pression", "Connectivité", "Représentativité")),
+          criteres = factor(ecoval[[name]][[2]], levels=c("Diversité habitat","Diversité Espèce","Patrimonialité_PS","Fonctionnalité","Pression_PS","Connectivité","Représentativité","Patrimonialité_PE","Pression_PE")),
           valeurs = as.numeric(ecoval[[name]][[10]]))
         p <- ggplot(data=dat1, aes(x=criteres, y=valeurs, fill=indicateurs)) + theme(legend.position="none") + coord_flip() +
           geom_bar(stat="identity", position=position_dodge(), colour="black")
       }
-    }else p <- plotly_empty(type = "scatter", mode = "markers")
+      p <- ggplotly(p)
+    }else if(input$selectniveauperte == '2'){
+      # Niveau Habitat  
+      if(input$selecthabitatSI2 != '0'){
+      # Etat initial
+        name <- paste("CI no.", input$selecthabitatSI2)
+        if(input$selecttypegraphperte == '1'){
+          dat1 <- data.frame(
+            indicateurs = ecoval[[name]][[3]],
+            criteres = factor(ecoval[[name]][[2]], levels=c("Diversité espèce", "Fonctionnalité", "Structure", "Pression", "Connectivité", "Représentativité")),
+            valeurs = as.numeric(ecoval[[name]][[4]]))
+          p <- ggplot(data=dat1, aes(x=criteres, y=valeurs, fill=indicateurs)) + theme(legend.position="none") +
+            geom_bar(stat="identity", position=position_dodge(), colour="black")
+        }else if(input$selecttypegraphperte == '2'){
+        # Pertes CT
+          dat1 <- data.frame(
+            indicateurs = ecoval[[name]][[3]],
+            criteres = factor(ecoval[[name]][[2]], levels=c("Diversité espèce", "Fonctionnalité", "Structure", "Pression", "Connectivité", "Représentativité")),
+            valeurs = as.numeric(ecoval[[name]][[7]]))
+          p <- ggplot(data=dat1, aes(x=criteres, y=valeurs, fill=indicateurs)) + theme(legend.position="none") + coord_flip() +
+            geom_bar(stat="identity", position=position_dodge(), colour="black")
+        }else if(input$selecttypegraphperte == '3'){
+        # Pertes LT
+          dat1 <- data.frame(
+            indicateurs = ecoval[[name]][[3]],
+            criteres = factor(ecoval[[name]][[2]], levels=c("Diversité espèce", "Fonctionnalité", "Structure", "Pression", "Connectivité", "Représentativité")),
+            valeurs = as.numeric(ecoval[[name]][[10]]))
+          p <- ggplot(data=dat1, aes(x=criteres, y=valeurs, fill=indicateurs)) + theme(legend.position="none") + coord_flip() +
+            geom_bar(stat="identity", position=position_dodge(), colour="black")
+        }
+      }else p <- plotly_empty(type = "scatter", mode = "markers")
+      p <- ggplotly(p)
+    }else if(input$selectniveauperte == '3'){
+      # Niveau Espece
+      if(input$selectspeciesSI2 != '0'){
+        # Etat initial
+        name <- paste("DI no.", input$selectspeciesSI2)
+        if(input$selecttypegraphperte == '1'){
+          dat1 <- data.frame(
+            indicateurs = ecoval[[name]][[3]],
+            criteres = factor(ecoval[[name]][[2]], levels=c("Diversité espèce", "Fonctionnalité", "Pression", "Connectivité", "Représentativité")),
+            valeurs = as.numeric(ecoval[[name]][[4]]))
+          p <- ggplot(data=dat1, aes(x=criteres, y=valeurs, fill=indicateurs)) + theme(legend.position="none") +
+            geom_bar(stat="identity", position=position_dodge(), colour="black")
+        }else if(input$selecttypegraphperte == '2'){
+          # Pertes CT
+          dat1 <- data.frame(
+            indicateurs = ecoval[[name]][[3]],
+            criteres = factor(ecoval[[name]][[2]], levels=c("Diversité espèce", "Fonctionnalité", "Pression", "Connectivité", "Représentativité")),
+            valeurs = as.numeric(ecoval[[name]][[7]]))
+          p <- ggplot(data=dat1, aes(x=criteres, y=valeurs, fill=indicateurs)) + theme(legend.position="none") + coord_flip() +
+            geom_bar(stat="identity", position=position_dodge(), colour="black")
+        }else if(input$selecttypegraphperte == '3'){
+          # Pertes LT
+          dat1 <- data.frame(
+            indicateurs = ecoval[[name]][[3]],
+            criteres = factor(ecoval[[name]][[2]], levels=c("Diversité espèce", "Fonctionnalité", "Pression", "Connectivité", "Représentativité")),
+            valeurs = as.numeric(ecoval[[name]][[10]]))
+          p <- ggplot(data=dat1, aes(x=criteres, y=valeurs, fill=indicateurs)) + theme(legend.position="none") + coord_flip() +
+            geom_bar(stat="identity", position=position_dodge(), colour="black")
+        }
+      }else p <- plotly_empty(type = "scatter", mode = "markers")
+      p <- ggplotly(p)
+    }
+    pertes$tableau <- dat1
+  }else{
+    p <- plotly_empty(type = "scatter", mode = "markers")
     p <- ggplotly(p)
+    pertes$tableau <- NULL
   }
   p
 })
+
+output$SIcalcul <- DT::renderDataTable({
+  dat <- datatable(pertes$tableau, rownames = FALSE, options = list(pageLength = dim.data.frame(tableau$B)[1], searching = TRUE, dom = 'ft', ordering = FALSE), filter = "top")
+  return(dat)
+})
+
+output$dwnlpertes  <- downloadHandler(
+  filename = function() {
+    print(listsite)
+    paste(listsite[as.numeric(input$selectsiteimpact2)+1, 1], "_pertes", ".csv", sep = "")
+  },
+  content = function(file) {
+    write.csv(pertes$tableau, file, row.names = FALSE)
+  }
+)

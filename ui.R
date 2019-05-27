@@ -339,14 +339,16 @@ shinyUI(fluidPage(HTML("<!DOCTYPE html>
                               ),
                               # EQUIVALENCE ----------------------------------------------
                               tabPanel(value="calculs", HTML('<h4 style="color: #005BBB; "><b>Calculs</b></h4>'),
-                                       tabsetPanel(id="descrcompens",
+                                       tabsetPanel(id="descrcalculs",
                                                    tabPanel(HTML('<h4 style="color: #005BBB; ">Pertes</h4>'), br(),
                                                             fluidRow(column(2, align="left", selectInput("selectsiteimpact2", label = "SELECTIONNER LE SITE IMPACT\u00C9", choices = list("-" = 0), selected = 0)),
                                                                      column(2, align="left", selectInput("selecttypegraphperte", label = "TYPE DE GRAPHE", choices = list("Etat initial" = 1, "Pertes CT" = 2, "Pertes LT" = 3), selected = 1)),
                                                                      column(2, align="left", selectInput("selectniveauperte", label = "NIVEAU", choices = list("Général" = 1, "Habitat" = 2, "Espèce" = 3), selected = 1)),
                                                                      column(2, align="left", selectInput("selecthabitatSI2", label = "SELECTIONNER L'HABITAT", choices = list("-" = 0), selected = 0)),
                                                                      column(2, align="left", selectInput("selectspeciesSI2", label = "SELECTIONNER L'ESPECE", choices = list("-" = 0), selected = 0))), hr(),
-                                                                     plotlyOutput('plot_pertes')
+                                                                     plotlyOutput('plot_pertes'), br(),
+                                                            fluidRow(column(6, align="center", DT::dataTableOutput("SIcalcul")),
+                                                                     column(6, align="left", br(), br(), br(), br(), downloadButton("dwnlpertes", "TELECHARGER LA TABLE")))
                                                    ),
                                                    tabPanel(HTML('<h4 style="color: #005BBB; ">Gains</h4>'), br(),
                                                             fluidRow(column(2, align="left", selectInput("selectsitecompens2", label = "SELECTIONNER LE SITE COMPENSATOIRE", choices = list("-" = 0), selected = 0)),

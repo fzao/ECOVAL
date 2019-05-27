@@ -51,3 +51,5 @@ A3listtype <- list("1"="Fermé", "2"="Ouvert", "3"="Buissonnant", "4"="Zone humi
 tableau$B <- model_B
 tableau$C <- model_C
 tableau$D <- model_D
+pertes <- reactiveValues(tableau=NULL)
+gains <- reactiveValues(tableau=NULL)
