@@ -356,7 +356,9 @@ shinyUI(fluidPage(HTML("<!DOCTYPE html>
                                                                      column(2, align="left", selectInput("selectniveaugain", label = "NIVEAU", choices = list("Général" = 1, "Habitat" = 2, "Espèce" = 3), selected = 1)),
                                                                      column(2, align="left", selectInput("selecthabitatSC2", label = "SELECTIONNER L'HABITAT", choices = list("-" = 0), selected = 0)),
                                                                      column(2, align="left", selectInput("selectspeciesSC2", label = "SELECTIONNER L'ESPECE", choices = list("-" = 0), selected = 0))), hr(),
-                                                            plotlyOutput('plot_gains')
+                                                                     plotlyOutput('plot_gains'), br(),
+                                                            fluidRow(column(6, align="center", DT::dataTableOutput("SCcalcul")),
+                                                                     column(6, align="left", br(), br(), br(), br(), downloadButton("dwnlgains", "TELECHARGER LA TABLE")))
                                                    ),
                                                    tabPanel(HTML('<h4 style="color: #005BBB; ">Equivalence</h4>'))
                                        )

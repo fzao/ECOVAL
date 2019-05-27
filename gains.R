@@ -60,8 +60,12 @@ observeEvent(input$selectsitecompens2, {
   updateListSpeciesSiteCompens2()
   if(input$selectsitecompens2 == '0'){
     shinyjs::hide("plot_gains")
+    shinyjs::hide("SCcalcul")
+    shinyjs::hide("dwnlgains")
   }else{
     shinyjs::show("plot_gains")
+    shinyjs::show("SCcalcul")
+    shinyjs::show("dwnlgains")
   }
 })
 
@@ -172,6 +176,7 @@ output$plot_gains <- renderPlotly({
       }else p <- plotly_empty(type = "scatter", mode = "markers")
       p <- ggplotly(p)
     }
+    gains$tableau <- dat1
   }else{
     p <- plotly_empty(type = "scatter", mode = "markers")
     p <- ggplotly(p)
@@ -179,3 +184,19 @@ output$plot_gains <- renderPlotly({
   }
   p
 })
+
+output$SCcalcul <- DT::renderDataTable({
+  dat <- datatable(gains$tableau, rownames = FALSE, options = list(pageLength = dim.data.frame(gains$tableau)[1], searching = TRUE, dom = 'ft', ordering = FALSE), filter = "top")
+  return(dat)
+})
+
+output$dwnlgains  <- downloadHandler(
+  filename = function() {
+    print(listsite)
+    paste(listsite[as.numeric(input$selectsiteimpact2)+1, 1], "_gains", ".csv", sep = "")
+  },
+  content = function(file) {
+    write.csv(gains$tableau, file, row.names = FALSE)
+  }
+)
+

@@ -186,7 +186,7 @@ output$plot_pertes <- renderPlotly({
 })
 
 output$SIcalcul <- DT::renderDataTable({
-  dat <- datatable(pertes$tableau, rownames = FALSE, options = list(pageLength = dim.data.frame(tableau$B)[1], searching = TRUE, dom = 'ft', ordering = FALSE), filter = "top")
+  dat <- datatable(pertes$tableau, rownames = FALSE, options = list(pageLength = dim.data.frame(pertes$tableau)[1], searching = TRUE, dom = 'ft', ordering = FALSE), filter = "top")
   return(dat)
 })
 
