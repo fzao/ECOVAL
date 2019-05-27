@@ -116,6 +116,7 @@ output$plot_gains <- renderPlotly({
     }else if(input$selectniveaugain == '2'){
       # Niveau Habitat  
       if(input$selecthabitatSC2 != '0'){
+        shinyjs::show("dwnlgains")
         # Etat initial
         name <- paste("CC no.", input$selecthabitatSC2)
         if(input$selecttypegraphgain == '1'){
@@ -142,11 +143,16 @@ output$plot_gains <- renderPlotly({
           p <- ggplot(data=dat1, aes(x=criteres, y=valeurs, fill=indicateurs)) + theme(legend.position="none") + coord_flip() +
             geom_bar(stat="identity", position=position_dodge(), colour="black")
         }
-      }else p <- plotly_empty(type = "scatter", mode = "markers")
+      }else{
+        shinyjs::hide("dwnlgains")
+        dat1 <- NULL
+        p <- plotly_empty(type = "scatter", mode = "markers")
+      }
       p <- ggplotly(p)
     }else if(input$selectniveaugain == '3'){
       # Niveau Espece
       if(input$selectspeciesSC2 != '0'){
+        shinyjs::show("dwnlgains")
         # Etat initial
         name <- paste("DC no.", input$selectspeciesSC2)
         if(input$selecttypegraphgain == '1'){
@@ -173,7 +179,11 @@ output$plot_gains <- renderPlotly({
           p <- ggplot(data=dat1, aes(x=criteres, y=valeurs, fill=indicateurs)) + theme(legend.position="none") + coord_flip() +
             geom_bar(stat="identity", position=position_dodge(), colour="black")
         }
-      }else p <- plotly_empty(type = "scatter", mode = "markers")
+      }else{
+        shinyjs::hide("dwnlgains")
+        dat1 <- NULL
+        p <- plotly_empty(type = "scatter", mode = "markers")
+      }
       p <- ggplotly(p)
     }
     gains$tableau <- dat1

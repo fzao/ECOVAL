@@ -116,6 +116,7 @@ output$plot_pertes <- renderPlotly({
     }else if(input$selectniveauperte == '2'){
       # Niveau Habitat  
       if(input$selecthabitatSI2 != '0'){
+        shinyjs::show("dwnlpertes")
       # Etat initial
         name <- paste("CI no.", input$selecthabitatSI2)
         if(input$selecttypegraphperte == '1'){
@@ -142,11 +143,16 @@ output$plot_pertes <- renderPlotly({
           p <- ggplot(data=dat1, aes(x=criteres, y=valeurs, fill=indicateurs)) + theme(legend.position="none") + coord_flip() +
             geom_bar(stat="identity", position=position_dodge(), colour="black")
         }
-      }else p <- plotly_empty(type = "scatter", mode = "markers")
+      }else{
+        shinyjs::hide("dwnlpertes")
+        dat1 <- NULL
+        p <- plotly_empty(type = "scatter", mode = "markers")
+      }
       p <- ggplotly(p)
     }else if(input$selectniveauperte == '3'){
       # Niveau Espece
       if(input$selectspeciesSI2 != '0'){
+        shinyjs::show("dwnlpertes")
         # Etat initial
         name <- paste("DI no.", input$selectspeciesSI2)
         if(input$selecttypegraphperte == '1'){
@@ -173,7 +179,11 @@ output$plot_pertes <- renderPlotly({
           p <- ggplot(data=dat1, aes(x=criteres, y=valeurs, fill=indicateurs)) + theme(legend.position="none") + coord_flip() +
             geom_bar(stat="identity", position=position_dodge(), colour="black")
         }
-      }else p <- plotly_empty(type = "scatter", mode = "markers")
+      }else{
+        shinyjs::hide("dwnlpertes")
+        dat1 <- NULL
+        p <- plotly_empty(type = "scatter", mode = "markers")
+      }
       p <- ggplotly(p)
     }
     pertes$tableau <- dat1
