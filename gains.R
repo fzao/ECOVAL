@@ -218,13 +218,31 @@ output$SCcalcul <- DT::renderDataTable({
   return(dat)
 })
 
+
 output$dwnlgains  <- downloadHandler(
   filename = function() {
-    print(listsite)
-    paste(listsite[as.numeric(input$selectsiteimpact2)+1, 1], "_gains", ".csv", sep = "")
+    radix <- paste(listsite[as.numeric(input$selectsitecompens2)+1, 1], '_', sep = "")
+    if(input$selecttypegraphgain == '1') type <- "Etat initial"
+    else if(input$selecttypegraphgain == '2') type <- "Gains CT"
+    else if(input$selecttypegraphgain == '3') type <- "Gains LT"
+    if(input$selectniveaugain == '1'){
+      niveau <- "Général"
+      habitat <- ""
+      species <- ""
+    }
+    else if(input$selectniveaugain == '2'){
+      niveau <- "Habitat_"
+      species <- ""
+      habitat <- listhabitat[as.numeric(input$selecthabitatSC2)+1, 1]
+    }
+    else if(input$selectniveaugain == '3'){
+      niveau <- "Espèce_"
+      habitat <- ""
+      species <- listspecies[as.numeric(input$selectspeciesSC2)+1, 1]
+    }
+    paste(radix, type, '_', niveau, habitat, species, ".csv", sep = "")
   },
   content = function(file) {
-    write.csv(gains$tableau, file, row.names = FALSE)
+    write.csv(pertes$tableau, file, row.names = FALSE)
   }
 )
-

@@ -220,7 +220,26 @@ output$SIcalcul <- DT::renderDataTable({
 
 output$dwnlpertes  <- downloadHandler(
   filename = function() {
-    paste(listsite[as.numeric(input$selectsiteimpact2)+1, 1], "_pertes", ".csv", sep = "")
+    radix <- paste(listsite[as.numeric(input$selectsiteimpact2)+1, 1], '_', sep = "")
+    if(input$selecttypegraphperte == '1') type <- "Etat initial"
+    else if(input$selecttypegraphperte == '2') type <- "Pertes CT"
+    else if(input$selecttypegraphperte == '3') type <- "Pertes LT"
+    if(input$selectniveauperte == '1'){
+      niveau <- "Général"
+      habitat <- ""
+      species <- ""
+    }
+    else if(input$selectniveauperte == '2'){
+      niveau <- "Habitat_"
+      species <- ""
+      habitat <- listhabitat[as.numeric(input$selecthabitatSI2)+1, 1]
+    }
+    else if(input$selectniveauperte == '3'){
+      niveau <- "Espèce_"
+      habitat <- ""
+      species <- listspecies[as.numeric(input$selectspeciesSI2)+1, 1]
+    }
+    paste(radix, type, '_', niveau, habitat, species, ".csv", sep = "")
   },
   content = function(file) {
     write.csv(pertes$tableau, file, row.names = FALSE)
