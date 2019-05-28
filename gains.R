@@ -94,6 +94,7 @@ output$plot_gains <- renderPlotly({
       # Etat initial
       if(input$selecttypegraphgain == '1'){
         dat1 <- data.frame(
+          perimetres = ecoval[[name]][[1]],
           indicateurs = ecoval[[name]][[3]],
           criteres = factor(ecoval[[name]][[2]], levels=c("Diversité habitat","Diversité Espèce","Patrimonialité_PS","Fonctionnalité","Pression_PS","Connectivité","Représentativité","Patrimonialité_PE","Pression_PE")),
           valeurs = as.numeric(ecoval[[name]][[4]]))
@@ -102,6 +103,7 @@ output$plot_gains <- renderPlotly({
       }else if(input$selecttypegraphgain == '2'){
         # Gains CT
         dat1 <- data.frame(
+          perimetres = ecoval[[name]][[1]],
           indicateurs = ecoval[[name]][[3]],
           criteres = factor(ecoval[[name]][[2]], levels=c("Diversité habitat","Diversité Espèce","Patrimonialité_PS","Fonctionnalité","Pression_PS","Connectivité","Représentativité","Patrimonialité_PE","Pression_PE")),
           valeurs = as.numeric(ecoval[[name]][[7]]))
@@ -113,6 +115,7 @@ output$plot_gains <- renderPlotly({
       }else if(input$selecttypegraphgain == '3'){
         # Gains LT
         dat1 <- data.frame(
+          perimetres = ecoval[[name]][[1]],
           indicateurs = ecoval[[name]][[3]],
           criteres = factor(ecoval[[name]][[2]], levels=c("Diversité habitat","Diversité Espèce","Patrimonialité_PS","Fonctionnalité","Pression_PS","Connectivité","Représentativité","Patrimonialité_PE","Pression_PE")),
           valeurs = as.numeric(ecoval[[name]][[10]]))
@@ -131,6 +134,7 @@ output$plot_gains <- renderPlotly({
         name <- paste("CC no.", input$selecthabitatSC2)
         if(input$selecttypegraphgain == '1'){
           dat1 <- data.frame(
+            perimetres = ecoval[[name]][[1]],
             indicateurs = ecoval[[name]][[3]],
             criteres = factor(ecoval[[name]][[2]], levels=c("Diversité espèce", "Fonctionnalité", "Structure", "Pression", "Connectivité", "Représentativité")),
             valeurs = as.numeric(ecoval[[name]][[4]]))
@@ -139,6 +143,7 @@ output$plot_gains <- renderPlotly({
         }else if(input$selecttypegraphgain == '2'){
           # Gains CT
           dat1 <- data.frame(
+            perimetres = ecoval[[name]][[1]],
             indicateurs = ecoval[[name]][[3]],
             criteres = factor(ecoval[[name]][[2]], levels=c("Diversité espèce", "Fonctionnalité", "Structure", "Pression", "Connectivité", "Représentativité")),
             valeurs = as.numeric(ecoval[[name]][[7]]))
@@ -150,6 +155,7 @@ output$plot_gains <- renderPlotly({
         }else if(input$selecttypegraphgain == '3'){
           # Gains LT
           dat1 <- data.frame(
+            perimetres = ecoval[[name]][[1]],
             indicateurs = ecoval[[name]][[3]],
             criteres = factor(ecoval[[name]][[2]], levels=c("Diversité espèce", "Fonctionnalité", "Structure", "Pression", "Connectivité", "Représentativité")),
             valeurs = as.numeric(ecoval[[name]][[10]]))
@@ -173,6 +179,7 @@ output$plot_gains <- renderPlotly({
         name <- paste("DC no.", input$selectspeciesSC2)
         if(input$selecttypegraphgain == '1'){
           dat1 <- data.frame(
+            perimetres = ecoval[[name]][[1]],
             indicateurs = ecoval[[name]][[3]],
             criteres = factor(ecoval[[name]][[2]], levels=c("Diversité espèce", "Fonctionnalité", "Pression", "Connectivité", "Représentativité")),
             valeurs = as.numeric(ecoval[[name]][[4]]))
@@ -181,6 +188,7 @@ output$plot_gains <- renderPlotly({
         }else if(input$selecttypegraphgain == '2'){
           # Gains CT
           dat1 <- data.frame(
+            perimetres = ecoval[[name]][[1]],
             indicateurs = ecoval[[name]][[3]],
             criteres = factor(ecoval[[name]][[2]], levels=c("Diversité espèce", "Fonctionnalité", "Pression", "Connectivité", "Représentativité")),
             valeurs = as.numeric(ecoval[[name]][[7]]))
@@ -192,6 +200,7 @@ output$plot_gains <- renderPlotly({
         }else if(input$selecttypegraphgain == '3'){
           # Gains LT
           dat1 <- data.frame(
+            perimetres = ecoval[[name]][[1]],
             indicateurs = ecoval[[name]][[3]],
             criteres = factor(ecoval[[name]][[2]], levels=c("Diversité espèce", "Fonctionnalité", "Pression", "Connectivité", "Représentativité")),
             valeurs = as.numeric(ecoval[[name]][[10]]))

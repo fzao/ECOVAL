@@ -75,137 +75,66 @@ observeEvent(input$selecttypegraphequivalence, {
 observeEvent(input$selectniveauequivalence, {
   showhideSelectSpeciesHabitat()
 })
-# 
-# output$plot_pertes <- renderPlotly({
-#   if(input$selectsiteimpact2 != '0'){
-#     # Niveau General
-#     if(input$selectniveauperte == '1'){
-#       name <- paste("SIB no.", input$selectsiteimpact2)
-#       # Etat initial
-#       if(input$selecttypegraphperte == '1'){
-#         dat1 <- data.frame(
-#           indicateurs = ecoval[[name]][[3]],
-#           criteres = factor(ecoval[[name]][[2]], levels=c("Diversité habitat","Diversité Espèce","Patrimonialité_PS","Fonctionnalité","Pression_PS","Connectivité","Représentativité","Patrimonialité_PE","Pression_PE")),
-#           valeurs = as.numeric(ecoval[[name]][[4]]))
-#         p <- ggplot(data=dat1, aes(x=criteres, y=valeurs, fill=indicateurs)) + theme(legend.position="none") +
-#           geom_bar(stat="identity", position=position_dodge(), colour="black")
-#       }else if(input$selecttypegraphperte == '2'){
-#         # Pertes CT
-#         dat1 <- data.frame(
-#           indicateurs = ecoval[[name]][[3]],
-#           criteres = factor(ecoval[[name]][[2]], levels=c("Diversité habitat","Diversité Espèce","Patrimonialité_PS","Fonctionnalité","Pression_PS","Connectivité","Représentativité","Patrimonialité_PE","Pression_PE")),
-#           valeurs = as.numeric(ecoval[[name]][[7]]))
-#         p <- ggplot(data=dat1, aes(x=criteres, y=valeurs, fill=indicateurs)) + theme(legend.position="none") + coord_flip() +
-#           geom_bar(stat="identity", position=position_dodge(), colour="black")
-#         dat1$incertitudes <- ecoval[[name]][[6]]
-#         dat1["pertes brutes"] <- as.numeric(ecoval[[name]][[7]]) - as.numeric(ecoval[[name]][[4]])
-#         dat1["pertes relatives"] <- as.numeric(ecoval[[name]][[7]]) - as.numeric(ecoval[[name]][[4]]) * 100 / as.numeric(ecoval[[name]][[4]])
-#       }else if(input$selecttypegraphperte == '3'){
-#         # Pertes LT
-#         dat1 <- data.frame(
-#           indicateurs = ecoval[[name]][[3]],
-#           criteres = factor(ecoval[[name]][[2]], levels=c("Diversité habitat","Diversité Espèce","Patrimonialité_PS","Fonctionnalité","Pression_PS","Connectivité","Représentativité","Patrimonialité_PE","Pression_PE")),
-#           valeurs = as.numeric(ecoval[[name]][[10]]))
-#         p <- ggplot(data=dat1, aes(x=criteres, y=valeurs, fill=indicateurs)) + theme(legend.position="none") + coord_flip() +
-#           geom_bar(stat="identity", position=position_dodge(), colour="black")
-#         dat1$incertitudes <- ecoval[[name]][[9]]
-#         dat1["pertes brutes"] <- as.numeric(ecoval[[name]][[10]]) - as.numeric(ecoval[[name]][[4]])
-#         dat1["pertes relatives"] <- as.numeric(ecoval[[name]][[10]]) - as.numeric(ecoval[[name]][[4]]) * 100 / as.numeric(ecoval[[name]][[4]])
-#       }
-#       p <- ggplotly(p)
-#     }else if(input$selectniveauperte == '2'){
-#       # Niveau Habitat  
-#       if(input$selecthabitatSI2 != '0'){
-#         shinyjs::show("dwnlpertes")
-#         # Etat initial
-#         name <- paste("CI no.", input$selecthabitatSI2)
-#         if(input$selecttypegraphperte == '1'){
-#           dat1 <- data.frame(
-#             indicateurs = ecoval[[name]][[3]],
-#             criteres = factor(ecoval[[name]][[2]], levels=c("Diversité espèce", "Fonctionnalité", "Structure", "Pression", "Connectivité", "Représentativité")),
-#             valeurs = as.numeric(ecoval[[name]][[4]]))
-#           p <- ggplot(data=dat1, aes(x=criteres, y=valeurs, fill=indicateurs)) + theme(legend.position="none") +
-#             geom_bar(stat="identity", position=position_dodge(), colour="black")
-#         }else if(input$selecttypegraphperte == '2'){
-#           # Pertes CT
-#           dat1 <- data.frame(
-#             indicateurs = ecoval[[name]][[3]],
-#             criteres = factor(ecoval[[name]][[2]], levels=c("Diversité espèce", "Fonctionnalité", "Structure", "Pression", "Connectivité", "Représentativité")),
-#             valeurs = as.numeric(ecoval[[name]][[7]]))
-#           p <- ggplot(data=dat1, aes(x=criteres, y=valeurs, fill=indicateurs)) + theme(legend.position="none") + coord_flip() +
-#             geom_bar(stat="identity", position=position_dodge(), colour="black")
-#           dat1$incertitudes <- ecoval[[name]][[6]]
-#           dat1["pertes brutes"] <- as.numeric(ecoval[[name]][[7]]) - as.numeric(ecoval[[name]][[4]])
-#           dat1["pertes relatives"] <- as.numeric(ecoval[[name]][[7]]) - as.numeric(ecoval[[name]][[4]]) * 100 / as.numeric(ecoval[[name]][[4]])
-#         }else if(input$selecttypegraphperte == '3'){
-#           # Pertes LT
-#           dat1 <- data.frame(
-#             indicateurs = ecoval[[name]][[3]],
-#             criteres = factor(ecoval[[name]][[2]], levels=c("Diversité espèce", "Fonctionnalité", "Structure", "Pression", "Connectivité", "Représentativité")),
-#             valeurs = as.numeric(ecoval[[name]][[10]]))
-#           p <- ggplot(data=dat1, aes(x=criteres, y=valeurs, fill=indicateurs)) + theme(legend.position="none") + coord_flip() +
-#             geom_bar(stat="identity", position=position_dodge(), colour="black")
-#           dat1$incertitudes <- ecoval[[name]][[9]]
-#           dat1["pertes brutes"] <- as.numeric(ecoval[[name]][[10]]) - as.numeric(ecoval[[name]][[4]])
-#           dat1["pertes relatives"] <- as.numeric(ecoval[[name]][[10]]) - as.numeric(ecoval[[name]][[4]]) * 100 / as.numeric(ecoval[[name]][[4]])
-#         }
-#       }else{
-#         shinyjs::hide("dwnlpertes")
-#         dat1 <- NULL
-#         p <- plotly_empty(type = "scatter", mode = "markers")
-#       }
-#       p <- ggplotly(p)
-#     }else if(input$selectniveauperte == '3'){
-#       # Niveau Espece
-#       if(input$selectspeciesSI2 != '0'){
-#         shinyjs::show("dwnlpertes")
-#         # Etat initial
-#         name <- paste("DI no.", input$selectspeciesSI2)
-#         if(input$selecttypegraphperte == '1'){
-#           dat1 <- data.frame(
-#             indicateurs = ecoval[[name]][[3]],
-#             criteres = factor(ecoval[[name]][[2]], levels=c("Diversité espèce", "Fonctionnalité", "Pression", "Connectivité", "Représentativité")),
-#             valeurs = as.numeric(ecoval[[name]][[4]]))
-#           p <- ggplot(data=dat1, aes(x=criteres, y=valeurs, fill=indicateurs)) + theme(legend.position="none") +
-#             geom_bar(stat="identity", position=position_dodge(), colour="black")
-#         }else if(input$selecttypegraphperte == '2'){
-#           # Pertes CT
-#           dat1 <- data.frame(
-#             indicateurs = ecoval[[name]][[3]],
-#             criteres = factor(ecoval[[name]][[2]], levels=c("Diversité espèce", "Fonctionnalité", "Pression", "Connectivité", "Représentativité")),
-#             valeurs = as.numeric(ecoval[[name]][[7]]))
-#           p <- ggplot(data=dat1, aes(x=criteres, y=valeurs, fill=indicateurs)) + theme(legend.position="none") + coord_flip() +
-#             geom_bar(stat="identity", position=position_dodge(), colour="black")
-#           dat1$incertitudes <- ecoval[[name]][[6]]
-#           dat1["pertes brutes"] <- as.numeric(ecoval[[name]][[7]]) - as.numeric(ecoval[[name]][[4]])
-#           dat1["pertes relatives"] <- as.numeric(ecoval[[name]][[7]]) - as.numeric(ecoval[[name]][[4]]) * 100 / as.numeric(ecoval[[name]][[4]])
-#         }else if(input$selecttypegraphperte == '3'){
-#           # Pertes LT
-#           dat1 <- data.frame(
-#             indicateurs = ecoval[[name]][[3]],
-#             criteres = factor(ecoval[[name]][[2]], levels=c("Diversité espèce", "Fonctionnalité", "Pression", "Connectivité", "Représentativité")),
-#             valeurs = as.numeric(ecoval[[name]][[10]]))
-#           p <- ggplot(data=dat1, aes(x=criteres, y=valeurs, fill=indicateurs)) + theme(legend.position="none") + coord_flip() +
-#             geom_bar(stat="identity", position=position_dodge(), colour="black")
-#           dat1$incertitudes <- ecoval[[name]][[9]]
-#           dat1["pertes brutes"] <- as.numeric(ecoval[[name]][[10]]) - as.numeric(ecoval[[name]][[4]])
-#           dat1["pertes relatives"] <- as.numeric(ecoval[[name]][[10]]) - as.numeric(ecoval[[name]][[4]]) * 100 / as.numeric(ecoval[[name]][[4]])
-#         }
-#       }else{
-#         shinyjs::hide("dwnlpertes")
-#         dat1 <- NULL
-#         p <- plotly_empty(type = "scatter", mode = "markers")
-#       }
-#       p <- ggplotly(p)
-#     }
-#     pertes$tableau <- dat1
-#   }else{
-#     p <- plotly_empty(type = "scatter", mode = "markers")
-#     p <- ggplotly(p)
-#     pertes$tableau <- NULL
-#   }
-#   p
-# })
+
+output$plot_equivalence <- renderPlotly({
+  if(input$selecttypegraphequivalence != '0'){
+    name <- "SIB no. 1"
+    dat1 <- data.frame(
+      indicateurs = ecoval[[name]][[3]],
+      criteres = factor(ecoval[[name]][[2]], levels=c("Diversité habitat","Diversité Espèce","Patrimonialité_PS","Fonctionnalité","Pression_PS","Connectivité","Représentativité","Patrimonialité_PE","Pression_PE")),
+      valeurs = as.numeric(ecoval[[name]][[4]]))
+    # Niveau General
+    if(input$selectniveauequivalence == '1'){
+      # Equivalence CT
+      if(input$selecttypegraphequivalence == '1'){
+        p <- plotly_empty(type = "scatter", mode = "markers")
+      }else if(input$selecttypegraphequivalence == '2'){
+      # Equivalence LT
+        p <- plotly_empty(type = "scatter", mode = "markers")
+      }
+    }else if(input$selectniveauequivalence == '2'){
+    # Niveau Habitat
+      if(input$selecthabitatSE != '0'){
+        shinyjs::show("dwnlequivalence")
+        # Equivalence CT
+        if(input$selecttypegraphequivalence == '1'){
+          p <- plotly_empty(type = "scatter", mode = "markers")
+        }else if(input$selecttypegraphequivalence == '2'){
+        # Equivalence LT
+          p <- plotly_empty(type = "scatter", mode = "markers")
+        }
+      }else{
+        shinyjs::hide("dwnlequivalence")
+        dat1 <- NULL
+        p <- plotly_empty(type = "scatter", mode = "markers")
+      }
+      p <- ggplotly(p)
+    }else if(input$selectniveauequivalence == '3'){
+    # Niveau Espece
+    if(input$selectspeciesSE != '0'){
+        shinyjs::show("dwnlequivalence")
+        # Equivalence CT
+        if(input$selecttypegraphequivalence == '1'){
+          p <- plotly_empty(type = "scatter", mode = "markers")
+        }else if(input$selecttypegraphequivalence == '2'){
+        # Equivalence LT
+          p <- plotly_empty(type = "scatter", mode = "markers")
+        }
+      }else{
+        shinyjs::hide("dwnlequivalence")
+        dat1 <- NULL
+        p <- plotly_empty(type = "scatter", mode = "markers")
+      }
+      p <- ggplotly(p)
+    }
+    equivalence$tableau <- dat1
+  }else{
+    p <- plotly_empty(type = "scatter", mode = "markers")
+    p <- ggplotly(p)
+    equivalence$tableau <- NULL
+  }
+  p
+})
 # 
 # output$SIcalcul <- DT::renderDataTable({
 #   dat <- datatable(pertes$tableau, rownames = FALSE, options = list(pageLength = dim.data.frame(pertes$tableau)[1], searching = TRUE, dom = 'ft', ordering = FALSE), filter = "top")

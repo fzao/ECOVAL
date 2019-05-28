@@ -53,3 +53,4 @@ tableau$C <- model_C
 tableau$D <- model_D
 pertes <- reactiveValues(tableau=NULL)
 gains <- reactiveValues(tableau=NULL)
+equivalence <- reactiveValues(tableau=NULL)

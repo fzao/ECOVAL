@@ -347,8 +347,8 @@ shinyUI(fluidPage(HTML("<!DOCTYPE html>
                                                                      column(2, align="left", selectInput("selecthabitatSI2", label = "SELECTIONNER L'HABITAT", choices = list("-" = 0), selected = 0)),
                                                                      column(2, align="left", selectInput("selectspeciesSI2", label = "SELECTIONNER L'ESPECE", choices = list("-" = 0), selected = 0))), hr(),
                                                                      plotlyOutput('plot_pertes'), br(),
-                                                            fluidRow(column(6, align="center", DT::dataTableOutput("SIcalcul")),
-                                                                     column(6, align="left", br(), br(), br(), br(), downloadButton("dwnlpertes", "TELECHARGER LA TABLE")))
+                                                            fluidRow(column(8, align="center", DT::dataTableOutput("SIcalcul")),
+                                                                     column(4, align="left", br(), br(), br(), br(), downloadButton("dwnlpertes", "TELECHARGER LA TABLE")))
                                                    ),
                                                    tabPanel(HTML('<h4 style="color: #005BBB; ">Gains</h4>'), br(),
                                                             fluidRow(column(2, align="left", selectInput("selectsitecompens2", label = "SELECTIONNER LE SITE COMPENSATOIRE", choices = list("-" = 0), selected = 0)),
@@ -357,8 +357,8 @@ shinyUI(fluidPage(HTML("<!DOCTYPE html>
                                                                      column(2, align="left", selectInput("selecthabitatSC2", label = "SELECTIONNER L'HABITAT", choices = list("-" = 0), selected = 0)),
                                                                      column(2, align="left", selectInput("selectspeciesSC2", label = "SELECTIONNER L'ESPECE", choices = list("-" = 0), selected = 0))), hr(),
                                                                      plotlyOutput('plot_gains'), br(),
-                                                            fluidRow(column(6, align="center", DT::dataTableOutput("SCcalcul")),
-                                                                     column(6, align="left", br(), br(), br(), br(), downloadButton("dwnlgains", "TELECHARGER LA TABLE")))
+                                                            fluidRow(column(8, align="center", DT::dataTableOutput("SCcalcul")),
+                                                                     column(4, align="left", br(), br(), br(), br(), downloadButton("dwnlgains", "TELECHARGER LA TABLE")))
                                                    ),
                                                    tabPanel(HTML('<h4 style="color: #005BBB; ">Equivalence</h4>'), br(),
                                                             fluidRow(column(2, align="left", selectInput("selecttypegraphequivalence", label = "TYPE DE GRAPHE", choices = list("-" = 0, "Equivalence CT" = 1, "Equivalence LT" = 2), selected = 0)),
@@ -366,8 +366,8 @@ shinyUI(fluidPage(HTML("<!DOCTYPE html>
                                                                      column(2, align="left", selectInput("selecthabitatSE", label = "SELECTIONNER L'HABITAT", choices = list("-" = 0), selected = 0)),
                                                                      column(2, align="left", selectInput("selectspeciesSE", label = "SELECTIONNER L'ESPECE", choices = list("-" = 0), selected = 0))), hr(),
                                                             plotlyOutput('plot_equivalence'), br(),
-                                                            fluidRow(column(6, align="center", DT::dataTableOutput("SEcalcul")),
-                                                                     column(6, align="left", br(), br(), br(), br(), downloadButton("dwnlequivalence", "TELECHARGER LA TABLE")))
+                                                            fluidRow(column(8, align="center", DT::dataTableOutput("SEcalcul")),
+                                                                     column(4, align="left", br(), br(), br(), br(), downloadButton("dwnlequivalence", "TELECHARGER LA TABLE")))
                                                    )
                                        )
                               ),
