@@ -80,14 +80,16 @@ output$plot_equivalence <- renderPlotly({
   if(input$selecttypegraphequivalence != '0'){
     name <- "SIB no. 1"
     dat1 <- data.frame(
+      perimetres = ecoval[[name]][[1]],
       indicateurs = ecoval[[name]][[3]],
-      criteres = factor(ecoval[[name]][[2]], levels=c("Diversité habitat","Diversité Espèce","Patrimonialité_PS","Fonctionnalité","Pression_PS","Connectivité","Représentativité","Patrimonialité_PE","Pression_PE")),
-      valeurs = as.numeric(ecoval[[name]][[4]]))
+      criteres = factor(ecoval[[name]][[2]], levels=c("Diversité habitat","Diversité Espèce","Patrimonialité_PS","Fonctionnalité","Pression_PS","Connectivité","Représentativité","Patrimonialité_PE","Pression_PE")))
+      # valeurs = as.numeric(ecoval[[name]][[4]]))
     # Niveau General
     if(input$selectniveauequivalence == '1'){
       # Equivalence CT
       if(input$selecttypegraphequivalence == '1'){
-        p <- plotly_empty(type = "scatter", mode = "markers")
+        pertesCT <- 0.
+        #p <- plotly_empty(type = "scatter", mode = "markers")
       }else if(input$selecttypegraphequivalence == '2'){
       # Equivalence LT
         p <- plotly_empty(type = "scatter", mode = "markers")
