@@ -19,6 +19,7 @@ source('site_impact.R', local =TRUE)
 source('site_compens.R', local =TRUE)
 source('pertes.R', local = TRUE)
 source('gains.R', local = TRUE)
+source('equivalence.R', local = TRUE)
 
 observeEvent(input$projectname, {
   ecoval$General[1,2] <<- input$projectname

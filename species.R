@@ -39,6 +39,8 @@ updateListSpecies <- function(name, inplace=FALSE){
   }
   if(inplace) updateSelectInput(session, "selectspecies", choices = showlist, selected = input$selectspecies)
   else updateSelectInput(session, "selectspecies", choices = showlist, selected = showlist[[length(showlist)]])
+  # equivalence
+  updateListSpeciesEquivalence()
 }
 
 observeEvent(input$newspecies, {

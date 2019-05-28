@@ -62,10 +62,14 @@ observeEvent(input$selectsiteimpact2, {
     shinyjs::hide("plot_pertes")
     shinyjs::hide("SIcalcul")
     shinyjs::hide("dwnlpertes")
+    shinyjs::hide("selecttypegraphperte")
+    shinyjs::hide("selectniveauperte")
   }else{
     shinyjs::show("plot_pertes")
     shinyjs::show("SIcalcul")
     shinyjs::show("dwnlpertes")
+    shinyjs::show("selecttypegraphperte")
+    shinyjs::show("selectniveauperte")
   }
 })
 

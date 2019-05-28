@@ -40,6 +40,8 @@ updateListHabitat <- function(name, inplace=FALSE){
   }
   if(inplace) updateSelectInput(session, "selecthabitat", choices = showlist, selected = input$selecthabitat)
   else updateSelectInput(session, "selecthabitat", choices = showlist, selected = showlist[[length(showlist)]])
+  # equivalence
+  updateListHabitatEquivalence()
 }
 
 observeEvent(input$newhabitat, {

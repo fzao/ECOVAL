@@ -62,10 +62,14 @@ observeEvent(input$selectsitecompens2, {
     shinyjs::hide("plot_gains")
     shinyjs::hide("SCcalcul")
     shinyjs::hide("dwnlgains")
+    shinyjs::hide("selecttypegraphgain")
+    shinyjs::hide("selectniveaugain")
   }else{
     shinyjs::show("plot_gains")
     shinyjs::show("SCcalcul")
     shinyjs::show("dwnlgains")
+    shinyjs::show("selecttypegraphgain")
+    shinyjs::show("selectniveaugain")
   }
 })
 
