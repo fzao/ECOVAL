@@ -98,8 +98,23 @@ output$plot_pertes <- renderPlotly({
           indicateurs = ecoval[[name]][[3]],
           criteres = factor(ecoval[[name]][[2]], levels=c("Diversité habitat","Diversité Espèce","Patrimonialité_PS","Fonctionnalité","Pression_PS","Connectivité","Représentativité","Patrimonialité_PE","Pression_PE")),
           valeurs = as.numeric(ecoval[[name]][[4]]))
-        p <- ggplot(data=dat1, aes(x=criteres, y=valeurs, fill=indicateurs)) + theme(legend.position="none") +
-          geom_bar(stat="identity", position=position_dodge(), colour="black")
+        couleurs <- c("Diversité habitat" = "#83D072",
+                      "Diversité Espèce" ="#1E6218",
+                      "Patrimonialité_PS" = "#9D403E",
+                      "Fonctionnalité" = "#4894DC",
+                      "Pression_PS" = "#E6A936",
+                      "Connectivité" = "#AF76C4",
+                      "Représentativité" = "#68DDEA",
+                      "Patrimonialite_PE" = "#842D2A",
+                      "Pression_PE" = "#DE9830")
+        
+        p <- ggplot(data=dat1, aes(x=indicateurs, y=valeurs)) +
+          geom_bar(stat="identity", width=0.5, aes(fill=criteres))+
+          theme_bw()+
+          scale_fill_manual(values=couleurs)+
+          theme(legend.position='none')+
+          facet_grid(.~criteres, scales = "free", space = "free")+
+          theme (axis.text.x = element_text(colour="white"))
       }else if(input$selecttypegraphperte == '2'){
         # Pertes CT
         dat1 <- data.frame(
