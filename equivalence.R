@@ -15,33 +15,127 @@
 # Licence CeCILL v2.1
 #
 
-updateListHabitatEquivalence <- function(){
+updateListHabitatSiteEquivalence <- function(){
   showlisthabitatequivalence <- list()
   showlisthabitatequivalence[['-']] <- 0
-  nbhabitat <- dim(listhabitat)[1] - 1
-  if(nbhabitat > 0){
-    for(i in 1:nbhabitat){
-      hname <- listhabitat$habitat[i+1]
-      if(exists(hname, where = ecoval)) showlisthabitatequivalence[[listhabitat$name[i+1]]] <- listhabitat$index[i+1]
+  if(input$selectsiteimpact3 != '0'){
+    name <- paste("Site no.", input$selectsiteimpact3)
+    nbhabitat <- dim(listhabitat)[1] - 1
+    if(nbhabitat > 0){
+      for(i in 1:nbhabitat){
+        hname <- listhabitat$habitat[i+1]
+        if(exists(hname, where = ecoval)){
+          if(ecoval[[hname]][7,2] == ecoval[[name]][12,2]){
+            showlisthabitatequivalence[[listhabitat$name[i+1]]] <- listhabitat$index[i+1]
+          }
+        }
+      }
+    }
+  }
+  if(input$selectsitecompens3 != '0'){
+    name <- paste("Site no.", input$selectsitecompens3)
+    nbhabitat <- dim(listhabitat)[1] - 1
+    if(nbhabitat > 0){
+      for(i in 1:nbhabitat){
+        hname <- listhabitat$habitat[i+1]
+        if(exists(hname, where = ecoval)){
+          if(ecoval[[hname]][7,2] == ecoval[[name]][12,2]){
+            showlisthabitatequivalence[[listhabitat$name[i+1]]] <- listhabitat$index[i+1]
+          }
+        }
+      }
     }
   }
   updateSelectInput(session, "selecthabitatSE", choices = showlisthabitatequivalence, selected = showlisthabitatequivalence[[length(showlisthabitatequivalence)]])
 }
 
-updateListSpeciesEquivalence <- function(){
+updateListSpeciesSiteEquivalence <- function(){
   showlistspeciesequivalence <- list()
   showlistspeciesequivalence[['-']] <- 0
-  nbspecies <- dim(listspecies)[1] - 1
-  if(nbspecies > 0){
-    for(i in 1:nbspecies){
-      spname <- listspecies$species[i+1]
-      if(exists(spname, where = ecoval)) showlistspeciesequivalence[[listspecies$name[i+1]]] <- listspecies$index[i+1]
+  if(input$selectsiteimpact3 != '0'){
+    name <- paste("Site no.", input$selectsiteimpact3)
+    nbspecies <- dim(listspecies)[1] - 1
+    if(nbspecies > 0){
+      for(i in 1:nbspecies){
+        spname <- listspecies$species[i+1]
+        if(exists(spname, where = ecoval)){
+          if(ecoval[[spname]][6,2] == ecoval[[name]][12,2]){
+            showlistspeciesequivalence[[listspecies$name[i+1]]] <- listspecies$index[i+1]
+          }
+        }
+      }
+    }
+  }
+  if(input$selectsitecompens3 != '0'){
+    name <- paste("Site no.", input$selectsitecompens3)
+    nbspecies <- dim(listspecies)[1] - 1
+    if(nbspecies > 0){
+      for(i in 1:nbspecies){
+        spname <- listspecies$species[i+1]
+        if(exists(spname, where = ecoval)){
+          if(ecoval[[spname]][6,2] == ecoval[[name]][12,2]){
+            showlistspeciesequivalence[[listspecies$name[i+1]]] <- listspecies$index[i+1]
+          }
+        }
+      }
     }
   }
   updateSelectInput(session, "selectspeciesSE", choices = showlistspeciesequivalence, selected = showlistspeciesequivalence[[length(showlistspeciesequivalence)]])
 }
 
-showhideSelectSpeciesHabitat <- function(){
+observeEvent(input$selectsiteimpact3, {
+  updateListHabitatSiteEquivalence()
+  updateListSpeciesSiteEquivalence()
+  if(input$selectsiteimpact3 == '0'){
+    shinyjs::hide("plot_equivalence")
+    shinyjs::hide("SEcalcul")
+    shinyjs::hide("dwnlequivalence")
+    shinyjs::hide("selecttypegraphequivalence")
+    shinyjs::hide("selectniveauequivalence")
+  }else{
+    if(input$selectsitecompens3 == '0'){
+      shinyjs::hide("plot_equivalence")
+      shinyjs::hide("SEcalcul")
+      shinyjs::hide("dwnlequivalence")
+      shinyjs::hide("selecttypegraphequivalence")
+      shinyjs::hide("selectniveauequivalence")
+    }else{
+      shinyjs::show("plot_equivalence")
+      shinyjs::show("SEcalcul")
+      shinyjs::show("dwnlequivalence")
+      shinyjs::show("selecttypegraphequivalence")
+      shinyjs::show("selectniveauequivalence")
+    }
+  }
+})
+
+observeEvent(input$selectsitecompens3, {
+  updateListHabitatSiteEquivalence()
+  updateListSpeciesSiteEquivalence()
+  if(input$selectsitecompens3 == '0'){
+    shinyjs::hide("plot_equivalence")
+    shinyjs::hide("SEcalcul")
+    shinyjs::hide("dwnlequivalence")
+    shinyjs::hide("selecttypegraphequivalence")
+    shinyjs::hide("selectniveauequivalence")
+  }else{
+    if(input$selectsiteimpact3 == '0'){
+      shinyjs::hide("plot_equivalence")
+      shinyjs::hide("SEcalcul")
+      shinyjs::hide("dwnlequivalence")
+      shinyjs::hide("selecttypegraphequivalence")
+      shinyjs::hide("selectniveauequivalence")
+    }else{
+      shinyjs::show("plot_equivalence")
+      shinyjs::show("SEcalcul")
+      shinyjs::show("dwnlequivalence")
+      shinyjs::show("selecttypegraphequivalence")
+      shinyjs::show("selectniveauequivalence")
+    }
+  }
+})
+
+observeEvent(input$selectniveauequivalence, {
   if(input$selectniveauequivalence == '1'){
     shinyjs::hide("selecthabitatSE")
     shinyjs::hide("selectspeciesSE")
@@ -52,58 +146,42 @@ showhideSelectSpeciesHabitat <- function(){
     shinyjs::hide("selecthabitatSE")
     shinyjs::show("selectspeciesSE")
   }
-}
-
-observeEvent(input$selecttypegraphequivalence, {
-  if(input$selecttypegraphequivalence == '0'){
-    shinyjs::hide("selectniveauequivalence")
-    shinyjs::hide("selecthabitatSE")
-    shinyjs::hide("selectspeciesSE")
-    shinyjs::hide("plot_equivalence")
-    shinyjs::hide("SEcalcul")
-    shinyjs::hide("dwnlequivalence")
-  }else{
-    shinyjs::show("selectniveauequivalence")
-    shinyjs::show("plot_equivalence")
-    shinyjs::show("SEcalcul")
-    shinyjs::show("dwnlequivalence")
-    showhideSelectSpeciesHabitat()
-    
-  }
-})
-
-observeEvent(input$selectniveauequivalence, {
-  showhideSelectSpeciesHabitat()
 })
 
 output$plot_equivalence <- renderPlotly({
-  if(input$selecttypegraphequivalence != '0'){
-    name <- "SIB no. 1"
-    dat1 <- data.frame(
-      perimetres = ecoval[[name]][[1]],
-      indicateurs = ecoval[[name]][[3]],
-      criteres = factor(ecoval[[name]][[2]], levels=c("Diversité habitat","Diversité Espèce","Patrimonialité_PS","Fonctionnalité","Pression_PS","Connectivité","Représentativité","Patrimonialité_PE","Pression_PE")))
-      # valeurs = as.numeric(ecoval[[name]][[4]]))
+  if(input$selectsiteimpact3 != '0' & input$selectsitecompens3 != '0'){
     # Niveau General
     if(input$selectniveauequivalence == '1'){
-      # Equivalence CT
+      # Etat initial
       if(input$selecttypegraphequivalence == '1'){
-        pertesCT <- 0.
-        #p <- plotly_empty(type = "scatter", mode = "markers")
+        p <- plotly_empty(type = "scatter", mode = "markers")
+        dat1 <- NULL
       }else if(input$selecttypegraphequivalence == '2'){
+      # Equivalence CT
+        p <- plotly_empty(type = "scatter", mode = "markers")
+        dat1 <- NULL
+      }else if(input$selecttypegraphequivalence == '3'){
       # Equivalence LT
         p <- plotly_empty(type = "scatter", mode = "markers")
+        dat1 <- NULL
       }
+      p <- ggplotly(p)
     }else if(input$selectniveauequivalence == '2'){
-    # Niveau Habitat
+      # Niveau Habitat  
       if(input$selecthabitatSE != '0'){
         shinyjs::show("dwnlequivalence")
-        # Equivalence CT
+        # Etat initial
         if(input$selecttypegraphequivalence == '1'){
           p <- plotly_empty(type = "scatter", mode = "markers")
+          dat1 <- NULL
         }else if(input$selecttypegraphequivalence == '2'){
+        # Equivalence CT
+          p <- plotly_empty(type = "scatter", mode = "markers")
+          dat1 <- NULL
+        }else if(input$selecttypegraphequivalence == '3'){
         # Equivalence LT
           p <- plotly_empty(type = "scatter", mode = "markers")
+          dat1 <- NULL
         }
       }else{
         shinyjs::hide("dwnlequivalence")
@@ -112,15 +190,21 @@ output$plot_equivalence <- renderPlotly({
       }
       p <- ggplotly(p)
     }else if(input$selectniveauequivalence == '3'){
-    # Niveau Espece
-    if(input$selectspeciesSE != '0'){
+      # Niveau Espece
+      if(input$selectspeciesSE != '0'){
         shinyjs::show("dwnlequivalence")
-        # Equivalence CT
+        # Etat initial
         if(input$selecttypegraphequivalence == '1'){
           p <- plotly_empty(type = "scatter", mode = "markers")
+          dat1 <- NULL
         }else if(input$selecttypegraphequivalence == '2'){
+        # Equivalence CT
+          p <- plotly_empty(type = "scatter", mode = "markers")
+          dat1 <- NULL
+        }else if(input$selecttypegraphequivalence == '3'){
         # Equivalence LT
           p <- plotly_empty(type = "scatter", mode = "markers")
+          dat1 <- NULL
         }
       }else{
         shinyjs::hide("dwnlequivalence")
@@ -137,36 +221,35 @@ output$plot_equivalence <- renderPlotly({
   }
   p
 })
-# 
-# output$SIcalcul <- DT::renderDataTable({
-#   dat <- datatable(pertes$tableau, rownames = FALSE, options = list(pageLength = dim.data.frame(pertes$tableau)[1], searching = TRUE, dom = 'ft', ordering = FALSE), filter = "top")
-#   return(dat)
-# })
-# 
-# output$dwnlpertes  <- downloadHandler(
-#   filename = function() {
-#     radix <- paste(listsite[as.numeric(input$selectsiteimpact2)+1, 1], '_', sep = "")
-#     if(input$selecttypegraphperte == '1') type <- "Etat initial"
-#     else if(input$selecttypegraphperte == '2') type <- "Pertes CT"
-#     else if(input$selecttypegraphperte == '3') type <- "Pertes LT"
-#     if(input$selectniveauperte == '1'){
-#       niveau <- "Général"
-#       habitat <- ""
-#       species <- ""
-#     }
-#     else if(input$selectniveauperte == '2'){
-#       niveau <- "Habitat_"
-#       species <- ""
-#       habitat <- listhabitat[as.numeric(input$selecthabitatSI2)+1, 1]
-#     }
-#     else if(input$selectniveauperte == '3'){
-#       niveau <- "Espèce_"
-#       habitat <- ""
-#       species <- listspecies[as.numeric(input$selectspeciesSI2)+1, 1]
-#     }
-#     paste(radix, type, '_', niveau, habitat, species, ".csv", sep = "")
-#   },
-#   content = function(file) {
-#     write.csv(pertes$tableau, file, row.names = FALSE)
-#   }
-# )
+
+output$SEcalcul <- DT::renderDataTable({
+  dat <- datatable(equivalence$tableau, rownames = FALSE, options = list(pageLength = dim.data.frame(equivalence$tableau)[1], searching = TRUE, dom = 'ft', ordering = FALSE), filter = "top")
+  return(dat)
+})
+
+output$dwnlequivalence  <- downloadHandler(
+  filename = function() {
+    radix <- paste(listsite[as.numeric(input$selectsiteimpact3)+1, 3], '_', listsite[as.numeric(input$selectsitecompens3)+1, 3], '_', sep = "")
+    if(input$selecttypegraphequivalence == '1') type <- "Equivalence CT"
+    else if(input$selecttypegraphequivalence == '2') type <- "Equivalence LT"
+    if(input$selectniveauequivalence == '1'){
+      niveau <- "Général"
+      habitat <- ""
+      species <- ""
+    }
+    else if(input$selectniveauequivalence == '2'){
+      niveau <- "Habitat_"
+      species <- ""
+      habitat <- listhabitat[as.numeric(input$selecthabitatSE)+1, 3]
+    }
+    else if(input$selectniveauequivalence == '3'){
+      niveau <- "Espèce_"
+      habitat <- ""
+      species <- listspecies[as.numeric(input$selectspeciesSE)+1, 3]
+    }
+    paste(radix, type, '_', niveau, habitat, species, ".csv", sep = "")
+  },
+  content = function(file) {
+    write.csv(equivalence$tableau, file, row.names = FALSE)
+  }
+)

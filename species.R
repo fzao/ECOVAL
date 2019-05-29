@@ -40,7 +40,7 @@ updateListSpecies <- function(name, inplace=FALSE){
   if(inplace) updateSelectInput(session, "selectspecies", choices = showlist, selected = input$selectspecies)
   else updateSelectInput(session, "selectspecies", choices = showlist, selected = showlist[[length(showlist)]])
   # equivalence
-  updateListSpeciesEquivalence()
+  updateListSpeciesSiteEquivalence()
 }
 
 observeEvent(input$newspecies, {
@@ -72,6 +72,8 @@ observeEvent(input$newspecies, {
   updateSelectInput(session, "selectsitecompens", selected = "0")
   updateSelectInput(session, "selectsiteimpact2", selected = "0")
   updateSelectInput(session, "selectsitecompens2", selected = "0")
+  updateSelectInput(session, "selectsiteimpact3", selected = "0")
+  updateSelectInput(session, "selectsitecompens3", selected = "0")
 })
 
 observeEvent(input$deletespecies, {
@@ -100,6 +102,8 @@ observeEvent(input$destroyspecies, {
     updateSelectInput(session, "selectsitecompens", selected = "0")
     updateSelectInput(session, "selectsiteimpact2", selected = "0")
     updateSelectInput(session, "selectsitecompens2", selected = "0")
+    pdateSelectInput(session, "selectsiteimpact3", selected = "0")
+    updateSelectInput(session, "selectsitecompens3", selected = "0")
   }
 })
 

@@ -361,7 +361,9 @@ shinyUI(fluidPage(HTML("<!DOCTYPE html>
                                                                      column(4, align="left", br(), br(), br(), br(), downloadButton("dwnlgains", "TELECHARGER LA TABLE")))
                                                    ),
                                                    tabPanel(HTML('<h4 style="color: #005BBB; ">Equivalence</h4>'), br(),
-                                                            fluidRow(column(2, align="left", selectInput("selecttypegraphequivalence", label = "TYPE DE GRAPHE", choices = list("-" = 0, "Equivalence CT" = 1, "Equivalence LT" = 2), selected = 0)),
+                                                            fluidRow(column(2, align="left", selectInput("selectsiteimpact3", label = "SELECTIONNER LE SITE IMPACT\u00C9", choices = list("-" = 0), selected = 0)),
+                                                                     column(2, align="left", selectInput("selectsitecompens3", label = "SELECTIONNER LE SITE COMPENSATOIRE", choices = list("-" = 0), selected = 0)),
+                                                                     column(2, align="left", selectInput("selecttypegraphequivalence", label = "TYPE DE GRAPHE", choices = list("Equivalence CT" = 1, "Equivalence LT" = 2), selected = 0)),
                                                                      column(2, align="left", selectInput("selectniveauequivalence", label = "NIVEAU", choices = list("Général" = 1, "Habitat" = 2, "Espèce" = 3), selected = 1)),
                                                                      column(2, align="left", selectInput("selecthabitatSE", label = "SELECTIONNER L'HABITAT", choices = list("-" = 0), selected = 0)),
                                                                      column(2, align="left", selectInput("selectspeciesSE", label = "SELECTIONNER L'ESPECE", choices = list("-" = 0), selected = 0))), hr(),
