@@ -169,9 +169,9 @@ output$plot_equivalence <- renderPlotly({
           equivalence = equivalCT)
         p <- ggplot(data=dat1, aes(x=criteres, y=equivalence, fill=indicateurs)) + theme(legend.position="none") + coord_flip() +
           geom_bar(stat="identity", position=position_dodge(), colour="black")
+        dat1["100% compensé"] <- natzero
         dat1["pertes brutes"] <- pertes
         dat1["gains brutes"] <- gains
-        dat1["equivalence nulle"] <- natzero
       }else if(input$selecttypegraphequivalence == '2'){
       # Equivalence LT
         pertes <- as.numeric(ecoval[[nameImp]][[10]]) - as.numeric(ecoval[[nameImp]][[4]])
@@ -187,9 +187,9 @@ output$plot_equivalence <- renderPlotly({
           equivalence = equivalLT)
         p <- ggplot(data=dat1, aes(x=criteres, y=equivalence, fill=indicateurs)) + theme(legend.position="none") + coord_flip() +
           geom_bar(stat="identity", position=position_dodge(), colour="black")
+        dat1["100% compensé"] <- natzero
         dat1["pertes brutes"] <- pertes
         dat1["gains brutes"] <- gains
-        dat1["equivalence nulle"] <- natzero
       }
       p <- ggplotly(p)
     }else if(input$selectniveauequivalence == '2'){
