@@ -152,33 +152,47 @@ output$plot_equivalence <- renderPlotly({
   if(input$selectsiteimpact3 != '0' & input$selectsitecompens3 != '0'){
     # Niveau General
     if(input$selectniveauequivalence == '1'){
-      # Etat initial
+      nameImp <- paste("SIB no.", input$selectsiteimpact3)
+      nameComp <- paste("SCB no.", input$selectsitecompens3)
       if(input$selecttypegraphequivalence == '1'){
-        p <- plotly_empty(type = "scatter", mode = "markers")
-        dat1 <- NULL
-      }else if(input$selecttypegraphequivalence == '2'){
       # Equivalence CT
-        p <- plotly_empty(type = "scatter", mode = "markers")
-        dat1 <- NULL
-      }else if(input$selecttypegraphequivalence == '3'){
+        pertes <- as.numeric(ecoval[[nameImp]][[7]]) - as.numeric(ecoval[[nameImp]][[4]])
+        gains <- as.numeric(ecoval[[nameComp]][[7]]) - as.numeric(ecoval[[nameComp]][[4]])
+        equivalCT <- pertes + gains
+        dat1 <- data.frame(
+          perimetres = ecoval[[nameImp]][[1]],
+          indicateurs = ecoval[[nameImp]][[3]],
+          criteres = factor(ecoval[[nameImp]][[2]], levels=c("Diversité habitat","Diversité Espèce","Patrimonialité_PS","Fonctionnalité","Pression_PS","Connectivité","Représentativité","Patrimonialité_PE","Pression_PE")),
+          equivalence = equivalCT)
+        p <- ggplot(data=dat1, aes(x=criteres, y=equivalence, fill=indicateurs)) + theme(legend.position="none") + coord_flip() +
+          geom_bar(stat="identity", position=position_dodge(), colour="black")
+        dat1["pertes brutes"] <- pertes
+        dat1["gains brutes"] <- gains
+      }else if(input$selecttypegraphequivalence == '2'){
       # Equivalence LT
-        p <- plotly_empty(type = "scatter", mode = "markers")
-        dat1 <- NULL
+        pertes <- as.numeric(ecoval[[nameImp]][[10]]) - as.numeric(ecoval[[nameImp]][[4]])
+        gains <- as.numeric(ecoval[[nameComp]][[10]]) - as.numeric(ecoval[[nameComp]][[4]])
+        equivalLT <- pertes + gains
+        dat1 <- data.frame(
+          perimetres = ecoval[[nameImp]][[1]],
+          indicateurs = ecoval[[nameImp]][[3]],
+          criteres = factor(ecoval[[nameImp]][[2]], levels=c("Diversité habitat","Diversité Espèce","Patrimonialité_PS","Fonctionnalité","Pression_PS","Connectivité","Représentativité","Patrimonialité_PE","Pression_PE")),
+          equivalence = equivalLT)
+        p <- ggplot(data=dat1, aes(x=criteres, y=equivalence, fill=indicateurs)) + theme(legend.position="none") + coord_flip() +
+          geom_bar(stat="identity", position=position_dodge(), colour="black")
+        dat1["pertes brutes"] <- pertes
+        dat1["gains brutes"] <- gains
       }
       p <- ggplotly(p)
     }else if(input$selectniveauequivalence == '2'){
       # Niveau Habitat  
       if(input$selecthabitatSE != '0'){
         shinyjs::show("dwnlequivalence")
-        # Etat initial
         if(input$selecttypegraphequivalence == '1'){
-          p <- plotly_empty(type = "scatter", mode = "markers")
-          dat1 <- NULL
-        }else if(input$selecttypegraphequivalence == '2'){
         # Equivalence CT
           p <- plotly_empty(type = "scatter", mode = "markers")
           dat1 <- NULL
-        }else if(input$selecttypegraphequivalence == '3'){
+        }else if(input$selecttypegraphequivalence == '2'){
         # Equivalence LT
           p <- plotly_empty(type = "scatter", mode = "markers")
           dat1 <- NULL
@@ -193,15 +207,11 @@ output$plot_equivalence <- renderPlotly({
       # Niveau Espece
       if(input$selectspeciesSE != '0'){
         shinyjs::show("dwnlequivalence")
-        # Etat initial
         if(input$selecttypegraphequivalence == '1'){
-          p <- plotly_empty(type = "scatter", mode = "markers")
-          dat1 <- NULL
-        }else if(input$selecttypegraphequivalence == '2'){
         # Equivalence CT
           p <- plotly_empty(type = "scatter", mode = "markers")
           dat1 <- NULL
-        }else if(input$selecttypegraphequivalence == '3'){
+        }else if(input$selecttypegraphequivalence == '2'){
         # Equivalence LT
           p <- plotly_empty(type = "scatter", mode = "markers")
           dat1 <- NULL
