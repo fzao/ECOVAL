@@ -56,12 +56,12 @@ observeEvent(input$newspecies, {
   ecoval[[newname]][2,2] <<- newname #default french name
   # create new DF
   if(ecoval[[newname]][7,2] == '1' | ecoval[[newname]][7,2] == '3'){
-    newname <- paste("DI no.", as.character(numspecies))
-    ecoval[[newname]] <<- model_D
+    name <- paste("DI no.", as.character(numspecies))
+    ecoval[[name]] <<- model_D
   }
   if(ecoval[[newname]][7,2] == '2' | ecoval[[newname]][7,2] == '3'){
-    newname <- paste("DC no.", as.character(numspecies))
-    ecoval[[newname]] <<- model_D
+    name <- paste("DC no.", as.character(numspecies))
+    ecoval[[name]] <<- model_D
   }
   # clean species
   cleanSpecies()

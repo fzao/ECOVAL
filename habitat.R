@@ -58,12 +58,12 @@ observeEvent(input$newhabitat, {
   ecoval[[newname]][1,2] <<- newname #default name
   # create new DF
   if(ecoval[[newname]][8,2] == '1' | ecoval[[newname]][8,2] == '3'){
-    newname <- paste("CI no.", as.character(numhabitat))
-    ecoval[[newname]] <<- model_C
+    name <- paste("CI no.", as.character(numhabitat))
+    ecoval[[name]] <<- model_C
   }
   if(ecoval[[newname]][8,2] == '2' | ecoval[[newname]][8,2] == '3'){
-    newname <- paste("CC no.", as.character(numhabitat))
-    ecoval[[newname]] <<- model_C
+    name <- paste("CC no.", as.character(numhabitat))
+    ecoval[[name]] <<- model_C
   }
   # clean habitat
   cleanHabitat()
