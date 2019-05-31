@@ -159,6 +159,9 @@ output$plot_equivalence <- renderPlotly({
         pertes <- as.numeric(ecoval[[nameImp]][[7]]) - as.numeric(ecoval[[nameImp]][[4]])
         gains <- as.numeric(ecoval[[nameComp]][[7]]) - as.numeric(ecoval[[nameComp]][[4]])
         equivalCT <- pertes + gains
+        natzero <- (equivalCT == 0) & (pertes != 0)
+        natzero[natzero==TRUE] <- '*'
+        natzero[natzero==FALSE] <- ''
         dat1 <- data.frame(
           perimetres = ecoval[[nameImp]][[1]],
           indicateurs = ecoval[[nameImp]][[3]],
@@ -168,11 +171,15 @@ output$plot_equivalence <- renderPlotly({
           geom_bar(stat="identity", position=position_dodge(), colour="black")
         dat1["pertes brutes"] <- pertes
         dat1["gains brutes"] <- gains
+        dat1["equivalence nulle"] <- natzero
       }else if(input$selecttypegraphequivalence == '2'){
       # Equivalence LT
         pertes <- as.numeric(ecoval[[nameImp]][[10]]) - as.numeric(ecoval[[nameImp]][[4]])
         gains <- as.numeric(ecoval[[nameComp]][[10]]) - as.numeric(ecoval[[nameComp]][[4]])
         equivalLT <- pertes + gains
+        natzero <- (equivalLT == 0) & (pertes != 0)
+        natzero[natzero==TRUE] <- '*'
+        natzero[natzero==FALSE] <- ''
         dat1 <- data.frame(
           perimetres = ecoval[[nameImp]][[1]],
           indicateurs = ecoval[[nameImp]][[3]],
@@ -182,6 +189,7 @@ output$plot_equivalence <- renderPlotly({
           geom_bar(stat="identity", position=position_dodge(), colour="black")
         dat1["pertes brutes"] <- pertes
         dat1["gains brutes"] <- gains
+        dat1["equivalence nulle"] <- natzero
       }
       p <- ggplotly(p)
     }else if(input$selectniveauequivalence == '2'){
