@@ -163,10 +163,10 @@ output$plot_equivalence <- renderPlotly({
       nameComp <- paste("SCB no.", input$selectsitecompens3)
       if(input$selecttypegraphequivalence == '1'){
       # Equivalence CT
-        pertes <- as.numeric(ecoval[[nameImp]][[7]]) - as.numeric(ecoval[[nameImp]][[4]])
-        gains <- as.numeric(ecoval[[nameComp]][[7]]) - as.numeric(ecoval[[nameComp]][[4]])
-        equivalCT <- pertes + gains
-        natzero <- (equivalCT == 0) & (pertes != 0)
+        moins <- as.numeric(ecoval[[nameImp]][[7]]) - as.numeric(ecoval[[nameImp]][[4]])
+        plus <- as.numeric(ecoval[[nameComp]][[7]]) - as.numeric(ecoval[[nameComp]][[4]])
+        equivalCT <- moins + plus
+        natzero <- (equivalCT == 0) & (moins != 0)
         natzero[natzero==TRUE] <- '*'
         natzero[natzero==FALSE] <- ''
         dat1 <- data.frame(
@@ -177,14 +177,14 @@ output$plot_equivalence <- renderPlotly({
         p <- ggplot(data=dat1, aes(x=criteres, y=equivalence, fill=indicateurs)) + theme(legend.position="none") + coord_flip() +
           geom_bar(stat="identity", position=position_dodge(), colour="black")
         dat1["100% compensé"] <- natzero
-        dat1["pertes brutes"] <- pertes
-        dat1["gains brutes"] <- gains
+        dat1["pertes brutes"] <- moins
+        dat1["gains brutes"] <- plus
       }else if(input$selecttypegraphequivalence == '2'){
       # Equivalence LT
-        pertes <- as.numeric(ecoval[[nameImp]][[10]]) - as.numeric(ecoval[[nameImp]][[4]])
-        gains <- as.numeric(ecoval[[nameComp]][[10]]) - as.numeric(ecoval[[nameComp]][[4]])
-        equivalLT <- pertes + gains
-        natzero <- (equivalLT == 0) & (pertes != 0)
+        moins <- as.numeric(ecoval[[nameImp]][[10]]) - as.numeric(ecoval[[nameImp]][[4]])
+        plus <- as.numeric(ecoval[[nameComp]][[10]]) - as.numeric(ecoval[[nameComp]][[4]])
+        equivalLT <- moins + plus
+        natzero <- (equivalLT == 0) & (moins != 0)
         natzero[natzero==TRUE] <- '*'
         natzero[natzero==FALSE] <- ''
         dat1 <- data.frame(
@@ -195,42 +195,136 @@ output$plot_equivalence <- renderPlotly({
         p <- ggplot(data=dat1, aes(x=criteres, y=equivalence, fill=indicateurs)) + theme(legend.position="none") + coord_flip() +
           geom_bar(stat="identity", position=position_dodge(), colour="black")
         dat1["100% compensé"] <- natzero
-        dat1["pertes brutes"] <- pertes
-        dat1["gains brutes"] <- gains
+        dat1["pertes brutes"] <- moins
+        dat1["gains brutes"] <- plus
       }
       p <- ggplotly(p, width=500, height=1000)
     }else if(input$selectniveauequivalence == '2'){
-      # Niveau Habitat  
+      # Niveau Habitat
       if(input$selecthabitatSE != '0'){
         shinyjs::show("dwnlequivalence")
+        numHabitat <- as.numeric(input$selecthabitatSE)
+        nameHabitat <- listhabitat$name[numHabitat+1]
+        indicehabitat <- which(listhabitat$name == nameHabitat, arr.ind = TRUE)
+        nameI <- paste("Site no.", input$selectsiteimpact3) # Impact
+        nameC <- paste("Site no.", input$selectsitecompens3) # Compens
+        moins <- c(rep(0., dim(model_C)[1]))
+        plus <- c(rep(0., dim(model_C)[1]))
         if(input$selecttypegraphequivalence == '1'){
         # Equivalence CT
-          p <- plotly_empty(type = "scatter", mode = "markers")
-          dat1 <- NULL
+          for(i in indicehabitat){
+            hname <- listhabitat$habitat[i]
+            if(exists(hname, where = ecoval)){
+              if(ecoval[[hname]][7,2] == ecoval[[nameI]][12,2]){ # Pertes
+                nameImp <- paste("CI no.", as.character(listhabitat$index[i]))
+                nameIC <- nameImp
+                moins <- as.numeric(ecoval[[nameImp]][[7]]) - as.numeric(ecoval[[nameImp]][[4]])
+              }
+              if(ecoval[[hname]][7,2] == ecoval[[nameC]][12,2]){ # Gains
+                nameComp <- paste("CC no.", as.character(listhabitat$index[i]))
+                nameIC <- nameComp
+                plus <- as.numeric(ecoval[[nameComp]][[7]]) - as.numeric(ecoval[[nameComp]][[4]])
+              }
+            }
+          }
         }else if(input$selecttypegraphequivalence == '2'){
         # Equivalence LT
-          p <- plotly_empty(type = "scatter", mode = "markers")
-          dat1 <- NULL
+          for(i in indicehabitat){
+            hname <- listhabitat$habitat[i]
+            if(exists(hname, where = ecoval)){
+              if(ecoval[[hname]][7,2] == ecoval[[nameI]][12,2]){ # Pertes
+                nameImp <- paste("CI no.", as.character(listhabitat$index[i]))
+                nameIC <- nameImp
+                moins <- as.numeric(ecoval[[nameImp]][[10]]) - as.numeric(ecoval[[nameImp]][[4]])
+              }
+              if(ecoval[[hname]][7,2] == ecoval[[nameC]][12,2]){ # Gains
+                nameComp <- paste("CC no.", as.character(listhabitat$index[i]))
+                nameIC <- nameComp
+                plus <- as.numeric(ecoval[[nameComp]][[10]]) - as.numeric(ecoval[[nameComp]][[4]])
+              }
+            }
+          }
         }
+        equival <- moins + plus
+        natzero <- (equival == 0) & (moins != 0)
+        natzero[natzero==TRUE] <- '*'
+        natzero[natzero==FALSE] <- ''
+        dat1 <- data.frame(
+          perimetres = ecoval[[nameIC]][[1]],
+          indicateurs = ecoval[[nameIC]][[3]],
+          criteres = factor(ecoval[[nameIC]][[2]], levels=c("Diversité espèce", "Fonctionnalité", "Structure", "Pression", "Connectivité", "Représentativité")),
+          equivalence = equival)
+        p <- ggplot(data=dat1, aes(x=criteres, y=equivalence, fill=indicateurs)) + theme(legend.position="none") + coord_flip() +
+          geom_bar(stat="identity", position=position_dodge(), colour="black")
+        dat1["100% compensé"] <- natzero
+        dat1["pertes brutes"] <- moins
+        dat1["gains brutes"] <- plus
       }else{
         shinyjs::hide("dwnlequivalence")
         dat1 <- NULL
         p <- plotly_empty(type = "scatter", mode = "markers")
       }
-      p <- ggplotly(p)
+      p <- ggplotly(p, width=500, height=1000)
     }else if(input$selectniveauequivalence == '3'){
       # Niveau Espece
       if(input$selectspeciesSE != '0'){
         shinyjs::show("dwnlequivalence")
+        numSpecies <- as.numeric(input$selectspeciesSE)
+        nameSpecies <- listspecies$name[numSpecies+1]
+        indicespecies <- which(listspecies$name == nameSpecies, arr.ind = TRUE)
+        nameI <- paste("Site no.", input$selectsiteimpact3) # Impact
+        nameC <- paste("Site no.", input$selectsitecompens3) # Compens
+        moins <- c(rep(0., dim(model_D)[1]))
+        plus <- c(rep(0., dim(model_D)[1]))
         if(input$selecttypegraphequivalence == '1'){
         # Equivalence CT
-          p <- plotly_empty(type = "scatter", mode = "markers")
-          dat1 <- NULL
+          for(i in indicespecies){
+            sname <- listspecies$species[i]
+            if(exists(sname, where = ecoval)){
+              if(ecoval[[sname]][6,2] == ecoval[[nameI]][12,2]){ # Pertes
+                nameImp <- paste("DI no.", as.character(listspecies$index[i]))
+                nameIC <- nameImp
+                moins <- as.numeric(ecoval[[nameImp]][[7]]) - as.numeric(ecoval[[nameImp]][[4]])
+              }
+              if(ecoval[[sname]][6,2] == ecoval[[nameC]][12,2]){ # Gains
+                nameComp <- paste("DC no.", as.character(listspecies$index[i]))
+                nameIC <- nameComp
+                plus <- as.numeric(ecoval[[nameComp]][[7]]) - as.numeric(ecoval[[nameComp]][[4]])
+              }
+            }
+          }
         }else if(input$selecttypegraphequivalence == '2'){
         # Equivalence LT
-          p <- plotly_empty(type = "scatter", mode = "markers")
-          dat1 <- NULL
+          for(i in indicespecies){
+            sname <- listspecies$species[i]
+            if(exists(sname, where = ecoval)){
+              if(ecoval[[sname]][6,2] == ecoval[[nameI]][12,2]){ # Pertes
+                nameImp <- paste("DI no.", as.character(listspecies$index[i]))
+                nameIC <- nameImp
+                moins <- as.numeric(ecoval[[nameImp]][[10]]) - as.numeric(ecoval[[nameImp]][[4]])
+              }
+              if(ecoval[[sname]][6,2] == ecoval[[nameC]][12,2]){ # Gains
+                nameComp <- paste("DC no.", as.character(listspecies$index[i]))
+                nameIC <- nameComp
+                plus <- as.numeric(ecoval[[nameComp]][[10]]) - as.numeric(ecoval[[nameComp]][[4]])
+              }
+            }
+          }
         }
+        equival <- moins + plus
+        natzero <- (equival == 0) & (moins != 0)
+        natzero[natzero==TRUE] <- '*'
+        natzero[natzero==FALSE] <- ''
+        dat1 <- data.frame(
+          perimetres = ecoval[[nameIC]][[1]],
+          indicateurs = ecoval[[nameIC]][[3]],
+          criteres = factor(ecoval[[nameIC]][[2]], levels=c("Diversité espèce", "Fonctionnalité", "Pression", "Connectivité", "Représentativité")),
+          equivalence = equival)
+        p <- ggplot(data=dat1, aes(x=criteres, y=equivalence, fill=indicateurs)) + theme(legend.position="none") + coord_flip() +
+          geom_bar(stat="identity", position=position_dodge(), colour="black")
+        dat1["100% compensé"] <- natzero
+        dat1["pertes brutes"] <- moins
+        dat1["gains brutes"] <- plus
       }else{
         shinyjs::hide("dwnlequivalence")
         dat1 <- NULL
