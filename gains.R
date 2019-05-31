@@ -58,6 +58,7 @@ updateListSpeciesSiteCompens2 <- function(){
 observeEvent(input$selectsitecompens2, {
   updateListHabitatSiteCompens2()
   updateListSpeciesSiteCompens2()
+  updateTabsetPanel(session, "resultgains", selected = "graphe")
   if(input$selectsitecompens2 == '0'){
     shinyjs::hide("plot_gains")
     shinyjs::hide("SCcalcul")
@@ -74,6 +75,7 @@ observeEvent(input$selectsitecompens2, {
 })
 
 observeEvent(input$selectniveaugain, {
+  updateTabsetPanel(session, "resultgains", selected = "graphe")
   if(input$selectniveaugain == '1'){
     shinyjs::hide("selecthabitatSC2")
     shinyjs::hide("selectspeciesSC2")
@@ -85,6 +87,10 @@ observeEvent(input$selectniveaugain, {
     shinyjs::show("selectspeciesSC2")
   }
 })
+
+observeEvent(input$selecttypegraphgain, updateTabsetPanel(session, "resultgains", selected = "graphe"))
+observeEvent(input$selecthabitatSC2, updateTabsetPanel(session, "resultgains", selected = "graphe"))
+observeEvent(input$selectspeciesSC2, updateTabsetPanel(session, "resultgains", selected = "graphe"))
 
 output$plot_gains <- renderPlotly({
   if(input$selectsitecompens2 != '0'){
@@ -100,6 +106,7 @@ output$plot_gains <- renderPlotly({
           valeurs = as.numeric(ecoval[[name]][[4]]))
         p <- ggplot(data=dat1, aes(x=criteres, y=valeurs, fill=indicateurs)) + theme(legend.position="none") +
           geom_bar(stat="identity", position=position_dodge(), colour="black")
+        p <- ggplotly(p)
       }else if(input$selecttypegraphgain == '2'){
         # Gains CT
         dat1 <- data.frame(
@@ -112,6 +119,7 @@ output$plot_gains <- renderPlotly({
         dat1$incertitudes <- ecoval[[name]][[6]]
         dat1["gains brutes"] <- as.numeric(ecoval[[name]][[7]]) - as.numeric(ecoval[[name]][[4]])
         dat1["gains relatifs"] <- as.numeric(ecoval[[name]][[7]]) - as.numeric(ecoval[[name]][[4]]) * 100 / as.numeric(ecoval[[name]][[4]])
+        p <- ggplotly(p, width=500, height=1000)
       }else if(input$selecttypegraphgain == '3'){
         # Gains LT
         dat1 <- data.frame(
@@ -124,8 +132,8 @@ output$plot_gains <- renderPlotly({
         dat1$incertitudes <- ecoval[[name]][[9]]
         dat1["gains brutes"] <- as.numeric(ecoval[[name]][[10]]) - as.numeric(ecoval[[name]][[4]])
         dat1["gains relatifs"] <- as.numeric(ecoval[[name]][[10]]) - as.numeric(ecoval[[name]][[4]]) * 100 / as.numeric(ecoval[[name]][[4]])
+        p <- ggplotly(p, width=500, height=1000)
       }
-      p <- ggplotly(p)
     }else if(input$selectniveaugain == '2'){
       # Niveau Habitat  
       if(input$selecthabitatSC2 != '0'){
@@ -140,6 +148,7 @@ output$plot_gains <- renderPlotly({
             valeurs = as.numeric(ecoval[[name]][[4]]))
           p <- ggplot(data=dat1, aes(x=criteres, y=valeurs, fill=indicateurs)) + theme(legend.position="none") +
             geom_bar(stat="identity", position=position_dodge(), colour="black")
+          p <- ggplotly(p)
         }else if(input$selecttypegraphgain == '2'){
           # Gains CT
           dat1 <- data.frame(
@@ -152,6 +161,7 @@ output$plot_gains <- renderPlotly({
           dat1$incertitudes <- ecoval[[name]][[6]]
           dat1["gains brutes"] <- as.numeric(ecoval[[name]][[7]]) - as.numeric(ecoval[[name]][[4]])
           dat1["gains relatifs"] <- as.numeric(ecoval[[name]][[7]]) - as.numeric(ecoval[[name]][[4]]) * 100 / as.numeric(ecoval[[name]][[4]])
+          p <- ggplotly(p, width=500, height=1000)
         }else if(input$selecttypegraphgain == '3'){
           # Gains LT
           dat1 <- data.frame(
@@ -164,13 +174,13 @@ output$plot_gains <- renderPlotly({
           dat1$incertitudes <- ecoval[[name]][[9]]
           dat1["gains brutes"] <- as.numeric(ecoval[[name]][[10]]) - as.numeric(ecoval[[name]][[4]])
           dat1["gains relatifs"] <- as.numeric(ecoval[[name]][[10]]) - as.numeric(ecoval[[name]][[4]]) * 100 / as.numeric(ecoval[[name]][[4]])
+          p <- ggplotly(p, width=500, height=1000)
         }
       }else{
         shinyjs::hide("dwnlgains")
         dat1 <- NULL
         p <- plotly_empty(type = "scatter", mode = "markers")
       }
-      p <- ggplotly(p)
     }else if(input$selectniveaugain == '3'){
       # Niveau Espece
       if(input$selectspeciesSC2 != '0'){
@@ -185,6 +195,7 @@ output$plot_gains <- renderPlotly({
             valeurs = as.numeric(ecoval[[name]][[4]]))
           p <- ggplot(data=dat1, aes(x=criteres, y=valeurs, fill=indicateurs)) + theme(legend.position="none") +
             geom_bar(stat="identity", position=position_dodge(), colour="black")
+          p <- ggplotly(p)
         }else if(input$selecttypegraphgain == '2'){
           # Gains CT
           dat1 <- data.frame(
@@ -197,6 +208,7 @@ output$plot_gains <- renderPlotly({
           dat1$incertitudes <- ecoval[[name]][[6]]
           dat1["gains brutes"] <- as.numeric(ecoval[[name]][[7]]) - as.numeric(ecoval[[name]][[4]])
           dat1["gains relatifs"] <- as.numeric(ecoval[[name]][[7]]) - as.numeric(ecoval[[name]][[4]]) * 100 / as.numeric(ecoval[[name]][[4]])
+          p <- ggplotly(p, width=500, height=1000)
         }else if(input$selecttypegraphgain == '3'){
           # Gains LT
           dat1 <- data.frame(
@@ -209,13 +221,13 @@ output$plot_gains <- renderPlotly({
           dat1$incertitudes <- ecoval[[name]][[9]]
           dat1["gains brutes"] <- as.numeric(ecoval[[name]][[10]]) - as.numeric(ecoval[[name]][[4]])
           dat1["gains relatifs"] <- as.numeric(ecoval[[name]][[10]]) - as.numeric(ecoval[[name]][[4]]) * 100 / as.numeric(ecoval[[name]][[4]])
+          p <- ggplotly(p, width=500, height=1000)
         }
       }else{
         shinyjs::hide("dwnlgains")
         dat1 <- NULL
         p <- plotly_empty(type = "scatter", mode = "markers")
       }
-      p <- ggplotly(p)
     }
     gains$tableau <- dat1
   }else{
@@ -230,7 +242,6 @@ output$SCcalcul <- DT::renderDataTable({
   dat <- datatable(gains$tableau, rownames = FALSE, options = list(pageLength = dim.data.frame(gains$tableau)[1], searching = TRUE, dom = 'ft', ordering = FALSE), filter = "top")
   return(dat)
 })
-
 
 output$dwnlgains  <- downloadHandler(
   filename = function() {

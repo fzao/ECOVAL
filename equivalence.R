@@ -86,6 +86,7 @@ updateListSpeciesSiteEquivalence <- function(){
 observeEvent(input$selectsiteimpact3, {
   updateListHabitatSiteEquivalence()
   updateListSpeciesSiteEquivalence()
+  updateTabsetPanel(session, "resultequivalence", selected = "graphe")
   if(input$selectsiteimpact3 == '0'){
     shinyjs::hide("plot_equivalence")
     shinyjs::hide("SEcalcul")
@@ -112,6 +113,7 @@ observeEvent(input$selectsiteimpact3, {
 observeEvent(input$selectsitecompens3, {
   updateListHabitatSiteEquivalence()
   updateListSpeciesSiteEquivalence()
+  updateTabsetPanel(session, "resultequivalence", selected = "graphe")
   if(input$selectsitecompens3 == '0'){
     shinyjs::hide("plot_equivalence")
     shinyjs::hide("SEcalcul")
@@ -136,6 +138,7 @@ observeEvent(input$selectsitecompens3, {
 })
 
 observeEvent(input$selectniveauequivalence, {
+  updateTabsetPanel(session, "resultequivalence", selected = "graphe")
   if(input$selectniveauequivalence == '1'){
     shinyjs::hide("selecthabitatSE")
     shinyjs::hide("selectspeciesSE")
@@ -147,6 +150,10 @@ observeEvent(input$selectniveauequivalence, {
     shinyjs::show("selectspeciesSE")
   }
 })
+
+observeEvent(input$selecttypegraphequivalence, updateTabsetPanel(session, "resultequivalence", selected = "graphe"))
+observeEvent(input$selecthabitatSE, updateTabsetPanel(session, "resultequivalence", selected = "graphe"))
+observeEvent(input$selectspeciesSE, updateTabsetPanel(session, "resultequivalence", selected = "graphe"))
 
 output$plot_equivalence <- renderPlotly({
   if(input$selectsiteimpact3 != '0' & input$selectsitecompens3 != '0'){
@@ -191,7 +198,7 @@ output$plot_equivalence <- renderPlotly({
         dat1["pertes brutes"] <- pertes
         dat1["gains brutes"] <- gains
       }
-      p <- ggplotly(p)
+      p <- ggplotly(p, width=500, height=1000)
     }else if(input$selectniveauequivalence == '2'){
       # Niveau Habitat  
       if(input$selecthabitatSE != '0'){
@@ -229,7 +236,7 @@ output$plot_equivalence <- renderPlotly({
         dat1 <- NULL
         p <- plotly_empty(type = "scatter", mode = "markers")
       }
-      p <- ggplotly(p)
+      p <- ggplotly(p, width=500, height=1000)
     }
     equivalence$tableau <- dat1
   }else{

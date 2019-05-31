@@ -58,6 +58,7 @@ updateListSpeciesSiteImpact2 <- function(){
 observeEvent(input$selectsiteimpact2, {
   updateListHabitatSiteImpact2()
   updateListSpeciesSiteImpact2()
+  updateTabsetPanel(session, "resultpertes", selected = "graphe")
   if(input$selectsiteimpact2 == '0'){
     shinyjs::hide("plot_pertes")
     shinyjs::hide("SIcalcul")
@@ -74,6 +75,7 @@ observeEvent(input$selectsiteimpact2, {
 })
 
 observeEvent(input$selectniveauperte, {
+  updateTabsetPanel(session, "resultpertes", selected = "graphe")
   if(input$selectniveauperte == '1'){
     shinyjs::hide("selecthabitatSI2")
     shinyjs::hide("selectspeciesSI2")
@@ -85,6 +87,10 @@ observeEvent(input$selectniveauperte, {
     shinyjs::show("selectspeciesSI2")
   }
 })
+
+observeEvent(input$selecttypegraphperte, updateTabsetPanel(session, "resultpertes", selected = "graphe"))
+observeEvent(input$selecthabitatSI2, updateTabsetPanel(session, "resultpertes", selected = "graphe"))
+observeEvent(input$selectspeciesSI2, updateTabsetPanel(session, "resultpertes", selected = "graphe"))
 
 output$plot_pertes <- renderPlotly({
   if(input$selectsiteimpact2 != '0'){
@@ -115,6 +121,7 @@ output$plot_pertes <- renderPlotly({
           theme(legend.position='none')+
           facet_grid(.~criteres, scales = "free", space = "free")+
           theme (axis.text.x = element_text(colour="white"))
+        p <- ggplotly(p)
       }else if(input$selecttypegraphperte == '2'){
         # Pertes CT
         dat1 <- data.frame(
@@ -127,6 +134,7 @@ output$plot_pertes <- renderPlotly({
         dat1$incertitudes <- ecoval[[name]][[6]]
         dat1["pertes brutes"] <- as.numeric(ecoval[[name]][[7]]) - as.numeric(ecoval[[name]][[4]])
         dat1["pertes relatives"] <- as.numeric(ecoval[[name]][[7]]) - as.numeric(ecoval[[name]][[4]]) * 100 / as.numeric(ecoval[[name]][[4]])
+        p <- ggplotly(p, width=500, height=1000)
       }else if(input$selecttypegraphperte == '3'){
         # Pertes LT
         dat1 <- data.frame(
@@ -139,8 +147,8 @@ output$plot_pertes <- renderPlotly({
         dat1$incertitudes <- ecoval[[name]][[9]]
         dat1["pertes brutes"] <- as.numeric(ecoval[[name]][[10]]) - as.numeric(ecoval[[name]][[4]])
         dat1["pertes relatives"] <- as.numeric(ecoval[[name]][[10]]) - as.numeric(ecoval[[name]][[4]]) * 100 / as.numeric(ecoval[[name]][[4]])
+        p <- ggplotly(p, width=500, height=1000)
       }
-      p <- ggplotly(p)
     }else if(input$selectniveauperte == '2'){
       # Niveau Habitat  
       if(input$selecthabitatSI2 != '0'){
@@ -155,6 +163,7 @@ output$plot_pertes <- renderPlotly({
             valeurs = as.numeric(ecoval[[name]][[4]]))
           p <- ggplot(data=dat1, aes(x=criteres, y=valeurs, fill=indicateurs)) + theme(legend.position="none") +
             geom_bar(stat="identity", position=position_dodge(), colour="black")
+          p <- ggplotly(p)
         }else if(input$selecttypegraphperte == '2'){
         # Pertes CT
           dat1 <- data.frame(
@@ -167,6 +176,7 @@ output$plot_pertes <- renderPlotly({
           dat1$incertitudes <- ecoval[[name]][[6]]
           dat1["pertes brutes"] <- as.numeric(ecoval[[name]][[7]]) - as.numeric(ecoval[[name]][[4]])
           dat1["pertes relatives"] <- as.numeric(ecoval[[name]][[7]]) - as.numeric(ecoval[[name]][[4]]) * 100 / as.numeric(ecoval[[name]][[4]])
+          p <- ggplotly(p, width=500, height=1000)
         }else if(input$selecttypegraphperte == '3'){
         # Pertes LT
           dat1 <- data.frame(
@@ -179,13 +189,13 @@ output$plot_pertes <- renderPlotly({
           dat1$incertitudes <- ecoval[[name]][[9]]
           dat1["pertes brutes"] <- as.numeric(ecoval[[name]][[10]]) - as.numeric(ecoval[[name]][[4]])
           dat1["pertes relatives"] <- as.numeric(ecoval[[name]][[10]]) - as.numeric(ecoval[[name]][[4]]) * 100 / as.numeric(ecoval[[name]][[4]])
+          p <- ggplotly(p, width=500, height=1000)
         }
       }else{
         shinyjs::hide("dwnlpertes")
         dat1 <- NULL
         p <- plotly_empty(type = "scatter", mode = "markers")
       }
-      p <- ggplotly(p)
     }else if(input$selectniveauperte == '3'){
       # Niveau Espece
       if(input$selectspeciesSI2 != '0'){
@@ -200,6 +210,7 @@ output$plot_pertes <- renderPlotly({
             valeurs = as.numeric(ecoval[[name]][[4]]))
           p <- ggplot(data=dat1, aes(x=criteres, y=valeurs, fill=indicateurs)) + theme(legend.position="none") +
             geom_bar(stat="identity", position=position_dodge(), colour="black")
+          p <- ggplotly(p)
         }else if(input$selecttypegraphperte == '2'){
           # Pertes CT
           dat1 <- data.frame(
@@ -212,6 +223,7 @@ output$plot_pertes <- renderPlotly({
           dat1$incertitudes <- ecoval[[name]][[6]]
           dat1["pertes brutes"] <- as.numeric(ecoval[[name]][[7]]) - as.numeric(ecoval[[name]][[4]])
           dat1["pertes relatives"] <- as.numeric(ecoval[[name]][[7]]) - as.numeric(ecoval[[name]][[4]]) * 100 / as.numeric(ecoval[[name]][[4]])
+          p <- ggplotly(p, width=500, height=1000)
         }else if(input$selecttypegraphperte == '3'){
           # Pertes LT
           dat1 <- data.frame(
@@ -224,13 +236,13 @@ output$plot_pertes <- renderPlotly({
           dat1$incertitudes <- ecoval[[name]][[9]]
           dat1["pertes brutes"] <- as.numeric(ecoval[[name]][[10]]) - as.numeric(ecoval[[name]][[4]])
           dat1["pertes relatives"] <- as.numeric(ecoval[[name]][[10]]) - as.numeric(ecoval[[name]][[4]]) * 100 / as.numeric(ecoval[[name]][[4]])
+          p <- ggplotly(p, width=500, height=1000)
         }
       }else{
         shinyjs::hide("dwnlpertes")
         dat1 <- NULL
         p <- plotly_empty(type = "scatter", mode = "markers")
       }
-      p <- ggplotly(p)
     }
     pertes$tableau <- dat1
   }else{
