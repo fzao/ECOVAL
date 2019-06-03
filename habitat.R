@@ -76,6 +76,8 @@ observeEvent(input$newhabitat, {
   updateSelectInput(session, "selectsitecompens2", selected = "0")
   updateSelectInput(session, "selectsiteimpact3", selected = "0")
   updateSelectInput(session, "selectsitecompens3", selected = "0")
+  updateSelectInput(session, "selectsiteimpact4", selected = "0")
+  updateSelectInput(session, "selectsitecompens4", selected = "0")
 })
 
 observeEvent(input$deletehabitat, {
@@ -106,6 +108,8 @@ observeEvent(input$destroyhabitat, {
     updateSelectInput(session, "selectsitecompens2", selected = "0")
     updateSelectInput(session, "selectsiteimpact3", selected = "0")
     updateSelectInput(session, "selectsitecompens3", selected = "0")
+    updateSelectInput(session, "selectsiteimpact4", selected = "0")
+    updateSelectInput(session, "selectsitecompens4", selected = "0")
   }
 })
 

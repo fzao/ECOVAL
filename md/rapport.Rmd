@@ -1,0 +1,21 @@
+---
+title: "Synthèse ECOVAL"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+# projet -- `r input$projectname`
+
+```{r filename, include=FALSE}
+inFile <- input$userfile
+fileName <- inFile$name
+```
+
+* Date : `r format(input$date, "%d %m %Y")`
+* Contexte : `r input$projectcontext`
+* Fichier : `r fileName`
+
+_Rapport généré le_ `r format(Sys.time(), "%a %d %b %Y %H:%M:%S")`

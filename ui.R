@@ -21,6 +21,7 @@ library(plotly)
 library(xlsx)
 library(DT)
 library(leaflet)
+library(rmarkdown)
 
 Species <- readRDS("model/Species_names.rds")
 
@@ -378,7 +379,10 @@ shinyUI(fluidPage(HTML("<!DOCTYPE html>
                               ),
                               # FICHE DE SYNTHESE ----------------------------------------------
                               tabPanel(value="synth", HTML('<h4 style="color: #005BBB; "><b>Synthèse</b></h4>'), br(),
-                                       DT::dataTableOutput('synthtab')
+                                       fluidRow(column(2, selectInput("selectsiteimpact4", label = "SELECTIONNER LE SITE IMPACT\u00C9", choices = list("-" = 0), selected = 0)),
+                                                column(2, align="left", selectInput("selectsitecompens4", label = "SELECTIONNER LE SITE COMPENSATOIRE", choices = list("-" = 0), selected = 0))), hr(),
+                                       fluidRow(column(2, align="left", radioButtons('format', 'Format du document', c('HTML', 'PDF', 'Word'), inline = TRUE))),
+                                       fluidRow(column(2, align="left", downloadButton("genere", "Générer un rapport")))
                               ),
                               # A PROPOS ----------------------------------------------
                               tabPanel(value="propos", HTML('<h4 style="color: #005BBB; "><b>A propos</b></h4>'))

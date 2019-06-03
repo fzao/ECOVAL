@@ -22,6 +22,7 @@ shinyServer(function(input, output, session) {
   source('species.R', local = TRUE)
   source('habitat.R', local = TRUE)
   source('init.R', local = TRUE)
+  source('synthese.R', local = TRUE)
   
   observeEvent(input$redir1, {
     updateTabsetPanel(session, "tabs", selected = "projet")

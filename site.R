@@ -651,9 +651,11 @@ updateListSiteImpactCompens <- function(){
   updateSelectInput(session, "selectsiteimpact", choices = showlistimpact, selected = "0") # Projet
   updateSelectInput(session, "selectsiteimpact2", choices = showlistimpact, selected = "0") # Gains/Pertes
   updateSelectInput(session, "selectsiteimpact3", choices = showlistimpact, selected = "0") # Equivalence
+  updateSelectInput(session, "selectsiteimpact4", choices = showlistimpact, selected = "0") # Synthese
   updateSelectInput(session, "selectsitecompens", choices = showlistcompens, selected = "0") # Projet
   updateSelectInput(session, "selectsitecompens2", choices = showlistcompens, selected = "0") # Gains/Pertes
   updateSelectInput(session, "selectsitecompens3", choices = showlistcompens, selected = "0") # Equivalence
+  updateSelectInput(session, "selectsitecompens4", choices = showlistcompens, selected = "0") # Synthese
 }
 
 newSICX <- function(numsite){
