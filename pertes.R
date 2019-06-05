@@ -112,15 +112,17 @@ output$plot_pertes <- renderPlotly({
                       "Connectivité" = "#AF76C4",
                       "Représentativité" = "#68DDEA",
                       "Patrimonialite_PE" = "#842D2A",
-                      "Pression_PE" = "#DE9830")
+                      "Pression_PE" = "#DE9830",
+                      "Struture" = "grey")
         
         p <- ggplot(data=dat1, aes(x=indicateurs, y=valeurs)) +
           geom_bar(stat="identity", width=0.5, aes(fill=criteres))+
           theme_bw()+
           scale_fill_manual(values=couleurs)+
+          geom_text(aes(label=valeurs,  hjust="center",vjust="bottom", y=valeurs+2))+
           theme(legend.position='none')+
-          facet_grid(.~criteres, scales = "free", space = "free")+
-          theme (axis.text.x = element_text(colour="white"))
+          facet_grid(.~criteres, scales = "free", space ="free")+
+          theme (axis.text.x = element_text(colour="black", angle = 45, size = 8))
         p <- ggplotly(p)
       }else if(input$selecttypegraphperte == '2'){
         # Pertes CT
@@ -161,8 +163,25 @@ output$plot_pertes <- renderPlotly({
             indicateurs = ecoval[[name]][[3]],
             criteres = factor(ecoval[[name]][[2]], levels=c("Diversité espèce", "Fonctionnalité", "Structure", "Pression", "Connectivité", "Représentativité")),
             valeurs = as.numeric(ecoval[[name]][[4]]))
-          p <- ggplot(data=dat1, aes(x=criteres, y=valeurs, fill=indicateurs)) + theme(legend.position="none") +
-            geom_bar(stat="identity", position=position_dodge(), colour="black")
+          couleurs <- c("Diversité habitat" = "#83D072",
+                        "Diversité Espèce" ="#1E6218",
+                        "Patrimonialité_PS" = "#9D403E",
+                        "Fonctionnalité" = "#4894DC",
+                        "Pression_PS" = "#E6A936",
+                        "Connectivité" = "#AF76C4",
+                        "Représentativité" = "#68DDEA",
+                        "Patrimonialite_PE" = "#842D2A",
+                        "Pression_PE" = "#DE9830",
+                        "Struture" = "grey")
+          
+          p <- ggplot(data=dat1, aes(x=indicateurs, y=valeurs)) +
+            geom_bar(stat="identity", width=0.5, aes(fill=criteres))+
+            theme_bw()+
+            scale_fill_manual(values=couleurs)+
+            geom_text(aes(label=valeurs,  hjust="center",vjust="bottom", y=valeurs+2))+
+            theme(legend.position='none')+
+            facet_grid(.~criteres, scales = "free", space ="free")+
+            theme (axis.text.x = element_text(colour="black", angle = 45, size = 8))
           p <- ggplotly(p)
         }else if(input$selecttypegraphperte == '2'){
         # Pertes CT
@@ -208,8 +227,25 @@ output$plot_pertes <- renderPlotly({
             indicateurs = ecoval[[name]][[3]],
             criteres = factor(ecoval[[name]][[2]], levels=c("Diversité espèce", "Fonctionnalité", "Pression", "Connectivité", "Représentativité")),
             valeurs = as.numeric(ecoval[[name]][[4]]))
-          p <- ggplot(data=dat1, aes(x=criteres, y=valeurs, fill=indicateurs)) + theme(legend.position="none") +
-            geom_bar(stat="identity", position=position_dodge(), colour="black")
+          couleurs <- c("Diversité habitat" = "#83D072",
+                        "Diversité Espèce" ="#1E6218",
+                        "Patrimonialité_PS" = "#9D403E",
+                        "Fonctionnalité" = "#4894DC",
+                        "Pression_PS" = "#E6A936",
+                        "Connectivité" = "#AF76C4",
+                        "Représentativité" = "#68DDEA",
+                        "Patrimonialite_PE" = "#842D2A",
+                        "Pression_PE" = "#DE9830",
+                        "Struture" = "grey")
+          
+          p <- ggplot(data=dat1, aes(x=indicateurs, y=valeurs)) +
+            geom_bar(stat="identity", width=0.5, aes(fill=criteres))+
+            theme_bw()+
+            scale_fill_manual(values=couleurs)+
+            geom_text(aes(label=valeurs,  hjust="center",vjust="bottom", y=valeurs+2))+
+            theme(legend.position='none')+
+            facet_grid(.~criteres, scales = "free", space ="free")+
+            theme (axis.text.x = element_text(colour="black", angle = 45, size = 8))
           p <- ggplotly(p)
         }else if(input$selecttypegraphperte == '2'){
           # Pertes CT
