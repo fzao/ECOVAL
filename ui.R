@@ -22,6 +22,8 @@ library(xlsx)
 library(DT)
 library(leaflet)
 library(rmarkdown)
+library(knitr)
+library(kableExtra)
 
 Species <- readRDS("model/Species_names.rds")
 
@@ -381,7 +383,6 @@ shinyUI(fluidPage(HTML("<!DOCTYPE html>
                               tabPanel(value="synth", HTML('<h4 style="color: #005BBB; "><b>Synthèse</b></h4>'), br(),
                                        fluidRow(column(2, selectInput("selectsiteimpact4", label = "SITE IMPACT\u00C9", choices = list("-" = 0), selected = 0)),
                                                 column(2, align="left", selectInput("selectsitecompens4", label = "SITE COMPENSATOIRE", choices = list("-" = 0), selected = 0))), hr(),
-                                       fluidRow(column(2, align="left", radioButtons('format', 'Format du document', c('HTML', 'PDF', 'Word'), inline = TRUE))),
                                        fluidRow(column(2, align="left", downloadButton("genere", "Générer un rapport")))
                               ),
                               # A PROPOS ----------------------------------------------

@@ -19,3 +19,335 @@ fileName <- inFile$name
 * Fichier : `r fileName`
 
 _Rapport généré le_ `r format(Sys.time(), "%a %d %b %Y %H:%M:%S")`
+
+--------------------------------------
+
+# <span style='color:#C0504D'>**Site Impacté -- `r listsite$name[as.numeric(input$selectsiteimpact4)+1]`**</span>
+
+#### **Coordonnées géographiques**
+
+- latitude : `r ecoval[[paste("Site no.", input$selectsiteimpact4)]][4,2]`
+- longitude : `r ecoval[[paste("Site no.", input$selectsiteimpact4)]][5,2]`
+
+#### **Surface**
+
+`r ecoval[[paste("Site no.", input$selectsiteimpact4)]][3,2]` ha
+
+#### **Contexte**
+
+`r ecoval[[paste("Site no.", input$selectsiteimpact4)]][6,2]`
+
+## <span style='color:#C0504D'>Etat Initial</span>
+
+### <span style='color:#C0504D'>*Niveau Général*</span>
+
+```{r echo=FALSE}
+      name <- paste("SIB no.", input$selectsiteimpact4)
+      dat1 <- data.frame(
+          perimetres = ecoval[[name]][[1]],
+          indicateurs = ecoval[[name]][[3]],
+          criteres = factor(ecoval[[name]][[2]], levels=c("Diversité habitat","Diversité Espèce",
+                                                          "Patrimonialité_PS","Fonctionnalité","Pression_PS",
+                                                          "Connectivité","Représentativité","Patrimonialité_PE","Pression_PE")),
+          valeurs = as.numeric(ecoval[[name]][[4]]))
+          couleurs <- c("Diversité habitat" = "#83D072",
+                      "Diversité Espèce" ="#1E6218",
+                      "Patrimonialité_PS" = "#9D403E",
+                      "Fonctionnalité" = "#4894DC",
+                      "Pression_PS" = "#E6A936",
+                      "Connectivité" = "#AF76C4",
+                      "Représentativité" = "#68DDEA",
+                      "Patrimonialite_PE" = "#842D2A",
+                      "Pression_PE" = "#DE9830")
+          colnames(dat1) <- c("Périmètre", "Indicateur", "Critère", "Valeur")
+        knitr::kable(dat1) %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed"), full_width = F)
+```
+
+### <span style='color:#C0504D'>*Identification des enjeux*</span>
+
+**HABITATS**
+
+```{r echo=FALSE, results='asis'}
+    # liste les habitats du site impacte
+    name <- paste("Site no.", input$selectsiteimpact4)
+    habitat <- list()
+    nbhabitat <- dim(listhabitat)[1] - 1
+    if(nbhabitat > 0){
+      for(i in 1:nbhabitat){
+        hname <- listhabitat$habitat[i+1]
+        if(exists(hname, where = ecoval)){
+          if(ecoval[[hname]][7,2] == ecoval[[name]][12,2]){
+            habitat[[listhabitat$name[i+1]]] <- listhabitat$index[i+1]
+          }
+        }
+      }
+    }
+    # affichage
+    if(length(habitat) > 0){
+      for(i in 1:length(habitat)){
+        name <- paste("Habitat", habitat[i])
+        if(exists(name, where = ecoval)){
+            dat1 <- ecoval[[name]][1:5,]
+            colnames(dat1) <- c("", paste("Habitat", as.character(i)))
+            print(knitr::kable(dat1) %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed"), full_width = F))
+        }
+      }
+    }
+```
+
+**ESPECES**
+
+```{r echo=FALSE, results='asis'}
+    # liste les especes du site impacte
+    name <- paste("Site no.", input$selectsiteimpact4)
+    species <- list()
+    nbspecies <- dim(listspecies)[1] - 1
+    if(nbspecies > 0){
+      for(i in 1:nbspecies){
+        sname <- listspecies$species[i+1]
+        if(exists(sname, where = ecoval)){
+          if(ecoval[[sname]][6,2] == ecoval[[name]][12,2]){
+            species[[listspecies$name[i+1]]] <- listspecies$index[i+1]
+          }
+        }
+      }
+    }
+    # regroupe les informationq pour affichage
+    if(length(species) > 0){
+      for(i in 1:length(species)){
+        name <- paste("Espece", species[i])
+        if(exists(name, where = ecoval)){
+            dat1 <- ecoval[[name]][1:4,]
+            colnames(dat1) <- c("", paste("Espèce", as.character(i)))
+            print(knitr::kable(dat1) %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed"), full_width = F))
+        }
+      }
+    }
+```
+
+### <span style='color:#C0504D'>*Niveau Habitat*</span>
+
+```{r echo=FALSE, results='asis'}
+     # affichage
+     if(length(habitat) > 0){
+       for(i in 1:length(habitat)){
+         name <- paste("CI no.", habitat[i])
+         if(exists(name, where = ecoval)){
+             dat1 <- ecoval[[name]]
+             colnames(dat1) <- c("Echelle", "Critère", "Indicateurs", "Valeur à l'état initial",
+                                 "Justification prédiction CT", "Incertitudes CT", "Valeur après impact CT",
+                                 "Justification prédiction LT", "Incertitudes LT", "Valeur après impact LT")
+             print(paste("Habitat", as.character(i), '--', names(habitat)[i]))
+             print(knitr::kable(dat1) %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed"), full_width = F))
+         }
+       }
+     }
+```
+
+### <span style='color:#C0504D'>*Niveau Espèce*</span>
+
+```{r echo=FALSE, results='asis'}
+     # affichage
+     if(length(species) > 0){
+       for(i in 1:length(species)){
+         name <- paste("DI no.", species[i])
+         if(exists(name, where = ecoval)){
+             dat1 <- ecoval[[name]]
+             colnames(dat1) <- c("Echelle", "Critère", "Indicateurs", "Valeur à l'état initial",
+                                 "Justification prédiction CT", "Incertitudes CT", "Valeur après impact CT",
+                                 "Justification prédiction LT", "Incertitudes LT", "Valeur après impact LT")
+             print(paste("Espèce", as.character(i), '--', names(species)[i]))
+             print(knitr::kable(dat1) %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed"), full_width = F))
+         }
+       }
+     }
+```
+
+
+## <span style='color:#C0504D'>Impacts sur `r listsite$name[as.numeric(input$selectsiteimpact4)+1]`</span>
+
+#### **Description qualitative**
+
+`r input$descqual`
+
+#### **Temporalité**
+
+`r input$tempo`
+
+#### **Durée**
+
+`r duree[input$duree]`
+
+#### **Intensité**
+
+`r intensite[input$intensite]`
+
+#### **Portée spatiale**
+
+`r portee[input$portee]`
+
+## <span style='color:#C0504D'>Pertes</span>
+
+### <span style='color:#C0504D'>*Niveau Général*</span>
+
+#### **Court Terme**
+
+```{r echo=FALSE}
+      name <- paste("SIB no.", input$selectsiteimpact4)
+      dat1 <- data.frame(
+          perimetres = ecoval[[name]][[1]],
+          indicateurs = ecoval[[name]][[3]],
+          criteres = factor(ecoval[[name]][[2]], levels=c("Diversité habitat","Diversité Espèce","Patrimonialité_PS",
+                                                          "Fonctionnalité","Pression_PS","Connectivité","Représentativité",
+                                                          "Patrimonialité_PE","Pression_PE")),
+          valeurs = as.numeric(ecoval[[name]][[7]]))
+      dat1$incertitudes <- ecoval[[name]][[6]]
+      dat1["pertes brutes"] <- as.numeric(ecoval[[name]][[7]]) - as.numeric(ecoval[[name]][[4]])
+      dat1["pertes relatives"] <- as.numeric(ecoval[[name]][[7]]) - as.numeric(ecoval[[name]][[4]]) * 100 / as.numeric(ecoval[[name]][[4]])
+      knitr::kable(dat1) %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed"), full_width = F)
+```
+
+#### **Long Terme**
+
+```{r echo=FALSE}
+      name <- paste("SIB no.", input$selectsiteimpact4)
+      dat1 <- data.frame(
+          perimetres = ecoval[[name]][[1]],
+          indicateurs = ecoval[[name]][[3]],
+          criteres = factor(ecoval[[name]][[2]], levels=c("Diversité habitat","Diversité Espèce","Patrimonialité_PS",
+                                                          "Fonctionnalité","Pression_PS","Connectivité","Représentativité",
+                                                          "Patrimonialité_PE","Pression_PE")),
+          valeurs = as.numeric(ecoval[[name]][[10]]))
+        dat1$incertitudes <- ecoval[[name]][[9]]
+        dat1["pertes brutes"] <- as.numeric(ecoval[[name]][[10]]) - as.numeric(ecoval[[name]][[4]])
+        dat1["pertes relatives"] <- as.numeric(ecoval[[name]][[10]]) - as.numeric(ecoval[[name]][[4]]) * 100 / as.numeric(ecoval[[name]][[4]])
+        knitr::kable(dat1) %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed"), full_width = F)
+```
+
+### <span style='color:#C0504D'>*Niveau Habitat*</span>
+
+#### **Court Terme**
+
+```{r echo=FALSE, results='asis'}
+     # affichage
+     if(length(habitat) > 0){
+       for(i in 1:length(habitat)){
+         name <- paste("CI no.", habitat[i])
+         if(exists(name, where = ecoval)){
+          dat1 <- data.frame(
+            perimetres = ecoval[[name]][[1]],
+            indicateurs = ecoval[[name]][[3]],
+            criteres = factor(ecoval[[name]][[2]], levels=c("Diversité espèce", "Fonctionnalité", "Structure", "Pression", "Connectivité", "Représentativité")),
+            valeurs = as.numeric(ecoval[[name]][[7]]))
+          dat1$incertitudes <- ecoval[[name]][[6]]
+          dat1["pertes brutes"] <- as.numeric(ecoval[[name]][[7]]) - as.numeric(ecoval[[name]][[4]])
+          dat1["pertes relatives"] <- as.numeric(ecoval[[name]][[7]]) - as.numeric(ecoval[[name]][[4]]) * 100 / as.numeric(ecoval[[name]][[4]])
+          print(paste("Habitat", as.character(i), '--', names(habitat)[i]))
+          print(knitr::kable(dat1) %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed"), full_width = F))
+         }
+       }
+     }
+```
+
+#### **Long Terme**
+
+```{r echo=FALSE, results='asis'}
+     # affichage
+     if(length(habitat) > 0){
+       for(i in 1:length(habitat)){
+         name <- paste("CI no.", habitat[i])
+         if(exists(name, where = ecoval)){
+          dat1 <- data.frame(
+            perimetres = ecoval[[name]][[1]],
+            indicateurs = ecoval[[name]][[3]],
+            criteres = factor(ecoval[[name]][[2]], levels=c("Diversité espèce", "Fonctionnalité", "Structure", "Pression", "Connectivité", "Représentativité")),
+            valeurs = as.numeric(ecoval[[name]][[10]]))
+          dat1$incertitudes <- ecoval[[name]][[9]]
+          dat1["pertes brutes"] <- as.numeric(ecoval[[name]][[10]]) - as.numeric(ecoval[[name]][[4]])
+          dat1["pertes relatives"] <- as.numeric(ecoval[[name]][[10]]) - as.numeric(ecoval[[name]][[4]]) * 100 / as.numeric(ecoval[[name]][[4]])
+          print(paste("Habitat", as.character(i), '--', names(habitat)[i]))
+          print(knitr::kable(dat1) %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed"), full_width = F))
+         }
+       }
+     }
+```
+
+
+### <span style='color:#C0504D'>*Niveau Espèce*</span>
+
+#### **Court Terme**
+
+```{r echo=FALSE, results='asis'}
+     # affichage
+     if(length(species) > 0){
+       #l <- htmltools::tagList()
+       for(i in 1:length(species)){
+         name <- paste("DI no.", species[i])
+         if(exists(name, where = ecoval)){
+          dat1 <- data.frame(
+            perimetres = ecoval[[name]][[1]],
+            indicateurs = ecoval[[name]][[3]],
+            criteres = factor(ecoval[[name]][[2]], levels=c("Diversité espèce", "Fonctionnalité", 
+                                                            "Pression", "Connectivité", "Représentativité")),
+            valeurs = as.numeric(ecoval[[name]][[7]]))
+          #p <- ggplot(data=dat1, aes(x=criteres, y=valeurs, fill=indicateurs)) + theme(legend.position="none") + coord_flip() +
+          #  geom_bar(stat="identity", position=position_dodge(), colour="black") +
+          #  ggtitle(paste("Espèce", as.character(i), '--', names(species)[i]))
+          dat1$incertitudes <- ecoval[[name]][[6]]
+          dat1["pertes brutes"] <- as.numeric(ecoval[[name]][[7]]) - as.numeric(ecoval[[name]][[4]])
+          dat1["pertes relatives"] <- as.numeric(ecoval[[name]][[7]]) - as.numeric(ecoval[[name]][[4]]) * 100 / as.numeric(ecoval[[name]][[4]])
+          print(paste("Espèce", as.character(i), '--', names(species)[i]))
+          print(knitr::kable(dat1) %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed"), full_width = F))
+          #p <- ggplotly(p, width=500, height=1000)
+          #l[[i]] <- p
+         }
+       }
+     }
+   #l
+```
+
+#### **Long Terme**
+
+```{r echo=FALSE, results='asis'}
+     # affichage
+     if(length(species) > 0){
+       for(i in 1:length(species)){
+         name <- paste("DI no.", species[i])
+         if(exists(name, where = ecoval)){
+         dat1 <- data.frame(
+            perimetres = ecoval[[name]][[1]],
+            indicateurs = ecoval[[name]][[3]],
+            criteres = factor(ecoval[[name]][[2]], levels=c("Diversité espèce", "Fonctionnalité", "Pression", "Connectivité", "Représentativité")),
+            valeurs = as.numeric(ecoval[[name]][[10]]))
+          dat1$incertitudes <- ecoval[[name]][[9]]
+          dat1["pertes brutes"] <- as.numeric(ecoval[[name]][[10]]) - as.numeric(ecoval[[name]][[4]])
+          dat1["pertes relatives"] <- as.numeric(ecoval[[name]][[10]]) - as.numeric(ecoval[[name]][[4]]) * 100 / as.numeric(ecoval[[name]][[4]])
+          print(paste("Espèce", as.character(i), '--', names(species)[i]))
+          print(knitr::kable(dat1) %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed"), full_width = F))
+         }
+       }
+     }
+
+```
+
+--------------------------------------
+
+# <span style='color:#9BBB59'>**Site compensatoire -- `r listsite$name[as.numeric(input$selectsitecompens4)+1]`**</span>
+
+#### **Coordonnées géographiques**
+
+- latitude : `r ecoval[[paste("Site no.", input$selectsitecompens4)]][4,2]`
+- longitude : `r ecoval[[paste("Site no.", input$selectsitecompens4)]][5,2]`
+
+#### **Surface**
+
+`r ecoval[[paste("Site no.", input$selectsitecompens4)]][3,2]` ha
+
+#### **Contexte**
+
+`r ecoval[[paste("Site no.", input$selectsitecompens4)]][6,2]`
+
+--------------------------------------
+
+# <span style='color:#B2A1C7'>**Equivalence `r listsite$name[as.numeric(input$selectsiteimpact4)+1]` -- `r listsite$name[as.numeric(input$selectsitecompens4)+1]`**</span>
+
