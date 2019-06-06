@@ -54,3 +54,6 @@ tableau$D <- model_D
 pertes <- reactiveValues(tableau=NULL)
 gains <- reactiveValues(tableau=NULL)
 equivalence <- reactiveValues(tableau=NULL)
+duree <- list("1"="Temporaire Courte Durée", "2"="Temporaire Longue Durée", "3"="Permanent")
+intensite <- list("1"="Peu Intense", "2"="Intense", "3"="Très Intense")
+portee <- list("1"="Ponctuelle Faible Surface", "2"="Ponctuelle Surface Importante", "3"="Linéaire")

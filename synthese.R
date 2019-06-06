@@ -17,9 +17,7 @@
 
 output$genere <- downloadHandler(
   filename = function() {
-    paste('my-report', sep = '.', switch(
-      input$format, PDF = 'pdf', HTML = 'html', Word = 'docx'
-    ))
+    paste('my-report', sep = '.', 'html')
   },
   
   content = function(file) {
@@ -28,39 +26,30 @@ output$genere <- downloadHandler(
     on.exit(setwd(owd))
     file.copy(src, 'rapport.Rmd', overwrite = TRUE)
     
-    out <- rmarkdown::render('rapport.Rmd', switch(
-      input$format,
-      PDF = pdf_document(), HTML = html_document(), Word = word_document()
-    ))
+    out <- rmarkdown::render('rapport.Rmd', html_document())
     file.rename(out, file)
   }
 )
 
-observeEvent(input$selectsitecompens4, {
+observeEvent(input$selectsiteimpact4, {
   if(input$selectsitecompens4 == '0'){
-    shinyjs::hide("format")
     shinyjs::hide("genere")
   }else{
     if(input$selectsiteimpact4 == '0'){
-      shinyjs::hide("format")
       shinyjs::hide("genere")
     }else{
-      shinyjs::show("format")
       shinyjs::show("genere")
     }
   }
 })
 
-observeEvent(input$selectsiteimpact4, {
+observeEvent(input$selectsitecompens4, {
   if(input$selectsiteimpact4 == '0'){
-    shinyjs::hide("format")
     shinyjs::hide("genere")
   }else{
     if(input$selectsitecompens4 == '0'){
-      shinyjs::hide("format")
       shinyjs::hide("genere")
     }else{
-      shinyjs::show("format")
       shinyjs::show("genere")
     }
   }
