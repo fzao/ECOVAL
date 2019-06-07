@@ -286,6 +286,8 @@ shinyUI(fluidPage(HTML("<!DOCTYPE html>
                                                                             DT::dataTableOutput("SCtable3")
                                                                    ),
                                                                    tabPanel(HTML('<h4 style="color: #005BBB; ">Niveau Général</h4>'), value="compensindicng", br(),
+                                                                            fluidRow(column(12, align="center", HTML('<h4 style="color: #A5C226; ">ETAT INITIAL</h4>'))), br(),
+                                                                            fluidRow(column(12, align="center", tags$style("#Manuel2 {background-color:#FFA02F;}"), numericInput("Manuel2", NA, value = 0.))),
                                                                             fluidRow(column(6, align="center", HTML('<h4 style="color: #A5C226; ">COURT TERME</h4>')), column(6, align="center", HTML('<h4 style="color: #A5C226; ">LONG TERME</h4>'))), br(),
                                                                             fluidRow(column(2, align="left", textAreaInput("SCjustifCT", "Justification de l'estimation", height='250px', placeholder = "justification de la prédiction faite")),
                                                                                      column(2, align="left", checkboxGroupInput("SCdegincCT", "Degré d'incertitude",
@@ -299,12 +301,14 @@ shinyUI(fluidPage(HTML("<!DOCTYPE html>
                                                                                                                                   "Comportement de l'espèce faune ou flore : le comportement (capacité de recolonisation) des espèces sur lesquelles porte l'indicateur est-il bien connu ?" = "2",
                                                                                                                                   "Risque d'échec associé à la mesure compensatoire : les résultats de l'action de compensation sont-ils bien maîtrisés?" = "3"))),
                                                                                      column(2, align="left", numericInput("SCvalLT", "Valeur après compensation", value = 0.))), br(),
-                                                                            fluidRow(column(6, align="right", actionButton("renseigner2", "RENSEIGNER")),
-                                                                                     column(6, align="left", tags$style("#Manuel2 {background-color:#FFA02F;}"), numericInput("Manuel2", NA, value = 0.))), br(),
+                                                                            fluidRow(column(12, align="center", actionButton("renseigner2", "RENSEIGNER"))), br(),
                                                                             DT::dataTableOutput("SCtable4")
                                                                    ),
                                                                    tabPanel(HTML('<h4 style="color: #005BBB; ">Niveau Habitat</h4>'), value="compensindicnh", br(),
                                                                             selectInput("selecthabitatSC", label = "HABITAT", choices = list("-" = 0), selected = 0), br(),
+                                                                            fluidRow(column(12, align="center", HTML('<h4 style="color: #A5C226; ">ETAT INITIAL</h4>'))), br(),
+                                                                            fluidRow(column(6, align="right", tags$style("#ManuelNH2 {background-color:#FFA02F;}"), numericInput("ManuelNH2", NA, value = 0.)), 
+                                                                                     column(6, align="left", textInput("justifySCNH", NA, placeholder = "justification"))), br(),
                                                                             fluidRow(column(6, align="center", HTML('<h4 style="color: #A5C226; ">COURT TERME</h4>')), column(6, align="center", HTML('<h4 style="color: #A5C226; ">LONG TERME</h4>'))), br(),
                                                                             fluidRow(column(2, align="left", textAreaInput("SCjustifCTNH", "Justification de prédiction", height='250px', placeholder = "justification de la prédiction court terme")),
                                                                                      column(2, align="left", checkboxGroupInput("SCdegincCTNH", "Incertitudes",
@@ -318,11 +322,13 @@ shinyUI(fluidPage(HTML("<!DOCTYPE html>
                                                                                                                                   "Comportement de l'espèce faune ou flore : le comportement (capacité de recolonisation) des espèces sur lesquelles porte l'indicateur est-il bien connu ?" = "2",
                                                                                                                                   "Risque d'échec associé à la mesure compensatoire : les résultats de l'action de compensation sont-ils bien maîtrisés?" = "3"))),
                                                                                      column(2, align="left", numericInput("SCvalLTNH", "Valeur après compensation LT", value = 0.))), br(),
-                                                                            fluidRow(column(6, align="right", actionButton("renseignerNH2", "RENSEIGNER")),
-                                                                                     column(6, align="left", tags$style("#ManuelNH2 {background-color:#FFA02F;}"), numericInput("ManuelNH2", NA, value = 0.))), br(),
+                                                                            fluidRow(column(12, align="center", actionButton("renseignerNH2", "RENSEIGNER"))), br(),
                                                                             DT::dataTableOutput("SCtable5")
                                                                    ),
                                                                    tabPanel(HTML('<h4 style="color: #005BBB; ">Niveau Espèce</h4>'), value="compensindicnsp", br(),
+                                                                            fluidRow(column(12, align="center", HTML('<h4 style="color: #A5C226; ">ETAT INITIAL</h4>'))), br(),
+                                                                            fluidRow(column(6, align="right", tags$style("#ManuelNSP2 {background-color:#FFA02F;}"), numericInput("ManuelNSP2", NA, value = 0.)), 
+                                                                                     column(6, align="left", textInput("justifySCNSP", NA, placeholder = "justification"))), br(),
                                                                             selectInput("selectspeciesSC", label = "ESPECE", choices = list("-" = 0), selected = 0), br(),
                                                                             fluidRow(column(6, align="center", HTML('<h4 style="color: #A5C226; ">COURT TERME</h4>')), column(6, align="center", HTML('<h4 style="color: #A5C226; ">LONG TERME</h4>'))), br(),
                                                                             fluidRow(column(2, align="left", textAreaInput("SCjustifCTNSP", "Justification de prédiction", height='250px', placeholder = "justification de la prédiction court terme")),
@@ -337,8 +343,7 @@ shinyUI(fluidPage(HTML("<!DOCTYPE html>
                                                                                                                                   "Comportement de l'espèce faune ou flore : le comportement (capacité de recolonisation) des espèces sur lesquelles porte l'indicateur est-il bien connu ?" = "2",
                                                                                                                                   "Risque d'échec associé à la mesure compensatoire : les résultats de l'action de compensation sont-ils bien maîtrisés?" = "3"))),
                                                                                      column(2, align="left", numericInput("SCvalLTNSP", "Valeur après compensation LT", value = 0.))), br(),
-                                                                            fluidRow(column(6, align="right", actionButton("renseignerNSP2", "RENSEIGNER")),
-                                                                                     column(6, align="left", tags$style("#ManuelNSP2 {background-color:#FFA02F;}"), numericInput("ManuelNSP2", NA, value = 0.))), br(),
+                                                                            fluidRow(column(12, align="center", actionButton("renseignerNSP2", "RENSEIGNER"))), br(),
                                                                             DT::dataTableOutput("SCtable6")
                                                                             
                                                                    )
