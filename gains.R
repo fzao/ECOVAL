@@ -157,8 +157,8 @@ output$plot_gains <- renderPlotly({
           criteres = factor(ecoval[[name]][[2]], levels=c("Diversité habitat","Diversité Espèce","Patrimonialité_PS","Fonctionnalité","Pression_PS","Connectivité","Représentativité","Patrimonialité_PE","Pression_PE", "Structure")),
           valeurs = as.numeric(ecoval[[name]][[7]],
           incertitudes <- ecoval[[name]][[6]],
-          pertes_brutes <- as.numeric(ecoval[[name]][[7]]) - as.numeric(ecoval[[name]][[4]]),
-          pertes_relatives <- as.numeric(ecoval[[name]][[7]]) - as.numeric(ecoval[[name]][[4]]) * 100 / as.numeric(ecoval[[name]][[4]]))
+          pertes_brutes <- as.numeric(ecoval[[name]][[10]]) - as.numeric(ecoval[[name]][[4]]),
+          pertes_relatives <- as.numeric(ecoval[[name]][[10]]) - as.numeric(ecoval[[name]][[4]]) * 100 / as.numeric(ecoval[[name]][[4]]))
         )
         p <- ggplot(data=dat1, aes(x=indicateurs, y=pertes_relatives)) +
           geom_bar(stat="identity",  width=0.5, aes(fill=as.factor(sign(pertes_relatives))))+
@@ -240,8 +240,8 @@ output$plot_gains <- renderPlotly({
             criteres = factor(ecoval[[name]][[2]], levels=c("Diversité habitat","Diversité Espèce","Patrimonialité_PS","Fonctionnalité","Pression_PS","Connectivité","Représentativité","Patrimonialité_PE","Pression_PE", "Structure")),
             valeurs = as.numeric(ecoval[[name]][[7]],
             incertitudes <- ecoval[[name]][[6]],
-            pertes_brutes <- as.numeric(ecoval[[name]][[7]]) - as.numeric(ecoval[[name]][[4]]),
-            pertes_relatives <- as.numeric(ecoval[[name]][[7]]) - as.numeric(ecoval[[name]][[4]]) * 100 / as.numeric(ecoval[[name]][[4]]))
+            pertes_brutes <- as.numeric(ecoval[[name]][[10]]) - as.numeric(ecoval[[name]][[4]]),
+            pertes_relatives <- as.numeric(ecoval[[name]][[10]]) - as.numeric(ecoval[[name]][[4]]) * 100 / as.numeric(ecoval[[name]][[4]]))
           )
           p <- ggplot(data=dat1, aes(x=indicateurs, y=pertes_relatives)) +
             geom_bar(stat="identity",  width=0.5, aes(fill=as.factor(sign(pertes_relatives))))+
@@ -328,8 +328,8 @@ output$plot_gains <- renderPlotly({
             criteres = factor(ecoval[[name]][[2]], levels=c("Diversité habitat","Diversité Espèce","Patrimonialité_PS","Fonctionnalité","Pression_PS","Connectivité","Représentativité","Patrimonialité_PE","Pression_PE", "Structure")),
             valeurs = as.numeric(ecoval[[name]][[7]],
             incertitudes <- ecoval[[name]][[6]],
-            pertes_brutes <- as.numeric(ecoval[[name]][[7]]) - as.numeric(ecoval[[name]][[4]]),
-            pertes_relatives <- as.numeric(ecoval[[name]][[7]]) - as.numeric(ecoval[[name]][[4]]) * 100 / as.numeric(ecoval[[name]][[4]]))
+            pertes_brutes <- as.numeric(ecoval[[name]][[10]]) - as.numeric(ecoval[[name]][[4]]),
+            pertes_relatives <- as.numeric(ecoval[[name]][[10]]) - as.numeric(ecoval[[name]][[4]]) * 100 / as.numeric(ecoval[[name]][[4]]))
           )
           p <- ggplot(data=dat1, aes(x=indicateurs, y=pertes_relatives)) +
             geom_bar(stat="identity",  width=0.5, aes(fill=as.factor(sign(pertes_relatives))))+
