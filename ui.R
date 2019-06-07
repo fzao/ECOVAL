@@ -179,6 +179,8 @@ shinyUI(fluidPage(HTML("<!DOCTYPE html>
                                                               DT::dataTableOutput("SItable3")
                                                      ),
                                                      tabPanel(HTML('<h4 style="color: #005BBB; ">Niveau Général</h4>'), value="impactindicng", br(),
+                                                              fluidRow(column(12, align="center", HTML('<h4 style="color: #A5C226; ">ETAT INITIAL</h4>'))), br(),
+                                                              fluidRow(column(12, align="center", tags$style("#Manuel {background-color:#FFA02F;}"), numericInput("Manuel", NA, value = 0.))),
                                                               fluidRow(column(6, align="center", HTML('<h4 style="color: #A5C226; ">COURT TERME</h4>')), column(6, align="center", HTML('<h4 style="color: #A5C226; ">LONG TERME</h4>'))), br(),
                                                               fluidRow(column(2, align="left", textAreaInput("SIjustifCT", "Justification de l'estimation", height='250px', placeholder = "justification de la prédiction faite")),
                                                                        column(2, align="left", checkboxGroupInput("SIdegincCT", "Degré d'incertitude",
@@ -192,12 +194,14 @@ shinyUI(fluidPage(HTML("<!DOCTYPE html>
                                                                                                                      "Comportement de l'espèce faune ou flore : le comportement (capacité de recolonisation) des espèces sur lesquelles porte l'indicateur est-il bien connu ?" = "2",
                                                                                                                      "Définition de l'emprise de l'impact : l'emprise impactée est-elle en lien direct avec la valeur prédite de l'indicateur ?" = "3"))),
                                                                        column(2, align="left", numericInput("SIvalLT", "Valeur après impact", value = 0.))), br(),
-                                                              fluidRow(column(6, align="right", actionButton("renseigner", "RENSEIGNER")),
-                                                                       column(6, align="left", tags$style("#Manuel {background-color:#FFA02F;}"), numericInput("Manuel", NA, value = 0.))), br(),
+                                                              fluidRow(column(12, align="center", actionButton("renseigner", "RENSEIGNER"))),
                                                               DT::dataTableOutput("SItable4")
                                                      ),
                                                      tabPanel(HTML('<h4 style="color: #005BBB; ">Niveau Habitat</h4>'), value="impactindicnh", br(),
                                                               selectInput("selecthabitatSI", label = "HABITAT", choices = list("-" = 0), selected = 0), br(),
+                                                              fluidRow(column(12, align="center", HTML('<h4 style="color: #A5C226; ">ETAT INITIAL</h4>'))), br(),
+                                                              fluidRow(column(6, align="right", tags$style("#ManuelNH {background-color:#FFA02F;}"), numericInput("ManuelNH", NA, value = 0.)), 
+                                                                       column(6, align="left", textInput("justifySINH", NA, placeholder = "justification"))), br(),
                                                               fluidRow(column(6, align="center", HTML('<h4 style="color: #A5C226; ">COURT TERME</h4>')), column(6, align="center", HTML('<h4 style="color: #A5C226; ">LONG TERME</h4>'))), br(),
                                                               fluidRow(column(2, align="left", textAreaInput("SIjustifCTNH", "Justification de prédiction", height='250px', placeholder = "justification de la prédiction court terme")),
                                                                        column(2, align="left", checkboxGroupInput("SIdegincCTNH", "Incertitudes",
@@ -211,12 +215,14 @@ shinyUI(fluidPage(HTML("<!DOCTYPE html>
                                                                                                                     "Comportement de l'espèce faune ou flore : le comportement (capacité de recolonisation) des espèces sur lesquelles porte l'indicateur est-il bien connu ?" = "2",
                                                                                                                     "Définition de l'emprise de l'impact : l'emprise impactée est-elle en lien direct avec la valeur prédite de l'indicateur ?" = "3"))),
                                                                        column(2, align="left", numericInput("SIvalLTNH", "Valeur après impact LT", value = 0.))), br(),
-                                                              fluidRow(column(6, align="right", actionButton("renseignerNH", "RENSEIGNER")),
-                                                                       column(6, align="left", tags$style("#ManuelNH {background-color:#FFA02F;}"), numericInput("ManuelNH", NA, value = 0.))), br(),
+                                                              fluidRow(column(12, align="center", actionButton("renseignerNH", "RENSEIGNER"))), br(),
                                                               DT::dataTableOutput("SItable5")
                                                      ),
                                                      tabPanel(HTML('<h4 style="color: #005BBB; ">Niveau Espèce</h4>'), value="impactindicnsp", br(),
                                                               selectInput("selectspeciesSI", label = "ESPECE", choices = list("-" = 0), selected = 0), br(),
+                                                              fluidRow(column(12, align="center", HTML('<h4 style="color: #A5C226; ">ETAT INITIAL</h4>'))), br(),
+                                                              fluidRow(column(6, align="right", tags$style("#ManuelNSP {background-color:#FFA02F;}"), numericInput("ManuelNSP", NA, value = 0.)), 
+                                                                       column(6, align="left", textInput("justifySINSP", NA, placeholder = "justification"))), br(),
                                                               fluidRow(column(6, align="center", HTML('<h4 style="color: #A5C226; ">COURT TERME</h4>')), column(6, align="center", HTML('<h4 style="color: #A5C226; ">LONG TERME</h4>'))), br(),
                                                               fluidRow(column(2, align="left", textAreaInput("SIjustifCTNSP", "Justification de prédiction", height='250px', placeholder = "justification de la prédiction court terme")),
                                                                        column(2, align="left", checkboxGroupInput("SIdegincCTNSP", "Incertitudes",
@@ -230,8 +236,7 @@ shinyUI(fluidPage(HTML("<!DOCTYPE html>
                                                                                                                     "Comportement de l'espèce faune ou flore : le comportement (capacité de recolonisation) des espèces sur lesquelles porte l'indicateur est-il bien connu ?" = "2",
                                                                                                                     "Définition de l'emprise de l'impact : l'emprise impactée est-elle en lien direct avec la valeur prédite de l'indicateur ?" = "3"))),
                                                                        column(2, align="left", numericInput("SIvalLTNSP", "Valeur après impact LT", value = 0.))), br(),
-                                                              fluidRow(column(6, align="right", actionButton("renseignerNSP", "RENSEIGNER")),
-                                                                       column(6, align="left", tags$style("#ManuelNSP {background-color:#FFA02F;}"), numericInput("ManuelNSP", NA, value = 0.))), br(),
+                                                              fluidRow(column(12, align="center", actionButton("renseignerNSP", "RENSEIGNER"))),
                                                               DT::dataTableOutput("SItable6")
                                                               
                                                      )
