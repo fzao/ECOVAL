@@ -326,10 +326,10 @@ shinyUI(fluidPage(HTML("<!DOCTYPE html>
                                                                             DT::dataTableOutput("SCtable5")
                                                                    ),
                                                                    tabPanel(HTML('<h4 style="color: #005BBB; ">Niveau Espèce</h4>'), value="compensindicnsp", br(),
+                                                                            selectInput("selectspeciesSC", label = "ESPECE", choices = list("-" = 0), selected = 0), br(),
                                                                             fluidRow(column(12, align="center", HTML('<h4 style="color: #A5C226; ">ETAT INITIAL</h4>'))), br(),
                                                                             fluidRow(column(6, align="right", tags$style("#ManuelNSP2 {background-color:#FFA02F;}"), numericInput("ManuelNSP2", NA, value = 0.)), 
                                                                                      column(6, align="left", textInput("justifySCNSP", NA, placeholder = "justification"))), br(),
-                                                                            selectInput("selectspeciesSC", label = "ESPECE", choices = list("-" = 0), selected = 0), br(),
                                                                             fluidRow(column(6, align="center", HTML('<h4 style="color: #A5C226; ">COURT TERME</h4>')), column(6, align="center", HTML('<h4 style="color: #A5C226; ">LONG TERME</h4>'))), br(),
                                                                             fluidRow(column(2, align="left", textAreaInput("SCjustifCTNSP", "Justification de prédiction", height='250px', placeholder = "justification de la prédiction court terme")),
                                                                                      column(2, align="left", checkboxGroupInput("SCdegincCTNSP", "Incertitudes",

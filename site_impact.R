@@ -619,26 +619,27 @@ observeEvent(input$renseignerNH,{
     for(i in 1:length(partial_select)) pointer2row[i] <- partial_select[i]
     pointer2row <- as.integer(pointer2row)
     tableau$C[pointer2row[rs],4] <- input$ManuelNH
+    tableau$C[pointer2row[rs],5] <- input$justifySINH
     # update array visu CT
-    tableau$C[pointer2row[rs],5] <- input$SIjustifCTNH
-    if(is.null(input$SIdegincCTNH)) tableau$C[pointer2row[rs],6] <- ""
+    tableau$C[pointer2row[rs],6] <- input$SIjustifCTNH
+    if(is.null(input$SIdegincCTNH)) tableau$C[pointer2row[rs],7] <- ""
     else{
       dimselect <- length(input$SIdegincCTNH)
-      if(dimselect == 1) tableau$C[pointer2row[rs],6] <- "*"
-      else if(dimselect == 2) tableau$C[pointer2row[rs],6] <- "**"
-      else if(dimselect == 3) tableau$C[pointer2row[rs],6] <- "***"
+      if(dimselect == 1) tableau$C[pointer2row[rs],7] <- "*"
+      else if(dimselect == 2) tableau$C[pointer2row[rs],7] <- "**"
+      else if(dimselect == 3) tableau$C[pointer2row[rs],7] <- "***"
     }
-    tableau$C[pointer2row[rs],7] <- input$SIvalCTNH
+    tableau$C[pointer2row[rs],8] <- input$SIvalCTNH
     # update array visu LT
-    tableau$C[pointer2row[rs],8] <- input$SIjustifLTNH
-    if(is.null(input$SIdegincLTNH)) tableau$C[pointer2row[rs],9] <- ""
+    tableau$C[pointer2row[rs],9] <- input$SIjustifLTNH
+    if(is.null(input$SIdegincLTNH)) tableau$C[pointer2row[rs],10] <- ""
     else{
       dimselect <- length(input$SIdegincLTNH)
-      if(dimselect == 1) tableau$C[pointer2row[rs],9] <- "*"
-      else if(dimselect == 2) tableau$C[pointer2row[rs],9] <- "**"
-      else if(dimselect == 3) tableau$C[pointer2row[rs],9] <- "***"
+      if(dimselect == 1) tableau$C[pointer2row[rs],10] <- "*"
+      else if(dimselect == 2) tableau$C[pointer2row[rs],10] <- "**"
+      else if(dimselect == 3) tableau$C[pointer2row[rs],10] <- "***"
     }
-    tableau$C[pointer2row[rs],10] <- input$SIvalLTNH
+    tableau$C[pointer2row[rs],11] <- input$SIvalLTNH
     # save ecoval
     name <- paste("CI no.", input$selecthabitatSI)
     ecoval[[name]] <<- tableau$C
@@ -667,7 +668,7 @@ output$SItable5<- DT::renderDataTable({
     }
     viewTabC <- tableau$C[partial_select,]
     dat <- datatable(viewTabC, rownames = TRUE,
-                     colnames = c("Valeur à l'état initial" = 5, "Justification prédiction CT" = 6, "Incertitudes CT" = 7, "Valeur après impact CT" = 8, "Justification prédiction LT" = 9, "Incertitudes LT" = 10, "Valeur après impact LT" = 11),
+                     colnames = c("Valeur à l'état initial" = 5, "Justification" = 6, "Justification prédiction CT" = 7, "Incertitudes CT" = 8, "Valeur après impact CT" = 9, "Justification prédiction LT" = 10, "Incertitudes LT" = 11, "Valeur après impact LT" = 12),
                      selection = 'single', options = list(pageLength = dim.data.frame(tableau$C)[1], searching = TRUE, dom = 'ft', ordering = FALSE), filter = "top")%>%
       formatStyle(4, 3, backgroundColor = '#FFA02F')
   }
@@ -727,26 +728,27 @@ observeEvent(input$renseignerNSP,{
     for(i in 1:length(partial_select)) pointer2row[i] <- partial_select[i]
     pointer2row <- as.integer(pointer2row)
     tableau$D[pointer2row[rs],4] <- input$ManuelNSP
+    tableau$D[pointer2row[rs],5] <- input$justifySINSP
     # update array visu CT
-    tableau$D[pointer2row[rs],5] <- input$SIjustifCTNSP
-    if(is.null(input$SIdegincCTNSP)) tableau$D[pointer2row[rs],6] <- ""
+    tableau$D[pointer2row[rs],6] <- input$SIjustifCTNSP
+    if(is.null(input$SIdegincCTNSP)) tableau$D[pointer2row[rs],7] <- ""
     else{
       dimselect <- length(input$SIdegincCTNSP)
-      if(dimselect == 1) tableau$D[pointer2row[rs],6] <- "*"
-      else if(dimselect == 2) tableau$D[pointer2row[rs],6] <- "**"
-      else if(dimselect == 3) tableau$D[pointer2row[rs],6] <- "***"
+      if(dimselect == 1) tableau$D[pointer2row[rs],7] <- "*"
+      else if(dimselect == 2) tableau$D[pointer2row[rs],7] <- "**"
+      else if(dimselect == 3) tableau$D[pointer2row[rs],7] <- "***"
     }
-    tableau$D[pointer2row[rs],7] <- input$SIvalCTNSP
+    tableau$D[pointer2row[rs],8] <- input$SIvalCTNSP
     # update array visu LT
-    tableau$D[pointer2row[rs],8] <- input$SIjustifLTNSP
-    if(is.null(input$SIdegincLTNSP)) tableau$D[pointer2row[rs],9] <- ""
+    tableau$D[pointer2row[rs],9] <- input$SIjustifLTNSP
+    if(is.null(input$SIdegincLTNSP)) tableau$D[pointer2row[rs],10] <- ""
     else{
       dimselect <- length(input$SIdegincLTNSP)
-      if(dimselect == 1) tableau$D[pointer2row[rs],9] <- "*"
-      else if(dimselect == 2) tableau$D[pointer2row[rs],9] <- "**"
-      else if(dimselect == 3) tableau$D[pointer2row[rs],9] <- "***"
+      if(dimselect == 1) tableau$D[pointer2row[rs],10] <- "*"
+      else if(dimselect == 2) tableau$D[pointer2row[rs],10] <- "**"
+      else if(dimselect == 3) tableau$D[pointer2row[rs],10] <- "***"
     }
-    tableau$D[pointer2row[rs],10] <- input$SIvalLTNSP
+    tableau$D[pointer2row[rs],11] <- input$SIvalLTNSP
     # save ecoval
     name <- paste("DI no.", input$selectspeciesSI)
     ecoval[[name]] <<- tableau$D
@@ -784,7 +786,7 @@ output$SItable6<- DT::renderDataTable({
     }
     viewTabD <- tableau$D[partial_select,]
     dat <- datatable(viewTabD, rownames = TRUE,
-                     colnames = c("Valeur à l'état initial" = 5, "Justification prédiction CT" = 6, "Incertitudes CT" = 7, "Valeur après impact CT" = 8, "Justification prédiction LT" = 9, "Incertitudes LT" = 10, "Valeur après impact LT" = 11),
+                     colnames = c("Valeur à l'état initial" = 5, "Justification" = 6, "Justification prédiction CT" = 7, "Incertitudes CT" = 8, "Valeur après impact CT" = 9, "Justification prédiction LT" = 10, "Incertitudes LT" = 11, "Valeur après impact LT" = 12),
                      selection = 'single', options = list(pageLength = dim.data.frame(tableau$D)[1], searching = TRUE, dom = 'ft', ordering = FALSE), filter = "top")%>%
       formatStyle(4, 3, backgroundColor = '#FFA02F')
   }
