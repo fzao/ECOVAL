@@ -605,28 +605,40 @@ observeEvent(input$selecthabitatSC, {
 observeEvent(input$renseignerNH2,{
   rs <- as.numeric(input$SCtable5_rows_selected)
   if(length(rs) == 1){
-    tableau$C[rs,4] <- input$ManuelNH2
-    tableau$C[rs,5] <- input$justifySCNH
+    partial_select <- c(1,2,3,4,5,6,7,8,9,17,18,19,20,21,25,26,27)
+    name  <- paste("Habitat", input$selecthabitatSC)
+    if(ecoval[[name]][4,2] == "1"){ # Fermé
+      partial_select <- c(partial_select, c(10,11,12,13,14,22))
+    }else if(ecoval[[name]][4,2] == "2"){ # Ouvert
+      partial_select <- c(partial_select, c(15, 23))
+    }else if(ecoval[[name]][4,2] == "4"){ # Zone humide
+      partial_select <- c(partial_select, c(16, 24))
+    }
+    pointer2row <- list()
+    for(i in 1:length(partial_select)) pointer2row[i] <- partial_select[i]
+    pointer2row <- as.integer(pointer2row)
+    tableau$C[pointer2row[rs],4] <- input$ManuelNH2
+    tableau$C[pointer2row[rs],5] <- input$justifySCNH
     # update array visu CT
-    tableau$C[rs,6] <- input$SCjustifCTNH
-    if(is.null(input$SCdegincCTNH)) tableau$C[rs,7] <- ""
+    tableau$C[pointer2row[rs],6] <- input$SCjustifCTNH
+    if(is.null(input$SCdegincCTNH)) tableau$C[pointer2row[rs],7] <- ""
     else{
       dimselect <- length(input$SCdegincCTNH)
-      if(dimselect == 1) tableau$C[rs,7] <- "*"
-      else if(dimselect == 2) tableau$C[rs,7] <- "**"
-      else if(dimselect == 3) tableau$C[rs,7] <- "***"
+      if(dimselect == 1) tableau$C[pointer2row[rs],7] <- "*"
+      else if(dimselect == 2) tableau$C[pointer2row[rs],7] <- "**"
+      else if(dimselect == 3) tableau$C[pointer2row[rs],7] <- "***"
     }
-    tableau$C[rs,8] <- input$SCvalCTNH
+    tableau$C[pointer2row[rs],8] <- input$SCvalCTNH
     # update array visu LT
-    tableau$C[rs,9] <- input$SCjustifLTNH
-    if(is.null(input$SCdegincLTNH)) tableau$C[rs,10] <- ""
+    tableau$C[pointer2row[rs],9] <- input$SCjustifLTNH
+    if(is.null(input$SCdegincLTNH)) tableau$C[pointer2row[rs],10] <- ""
     else{
       dimselect <- length(input$SCdegincLTNH)
-      if(dimselect == 1) tableau$C[rs,10] <- "*"
-      else if(dimselect == 2) tableau$C[rs,10] <- "**"
-      else if(dimselect == 3) tableau$C[rs,10] <- "***"
+      if(dimselect == 1) tableau$C[pointer2row[rs],10] <- "*"
+      else if(dimselect == 2) tableau$C[pointer2row[rs],10] <- "**"
+      else if(dimselect == 3) tableau$C[pointer2row[rs],10] <- "***"
     }
-    tableau$C[rs,11] <- input$SCvalLTNH
+    tableau$C[pointer2row[rs],11] <- input$SCvalLTNH
     # save ecoval
     name <- paste("CC no.", input$selecthabitatSC)
     ecoval[[name]] <<- tableau$C
@@ -693,28 +705,49 @@ observeEvent(input$selectspeciesSC, {
 observeEvent(input$renseignerNSP2,{
   rs <- as.numeric(input$SCtable6_rows_selected)
   if(length(rs) == 1){
-    tableau$D[rs,4] <- input$ManuelNSP2
-    tableau$D[rs,5] <- input$justifySCNSP
+    partial_select <- c(1,2,16,17,18,19,20)
+    name  <- paste("Espece", input$selectspeciesSC)
+    if(ecoval[[name]][3,2] != "7"){ # Faune
+      partial_select <- c(partial_select, c(3))
+    }
+    if(ecoval[[name]][3,2] == "1"){ # Avifaune
+      partial_select <- c(partial_select, c(4,5,6))
+    }else if(ecoval[[name]][3,2] == "2"){ # Chiroptere
+      partial_select <- c(partial_select, c(7,8))
+    }else if(ecoval[[name]][3,2] == "4"){ # Amphibien
+      partial_select <- c(partial_select, c(9,10,11))
+    }else if(ecoval[[name]][3,2] == "6"){ # Insecte
+      partial_select <- c(partial_select, c(12))
+    }else if(ecoval[[name]][3,2] == "7"){ # Flore
+      partial_select <- c(partial_select, c(13))
+    }else if(ecoval[[name]][3,2] == "10"){ # Communaute faunistique
+      partial_select <- c(partial_select, c(14,15))
+    }
+    pointer2row <- list()
+    for(i in 1:length(partial_select)) pointer2row[i] <- partial_select[i]
+    pointer2row <- as.integer(pointer2row)
+    tableau$D[pointer2row[rs],4] <- input$ManuelNSP2
+    tableau$D[pointer2row[rs],5] <- input$justifySCNSP
     # update array visu CT
-    tableau$D[rs,6] <- input$SCjustifCTNSP
-    if(is.null(input$SCdegincCTNSP)) tableau$D[rs,7] <- ""
+    tableau$D[pointer2row[rs],6] <- input$SCjustifCTNSP
+    if(is.null(input$SCdegincCTNSP)) tableau$D[pointer2row[rs]] <- ""
     else{
       dimselect <- length(input$SCdegincCTNSP)
-      if(dimselect == 1) tableau$D[rs,7] <- "*"
-      else if(dimselect == 2) tableau$D[rs,7] <- "**"
-      else if(dimselect == 3) tableau$D[rs,7] <- "***"
+      if(dimselect == 1) tableau$D[pointer2row[rs],7] <- "*"
+      else if(dimselect == 2) tableau$D[pointer2row[rs],7] <- "**"
+      else if(dimselect == 3) tableau$D[pointer2row[rs],7] <- "***"
     }
-    tableau$D[rs,8] <- input$SCvalCTNSP
+    tableau$D[pointer2row[rs],8] <- input$SCvalCTNSP
     # update array visu LT
-    tableau$D[rs,9] <- input$SCjustifLTNSP
-    if(is.null(input$SCdegincLTNSP)) tableau$D[rs,10] <- ""
+    tableau$D[pointer2row[rs],9] <- input$SCjustifLTNSP
+    if(is.null(input$SCdegincLTNSP)) tableau$D[pointer2row[rs],10] <- ""
     else{
       dimselect <- length(input$SCdegincLTNSP)
-      if(dimselect == 1) tableau$D[rs,10] <- "*"
-      else if(dimselect == 2) tableau$D[rs,10] <- "**"
-      else if(dimselect == 3) tableau$D[rs,10] <- "***"
+      if(dimselect == 1) tableau$D[pointer2row[rs],10] <- "*"
+      else if(dimselect == 2) tableau$D[pointer2row[rs],10] <- "**"
+      else if(dimselect == 3) tableau$D[pointer2row[rs],10] <- "***"
     }
-    tableau$D[rs,11] <- input$SCvalLTNSP
+    tableau$D[pointer2row[rs],11] <- input$SCvalLTNSP
     # save ecoval
     name <- paste("DC no.", input$selectspeciesSC)
     ecoval[[name]] <<- tableau$D

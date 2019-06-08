@@ -605,7 +605,6 @@ observeEvent(input$selecthabitatSI, {
 observeEvent(input$renseignerNH,{
   rs <- as.numeric(input$SItable5_rows_selected)
   if(length(rs) == 1){
-    
     partial_select <- c(1,2,3,4,5,6,7,8,9,17,18,19,20,21,25,26,27)
     name  <- paste("Habitat", input$selecthabitatSI)
     if(ecoval[[name]][4,2] == "1"){ # Fermé
