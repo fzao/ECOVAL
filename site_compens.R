@@ -605,14 +605,14 @@ observeEvent(input$selecthabitatSC, {
 observeEvent(input$renseignerNH2,{
   rs <- as.numeric(input$SCtable5_rows_selected)
   if(length(rs) == 1){
-    partial_select <- c(1,2,3,4,5,6,7,8,9,17,18,19,20,21,25,26,27)
+    partial_select <- c(1,2,3,4,5,6,7,8,9,16,17,18,19,20,24,25,26)
     name  <- paste("Habitat", input$selecthabitatSC)
     if(ecoval[[name]][4,2] == "1"){ # Fermé
-      partial_select <- c(partial_select, c(10,11,12,13,14,22))
+      partial_select <- c(partial_select, c(10,11,12,13,14,21))
     }else if(ecoval[[name]][4,2] == "2"){ # Ouvert
-      partial_select <- c(partial_select, c(15, 23))
+      partial_select <- c(partial_select, c(15, 22))
     }else if(ecoval[[name]][4,2] == "4"){ # Zone humide
-      partial_select <- c(partial_select, c(16, 24))
+      partial_select <- c(partial_select, c(16, 23))
     }
     pointer2row <- list()
     for(i in 1:length(partial_select)) pointer2row[i] <- partial_select[i]
@@ -656,14 +656,14 @@ observeEvent(input$renseignerNH2,{
 output$SCtable5<- DT::renderDataTable({
   dat <- NULL
   if(input$selecthabitatSC != "0"){
-    partial_select <- c(1,2,3,4,5,6,7,8,9,17,18,19,20,21,25,26,27)
+    partial_select <- c(1,2,3,4,5,6,7,8,9,16,17,18,19,20,24,25,26)
     name  <- paste("Habitat", input$selecthabitatSC)
     if(ecoval[[name]][4,2] == "1"){ # Fermé
-      partial_select <- c(partial_select, c(10,11,12,13,14,22))
+      partial_select <- c(partial_select, c(10,11,12,13,14,21))
     }else if(ecoval[[name]][4,2] == "2"){ # Ouvert
-      partial_select <- c(partial_select, c(15, 23))
+      partial_select <- c(partial_select, c(15, 22))
     }else if(ecoval[[name]][4,2] == "4"){ # Zone humide
-      partial_select <- c(partial_select, c(16, 24))
+      partial_select <- c(partial_select, c(16, 23))
     }
     viewTabC <- tableau$C[partial_select,]
     dat <- datatable(viewTabC, rownames = TRUE,

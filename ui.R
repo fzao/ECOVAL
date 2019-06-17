@@ -360,7 +360,7 @@ shinyUI(fluidPage(HTML("<!DOCTYPE html>
                                                                      column(2, align="left", selectInput("selecthabitatSI2", label = "HABITAT", choices = list("-" = 0), selected = 0)),
                                                                      column(2, align="left", selectInput("selectspeciesSI2", label = "ESPECE", choices = list("-" = 0), selected = 0))),
                                                             tabsetPanel(id="resultpertes", 
-                                                                       tabPanel(value="graphe"," Graphe", fluidRow(column(12, align="center", br(), plotlyOutput('plot_pertes')))),
+                                                                       tabPanel(value="graphe"," Graphe", fluidRow(column(12, align="center", br(), plotOutput('plot_pertes')))),
                                                                        tabPanel(value="tableau", "Tableau", fluidRow(column(8, align="left", br(), DT::dataTableOutput("SIcalcul")), column(4, align="left", br(), downloadButton("dwnlpertes", "TELECHARGER LA TABLE"))))
                                                             )
                                                    ),

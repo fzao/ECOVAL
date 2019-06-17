@@ -92,74 +92,74 @@ observeEvent(input$selecttypegraphperte, updateTabsetPanel(session, "resultperte
 observeEvent(input$selecthabitatSI2, updateTabsetPanel(session, "resultpertes", selected = "graphe"))
 observeEvent(input$selectspeciesSI2, updateTabsetPanel(session, "resultpertes", selected = "graphe"))
 
-output$plot_pertes <- renderPlotly({
+output$plot_pertes <- renderPlot({
   if(input$selectsiteimpact2 != '0'){
     # Niveau General
     if(input$selectniveauperte == '1'){
       name <- paste("SIB no.", input$selectsiteimpact2)
+      shortindicnames <- c("Nb hab forestier",
+                           "Surf hab forestier",
+                           "Nb hab ouvert",
+                           "Surf hab ouvert",
+                           "Nb hab buiss",
+                           "Surf hab buiss",
+                           "Nb hab rocheux",
+                           "Surf hab rocheux",
+                           "Nb hab humide",
+                           "Surf hab humide",
+                           "Nb hab aqua",
+                           "Surf hab aqua",
+                           "Lg lisière _ ha forêt",
+                           "Diversité avifaune", 
+                           "Diversité chiroptères", 
+                           "Diversité reptiles", 
+                           "Diversité amphibiens", 
+                           "Diversité mammifères",
+                           "Diversité insectes", 
+                           "Diversité lépidoptères", 
+                           "Diversité odonates", 
+                           "Diversité orthoptères", 
+                           "Diversité coléoptères", 
+                           "Diversité flore totale",
+                           "% habitat en danger localement",
+                           "% habitat d'intérêt comm +prio",
+                           "% sp protégées faune national et regional",
+                           "% sp protégées flore national et regional",
+                           "% sp menacées faune national",
+                           "% sp menacées flore national",
+                           "% sp menacées faune regional",
+                           "% sp menacées flore regional",
+                           "% sp faune DFFH",
+                           "% sp flore DFFH",
+                           "% avifaune DO",
+                           "% oiseaux nicheurs",
+                           "% sp repro site",
+                           "Indice de spé avifaune",
+                           "% chiroptères spécialistes",
+                           "% hab bon état conservation",
+                           "Surf milieux NON cultivés",
+                           "Surf zones NON urbanisées",
+                           "Nb sp EEE",
+                           "Nb patchs EEE",
+                           "% recouvrement EEE",
+                           "Lg linéaire transpt",
+                           "Lg linéaire haie", 
+                           "Surf corridor",
+                           "Nb Sp TVB",
+                           "% hab forestier _ PE",
+                           "% hab ouvert _ PE",
+                           "% hab rocheux _ PE",
+                           "% hab aqua _ PE",
+                           "% hab humide _ PE",
+                           "% hab buiss _ PE",
+                           "Nb zonage",
+                           "Nb Sp faune ZNIEFF",
+                           "Nb Sp flore ZNIEFF",
+                           "% milieu cultivés_PE",
+                           "% zones arti_PE",
+                           "Surf EEE prox")
       # Etat initial
       if(input$selecttypegraphperte == '1'){
-        shortindicnames <- c("Nb hab forestier",
-                             "Surf hab forestier",
-                             "Nb hab ouvert",
-                             "Surf hab ouvert",
-                             "Nb hab buiss",
-                             "Surf hab buiss",
-                             "Nb hab rocheux",
-                             "Surf hab rocheux",
-                             "Nb hab humide",
-                             "Surf hab humide",
-                             "Nb hab aqua",
-                             "Surf hab aqua",
-                             "Lg lisière _ ha forêt",
-                             "Diversité avifaune", 
-                             "Diversité chiroptères", 
-                             "Diversité reptiles", 
-                             "Diversité amphibiens", 
-                             "Diversité mammifères",
-                             "Diversité insectes", 
-                             "Diversité lépidoptères", 
-                             "Diversité odonates", 
-                             "Diversité orthoptères", 
-                             "Diversité coléoptères", 
-                             "Diversité flore totale",
-                             "% habitat en danger localement",
-                             "% habitat d'intérêt comm +prio",
-                             "% sp protégées faune national et regional",
-                             "% sp protégées flore national et regional",
-                             "% sp menacées faune national",
-                             "% sp menacées flore national",
-                             "% sp menacées faune regional",
-                             "% sp menacées flore regional",
-                             "% sp faune DFFH",
-                             "% sp flore DFFH",
-                             "% avifaune DO",
-                             "% oiseaux nicheurs",
-                             "% sp repro site",
-                             "Indice de spé avifaune",
-                             "% chiroptères spécialistes",
-                             "% hab bon état conservation",
-                             "Surf milieux NON cultivés",
-                             "Surf zones NON urbanisées",
-                             "Nb sp EEE",
-                             "Nb patchs EEE",
-                             "% recouvrement EEE",
-                             "Lg linéaire transpt",
-                             "Lg linéaire haie", 
-                             "Surf corridor",
-                             "Nb Sp TVB",
-                             "% hab forestier _ PE",
-                             "% hab ouvert _ PE",
-                             "% hab rocheux _ PE",
-                             "% hab aqua _ PE",
-                             "% hab humide _ PE",
-                             "% hab buiss _ PE",
-                             "Nb zonage",
-                             "Nb Sp faune ZNIEFF",
-                             "Nb Sp flore ZNIEFF",
-                             "% milieu cultivés_PE",
-                             "% zones arti_PE",
-                             "Surf EEE prox")
         dat1 <- data.frame(
           perimetres = ecoval[[name]][[1]],
           indicateurs = shortindicnames, # ecoval[[name]][[3]]
@@ -184,16 +184,14 @@ output$plot_pertes <- renderPlotly({
           geom_text(aes(label=valeurs,  hjust="center",vjust="bottom", y=valeurs+2))+
           theme(legend.position='none')+
           facet_grid(.~criteres, scales = "free", space ="free")+
-          theme (axis.text.x = element_text(colour="black", angle = 45, size = 8))
-      
-        p <- ggplotly(p, width=1300, height=800)
+          theme (axis.text.x = element_text(colour="black", angle = 45, size = 10, hjust = 1))
       }else if(input$selecttypegraphperte == '2'){
         # Pertes CT
         dat1 <- data.frame(
           perimetres = ecoval[[name]][[1]],
-          indicateurs = ecoval[[name]][[3]],
+          indicateurs = shortindicnames, # ecoval[[name]][[3]],
           criteres = factor(ecoval[[name]][[2]], levels=c("Diversité habitat","Diversité Espèce","Patrimonialité_PS","Fonctionnalité","Pression_PS","Connectivité","Représentativité","Patrimonialité_PE","Pression_PE", "Structure")),
-          # valeurs = as.numeric(ecoval[[name]][[7]],
+          # valeurs = as.numeric(ecoval[[name]][[4]],
           incertitudes <- ecoval[[name]][[6]],
           pertes_brutes <- as.numeric(ecoval[[name]][[7]]) - as.numeric(ecoval[[name]][[4]]),
           pertes_relatives <- as.numeric(ecoval[[name]][[7]]) - as.numeric(ecoval[[name]][[4]]) * 100 / as.numeric(ecoval[[name]][[4]]))
@@ -211,15 +209,15 @@ output$plot_pertes <- renderPlotly({
           theme(panel.grid.major = element_line(size = 0.5, colour = "light grey"))+
           theme_bw()+
           facet_grid(criteres ~ ., scales = "free", space = "free")
-        p <- ggplotly(p, width=1000, height=1200)
+        # p <- ggplotly(p, width=1000, height=1200)
       }else if(input$selecttypegraphperte == '3'){
         # Pertes LT
         dat1 <- data.frame(
           perimetres = ecoval[[name]][[1]],
-          indicateurs = ecoval[[name]][[3]],
+          indicateurs = shortindicnames, # ecoval[[name]][[3]],
           criteres = factor(ecoval[[name]][[2]], levels=c("Diversité habitat","Diversité Espèce","Patrimonialité_PS","Fonctionnalité","Pression_PS","Connectivité","Représentativité","Patrimonialité_PE","Pression_PE", "Structure")),
-          #valeurs = as.numeric(ecoval[[name]][[7]],
-          incertitudes <- ecoval[[name]][[6]],
+          #valeurs = as.numeric(ecoval[[name]][[4]],
+          incertitudes <- ecoval[[name]][[9]],
           pertes_brutes <- as.numeric(ecoval[[name]][[10]]) - as.numeric(ecoval[[name]][[4]]),
           pertes_relatives <- as.numeric(ecoval[[name]][[10]]) - as.numeric(ecoval[[name]][[4]]) * 100 / as.numeric(ecoval[[name]][[4]]))
         p <- ggplot(data=dat1, aes(x=indicateurs, y=pertes_relatives)) +
@@ -235,7 +233,7 @@ output$plot_pertes <- renderPlotly({
           theme(panel.grid.major = element_line(size = 0.5, colour = "light grey"))+
           theme_bw()+
           facet_grid(criteres ~ ., scales = "free", space = "free")
-        p <- ggplotly(p, width=1000, height=1200)
+        # p <- ggplotly(p, width=1000, height=1200)
       }
     }else if(input$selectniveauperte == '2'){
       # Niveau Habitat  
@@ -243,10 +241,36 @@ output$plot_pertes <- renderPlotly({
         shinyjs::show("dwnlpertes")
       # Etat initial
         name <- paste("CI no.", input$selecthabitatSI2)
+        shortindicnames <- c("Nb sp faune dep hab",
+                             "Nb sp flore",
+                             "Surface totale habitat",
+                             "Nombre de patches d'habitat",
+                             "Nombre de micro-habitats",
+                             "Nb horizons sol",
+                             "Epaisseur d'horizons sol",
+                             "Abondance relative de faune détritivore",
+                             "Nb sp faune dep hab reproduction",
+                             "Nb TGB",
+                             "% bois mort",
+                             "Nb sp bio-indicatrices",
+                             "Densité de lichen",
+                             "Ancienneté de la forêt",
+                             "Nb sp pollinisatrices",
+                             "% flore dominante",
+                             "Nb strates végétation",
+                             "Hauteur strates",
+                             "% sol dégradé",
+                             "Nb sp indicatrices de pression",
+                             "Tps depuis dernière coupe",
+                             "Tx recouvrement ligneux",
+                             "Tx couvert algues eutrophisation",
+                             "Indice frag type hab",
+                             "Surface d'habitat dans le PE",
+                             "% surf hab _ PE")
         if(input$selecttypegraphperte == '1'){
           dat1 <- data.frame(
             perimetres = ecoval[[name]][[1]],
-            indicateurs = ecoval[[name]][[3]],
+            indicateurs = shortindicnames, # ecoval[[name]][[3]],
             criteres = factor(ecoval[[name]][[2]], levels=c("Diversité habitat","Diversité Espèce","Patrimonialité_PS","Fonctionnalité","Pression_PS","Connectivité","Représentativité","Patrimonialité_PE","Pression_PE", "Structure")),
             valeurs = as.numeric(ecoval[[name]][[4]]))
           couleurs <- c("Diversité habitat" = "#83D072",
@@ -267,18 +291,18 @@ output$plot_pertes <- renderPlotly({
             geom_text(aes(label=valeurs,  hjust="center",vjust="bottom", y=valeurs+2))+
             theme(legend.position='none')+
             facet_grid(.~criteres, scales = "free", space ="free")+
-            theme (axis.text.x = element_text(colour="black", angle = 45, size = 8))
-          p <- ggplotly(p, width=1000, height=800)
+            theme (axis.text.x = element_text(colour="black", angle = 45, size = 10, hjust = 1))
+          # p <- ggplotly(p, width=1000, height=800)
         }else if(input$selecttypegraphperte == '2'){
         # Pertes CT
           dat1 <- data.frame(
             perimetres = ecoval[[name]][[1]],
-            indicateurs = ecoval[[name]][[3]],
+            indicateurs = shortindicnames, # ecoval[[name]][[3]],
             criteres = factor(ecoval[[name]][[2]], levels=c("Diversité habitat","Diversité Espèce","Patrimonialité_PS","Fonctionnalité","Pression_PS","Connectivité","Représentativité","Patrimonialité_PE","Pression_PE", "Structure")),
-            #valeurs = as.numeric(ecoval[[name]][[7]],
-            incertitudes <- ecoval[[name]][[6]],
-            pertes_brutes <- as.numeric(ecoval[[name]][[7]]) - as.numeric(ecoval[[name]][[4]]),
-            pertes_relatives <- as.numeric(ecoval[[name]][[7]]) - as.numeric(ecoval[[name]][[4]]) * 100 / as.numeric(ecoval[[name]][[4]]))
+            #valeurs = as.numeric(ecoval[[name]][[4]],
+            incertitudes <- ecoval[[name]][[7]],
+            pertes_brutes <- as.numeric(ecoval[[name]][[8]]) - as.numeric(ecoval[[name]][[4]]),
+            pertes_relatives <- as.numeric(ecoval[[name]][[8]]) - as.numeric(ecoval[[name]][[4]]) * 100 / as.numeric(ecoval[[name]][[4]]))
           p <- ggplot(data=dat1, aes(x=indicateurs, y=pertes_relatives)) +
             geom_bar(stat="identity",  width=0.5, aes(fill=as.factor(sign(pertes_relatives))))+
             coord_flip()+
@@ -292,17 +316,17 @@ output$plot_pertes <- renderPlotly({
             theme(panel.grid.major = element_line(size = 0.5, colour = "light grey"))+
             theme_bw()+
             facet_grid(criteres ~ ., scales = "free", space = "free")
-          p <- ggplotly(p, width=1100, height=800)
+          # p <- ggplotly(p, width=1100, height=800)
         }else if(input$selecttypegraphperte == '3'){
         # Pertes LT
           dat1 <- data.frame(
             perimetres = ecoval[[name]][[1]],
-            indicateurs = ecoval[[name]][[3]],
+            indicateurs = shortindicnames, # ecoval[[name]][[3]],
             criteres = factor(ecoval[[name]][[2]], levels=c("Diversité habitat","Diversité Espèce","Patrimonialité_PS","Fonctionnalité","Pression_PS","Connectivité","Représentativité","Patrimonialité_PE","Pression_PE", "Structure")),
-            #aleurs = as.numeric(ecoval[[name]][[7]],
-            incertitudes <- ecoval[[name]][[6]],
-            pertes_brutes <- as.numeric(ecoval[[name]][[10]]) - as.numeric(ecoval[[name]][[4]]),
-            pertes_relatives <- as.numeric(ecoval[[name]][[10]]) - as.numeric(ecoval[[name]][[4]]) * 100 / as.numeric(ecoval[[name]][[4]]))
+            #valeurs = as.numeric(ecoval[[name]][[4]],
+            incertitudes <- ecoval[[name]][[10]],
+            pertes_brutes <- as.numeric(ecoval[[name]][[11]]) - as.numeric(ecoval[[name]][[4]]),
+            pertes_relatives <- as.numeric(ecoval[[name]][[11]]) - as.numeric(ecoval[[name]][[4]]) * 100 / as.numeric(ecoval[[name]][[4]]))
           
           p <- ggplot(data=dat1, aes(x=indicateurs, y=pertes_relatives)) +
             geom_bar(stat="identity",  width=0.5, aes(fill=as.factor(sign(pertes_relatives))))+
@@ -317,7 +341,7 @@ output$plot_pertes <- renderPlotly({
             theme(panel.grid.major = element_line(size = 0.5, colour = "light grey"))+
             theme_bw()+
             facet_grid(criteres ~ ., scales = "free", space = "free")
-          p <- ggplotly(p, width=1100, height=800)
+          # p <- ggplotly(p, width=1100, height=800)
         }
       }else{
         shinyjs::hide("dwnlpertes")
@@ -330,10 +354,30 @@ output$plot_pertes <- renderPlotly({
         shinyjs::show("dwnlpertes")
         # Etat initial
         name <- paste("DI no.", input$selectspeciesSI2)
+        shortindicnames <- c("Surf tot hab favorable",
+                             "Nb patchs hab favorable",
+                             "Estimation nb indiv",
+                             "Surf nourrissage favorable",
+                             "Surf reproduction favorable",
+                             "Estimation nb couples",
+                             "Surf chasse favorable",
+                             "Nb gîtes favorables",
+                             "Surf reproduction favorable", # CFZ : A Enlever!!
+                             "Nb mâles chanteurs",
+                             "Nb pontes",
+                             "% plante(s) hôte(s)",
+                             "Nb station / pieds",
+                             "Nombre d'sp",
+                             "Nombre de familles",
+                             "%Surf SANS perturbation",
+                             "Surf hab favorable _ PE",
+                             "Nb osb sp",
+                             "Surf hab favorable connecté _ PE",
+                             "Nb zones connectées entre elles")
         if(input$selecttypegraphperte == '1'){
           dat1 <- data.frame(
             perimetres = ecoval[[name]][[1]],
-            indicateurs = ecoval[[name]][[3]],
+            indicateurs = shortindicnames, # ecoval[[name]][[3]],
             criteres = factor(ecoval[[name]][[2]], levels=c("Diversité habitat","Diversité Espèce","Patrimonialité_PS","Fonctionnalité","Pression_PS","Connectivité","Représentativité","Patrimonialité_PE","Pression_PE", "Structure")),
             valeurs = as.numeric(ecoval[[name]][[4]]))
           couleurs <- c("Diversité habitat" = "#83D072",
@@ -354,18 +398,18 @@ output$plot_pertes <- renderPlotly({
             geom_text(aes(label=valeurs,  hjust="center",vjust="bottom", y=valeurs+2))+
             theme(legend.position='none')+
             facet_grid(.~criteres, scales = "free", space ="free")+
-            theme (axis.text.x = element_text(colour="black", angle = 45, size = 8))
-          p <- ggplotly(p, width=800, height=800)
+            theme (axis.text.x = element_text(colour="black", angle = 45, size = 10, hjust = 1))
+          # p <- ggplotly(p, width=800, height=800)
         }else if(input$selecttypegraphperte == '2'){
           # Pertes CT
           dat1 <- data.frame(
             perimetres = ecoval[[name]][[1]],
-            indicateurs = ecoval[[name]][[3]],
+            indicateurs = shortindicnames, # ecoval[[name]][[3]],
             criteres = factor(ecoval[[name]][[2]], levels=c("Diversité habitat","Diversité Espèce","Patrimonialité_PS","Fonctionnalité","Pression_PS","Connectivité","Représentativité","Patrimonialité_PE","Pression_PE", "Structure")),
-           #valeurs = as.numeric(ecoval[[name]][[7]],
-            incertitudes <- ecoval[[name]][[6]],
-            pertes_brutes <- as.numeric(ecoval[[name]][[7]]) - as.numeric(ecoval[[name]][[4]]),
-            pertes_relatives <- as.numeric(ecoval[[name]][[7]]) - as.numeric(ecoval[[name]][[4]]) * 100 / as.numeric(ecoval[[name]][[4]]))
+            valeurs = as.numeric(ecoval[[name]][[4]]),
+            incertitudes <- ecoval[[name]][[7]],
+            pertes_brutes <- as.numeric(ecoval[[name]][[8]]) - as.numeric(ecoval[[name]][[4]]),
+            pertes_relatives <- as.numeric(ecoval[[name]][[8]]) - as.numeric(ecoval[[name]][[4]]) * 100 / as.numeric(ecoval[[name]][[4]]))
           
           p <- ggplot(data=dat1, aes(x=indicateurs, y=pertes_relatives)) +
             geom_bar(stat="identity",  width=0.5, aes(fill=as.factor(sign(pertes_relatives))))+
@@ -376,21 +420,22 @@ output$plot_pertes <- renderPlotly({
             geom_text(aes(label=pertes_brutes, hjust="left", vjust="center", y=2), size=2.5)+
             theme(axis.text.y=element_text(colour="black", size = 8))+
             geom_text(aes(label=incertitudes, hjust="top", vjust="center", y= -50))+
-            #geom_text(aes(label=valeurs, hjust="top", vjust="center", y= - 100), size=2.5)+
+            geom_text(aes(label=valeurs, hjust="top", vjust="center", y= - 100), size=2.5)+
+            theme (axis.text.x = element_text(colour="black", size = 10, hjust = 1)) +
             theme(panel.grid.major = element_line(size = 0.5, colour = "light grey"))+
             theme_bw()+
             facet_grid(criteres ~ ., scales = "free", space = "free")
-          p <- ggplotly(p, width=1000, height=800)
+          # p <- ggplotly(p, width=1000, height=800)
         }else if(input$selecttypegraphperte == '3'){
           # Pertes LT
           dat1 <- data.frame(
             perimetres = ecoval[[name]][[1]],
-            indicateurs = ecoval[[name]][[3]],
+            indicateurs = shortindicnames, # ecoval[[name]][[3]],
             criteres = factor(ecoval[[name]][[2]], levels=c("Diversité habitat","Diversité Espèce","Patrimonialité_PS","Fonctionnalité","Pression_PS","Connectivité","Représentativité","Patrimonialité_PE","Pression_PE", "Structure")),
-            #valeurs = as.numeric(ecoval[[name]][[7]],
-            incertitudes <- ecoval[[name]][[6]],
-            pertes_brutes <- as.numeric(ecoval[[name]][[10]]) - as.numeric(ecoval[[name]][[4]]),
-            pertes_relatives <- as.numeric(ecoval[[name]][[10]]) - as.numeric(ecoval[[name]][[4]]) * 100 / as.numeric(ecoval[[name]][[4]]))
+            #valeurs = as.numeric(ecoval[[name]][[4]],
+            incertitudes <- ecoval[[name]][[7]],
+            pertes_brutes <- as.numeric(ecoval[[name]][[11]]) - as.numeric(ecoval[[name]][[4]]),
+            pertes_relatives <- as.numeric(ecoval[[name]][[11]]) - as.numeric(ecoval[[name]][[4]]) * 100 / as.numeric(ecoval[[name]][[4]]))
           
           p <- ggplot(data=dat1, aes(x=indicateurs, y=pertes_relatives)) +
             geom_bar(stat="identity",  width=0.5, aes(fill=as.factor(sign(pertes_relatives))))+
@@ -405,7 +450,7 @@ output$plot_pertes <- renderPlotly({
             theme(panel.grid.major = element_line(size = 0.5, colour = "light grey"))+
             theme_bw()+
             facet_grid(criteres ~ ., scales = "free", space = "free")
-          p <- ggplotly(p, width=1000, height=800)
+          # p <- ggplotly(p, width=1000, height=800)
         }
       }else{
         shinyjs::hide("dwnlpertes")
