@@ -587,6 +587,7 @@ observeEvent(input$selecthabitatSC, {
     shinyjs::show("SCvalLTNH")
     shinyjs::show("renseignerNH2")
     shinyjs::show("ManuelNH2")
+    shinyjs::show("justifySCNH")
     shinyjs::show("SCtable5")
   }else{
     shinyjs::hide("SCjustifCTNH")
@@ -597,6 +598,7 @@ observeEvent(input$selecthabitatSC, {
     shinyjs::hide("SCvalLTNH")
     shinyjs::hide("renseignerNH2")
     shinyjs::hide("ManuelNH2")
+    shinyjs::hide("justifySCNH")
     shinyjs::hide("SCtable5")
   }
   if(input$descrcompens == "compensindicnh") updateSelectInput(session, "selecthabitatSI", selected = "0")
@@ -687,6 +689,7 @@ observeEvent(input$selectspeciesSC, {
     shinyjs::show("SCvalLTNSP")
     shinyjs::show("renseignerNSP2")
     shinyjs::show("ManuelNSP2")
+    shinyjs::show("justifySCNSP")
     shinyjs::show("SCtable6")
   }else{
     shinyjs::hide("SCjustifCTNSP")
@@ -697,6 +700,7 @@ observeEvent(input$selectspeciesSC, {
     shinyjs::hide("SCvalLTNSP")
     shinyjs::hide("renseignerNSP2")
     shinyjs::hide("ManuelNSP2")
+    shinyjs::hide("justifySCNSP")
     shinyjs::hide("SCtable6")
   }
   if(input$descrcompens == "compensindicnsp") updateSelectInput(session, "selectspeciesSI", selected = "0")

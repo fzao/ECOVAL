@@ -588,6 +588,7 @@ observeEvent(input$selecthabitatSI, {
     shinyjs::show("SIvalLTNH")
     shinyjs::show("renseignerNH")
     shinyjs::show("ManuelNH")
+    shinyjs::show("justifySINH")
     shinyjs::show("SItable5")
   }else{
     shinyjs::hide("SIjustifCTNH")
@@ -598,6 +599,7 @@ observeEvent(input$selecthabitatSI, {
     shinyjs::hide("SIvalLTNH")
     shinyjs::hide("renseignerNH")
     shinyjs::hide("ManuelNH")
+    shinyjs::hide("justifySINH")
     shinyjs::hide("SItable5")
   }
   if(input$descrimpact == "impactindicnh") updateSelectInput(session, "selecthabitatSC", selected = "0")
@@ -688,6 +690,7 @@ observeEvent(input$selectspeciesSI, {
     shinyjs::show("SIvalLTNSP")
     shinyjs::show("renseignerNSP")
     shinyjs::show("ManuelNSP")
+    shinyjs::show("justifySINSP")
     shinyjs::show("SItable6")
   }else{
     shinyjs::hide("SIjustifCTNSP")
@@ -698,6 +701,7 @@ observeEvent(input$selectspeciesSI, {
     shinyjs::hide("SIvalLTNSP")
     shinyjs::hide("renseignerNSP")
     shinyjs::hide("ManuelNSP")
+    shinyjs::hide("justifySINSP")
     shinyjs::hide("SItable6")
   }
   if(input$descrimpact == "impactindicnsp") updateSelectInput(session, "selectspeciesSC", selected = "0")
