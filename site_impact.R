@@ -706,7 +706,7 @@ observeEvent(input$selectspeciesSI, {
 observeEvent(input$renseignerNSP,{
   rs <- as.numeric(input$SItable6_rows_selected)
   if(length(rs) == 1){
-    partial_select <- c(1,2,16,17,18,19,20)
+    partial_select <- c(1,2,15,16,17,18,19)
     name  <- paste("Espece", input$selectspeciesSI)
     if(ecoval[[name]][3,2] != "7"){ # Faune
       partial_select <- c(partial_select, c(3))
@@ -716,13 +716,13 @@ observeEvent(input$renseignerNSP,{
     }else if(ecoval[[name]][3,2] == "2"){ # Chiroptere
       partial_select <- c(partial_select, c(7,8))
     }else if(ecoval[[name]][3,2] == "4"){ # Amphibien
-      partial_select <- c(partial_select, c(9,10,11))
+      partial_select <- c(partial_select, c(9,10))
     }else if(ecoval[[name]][3,2] == "6"){ # Insecte
-      partial_select <- c(partial_select, c(12))
+      partial_select <- c(partial_select, c(11))
     }else if(ecoval[[name]][3,2] == "7"){ # Flore
-      partial_select <- c(partial_select, c(13))
+      partial_select <- c(partial_select, c(12))
     }else if(ecoval[[name]][3,2] == "10"){ # Communaute faunistique
-      partial_select <- c(partial_select, c(14,15))
+      partial_select <- c(partial_select, c(13,14))
     }
     pointer2row <- list()
     for(i in 1:length(partial_select)) pointer2row[i] <- partial_select[i]
@@ -766,7 +766,7 @@ observeEvent(input$renseignerNSP,{
 output$SItable6<- DT::renderDataTable({
   dat <- NULL
   if(input$selectspeciesSI != "0"){
-    partial_select <- c(1,2,16,17,18,19,20)
+    partial_select <- c(1,2,15,16,17,18,19)
     name  <- paste("Espece", input$selectspeciesSI)
     if(ecoval[[name]][3,2] != "7"){ # Faune
       partial_select <- c(partial_select, c(3))
@@ -776,13 +776,13 @@ output$SItable6<- DT::renderDataTable({
     }else if(ecoval[[name]][3,2] == "2"){ # Chiroptere
       partial_select <- c(partial_select, c(7,8))
     }else if(ecoval[[name]][3,2] == "4"){ # Amphibien
-      partial_select <- c(partial_select, c(9,10,11))
+      partial_select <- c(partial_select, c(9,10))
     }else if(ecoval[[name]][3,2] == "6"){ # Insecte
-      partial_select <- c(partial_select, c(12))
+      partial_select <- c(partial_select, c(11))
     }else if(ecoval[[name]][3,2] == "7"){ # Flore
-      partial_select <- c(partial_select, c(13))
+      partial_select <- c(partial_select, c(12))
     }else if(ecoval[[name]][3,2] == "10"){ # Communaute faunistique
-      partial_select <- c(partial_select, c(14,15))
+      partial_select <- c(partial_select, c(13,14))
     }
     viewTabD <- tableau$D[partial_select,]
     dat <- datatable(viewTabD, rownames = TRUE,

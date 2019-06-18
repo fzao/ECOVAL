@@ -362,7 +362,6 @@ output$plot_pertes <- renderPlot({
                              "Estimation nb couples",
                              "Surf chasse favorable",
                              "Nb gîtes favorables",
-                             "Surf reproduction favorable", # CFZ : A Enlever!!
                              "Nb mâles chanteurs",
                              "Nb pontes",
                              "% plante(s) hôte(s)",
