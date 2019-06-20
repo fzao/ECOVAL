@@ -560,7 +560,7 @@ updateTabB2 <- function(){
 output$SCtable4<- DT::renderDataTable({
   dat <- datatable(tableau$B, rownames = TRUE,
                    colnames = c("Valeur à l'état initial" = 5, "Justification de l'estimation CT" = 6, "Degré d'incertitude CT" = 7, "Valeur après compensation CT" = 8, "Justification de l'estimation LT" = 9, "Degré d'incertitude LT" = 10, "Valeur après compensation LT" = 11),
-                   selection = 'single', options = list(pageLength = dim.data.frame(tableau$B)[1], searching = TRUE, dom = 'ft', ordering = FALSE), filter = "top") %>%
+                   selection = 'single', options = list(scrollY='300px', scrollCollapse=TRUE, pageLength = dim.data.frame(tableau$B)[1], searching = TRUE, dom = 'ft', ordering = FALSE), filter = "top") %>%
     formatStyle(4, 3, backgroundColor = styleEqual(c('Longueur de lisière (Km) / surface de milieu forestier (Ha)',
                                                      'Proportion des chiroptères spécialistes',
                                                      'Nombre de patchs d\\\'EEE',
@@ -670,7 +670,7 @@ output$SCtable5<- DT::renderDataTable({
     viewTabC <- tableau$C[partial_select,]
     dat <- datatable(viewTabC, rownames = TRUE,
                      colnames = c("Valeur à l'état initial" = 5, "Justification" = 6, "Justification prédiction CT" = 7, "Incertitudes CT" = 8, "Valeur après compensation CT" = 9, "Justification prédiction LT" = 10, "Incertitudes LT" = 11, "Valeur après compensation LT" = 12),
-                     selection = 'single', options = list(pageLength = dim.data.frame(tableau$C)[1], searching = TRUE, dom = 'ft', ordering = FALSE), filter = "top")%>%
+                     selection = 'single', options = list(scrollY='300px', scrollCollapse=TRUE, pageLength = dim.data.frame(tableau$C)[1], searching = TRUE, dom = 'ft', ordering = FALSE), filter = "top")%>%
       formatStyle(4, 3, backgroundColor = '#FFA02F')
   }
   return(dat)
@@ -790,7 +790,7 @@ output$SCtable6<- DT::renderDataTable({
     viewTabD <- tableau$D[partial_select,]
     dat <- datatable(viewTabD, rownames = TRUE,
                      colnames = c("Valeur à l'état initial" = 5, "Justification" = 6, "Justification prédiction CT" = 7, "Incertitudes CT" = 8, "Valeur après compensation CT" = 9, "Justification prédiction LT" = 10, "Incertitudes LT" = 11, "Valeur après compensation LT" = 12),
-                     selection = 'single', options = list(pageLength = dim.data.frame(tableau$D)[1], searching = TRUE, dom = 'ft', ordering = FALSE), filter = "top")%>%
+                     selection = 'single', options = list(scrollY='300px', scrollCollapse=TRUE, pageLength = dim.data.frame(tableau$D)[1], searching = TRUE, dom = 'ft', ordering = FALSE), filter = "top")%>%
       formatStyle(4, 3, backgroundColor = '#FFA02F')
   }
   return(dat)

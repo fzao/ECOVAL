@@ -195,7 +195,7 @@ shinyUI(fluidPage(HTML("<!DOCTYPE html>
                                                                                                                      "Définition de l'emprise de l'impact : l'emprise impactée est-elle en lien direct avec la valeur prédite de l'indicateur ?" = "3"))),
                                                                        column(2, align="left", numericInput("SIvalLT", "Valeur après impact", value = 0.))), br(),
                                                               fluidRow(column(12, align="center", actionButton("renseigner", "RENSEIGNER"))),
-                                                              DT::dataTableOutput("SItable4")
+                                                              DT::dataTableOutput("SItable4"), br()
                                                      ),
                                                      tabPanel(HTML('<h4 style="color: #005BBB; ">Niveau Habitat</h4>'), value="impactindicnh", br(),
                                                               selectInput("selecthabitatSI", label = "HABITAT", choices = list("-" = 0), selected = 0), br(),
@@ -216,7 +216,7 @@ shinyUI(fluidPage(HTML("<!DOCTYPE html>
                                                                                                                     "Définition de l'emprise de l'impact : l'emprise impactée est-elle en lien direct avec la valeur prédite de l'indicateur ?" = "3"))),
                                                                        column(2, align="left", numericInput("SIvalLTNH", "Valeur après impact LT", value = 0.))), br(),
                                                               fluidRow(column(12, align="center", actionButton("renseignerNH", "RENSEIGNER"))), br(),
-                                                              DT::dataTableOutput("SItable5")
+                                                              DT::dataTableOutput("SItable5"), br()
                                                      ),
                                                      tabPanel(HTML('<h4 style="color: #005BBB; ">Niveau Espèce</h4>'), value="impactindicnsp", br(),
                                                               selectInput("selectspeciesSI", label = "ESPECE", choices = list("-" = 0), selected = 0), br(),
@@ -237,7 +237,7 @@ shinyUI(fluidPage(HTML("<!DOCTYPE html>
                                                                                                                     "Définition de l'emprise de l'impact : l'emprise impactée est-elle en lien direct avec la valeur prédite de l'indicateur ?" = "3"))),
                                                                        column(2, align="left", numericInput("SIvalLTNSP", "Valeur après impact LT", value = 0.))), br(),
                                                               fluidRow(column(12, align="center", actionButton("renseignerNSP", "RENSEIGNER"))),
-                                                              DT::dataTableOutput("SItable6")
+                                                              DT::dataTableOutput("SItable6"), br()
                                                               
                                                      )
                                          )
@@ -302,7 +302,7 @@ shinyUI(fluidPage(HTML("<!DOCTYPE html>
                                                                                                                                   "Risque d'échec associé à la mesure compensatoire : les résultats de l'action de compensation sont-ils bien maîtrisés?" = "3"))),
                                                                                      column(2, align="left", numericInput("SCvalLT", "Valeur après compensation", value = 0.))), br(),
                                                                             fluidRow(column(12, align="center", actionButton("renseigner2", "RENSEIGNER"))), br(),
-                                                                            DT::dataTableOutput("SCtable4")
+                                                                            DT::dataTableOutput("SCtable4"), br()
                                                                    ),
                                                                    tabPanel(HTML('<h4 style="color: #005BBB; ">Niveau Habitat</h4>'), value="compensindicnh", br(),
                                                                             selectInput("selecthabitatSC", label = "HABITAT", choices = list("-" = 0), selected = 0), br(),
@@ -323,7 +323,7 @@ shinyUI(fluidPage(HTML("<!DOCTYPE html>
                                                                                                                                   "Risque d'échec associé à la mesure compensatoire : les résultats de l'action de compensation sont-ils bien maîtrisés?" = "3"))),
                                                                                      column(2, align="left", numericInput("SCvalLTNH", "Valeur après compensation LT", value = 0.))), br(),
                                                                             fluidRow(column(12, align="center", actionButton("renseignerNH2", "RENSEIGNER"))), br(),
-                                                                            DT::dataTableOutput("SCtable5")
+                                                                            DT::dataTableOutput("SCtable5"), br()
                                                                    ),
                                                                    tabPanel(HTML('<h4 style="color: #005BBB; ">Niveau Espèce</h4>'), value="compensindicnsp", br(),
                                                                             selectInput("selectspeciesSC", label = "ESPECE", choices = list("-" = 0), selected = 0), br(),
@@ -344,7 +344,7 @@ shinyUI(fluidPage(HTML("<!DOCTYPE html>
                                                                                                                                   "Risque d'échec associé à la mesure compensatoire : les résultats de l'action de compensation sont-ils bien maîtrisés?" = "3"))),
                                                                                      column(2, align="left", numericInput("SCvalLTNSP", "Valeur après compensation LT", value = 0.))), br(),
                                                                             fluidRow(column(12, align="center", actionButton("renseignerNSP2", "RENSEIGNER"))), br(),
-                                                                            DT::dataTableOutput("SCtable6")
+                                                                            DT::dataTableOutput("SCtable6"), br()
                                                                             
                                                                    )
                                                        )
