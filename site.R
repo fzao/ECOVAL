@@ -410,7 +410,7 @@ observeEvent(input$linkC2, {
 observeEvent(input$new, {
   numsite <<- numsite + 1
   newname <- paste("Site no.", as.character(numsite))
-  newsite <- data.frame("site" = newname, "index" = numsite, "name" = newname, "type" = as.integer(input$sitetype))
+  newsite <- data.frame("site" = newname, "index" = numsite, "name" = newname, "type" = "1")
   listsite <<- rbind(listsite, newsite)
   updateListSite(2)
   updateListSiteImpactCompens()
@@ -472,11 +472,10 @@ observeEvent(input$destroy, {
     listhabitat <<- mylist
     # destroy site
     listsite <<- listsite[-c(which(listsite$site == name)),]
+    delSICX(numero, ecoval[[name]][2,2])
     ecoval[[name]] <<- NULL
     updateListSite(2)
     updateListSiteImpactCompens()
-    # destroy tabs sicx
-    delSICX(numero)
   }
 })
 
@@ -528,24 +527,25 @@ observeEvent(input$sitetype, {
   if(numero != 0){
     name <- paste("Site no.", numero)
     if(ecoval[[name]][2,2] != input$sitetype){ # type has changed : all reset
+      delSICX(input$selectsite, ecoval[[name]][2,2])
       saveSite(input$selectsite)
       updateDescTemp(input$sitetype)
-      delSICX(input$selectsite)
       newSICX(input$selectsite)
       # MAJ appartenance habitat / species
       nbspecies <- dim(listspecies)[1] - 1
       if(nbspecies > 0){
         for(i in 1:nbspecies){
-          spname <- paste("Espece", as.character(listspecies$index[i+1]))
+          numspecies <- as.character(listspecies$index[i+1])
+          spname <- paste("Espece", numspecies)
           if(exists(spname, where = ecoval)){
             if(ecoval[[spname]][6,2] == ecoval[[name]][12,2]){
               ecoval[[spname]][7,2] <<- ecoval[[name]][2,2]
               if(ecoval[[spname]][7,2] == '1' | ecoval[[spname]][7,2] == '3'){
-                newname <- paste("DI no.", as.character(numspecies))
+                newname <- paste("DI no.", numspecies)
                 ecoval[[newname]] <<- model_D
               }
               if(ecoval[[spname]][7,2] == '2' | ecoval[[spname]][7,2] == '3'){
-                newname <- paste("DC no.", as.character(numspecies))
+                newname <- paste("DC no.", numspecies)
                 ecoval[[newname]] <<- model_D
               }
             }
@@ -555,16 +555,17 @@ observeEvent(input$sitetype, {
       nbhabitat <- dim(listhabitat)[1] - 1
       if(nbhabitat > 0){
         for(i in 1:nbhabitat){
-          hname <- paste("Habitat", as.character(listhabitat$index[i+1]))
+          numhabitat <- as.character(listhabitat$index[i+1])
+          hname <- paste("Habitat", numhabitat)
           if(exists(hname, where = ecoval)){
             if(ecoval[[hname]][7,2] == ecoval[[name]][12,2]){
               ecoval[[hname]][8,2] <<- ecoval[[name]][2,2]
               if(ecoval[[hname]][8,2] == '1' | ecoval[[hname]][8,2] == '3'){
-                newname <- paste("CI no.", as.character(numhabitat))
+                newname <- paste("CI no.", numhabitat)
                 ecoval[[newname]] <<- model_C
               }
               if(ecoval[[hname]][8,2] == '2' | ecoval[[hname]][8,2] == '3'){
-                newname <- paste("CC no.", as.character(numhabitat))
+                newname <- paste("CC no.", numhabitat)
                 ecoval[[newname]] <<- model_C
               }
             }
@@ -720,8 +721,7 @@ newSICX <- function(numsite){
   }
 }
 
-delSICX <- function(numsite){
-  type <- input$sitetype
+delSICX <- function(numsite, type){
   if(type == "1" | type == "3"){  # impacte
     # A1
     newname <- paste("SIA1 no.", numsite)
