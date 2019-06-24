@@ -388,6 +388,25 @@ observeEvent(input$link3, {
     h5("PORTEE DES PERTURBATIONS"), hr(), text1, text2, text3, easyClose = TRUE, footer = NULL))
 })
 
+descrIncertNG <- function(){
+  text1 <- h5(strong("-- Niveau A --\n"))
+  text2 <- h5("Influence du projet : la prédiction de la valeur de l'indicateur dépend-elle essentiellement des actions réalisées par le maître d'ouvrage ? Y a-t-il une part qu'il ne peut pas maîtriser ?")
+  text3 <- h5(strong("-- Niveau B --\n"))
+  text4 <- h5("Comportement de l'espèce faune ou flore : le comportement (capacité de recolonisation) des espèces sur lesquelles porte l'indicateur est-il bien connu ?")
+  text5 <- h5(strong("-- Niveau C --\n"))
+  text6 <- h5("Risque d'échec associé à la mesure compensatoire : les résultats de l'action de compensation sont-ils bien maîtrisés?")
+  showModal(modalDialog(
+    h5("NIVEAU GENERAL DES INCERTITUDES"), hr(), text1, text2, text3, text4, text5, text6, easyClose = TRUE, footer = NULL))
+}
+
+observeEvent(input$linkC1, {
+  descrIncertNG()
+})
+
+observeEvent(input$linkC2, {
+  descrIncertNG()
+})
+
 observeEvent(input$new, {
   numsite <<- numsite + 1
   newname <- paste("Site no.", as.character(numsite))
