@@ -155,13 +155,78 @@ observeEvent(input$selecttypegraphequivalence, updateTabsetPanel(session, "resul
 observeEvent(input$selecthabitatSE, updateTabsetPanel(session, "resultequivalence", selected = "graphe"))
 observeEvent(input$selectspeciesSE, updateTabsetPanel(session, "resultequivalence", selected = "graphe"))
 
-output$plot_equivalence <- renderPlotly({
+output$plot_equivalence <- renderPlot({
   if(input$selectsiteimpact3 != '0' & input$selectsitecompens3 != '0'){
-    # Niveau General
+    
+    ### Niveau General
+    
     if(input$selectniveauequivalence == '1'){
       nameImp <- paste("SIB no.", input$selectsiteimpact3)
       nameComp <- paste("SCB no.", input$selectsitecompens3)
+      shortindicnames <- c("Nb hab forestier",
+                           "Surf hab forestier",
+                           "Nb hab ouvert",
+                           "Surf hab ouvert",
+                           "Nb hab buiss",
+                           "Surf hab buiss",
+                           "Nb hab rocheux",
+                           "Surf hab rocheux",
+                           "Nb hab humide",
+                           "Surf hab humide",
+                           "Nb hab aqua",
+                           "Surf hab aqua",
+                           "Lg lisière _ ha forêt",
+                           "Diversité avifaune", 
+                           "Diversité chiroptères", 
+                           "Diversité reptiles", 
+                           "Diversité amphibiens", 
+                           "Diversité mammifères",
+                           "Diversité insectes", 
+                           "Diversité lépidoptères", 
+                           "Diversité odonates", 
+                           "Diversité orthoptères", 
+                           "Diversité coléoptères", 
+                           "Diversité flore totale",
+                           "% habitat en danger localement",
+                           "% habitat d'intérêt comm +prio",
+                           "% sp protégées faune national et regional",
+                           "% sp protégées flore national et regional",
+                           "% sp menacées faune national",
+                           "% sp menacées flore national",
+                           "% sp menacées faune regional",
+                           "% sp menacées flore regional",
+                           "% sp faune DFFH",
+                           "% sp flore DFFH",
+                           "% avifaune DO",
+                           "% oiseaux nicheurs",
+                           "% sp repro site",
+                           "Indice de spé avifaune",
+                           "% chiroptères spécialistes",
+                           "% hab bon état conservation",
+                           "Surf milieux NON cultivés",
+                           "Surf zones NON urbanisées",
+                           "Nb sp EEE",
+                           "Nb patchs EEE",
+                           "% recouvrement EEE",
+                           "Lg linéaire transpt",
+                           "Lg linéaire haie", 
+                           "Surf corridor",
+                           "Nb Sp TVB",
+                           "% hab forestier _ PE",
+                           "% hab ouvert _ PE",
+                           "% hab rocheux _ PE",
+                           "% hab aqua _ PE",
+                           "% hab humide _ PE",
+                           "% hab buiss _ PE",
+                           "Nb zonage",
+                           "Nb Sp faune ZNIEFF",
+                           "Nb Sp flore ZNIEFF",
+                           "% milieu cultivés_PE",
+                           "% zones arti_PE",
+                           "Surf EEE prox")
+      
       if(input$selecttypegraphequivalence == '1'){
+        
       # Equivalence CT
         moins <- as.numeric(ecoval[[nameImp]][[7]]) - as.numeric(ecoval[[nameImp]][[4]])
         plus <- as.numeric(ecoval[[nameComp]][[7]]) - as.numeric(ecoval[[nameComp]][[4]])
@@ -169,17 +234,31 @@ output$plot_equivalence <- renderPlotly({
         natzero <- (equivalCT == 0) & (moins != 0)
         natzero[natzero==TRUE] <- '*'
         natzero[natzero==FALSE] <- ''
+  
         dat1 <- data.frame(
           perimetres = ecoval[[nameImp]][[1]],
-          indicateurs = ecoval[[nameImp]][[3]],
+          indicateurs = shortindicnames, #ecoval[[nameImp]][[3]],
           criteres = factor(ecoval[[nameImp]][[2]], levels=c("Diversité habitat","Diversité Espèce","Patrimonialité_PS","Fonctionnalité","Pression_PS","Connectivité","Représentativité","Patrimonialité_PE","Pression_PE")),
           equivalence = equivalCT)
-        p <- ggplot(data=dat1, aes(x=criteres, y=equivalence, fill=indicateurs)) + theme(legend.position="none") + coord_flip() +
-          geom_bar(stat="identity", position=position_dodge(), colour="black")
+        
+        p <- ggplot(data=dat1, aes(x=indicateurs, y= equivalence))
+        geom_bar(stat="identity",  width=0.5, aes(fill=as.factor(sign(equivalence))))+
+          coord_flip()+
+          labs(x="Indicateurs", y="Pertes / Gains NETS")+
+          scale_fill_manual(values=c("#C67677", "#7FDD4C", "#7FDD4C"))+
+          theme(legend.position="none")+
+          theme(axis.text.x=element_text(colour="black", size = 11))+
+          geom_text(aes(label=equivalence, hjust="center", vjust="top", y= equivalence))+
+          theme(panel.grid.major = element_line(size = 0.5, colour = "light grey"))+
+          theme_bw()+
+          facet_grid(criteres ~ ., scales = "free", space = "free")
+      }
+        
         dat1["100% compensé"] <- natzero
         dat1["pertes brutes"] <- moins
         dat1["gains brutes"] <- plus
       }else if(input$selecttypegraphequivalence == '2'){
+        
       # Equivalence LT
         moins <- as.numeric(ecoval[[nameImp]][[10]]) - as.numeric(ecoval[[nameImp]][[4]])
         plus <- as.numeric(ecoval[[nameComp]][[10]]) - as.numeric(ecoval[[nameComp]][[4]])
@@ -187,22 +266,65 @@ output$plot_equivalence <- renderPlotly({
         natzero <- (equivalLT == 0) & (moins != 0)
         natzero[natzero==TRUE] <- '*'
         natzero[natzero==FALSE] <- ''
+        
         dat1 <- data.frame(
           perimetres = ecoval[[nameImp]][[1]],
-          indicateurs = ecoval[[nameImp]][[3]],
+          indicateurs = shortindicnames, #ecoval[[nameImp]][[3]],
           criteres = factor(ecoval[[nameImp]][[2]], levels=c("Diversité habitat","Diversité Espèce","Patrimonialité_PS","Fonctionnalité","Pression_PS","Connectivité","Représentativité","Patrimonialité_PE","Pression_PE")),
           equivalence = equivalLT)
-        p <- ggplot(data=dat1, aes(x=criteres, y=equivalence, fill=indicateurs)) + theme(legend.position="none") + coord_flip() +
-          geom_bar(stat="identity", position=position_dodge(), colour="black")
+        
+        p <- ggplot(data=dat1, aes(x=indicateurs, y= equivalence))
+        geom_bar(stat="identity",  width=0.5, aes(fill=as.factor(sign(equivalence))))+
+          coord_flip()+
+          labs(x="Indicateurs", y="Pertes / Gains NETS")+
+          scale_fill_manual(values=c("#C67677", "#7FDD4C", "#7FDD4C"))+
+          theme(legend.position="none")+
+          theme(axis.text.x=element_text(colour="black", size = 11))+
+          geom_text(aes(label=equivalence, hjust="center", vjust="top", y= equivalence))+
+          theme(panel.grid.major = element_line(size = 0.5, colour = "light grey"))+
+          theme_bw()+
+          facet_grid(criteres ~ ., scales = "free", space = "free")
+      
+        
         dat1["100% compensé"] <- natzero
         dat1["pertes brutes"] <- moins
         dat1["gains brutes"] <- plus
       }
-      p <- ggplotly(p, width=500, height=1000)
+      # p <- ggplotly(p, width=500, height=1000)
+      
     }else if(input$selectniveauequivalence == '2'){
-      # Niveau Habitat
+      
+      ### Niveau Habitat
+      
       if(input$selecthabitatSE != '0'){
         shinyjs::show("dwnlequivalence")
+        shortindicnames <- c("Nb sp faune dep hab",
+                             "Nb sp flore",
+                             "Surface totale habitat",
+                             "Nombre de patches d'habitat",
+                             "Nombre de micro-habitats",
+                             "Nb horizons sol",
+                             "Epaisseur d'horizons sol",
+                             "Abondance relative de faune détritivore",
+                             "Nb sp faune dep hab reproduction",
+                             "Nb TGB",
+                             "% bois mort",
+                             "Nb sp bio-indicatrices",
+                             "Densité de lichen",
+                             "Ancienneté de la forêt",
+                             "Nb sp pollinisatrices",
+                             "% flore dominante",
+                             "Nb strates végétation",
+                             "Hauteur strates",
+                             "% sol dégradé",
+                             "Nb sp indicatrices de pression",
+                             "Tps depuis dernière coupe",
+                             "Tx recouvrement ligneux",
+                             "Tx couvert algues eutrophisation",
+                             "Indice frag type hab",
+                             "Surface d'habitat dans le PE",
+                             "% surf hab _ PE")
+        
         numHabitat <- as.numeric(input$selecthabitatSE)
         nameHabitat <- listhabitat$name[numHabitat+1]
         indicehabitat <- which(listhabitat$name == nameHabitat, arr.ind = TRUE)
@@ -211,6 +333,7 @@ output$plot_equivalence <- renderPlotly({
         moins <- c(rep(0., dim(model_C)[1]))
         plus <- c(rep(0., dim(model_C)[1]))
         if(input$selecttypegraphequivalence == '1'){
+          
         # Equivalence CT
           for(i in indicehabitat){
             hname <- listhabitat$habitat[i]
@@ -228,6 +351,7 @@ output$plot_equivalence <- renderPlotly({
             }
           }
         }else if(input$selecttypegraphequivalence == '2'){
+          
         # Equivalence LT
           for(i in indicehabitat){
             hname <- listhabitat$habitat[i]
@@ -249,13 +373,26 @@ output$plot_equivalence <- renderPlotly({
         natzero <- (equival == 0) & (moins != 0)
         natzero[natzero==TRUE] <- '*'
         natzero[natzero==FALSE] <- ''
+        
         dat1 <- data.frame(
           perimetres = ecoval[[nameIC]][[1]],
-          indicateurs = ecoval[[nameIC]][[3]],
+          indicateurs = shortindicnames, #ecoval[[nameIC]][[3]],
           criteres = factor(ecoval[[nameIC]][[2]], levels=c("Diversité espèce", "Fonctionnalité", "Structure", "Pression", "Connectivité", "Représentativité")),
           equivalence = equival)
-        p <- ggplot(data=dat1, aes(x=criteres, y=equivalence, fill=indicateurs)) + theme(legend.position="none") + coord_flip() +
-          geom_bar(stat="identity", position=position_dodge(), colour="black")
+        
+        p <- ggplot(data=dat1, aes(x=indicateurs, y= equivalence))
+        geom_bar(stat="identity",  width=0.5, aes(fill=as.factor(sign(equivalence))))+
+          coord_flip()+
+          labs(x="Indicateurs", y="Pertes / Gains NETS")+
+          scale_fill_manual(values=c("#C67677", "#7FDD4C", "#7FDD4C"))+
+          theme(legend.position="none")+
+          theme(axis.text.x=element_text(colour="black", size = 11))+
+          geom_text(aes(label=equivalence, hjust="center", vjust="top", y= equivalence))+
+          theme(panel.grid.major = element_line(size = 0.5, colour = "light grey"))+
+          theme_bw()+
+          facet_grid(criteres ~ ., scales = "free", space = "free")
+      
+        
         dat1["100% compensé"] <- natzero
         dat1["pertes brutes"] <- moins
         dat1["gains brutes"] <- plus
@@ -264,11 +401,34 @@ output$plot_equivalence <- renderPlotly({
         dat1 <- NULL
         p <- plotly_empty(type = "scatter", mode = "markers")
       }
-      p <- ggplotly(p, width=500, height=1000)
+      # p <- ggplotly(p, width=500, height=1000)
+      
     }else if(input$selectniveauequivalence == '3'){
-      # Niveau Espece
+      
+      ### Niveau Espece
+      
       if(input$selectspeciesSE != '0'){
         shinyjs::show("dwnlequivalence")
+        shortindicnames <- c("Surf tot hab favorable",
+                             "Nb patchs hab favorable",
+                             "Estimation nb indiv",
+                             "Surf nourrissage favorable",
+                             "Surf reproduction favorable",
+                             "Estimation nb couples",
+                             "Surf chasse favorable",
+                             "Nb gîtes favorables",
+                             "Nb mâles chanteurs",
+                             "Nb pontes",
+                             "% plante(s) hôte(s)",
+                             "Nb station / pieds",
+                             "Nombre d'sp",
+                             "Nombre de familles",
+                             "% Surf SANS perturbation",
+                             "Surf hab favorable _ PE",
+                             "Nb osb sp",
+                             "Surf hab favorable connecté _ PE",
+                             "Nb zones connectées entre elles")
+        
         numSpecies <- as.numeric(input$selectspeciesSE)
         nameSpecies <- listspecies$name[numSpecies+1]
         indicespecies <- which(listspecies$name == nameSpecies, arr.ind = TRUE)
@@ -277,6 +437,7 @@ output$plot_equivalence <- renderPlotly({
         moins <- c(rep(0., dim(model_D)[1]))
         plus <- c(rep(0., dim(model_D)[1]))
         if(input$selecttypegraphequivalence == '1'){
+          
         # Equivalence CT
           for(i in indicespecies){
             sname <- listspecies$species[i]
@@ -294,6 +455,7 @@ output$plot_equivalence <- renderPlotly({
             }
           }
         }else if(input$selecttypegraphequivalence == '2'){
+          
         # Equivalence LT
           for(i in indicespecies){
             sname <- listspecies$species[i]
@@ -315,13 +477,26 @@ output$plot_equivalence <- renderPlotly({
         natzero <- (equival == 0) & (moins != 0)
         natzero[natzero==TRUE] <- '*'
         natzero[natzero==FALSE] <- ''
+        
         dat1 <- data.frame(
           perimetres = ecoval[[nameIC]][[1]],
-          indicateurs = ecoval[[nameIC]][[3]],
+          indicateurs = shortindicnames, #ecoval[[nameIC]][[3]],
           criteres = factor(ecoval[[nameIC]][[2]], levels=c("Diversité espèce", "Fonctionnalité", "Pression", "Connectivité", "Représentativité")),
           equivalence = equival)
-        p <- ggplot(data=dat1, aes(x=criteres, y=equivalence, fill=indicateurs)) + theme(legend.position="none") + coord_flip() +
-          geom_bar(stat="identity", position=position_dodge(), colour="black")
+        
+        p <- ggplot(data=dat1, aes(x=indicateurs, y= equivalence))
+        geom_bar(stat="identity",  width=0.5, aes(fill=as.factor(sign(equivalence))))+
+          coord_flip()+
+          labs(x="Indicateurs", y="Pertes / Gains NETS")+
+          scale_fill_manual(values=c("#C67677", "#7FDD4C", "#7FDD4C"))+
+          theme(legend.position="none")+
+          theme(axis.text.x=element_text(colour="black", size = 11))+
+          geom_text(aes(label=equivalence, hjust="center", vjust="top", y= equivalence))+
+          theme(panel.grid.major = element_line(size = 0.5, colour = "light grey"))+
+          theme_bw()+
+          facet_grid(criteres ~ ., scales = "free", space = "free")
+      
+        
         dat1["100% compensé"] <- natzero
         dat1["pertes brutes"] <- moins
         dat1["gains brutes"] <- plus

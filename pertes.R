@@ -94,7 +94,9 @@ observeEvent(input$selectspeciesSI2, updateTabsetPanel(session, "resultpertes", 
 
 output$plot_pertes <- renderPlot({
   if(input$selectsiteimpact2 != '0'){
-    # Niveau General
+    
+    ### Niveau General
+    
     if(input$selectniveauperte == '1'){
       name <- paste("SIB no.", input$selectsiteimpact2)
       shortindicnames <- c("Nb hab forestier",
@@ -183,34 +185,41 @@ output$plot_pertes <- renderPlot({
           scale_fill_manual(values=couleurs)+
           geom_text(aes(label=valeurs,  hjust="center",vjust="bottom", y=valeurs+2))+
           theme(legend.position='none')+
+          labs(x="Indicateurs", y="Valeur à l'état initial")+
           facet_grid(.~criteres, scales = "free", space ="free")+
           theme (axis.text.x = element_text(colour="black", angle = 45, size = 10, hjust = 1))
+        # renderPlot(p, height = 800, width = 800)
+        
       }else if(input$selecttypegraphperte == '2'){
+        
         # Pertes CT
         dat1 <- data.frame(
           perimetres = ecoval[[name]][[1]],
           indicateurs = shortindicnames, # ecoval[[name]][[3]],
           criteres = factor(ecoval[[name]][[2]], levels=c("Diversité habitat","Diversité Espèce","Patrimonialité_PS","Fonctionnalité","Pression_PS","Connectivité","Représentativité","Patrimonialité_PE","Pression_PE", "Structure")),
-          # valeurs = as.numeric(ecoval[[name]][[4]],
+          valeurs = as.numeric(ecoval[[name]][[4]],
           incertitudes <- ecoval[[name]][[6]],
           pertes_brutes <- as.numeric(ecoval[[name]][[7]]) - as.numeric(ecoval[[name]][[4]]),
           pertes_relatives <- as.numeric(ecoval[[name]][[7]]) - as.numeric(ecoval[[name]][[4]]) * 100 / as.numeric(ecoval[[name]][[4]]))
+        )
           
         p <- ggplot(data=dat1, aes(x=indicateurs, y=pertes_relatives)) +
           geom_bar(stat="identity",  width=0.5, aes(fill=as.factor(sign(pertes_relatives))))+
           coord_flip()+
           labs(x="Indicateurs", y="Pertes relatives (barre) et brutes (nombre)")+
-          scale_fill_manual(values=c("#B82010", "#7FDD4C", "#7FDD4C"))+
+          scale_fill_manual(values=c("#C67677", "#7FDD4C", "#7FDD4C"))+
           theme(legend.position="none")+
-          geom_text(aes(label=pertes_brutes, hjust="left", vjust="center", y=2), size=2.5)+
-          theme(axis.text.y=element_text(colour="black", size = 8))+
-          geom_text(aes(label=incertitudes, hjust="top", vjust="center", y= -50))+
-          #geom_text(aes(label=valeurs, hjust="top", vjust="center", y= - 100), size=2.5)+
+          geom_text(aes(label=pertes_brutes, hjust="center", vjust="center", y=pertes_brutes*0.5), size=3)+
+          theme(axis.text.x=element_text(colour="black", size = 11))+
+          geom_text(aes(label=incertitudes, hjust="center", vjust="top", y= pertes_brutes))+
           theme(panel.grid.major = element_line(size = 0.5, colour = "light grey"))+
           theme_bw()+
           facet_grid(criteres ~ ., scales = "free", space = "free")
-        # p <- ggplotly(p, width=1000, height=1200)
+        # plotOutput(p, width = "80%", height = "100%")
+       
+        
       }else if(input$selecttypegraphperte == '3'){
+        
         # Pertes LT
         dat1 <- data.frame(
           perimetres = ecoval[[name]][[1]],
@@ -219,24 +228,27 @@ output$plot_pertes <- renderPlot({
           #valeurs = as.numeric(ecoval[[name]][[4]],
           incertitudes <- ecoval[[name]][[9]],
           pertes_brutes <- as.numeric(ecoval[[name]][[10]]) - as.numeric(ecoval[[name]][[4]]),
-          pertes_relatives <- as.numeric(ecoval[[name]][[10]]) - as.numeric(ecoval[[name]][[4]]) * 100 / as.numeric(ecoval[[name]][[4]]))
+          pertes_relatives <- as.numeric(ecoval[[name]][[10]]) - as.numeric(ecoval[[name]][[4]]) * 100 / as.numeric(ecoval[[name]][[4]])
+        )
+        
         p <- ggplot(data=dat1, aes(x=indicateurs, y=pertes_relatives)) +
           geom_bar(stat="identity",  width=0.5, aes(fill=as.factor(sign(pertes_relatives))))+
           coord_flip()+
           labs(x="Indicateurs", y="Pertes relatives (barre) et brutes (nombre)")+
-          scale_fill_manual(values=c("#B82010", "#7FDD4C", "#7FDD4C"))+
+          scale_fill_manual(values=c("#C67677", "#7FDD4C", "#7FDD4C"))+
           theme(legend.position="none")+
-          geom_text(aes(label=pertes_brutes, hjust="left", vjust="center", y=2), size=2.5)+
-          theme(axis.text.y=element_text(colour="black", size = 8))+
-          geom_text(aes(label=incertitudes, hjust="top", vjust="center", y= -50))+
-          #geom_text(aes(label=valeurs, hjust="top", vjust="center", y= - 100), size=2.5)+
+          geom_text(aes(label=pertes_brutes, hjust="center", vjust="center", y=pertes_brutes*0.5), size=3)+
+          theme(axis.text.x=element_text(colour="black", size = 11))+
+          geom_text(aes(label=incertitudes, hjust="center", vjust="top", y= pertes_brutes))+
           theme(panel.grid.major = element_line(size = 0.5, colour = "light grey"))+
           theme_bw()+
           facet_grid(criteres ~ ., scales = "free", space = "free")
-        # p <- ggplotly(p, width=1000, height=1200)
+        
       }
     }else if(input$selectniveauperte == '2'){
-      # Niveau Habitat  
+      
+      ### Niveau Habitat  
+      
       if(input$selecthabitatSI2 != '0'){
         shinyjs::show("dwnlpertes")
       # Etat initial
@@ -272,7 +284,8 @@ output$plot_pertes <- renderPlot({
             perimetres = ecoval[[name]][[1]],
             indicateurs = shortindicnames, # ecoval[[name]][[3]],
             criteres = factor(ecoval[[name]][[2]], levels=c("Diversité habitat","Diversité Espèce","Patrimonialité_PS","Fonctionnalité","Pression_PS","Connectivité","Représentativité","Patrimonialité_PE","Pression_PE", "Structure")),
-            valeurs = as.numeric(ecoval[[name]][[4]]))
+            valeurs = as.numeric(ecoval[[name]][[4]])
+          )
           couleurs <- c("Diversité habitat" = "#83D072",
                         "Diversité Espèce" ="#1E6218",
                         "Patrimonialité_PS" = "#9D403E",
@@ -290,10 +303,13 @@ output$plot_pertes <- renderPlot({
             scale_fill_manual(values=couleurs)+
             geom_text(aes(label=valeurs,  hjust="center",vjust="bottom", y=valeurs+2))+
             theme(legend.position='none')+
+            labs(x="Indicateurs", y="Valeur à l'état initial")+
             facet_grid(.~criteres, scales = "free", space ="free")+
             theme (axis.text.x = element_text(colour="black", angle = 45, size = 10, hjust = 1))
           # p <- ggplotly(p, width=1000, height=800)
+          
         }else if(input$selecttypegraphperte == '2'){
+          
         # Pertes CT
           dat1 <- data.frame(
             perimetres = ecoval[[name]][[1]],
@@ -302,22 +318,25 @@ output$plot_pertes <- renderPlot({
             #valeurs = as.numeric(ecoval[[name]][[4]],
             incertitudes <- ecoval[[name]][[7]],
             pertes_brutes <- as.numeric(ecoval[[name]][[8]]) - as.numeric(ecoval[[name]][[4]]),
-            pertes_relatives <- as.numeric(ecoval[[name]][[8]]) - as.numeric(ecoval[[name]][[4]]) * 100 / as.numeric(ecoval[[name]][[4]]))
+            pertes_relatives <- as.numeric(ecoval[[name]][[8]]) - as.numeric(ecoval[[name]][[4]]) * 100 / as.numeric(ecoval[[name]][[4]])
+          )
+          
           p <- ggplot(data=dat1, aes(x=indicateurs, y=pertes_relatives)) +
             geom_bar(stat="identity",  width=0.5, aes(fill=as.factor(sign(pertes_relatives))))+
             coord_flip()+
             labs(x="Indicateurs", y="Pertes relatives (barre) et brutes (nombre)")+
-            scale_fill_manual(values=c("#B82010", "#7FDD4C", "#7FDD4C"))+
+            scale_fill_manual(values=c("#C67677", "#7FDD4C", "#7FDD4C"))+
             theme(legend.position="none")+
-            geom_text(aes(label=pertes_brutes, hjust="left", vjust="center", y=2), size=2.5)+
-            theme(axis.text.y=element_text(colour="black", size = 8))+
-            geom_text(aes(label=incertitudes, hjust="top", vjust="center", y= -50))+
-            #geom_text(aes(label=valeurs, hjust="top", vjust="center", y= - 100), size=2.5)+
+            geom_text(aes(label=pertes_brutes, hjust="center", vjust="center", y=pertes_brutes*0.5), size=3)+
+            theme(axis.text.x=element_text(colour="black", size = 11))+
+            geom_text(aes(label=incertitudes, hjust="center", vjust="top", y= pertes_brutes))+
             theme(panel.grid.major = element_line(size = 0.5, colour = "light grey"))+
             theme_bw()+
             facet_grid(criteres ~ ., scales = "free", space = "free")
           # p <- ggplotly(p, width=1100, height=800)
+          
         }else if(input$selecttypegraphperte == '3'){
+          
         # Pertes LT
           dat1 <- data.frame(
             perimetres = ecoval[[name]][[1]],
@@ -326,18 +345,18 @@ output$plot_pertes <- renderPlot({
             #valeurs = as.numeric(ecoval[[name]][[4]],
             incertitudes <- ecoval[[name]][[10]],
             pertes_brutes <- as.numeric(ecoval[[name]][[11]]) - as.numeric(ecoval[[name]][[4]]),
-            pertes_relatives <- as.numeric(ecoval[[name]][[11]]) - as.numeric(ecoval[[name]][[4]]) * 100 / as.numeric(ecoval[[name]][[4]]))
+            pertes_relatives <- as.numeric(ecoval[[name]][[11]]) - as.numeric(ecoval[[name]][[4]]) * 100 / as.numeric(ecoval[[name]][[4]])
+          )
           
           p <- ggplot(data=dat1, aes(x=indicateurs, y=pertes_relatives)) +
             geom_bar(stat="identity",  width=0.5, aes(fill=as.factor(sign(pertes_relatives))))+
             coord_flip()+
             labs(x="Indicateurs", y="Pertes relatives (barre) et brutes (nombre)")+
-            scale_fill_manual(values=c("#B82010", "#7FDD4C", "#7FDD4C"))+
+            scale_fill_manual(values=c("#C67677", "#7FDD4C", "#7FDD4C"))+
             theme(legend.position="none")+
-            geom_text(aes(label=pertes_brutes, hjust="left", vjust="center", y=2), size=2.5)+
-            theme(axis.text.y=element_text(colour="black", size = 8))+
-            geom_text(aes(label=incertitudes, hjust="top", vjust="center", y= -50))+
-            #geom_text(aes(label=valeurs, hjust="top", vjust="center", y= - 100), size=2.5)+
+            geom_text(aes(label=pertes_brutes, hjust="center", vjust="center", y=pertes_brutes*0.5), size=3)+
+            theme(axis.text.x=element_text(colour="black", size = 11))+
+            geom_text(aes(label=incertitudes, hjust="center", vjust="top", y= pertes_brutes))+
             theme(panel.grid.major = element_line(size = 0.5, colour = "light grey"))+
             theme_bw()+
             facet_grid(criteres ~ ., scales = "free", space = "free")
@@ -349,9 +368,12 @@ output$plot_pertes <- renderPlot({
         p <- plotly_empty(type = "scatter", mode = "markers")
       }
     }else if(input$selectniveauperte == '3'){
-      # Niveau Espece
+      
+      ### Niveau Espece
+      
       if(input$selectspeciesSI2 != '0'){
         shinyjs::show("dwnlpertes")
+        
         # Etat initial
         name <- paste("DI no.", input$selectspeciesSI2)
         shortindicnames <- c("Surf tot hab favorable",
@@ -368,17 +390,19 @@ output$plot_pertes <- renderPlot({
                              "Nb station / pieds",
                              "Nombre d'sp",
                              "Nombre de familles",
-                             "%Surf SANS perturbation",
+                             "% Surf SANS perturbation",
                              "Surf hab favorable _ PE",
                              "Nb osb sp",
                              "Surf hab favorable connecté _ PE",
                              "Nb zones connectées entre elles")
+        
         if(input$selecttypegraphperte == '1'){
           dat1 <- data.frame(
             perimetres = ecoval[[name]][[1]],
             indicateurs = shortindicnames, # ecoval[[name]][[3]],
             criteres = factor(ecoval[[name]][[2]], levels=c("Diversité habitat","Diversité Espèce","Patrimonialité_PS","Fonctionnalité","Pression_PS","Connectivité","Représentativité","Patrimonialité_PE","Pression_PE", "Structure")),
-            valeurs = as.numeric(ecoval[[name]][[4]]))
+            valeurs = as.numeric(ecoval[[name]][[4]])
+          )
           couleurs <- c("Diversité habitat" = "#83D072",
                         "Diversité Espèce" ="#1E6218",
                         "Patrimonialité_PS" = "#9D403E",
@@ -396,10 +420,13 @@ output$plot_pertes <- renderPlot({
             scale_fill_manual(values=couleurs)+
             geom_text(aes(label=valeurs,  hjust="center",vjust="bottom", y=valeurs+2))+
             theme(legend.position='none')+
+            labs(x="Indicateurs", y="Valeur à l'état initial")+
             facet_grid(.~criteres, scales = "free", space ="free")+
             theme (axis.text.x = element_text(colour="black", angle = 45, size = 10, hjust = 1))
           # p <- ggplotly(p, width=800, height=800)
+          
         }else if(input$selecttypegraphperte == '2'){
+          
           # Pertes CT
           dat1 <- data.frame(
             perimetres = ecoval[[name]][[1]],
@@ -408,24 +435,25 @@ output$plot_pertes <- renderPlot({
             valeurs = as.numeric(ecoval[[name]][[4]]),
             incertitudes <- ecoval[[name]][[7]],
             pertes_brutes <- as.numeric(ecoval[[name]][[8]]) - as.numeric(ecoval[[name]][[4]]),
-            pertes_relatives <- as.numeric(ecoval[[name]][[8]]) - as.numeric(ecoval[[name]][[4]]) * 100 / as.numeric(ecoval[[name]][[4]]))
+            pertes_relatives <- as.numeric(ecoval[[name]][[8]]) - as.numeric(ecoval[[name]][[4]]) * 100 / as.numeric(ecoval[[name]][[4]])
+          )
           
           p <- ggplot(data=dat1, aes(x=indicateurs, y=pertes_relatives)) +
             geom_bar(stat="identity",  width=0.5, aes(fill=as.factor(sign(pertes_relatives))))+
             coord_flip()+
             labs(x="Indicateurs", y="Pertes relatives (barre) et brutes (nombre)")+
-            scale_fill_manual(values=c("#B82010", "#7FDD4C", "#7FDD4C"))+
+            scale_fill_manual(values=c("#C67677", "#7FDD4C", "#7FDD4C"))+
             theme(legend.position="none")+
-            geom_text(aes(label=pertes_brutes, hjust="left", vjust="center", y=2), size=2.5)+
-            theme(axis.text.y=element_text(colour="black", size = 8))+
-            geom_text(aes(label=incertitudes, hjust="top", vjust="center", y= -50))+
-            geom_text(aes(label=valeurs, hjust="top", vjust="center", y= - 100), size=2.5)+
-            theme (axis.text.x = element_text(colour="black", size = 10, hjust = 1)) +
+            geom_text(aes(label=pertes_brutes, hjust="center", vjust="center", y=pertes_brutes*0.5), size=3)+
+            theme(axis.text.x=element_text(colour="black", size = 11))+
+            geom_text(aes(label=incertitudes, hjust="center", vjust="top", y= pertes_brutes))+
             theme(panel.grid.major = element_line(size = 0.5, colour = "light grey"))+
             theme_bw()+
             facet_grid(criteres ~ ., scales = "free", space = "free")
           # p <- ggplotly(p, width=1000, height=800)
+          
         }else if(input$selecttypegraphperte == '3'){
+          
           # Pertes LT
           dat1 <- data.frame(
             perimetres = ecoval[[name]][[1]],
@@ -434,18 +462,18 @@ output$plot_pertes <- renderPlot({
             #valeurs = as.numeric(ecoval[[name]][[4]],
             incertitudes <- ecoval[[name]][[7]],
             pertes_brutes <- as.numeric(ecoval[[name]][[11]]) - as.numeric(ecoval[[name]][[4]]),
-            pertes_relatives <- as.numeric(ecoval[[name]][[11]]) - as.numeric(ecoval[[name]][[4]]) * 100 / as.numeric(ecoval[[name]][[4]]))
+            pertes_relatives <- as.numeric(ecoval[[name]][[11]]) - as.numeric(ecoval[[name]][[4]]) * 100 / as.numeric(ecoval[[name]][[4]])
+          )
           
           p <- ggplot(data=dat1, aes(x=indicateurs, y=pertes_relatives)) +
             geom_bar(stat="identity",  width=0.5, aes(fill=as.factor(sign(pertes_relatives))))+
             coord_flip()+
             labs(x="Indicateurs", y="Pertes relatives (barre) et brutes (nombre)")+
-            scale_fill_manual(values=c("#B82010", "#7FDD4C", "#7FDD4C"))+
+            scale_fill_manual(values=c("#C67677", "#7FDD4C", "#7FDD4C"))+
             theme(legend.position="none")+
-            geom_text(aes(label=pertes_brutes, hjust="left", vjust="center", y=2), size=2.5)+
-            theme(axis.text.y=element_text(colour="black", size = 8))+
-            geom_text(aes(label=incertitudes, hjust="top", vjust="center", y= -50))+
-            #geom_text(aes(label=valeurs, hjust="top", vjust="center", y= - 100), size=2.5)+
+            geom_text(aes(label=pertes_brutes, hjust="center", vjust="center", y=pertes_brutes*0.5), size=3)+
+            theme(axis.text.x=element_text(colour="black", size = 11))+
+            geom_text(aes(label=incertitudes, hjust="center", vjust="top", y= pertes_brutes))+
             theme(panel.grid.major = element_line(size = 0.5, colour = "light grey"))+
             theme_bw()+
             facet_grid(criteres ~ ., scales = "free", space = "free")
