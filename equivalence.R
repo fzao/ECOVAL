@@ -252,7 +252,7 @@ output$plot_equivalence <- renderPlot({
           theme(panel.grid.major = element_line(size = 0.5, colour = "light grey"))+
           theme_bw()+
           facet_grid(criteres ~ ., scales = "free", space = "free")
-      }
+      #cfz}
         
         dat1["100% compensé"] <- natzero
         dat1["pertes brutes"] <- moins
