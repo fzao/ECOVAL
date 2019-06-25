@@ -399,13 +399,13 @@ descrIncertNG <- function(){
     h5("NIVEAU GENERAL DES INCERTITUDES"), hr(), text1, text2, text3, text4, text5, text6, easyClose = TRUE, footer = NULL))
 }
 
-observeEvent(input$linkC1, {
-  descrIncertNG()
-})
+observeEvent(input$linkC1, descrIncertNG())
+observeEvent(input$linkC2, descrIncertNG())
+observeEvent(input$linkC3, descrIncertNG())
+observeEvent(input$linkC4, descrIncertNG())
+observeEvent(input$linkC5, descrIncertNG())
+observeEvent(input$linkC6, descrIncertNG())
 
-observeEvent(input$linkC2, {
-  descrIncertNG()
-})
 
 observeEvent(input$new, {
   numsite <<- numsite + 1
