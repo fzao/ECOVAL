@@ -388,7 +388,7 @@ observeEvent(input$link3, {
     h5("PORTEE DES PERTURBATIONS"), hr(), text1, text2, text3, easyClose = TRUE, footer = NULL))
 })
 
-descrIncertNG <- function(){
+descrIncertC <- function(){
   text1 <- h5(strong("-- Niveau A --\n"))
   text2 <- h5("Influence du projet : la prédiction de la valeur de l'indicateur dépend-elle essentiellement des actions réalisées par le maître d'ouvrage ? Y a-t-il une part qu'il ne peut pas maîtriser ?")
   text3 <- h5(strong("-- Niveau B --\n"))
@@ -399,12 +399,30 @@ descrIncertNG <- function(){
     h5("NIVEAU GENERAL DES INCERTITUDES"), hr(), text1, text2, text3, text4, text5, text6, easyClose = TRUE, footer = NULL))
 }
 
-observeEvent(input$linkC1, descrIncertNG())
-observeEvent(input$linkC2, descrIncertNG())
-observeEvent(input$linkC3, descrIncertNG())
-observeEvent(input$linkC4, descrIncertNG())
-observeEvent(input$linkC5, descrIncertNG())
-observeEvent(input$linkC6, descrIncertNG())
+observeEvent(input$linkC1, descrIncertC())
+observeEvent(input$linkC2, descrIncertC())
+observeEvent(input$linkC3, descrIncertC())
+observeEvent(input$linkC4, descrIncertC())
+observeEvent(input$linkC5, descrIncertC())
+observeEvent(input$linkC6, descrIncertC())
+
+descrIncertI <- function(){
+  text1 <- h5(strong("-- Niveau A --\n"))
+  text2 <- h5("Influence du projet : la prédiction de la valeur de l'indicateur dépend-elle essentiellement des actions réalisées par le maître d'ouvrage ? Y a-t-il une part qu'il ne peut pas maîtriser ?")
+  text3 <- h5(strong("-- Niveau B --\n"))
+  text4 <- h5("Comportement de l'espèce faune ou flore : le comportement (capacité de recolonisation) des espèces sur lesquelles porte l'indicateur est-il bien connu ?")
+  text5 <- h5(strong("-- Niveau C --\n"))
+  text6 <- h5("Définition de l'emprise de l'impact : l'emprise impactée est-elle en lien direct avec la valeur prédite de l'indicateur ?")
+  showModal(modalDialog(
+    h5("NIVEAU GENERAL DES INCERTITUDES"), hr(), text1, text2, text3, text4, text5, text6, easyClose = TRUE, footer = NULL))
+}
+
+observeEvent(input$linkI1, descrIncertI())
+observeEvent(input$linkI2, descrIncertI())
+observeEvent(input$linkI3, descrIncertI())
+observeEvent(input$linkI4, descrIncertI())
+observeEvent(input$linkI5, descrIncertI())
+observeEvent(input$linkI6, descrIncertI())
 
 
 observeEvent(input$new, {
