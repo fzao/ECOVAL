@@ -41,11 +41,11 @@ shinyServer(function(input, output, session) {
   })
   
   observeEvent(input$redir5, {
-    updateTabsetPanel(session, "tabs", selected = "calculs")
+    updateTabsetPanel(session, "tabs", selected = "compens")
   })
   
   observeEvent(input$redir6, {
-    updateTabsetPanel(session, "tabs", selected = "synth")
+    updateTabsetPanel(session, "tabs", selected = "calculs")
   })
   
   observeEvent(input$redir7, {

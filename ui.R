@@ -137,7 +137,7 @@ shinyUI(fluidPage(HTML("<!DOCTYPE html>
                                        # leafletOutput("projectmap")
                                       ),
                               # SITE IMPACTE ----------------------------------------------
-                              tabPanel(value="siteimpact", HTML('<h4 style="color: #005BBB; "><b>Site impacté</b></h4>'), br(),
+                              tabPanel(value="impact", HTML('<h4 style="color: #005BBB; "><b>Site impacté</b></h4>'), br(),
                                        selectInput("selectsiteimpact", label = "SITE", choices = list("-" = 0), selected = 0), hr(),
                                        conditionalPanel(condition = "input.selectsiteimpact != '0'",
                                          tabsetPanel(id="descrimpact",
