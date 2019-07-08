@@ -197,10 +197,10 @@ output$plot_gains <- renderPlot({
           perimetres = ecoval[[name]][[1]],
           indicateurs = ecoval[[name]][[3]],
           criteres = factor(ecoval[[name]][[2]], levels=c("Diversité habitat","Diversité Espèce","Patrimonialité_PS","Fonctionnalité","Pression_PS","Connectivité","Représentativité","Patrimonialité_PE","Pression_PE", "Structure")),
-          valeurs = as.numeric(ecoval[[name]][[7]],
+          # valeurs = as.numeric(ecoval[[name]][[7]]),
           incertitudes <- ecoval[[name]][[6]],
           gains_bruts <- as.numeric(ecoval[[name]][[7]]) - as.numeric(ecoval[[name]][[4]]),
-          gains_relatifs <- as.numeric(ecoval[[name]][[7]]) - as.numeric(ecoval[[name]][[4]]) * 100 / as.numeric(ecoval[[name]][[4]]))
+          gains_relatifs <- as.numeric(ecoval[[name]][[7]]) - as.numeric(ecoval[[name]][[4]]) * 100 / as.numeric(ecoval[[name]][[4]])
         )
         
         p <- ggplot(data=dat1, aes(x=indicateurs, y=gains_relatifs)) +
@@ -208,12 +208,12 @@ output$plot_gains <- renderPlot({
           coord_flip()+
           labs(x="Indicateurs", y="Pertes relatives (barre) et brutes (nombre)")+
           scale_fill_manual(values=c("#C67677", "#7FDD4C", "#7FDD4C"))+
+          theme_bw()+
           theme(legend.position="none")+
           geom_text(aes(label=gains_bruts, hjust="center", vjust="center", y=gains_bruts*0.5), size=3)+
           theme(axis.text.x=element_text(colour="black", size = 11))+
           geom_text(aes(label=incertitudes, hjust="center", vjust="top", y= gains_bruts))+
           theme(panel.grid.major = element_line(size = 0.5, colour = "light grey"))+
-          theme_bw()+
           facet_grid(criteres ~ ., scales = "free", space = "free")
         # plotOutput(p, width = "80%", height = "100%")
         
@@ -224,10 +224,10 @@ output$plot_gains <- renderPlot({
           perimetres = ecoval[[name]][[1]],
           indicateurs = ecoval[[name]][[3]],
           criteres = factor(ecoval[[name]][[2]], levels=c("Diversité habitat","Diversité Espèce","Patrimonialité_PS","Fonctionnalité","Pression_PS","Connectivité","Représentativité","Patrimonialité_PE","Pression_PE", "Structure")),
-          valeurs = as.numeric(ecoval[[name]][[7]],
+          # valeurs = as.numeric(ecoval[[name]][[7]]),
           incertitudes <- ecoval[[name]][[6]],
           gains_bruts <- as.numeric(ecoval[[name]][[10]]) - as.numeric(ecoval[[name]][[4]]),
-          gains_relatifs <- as.numeric(ecoval[[name]][[10]]) - as.numeric(ecoval[[name]][[4]]) * 100 / as.numeric(ecoval[[name]][[4]]))
+          gains_relatifs <- as.numeric(ecoval[[name]][[10]]) - as.numeric(ecoval[[name]][[4]]) * 100 / as.numeric(ecoval[[name]][[4]])
         )
         
         p <- ggplot(data=dat1, aes(x=indicateurs, y=gains_relatifs)) +
@@ -235,12 +235,12 @@ output$plot_gains <- renderPlot({
           coord_flip()+
           labs(x="Indicateurs", y="Pertes relatives (barre) et brutes (nombre)")+
           scale_fill_manual(values=c("#C67677", "#7FDD4C", "#7FDD4C"))+
+          theme_bw()+
           theme(legend.position="none")+
           geom_text(aes(label=gains_bruts, hjust="center", vjust="center", y=gains_bruts*0.5), size=3)+
           theme(axis.text.x=element_text(colour="black", size = 11))+
           geom_text(aes(label=incertitudes, hjust="center", vjust="top", y= gains_bruts))+
           theme(panel.grid.major = element_line(size = 0.5, colour = "light grey"))+
-          theme_bw()+
           facet_grid(criteres ~ ., scales = "free", space = "free")
         
       }
@@ -315,10 +315,10 @@ output$plot_gains <- renderPlot({
             perimetres = ecoval[[name]][[1]],
             indicateurs = ecoval[[name]][[3]],
             criteres = factor(ecoval[[name]][[2]], levels=c("Diversité habitat","Diversité Espèce","Patrimonialité_PS","Fonctionnalité","Pression_PS","Connectivité","Représentativité","Patrimonialité_PE","Pression_PE", "Structure")),
-            valeurs = as.numeric(ecoval[[name]][[7]],
+            # valeurs = as.numeric(ecoval[[name]][[7]]),
             incertitudes <- ecoval[[name]][[6]],
             gains_bruts <- as.numeric(ecoval[[name]][[7]]) - as.numeric(ecoval[[name]][[4]]),
-            gains_relatifs <- as.numeric(ecoval[[name]][[7]]) - as.numeric(ecoval[[name]][[4]]) * 100 / as.numeric(ecoval[[name]][[4]]))
+            gains_relatifs <- as.numeric(ecoval[[name]][[7]]) - as.numeric(ecoval[[name]][[4]]) * 100 / as.numeric(ecoval[[name]][[4]])
           )
           
           p <- ggplot(data=dat1, aes(x=indicateurs, y=gains_relatifs)) +
@@ -326,12 +326,12 @@ output$plot_gains <- renderPlot({
             coord_flip()+
             labs(x="Indicateurs", y="Pertes relatives (barre) et brutes (nombre)")+
             scale_fill_manual(values=c("#C67677", "#7FDD4C", "#7FDD4C"))+
+            theme_bw()+
             theme(legend.position="none")+
             geom_text(aes(label=gains_bruts, hjust="center", vjust="center", y=gains_bruts*0.5), size=3)+
             theme(axis.text.x=element_text(colour="black", size = 11))+
             geom_text(aes(label=incertitudes, hjust="center", vjust="top", y= gains_bruts))+
             theme(panel.grid.major = element_line(size = 0.5, colour = "light grey"))+
-            theme_bw()+
             facet_grid(criteres ~ ., scales = "free", space = "free")
           # p <- ggplotly(p, width=1100, height=800)
           
@@ -342,10 +342,10 @@ output$plot_gains <- renderPlot({
             perimetres = ecoval[[name]][[1]],
             indicateurs = ecoval[[name]][[3]],
             criteres = factor(ecoval[[name]][[2]], levels=c("Diversité habitat","Diversité Espèce","Patrimonialité_PS","Fonctionnalité","Pression_PS","Connectivité","Représentativité","Patrimonialité_PE","Pression_PE", "Structure")),
-            valeurs = as.numeric(ecoval[[name]][[7]],
+            #valeurs = as.numeric(ecoval[[name]][[7]]),
             incertitudes <- ecoval[[name]][[6]],
             gains_bruts <- as.numeric(ecoval[[name]][[10]]) - as.numeric(ecoval[[name]][[4]]),
-            gains_relatifs <- as.numeric(ecoval[[name]][[10]]) - as.numeric(ecoval[[name]][[4]]) * 100 / as.numeric(ecoval[[name]][[4]]))
+            gains_relatifs <- as.numeric(ecoval[[name]][[10]]) - as.numeric(ecoval[[name]][[4]]) * 100 / as.numeric(ecoval[[name]][[4]])
           )
           
           p <- ggplot(data=dat1, aes(x=indicateurs, y=gains_relatifs)) +
@@ -353,12 +353,12 @@ output$plot_gains <- renderPlot({
             coord_flip()+
             labs(x="Indicateurs", y="Pertes relatives (barre) et brutes (nombre)")+
             scale_fill_manual(values=c("#C67677", "#7FDD4C", "#7FDD4C"))+
+            theme_bw()+
             theme(legend.position="none")+
             geom_text(aes(label=gains_bruts, hjust="center", vjust="center", y=gains_bruts*0.5), size=3)+
             theme(axis.text.x=element_text(colour="black", size = 11))+
             geom_text(aes(label=incertitudes, hjust="center", vjust="top", y= gains_bruts))+
             theme(panel.grid.major = element_line(size = 0.5, colour = "light grey"))+
-            theme_bw()+
             facet_grid(criteres ~ ., scales = "free", space = "free")
           # p <- ggplotly(p, width=1100, height=800)
           
@@ -432,10 +432,10 @@ output$plot_gains <- renderPlot({
             perimetres = ecoval[[name]][[1]],
             indicateurs = ecoval[[name]][[3]],
             criteres = factor(ecoval[[name]][[2]], levels=c("Diversité habitat","Diversité Espèce","Patrimonialité_PS","Fonctionnalité","Pression_PS","Connectivité","Représentativité","Patrimonialité_PE","Pression_PE", "Structure")),
-            valeurs = as.numeric(ecoval[[name]][[7]],
+            # valeurs = as.numeric(ecoval[[name]][[7]]),
             incertitudes <- ecoval[[name]][[6]],
             gains_bruts <- as.numeric(ecoval[[name]][[7]]) - as.numeric(ecoval[[name]][[4]]),
-            gains_relatifs <- as.numeric(ecoval[[name]][[7]]) - as.numeric(ecoval[[name]][[4]]) * 100 / as.numeric(ecoval[[name]][[4]]))
+            gains_relatifs <- as.numeric(ecoval[[name]][[7]]) - as.numeric(ecoval[[name]][[4]]) * 100 / as.numeric(ecoval[[name]][[4]])
           )
           
           p <- ggplot(data=dat1, aes(x=indicateurs, y=gains_relatifs)) +
@@ -443,12 +443,12 @@ output$plot_gains <- renderPlot({
             coord_flip()+
             labs(x="Indicateurs", y="Pertes relatives (barre) et brutes (nombre)")+
             scale_fill_manual(values=c("#C67677", "#7FDD4C", "#7FDD4C"))+
+            theme_bw()+
             theme(legend.position="none")+
             geom_text(aes(label=gains_bruts, hjust="center", vjust="center", y=gains_bruts*0.5), size=3)+
             theme(axis.text.x=element_text(colour="black", size = 11))+
             geom_text(aes(label=incertitudes, hjust="center", vjust="top", y= gains_bruts))+
             theme(panel.grid.major = element_line(size = 0.5, colour = "light grey"))+
-            theme_bw()+
             facet_grid(criteres ~ ., scales = "free", space = "free")
           # p <- ggplotly(p, width=1000, height=800)
           
@@ -459,10 +459,10 @@ output$plot_gains <- renderPlot({
             perimetres = ecoval[[name]][[1]],
             indicateurs = ecoval[[name]][[3]],
             criteres = factor(ecoval[[name]][[2]], levels=c("Diversité habitat","Diversité Espèce","Patrimonialité_PS","Fonctionnalité","Pression_PS","Connectivité","Représentativité","Patrimonialité_PE","Pression_PE", "Structure")),
-            valeurs = as.numeric(ecoval[[name]][[7]],
+            # valeurs = as.numeric(ecoval[[name]][[7]]),
             incertitudes <- ecoval[[name]][[6]],
             gains_bruts <- as.numeric(ecoval[[name]][[10]]) - as.numeric(ecoval[[name]][[4]]),
-            gains_relatifs <- as.numeric(ecoval[[name]][[10]]) - as.numeric(ecoval[[name]][[4]]) * 100 / as.numeric(ecoval[[name]][[4]]))
+            gains_relatifs <- as.numeric(ecoval[[name]][[10]]) - as.numeric(ecoval[[name]][[4]]) * 100 / as.numeric(ecoval[[name]][[4]])
           )
           
           p <- ggplot(data=dat1, aes(x=indicateurs, y=gains_relatifs)) +
@@ -470,12 +470,12 @@ output$plot_gains <- renderPlot({
             coord_flip()+
             labs(x="Indicateurs", y="Pertes relatives (barre) et brutes (nombre)")+
             scale_fill_manual(values=c("#C67677", "#7FDD4C", "#7FDD4C"))+
+            theme_bw()+
             theme(legend.position="none")+
             geom_text(aes(label=gains_bruts, hjust="center", vjust="center", y=gains_bruts*0.5), size=3)+
             theme(axis.text.x=element_text(colour="black", size = 11))+
             geom_text(aes(label=incertitudes, hjust="center", vjust="top", y= gains_bruts))+
             theme(panel.grid.major = element_line(size = 0.5, colour = "light grey"))+
-            theme_bw()+
             facet_grid(criteres ~ ., scales = "free", space = "free")
           # p <- ggplotly(p, width=1000, height=800)
           

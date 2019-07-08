@@ -246,11 +246,11 @@ output$plot_equivalence <- renderPlot({
           coord_flip()+
           labs(x="Indicateurs", y="Pertes / Gains NETS")+
           scale_fill_manual(values=c("#C67677", "#7FDD4C", "#7FDD4C"))+
+          theme_bw()+
           theme(legend.position="none")+
           theme(axis.text.x=element_text(colour="black", size = 11))+
           geom_text(aes(label=equivalence, hjust="center", vjust="top", y= equivalence))+
           theme(panel.grid.major = element_line(size = 0.5, colour = "light grey"))+
-          theme_bw()+
           facet_grid(criteres ~ ., scales = "free", space = "free")
 
         dat1["100% compensé"] <- natzero
@@ -277,11 +277,11 @@ output$plot_equivalence <- renderPlot({
           coord_flip()+
           labs(x="Indicateurs", y="Pertes / Gains NETS")+
           scale_fill_manual(values=c("#C67677", "#7FDD4C", "#7FDD4C"))+
+          theme_bw()+
           theme(legend.position="none")+
           theme(axis.text.x=element_text(colour="black", size = 11))+
           geom_text(aes(label=equivalence, hjust="center", vjust="top", y= equivalence))+
           theme(panel.grid.major = element_line(size = 0.5, colour = "light grey"))+
-          theme_bw()+
           facet_grid(criteres ~ ., scales = "free", space = "free")
       
         
@@ -384,11 +384,11 @@ output$plot_equivalence <- renderPlot({
           coord_flip()+
           labs(x="Indicateurs", y="Pertes / Gains NETS")+
           scale_fill_manual(values=c("#C67677", "#7FDD4C", "#7FDD4C"))+
+          theme_bw()+
           theme(legend.position="none")+
           theme(axis.text.x=element_text(colour="black", size = 11))+
           geom_text(aes(label=equivalence, hjust="center", vjust="top", y= equivalence))+
           theme(panel.grid.major = element_line(size = 0.5, colour = "light grey"))+
-          theme_bw()+
           facet_grid(criteres ~ ., scales = "free", space = "free")
       
         
@@ -488,11 +488,11 @@ output$plot_equivalence <- renderPlot({
           coord_flip()+
           labs(x="Indicateurs", y="Pertes / Gains NETS")+
           scale_fill_manual(values=c("#C67677", "#7FDD4C", "#7FDD4C"))+
+          theme_bw()+
           theme(legend.position="none")+
           theme(axis.text.x=element_text(colour="black", size = 11))+
           geom_text(aes(label=equivalence, hjust="center", vjust="top", y= equivalence))+
           theme(panel.grid.major = element_line(size = 0.5, colour = "light grey"))+
-          theme_bw()+
           facet_grid(criteres ~ ., scales = "free", space = "free")
       
         
