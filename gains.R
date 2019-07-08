@@ -195,12 +195,12 @@ output$plot_gains <- renderPlot({
         # Gains CT
         dat1 <- data.frame(
           perimetres = ecoval[[name]][[1]],
-          indicateurs = ecoval[[name]][[3]],
+          indicateurs = shortindicnames, # ecoval[[name]][[3]],
           criteres = factor(ecoval[[name]][[2]], levels=c("Diversité habitat","Diversité Espèce","Patrimonialité_PS","Fonctionnalité","Pression_PS","Connectivité","Représentativité","Patrimonialité_PE","Pression_PE", "Structure")),
           # valeurs = as.numeric(ecoval[[name]][[7]]),
           incertitudes <- ecoval[[name]][[6]],
           gains_bruts <- as.numeric(ecoval[[name]][[7]]) - as.numeric(ecoval[[name]][[4]]),
-          gains_relatifs <- as.numeric(ecoval[[name]][[7]]) - as.numeric(ecoval[[name]][[4]]) * 100 / as.numeric(ecoval[[name]][[4]])
+          gains_relatifs <- (as.numeric(ecoval[[name]][[7]]) - as.numeric(ecoval[[name]][[4]])) * 100 / as.numeric(ecoval[[name]][[4]])
         )
         
         p <- ggplot(data=dat1, aes(x=indicateurs, y=gains_relatifs)) +
@@ -210,9 +210,9 @@ output$plot_gains <- renderPlot({
           scale_fill_manual(values=c("#C67677", "#7FDD4C", "#7FDD4C"))+
           theme_bw()+
           theme(legend.position="none")+
-          geom_text(aes(label=gains_bruts, hjust="center", vjust="center", y=gains_bruts*0.5), size=3)+
+          geom_text(aes(label=gains_bruts, hjust="center", vjust="center", y=gains_relatifs*0.5), size=3)+
           theme(axis.text.x=element_text(colour="black", size = 11))+
-          geom_text(aes(label=incertitudes, hjust="center", vjust="top", y= gains_bruts))+
+          geom_text(aes(label=incertitudes, hjust="center", vjust="bottom", y= gains_relatifs))+
           theme(panel.grid.major = element_line(size = 0.5, colour = "light grey"))+
           facet_grid(criteres ~ ., scales = "free", space = "free")
         # plotOutput(p, width = "80%", height = "100%")
@@ -222,12 +222,12 @@ output$plot_gains <- renderPlot({
         # Gains LT
         dat1 <- data.frame(
           perimetres = ecoval[[name]][[1]],
-          indicateurs = ecoval[[name]][[3]],
+          indicateurs = shortindicnames, # ecoval[[name]][[3]],
           criteres = factor(ecoval[[name]][[2]], levels=c("Diversité habitat","Diversité Espèce","Patrimonialité_PS","Fonctionnalité","Pression_PS","Connectivité","Représentativité","Patrimonialité_PE","Pression_PE", "Structure")),
           # valeurs = as.numeric(ecoval[[name]][[7]]),
           incertitudes <- ecoval[[name]][[6]],
           gains_bruts <- as.numeric(ecoval[[name]][[10]]) - as.numeric(ecoval[[name]][[4]]),
-          gains_relatifs <- as.numeric(ecoval[[name]][[10]]) - as.numeric(ecoval[[name]][[4]]) * 100 / as.numeric(ecoval[[name]][[4]])
+          gains_relatifs <- (as.numeric(ecoval[[name]][[10]]) - as.numeric(ecoval[[name]][[4]])) * 100 / as.numeric(ecoval[[name]][[4]])
         )
         
         p <- ggplot(data=dat1, aes(x=indicateurs, y=gains_relatifs)) +
@@ -237,9 +237,9 @@ output$plot_gains <- renderPlot({
           scale_fill_manual(values=c("#C67677", "#7FDD4C", "#7FDD4C"))+
           theme_bw()+
           theme(legend.position="none")+
-          geom_text(aes(label=gains_bruts, hjust="center", vjust="center", y=gains_bruts*0.5), size=3)+
+          geom_text(aes(label=gains_bruts, hjust="center", vjust="center", y=gains_relatifs*0.5), size=3)+
           theme(axis.text.x=element_text(colour="black", size = 11))+
-          geom_text(aes(label=incertitudes, hjust="center", vjust="top", y= gains_bruts))+
+          geom_text(aes(label=incertitudes, hjust="center", vjust="bottom", y= gains_relatifs))+
           theme(panel.grid.major = element_line(size = 0.5, colour = "light grey"))+
           facet_grid(criteres ~ ., scales = "free", space = "free")
         
@@ -280,11 +280,23 @@ output$plot_gains <- renderPlot({
         # Etat initial
         name <- paste("CC no.", input$selecthabitatSC2)
         if(input$selecttypegraphgain == '1'){
+          # cfz
+          namehab <- paste("Habitat", input$selecthabitatSC2)
+          partial_select <- c(1,2,3,4,5,6,7,8,9,16,17,18,19,20,24,25,26)
+          if(ecoval[[namehab]][4,2] == "1"){ # Fermé
+            partial_select <- c(partial_select, c(10,11,12,13,14,21))
+          }else if(ecoval[[namehab]][4,2] == "2"){ # Ouvert
+            partial_select <- c(partial_select, c(15, 22))
+          }else if(ecoval[[namehab]][4,2] == "4"){ # Zone humide
+            partial_select <- c(partial_select, c(16, 23))
+          }
+          tabhab <- ecoval[[name]][partial_select,]
+          tabhab[[3]] <- shortindicnames[partial_select]
           dat1 <- data.frame(
-            perimetres = ecoval[[name]][[1]],
-            indicateurs = ecoval[[name]][[3]],
-            criteres = factor(ecoval[[name]][[2]], levels=c("Diversité espèce", "Fonctionnalité", "Structure", "Pression", "Connectivité", "Représentativité")),
-            valeurs = as.numeric(ecoval[[name]][[4]])
+            perimetres = tabhab[[1]],
+            indicateurs = tabhab[[3]],
+            criteres = factor(tabhab[[2]], levels=c("Diversité espèce", "Fonctionnalité", "Structure", "Pression", "Connectivité", "Représentativité")),
+            valeurs = as.numeric(tabhab[[4]])
           )
           couleurs <- c("Diversité habitat" = "#83D072",
                         "Diversité Espèce" ="#1E6218",
@@ -311,14 +323,25 @@ output$plot_gains <- renderPlot({
         }else if(input$selecttypegraphgain == '2'){
           
           # Gains CT
+          namehab <- paste("Habitat", input$selecthabitatSC2)
+          partial_select <- c(1,2,3,4,5,6,7,8,9,16,17,18,19,20,24,25,26)
+          if(ecoval[[namehab]][4,2] == "1"){ # Fermé
+            partial_select <- c(partial_select, c(10,11,12,13,14,21))
+          }else if(ecoval[[namehab]][4,2] == "2"){ # Ouvert
+            partial_select <- c(partial_select, c(15, 22))
+          }else if(ecoval[[namehab]][4,2] == "4"){ # Zone humide
+            partial_select <- c(partial_select, c(16, 23))
+          }
+          tabhab <- ecoval[[name]][partial_select,]
+          tabhab[[3]] <- shortindicnames[partial_select]
           dat1 <- data.frame(
-            perimetres = ecoval[[name]][[1]],
-            indicateurs = ecoval[[name]][[3]],
-            criteres = factor(ecoval[[name]][[2]], levels=c("Diversité habitat","Diversité Espèce","Patrimonialité_PS","Fonctionnalité","Pression_PS","Connectivité","Représentativité","Patrimonialité_PE","Pression_PE", "Structure")),
-            # valeurs = as.numeric(ecoval[[name]][[7]]),
-            incertitudes <- ecoval[[name]][[6]],
-            gains_bruts <- as.numeric(ecoval[[name]][[7]]) - as.numeric(ecoval[[name]][[4]]),
-            gains_relatifs <- as.numeric(ecoval[[name]][[7]]) - as.numeric(ecoval[[name]][[4]]) * 100 / as.numeric(ecoval[[name]][[4]])
+            perimetres = tabhab[[1]],
+            indicateurs = tabhab[[3]],
+            criteres = factor(tabhab[[2]], levels=c("Diversité habitat","Diversité Espèce","Patrimonialité_PS","Fonctionnalité","Pression_PS","Connectivité","Représentativité","Patrimonialité_PE","Pression_PE", "Structure")),
+            # valeurs = as.numeric(tabhab[[7]]),
+            incertitudes <- tabhab[[6]],
+            gains_bruts <- as.numeric(tabhab[[7]]) - as.numeric(tabhab[[4]]),
+            gains_relatifs <- (as.numeric(tabhab[[7]]) - as.numeric(tabhab[[4]])) * 100 / as.numeric(tabhab[[4]])
           )
           
           p <- ggplot(data=dat1, aes(x=indicateurs, y=gains_relatifs)) +
@@ -328,9 +351,9 @@ output$plot_gains <- renderPlot({
             scale_fill_manual(values=c("#C67677", "#7FDD4C", "#7FDD4C"))+
             theme_bw()+
             theme(legend.position="none")+
-            geom_text(aes(label=gains_bruts, hjust="center", vjust="center", y=gains_bruts*0.5), size=3)+
+            geom_text(aes(label=gains_bruts, hjust="center", vjust="center", y=gains_relatifs*0.5), size=3)+
             theme(axis.text.x=element_text(colour="black", size = 11))+
-            geom_text(aes(label=incertitudes, hjust="center", vjust="top", y= gains_bruts))+
+            geom_text(aes(label=incertitudes, hjust="center", vjust="bottom", y= gains_relatifs))+
             theme(panel.grid.major = element_line(size = 0.5, colour = "light grey"))+
             facet_grid(criteres ~ ., scales = "free", space = "free")
           # p <- ggplotly(p, width=1100, height=800)
@@ -338,14 +361,25 @@ output$plot_gains <- renderPlot({
         }else if(input$selecttypegraphgain == '3'){
           
           # Gains LT
+          namehab <- paste("Habitat", input$selecthabitatSC2)
+          partial_select <- c(1,2,3,4,5,6,7,8,9,16,17,18,19,20,24,25,26)
+          if(ecoval[[namehab]][4,2] == "1"){ # Fermé
+            partial_select <- c(partial_select, c(10,11,12,13,14,21))
+          }else if(ecoval[[namehab]][4,2] == "2"){ # Ouvert
+            partial_select <- c(partial_select, c(15, 22))
+          }else if(ecoval[[namehab]][4,2] == "4"){ # Zone humide
+            partial_select <- c(partial_select, c(16, 23))
+          }
+          tabhab <- ecoval[[name]][partial_select,]
+          tabhab[[3]] <- shortindicnames[partial_select]
           dat1 <- data.frame(
-            perimetres = ecoval[[name]][[1]],
-            indicateurs = ecoval[[name]][[3]],
-            criteres = factor(ecoval[[name]][[2]], levels=c("Diversité habitat","Diversité Espèce","Patrimonialité_PS","Fonctionnalité","Pression_PS","Connectivité","Représentativité","Patrimonialité_PE","Pression_PE", "Structure")),
-            #valeurs = as.numeric(ecoval[[name]][[7]]),
-            incertitudes <- ecoval[[name]][[6]],
-            gains_bruts <- as.numeric(ecoval[[name]][[10]]) - as.numeric(ecoval[[name]][[4]]),
-            gains_relatifs <- as.numeric(ecoval[[name]][[10]]) - as.numeric(ecoval[[name]][[4]]) * 100 / as.numeric(ecoval[[name]][[4]])
+            perimetres = tabhab[[1]],
+            indicateurs = tabhab[[3]],
+            criteres = factor(tabhab[[2]], levels=c("Diversité habitat","Diversité Espèce","Patrimonialité_PS","Fonctionnalité","Pression_PS","Connectivité","Représentativité","Patrimonialité_PE","Pression_PE", "Structure")),
+            #valeurs = as.numeric(tabhab[[7]]),
+            incertitudes <- tabhab[[6]],
+            gains_bruts <- as.numeric(tabhab[[10]]) - as.numeric(tabhab[[4]]),
+            gains_relatifs <- (as.numeric(tabhab[[10]]) - as.numeric(tabhab[[4]])) * 100 / as.numeric(tabhab[[4]])
           )
           
           p <- ggplot(data=dat1, aes(x=indicateurs, y=gains_relatifs)) +
@@ -355,9 +389,9 @@ output$plot_gains <- renderPlot({
             scale_fill_manual(values=c("#C67677", "#7FDD4C", "#7FDD4C"))+
             theme_bw()+
             theme(legend.position="none")+
-            geom_text(aes(label=gains_bruts, hjust="center", vjust="center", y=gains_bruts*0.5), size=3)+
+            geom_text(aes(label=gains_bruts, hjust="center", vjust="center", y=gains_relatifs*0.5), size=3)+
             theme(axis.text.x=element_text(colour="black", size = 11))+
-            geom_text(aes(label=incertitudes, hjust="center", vjust="top", y= gains_bruts))+
+            geom_text(aes(label=incertitudes, hjust="center", vjust="bottom", y= gains_relatifs))+
             theme(panel.grid.major = element_line(size = 0.5, colour = "light grey"))+
             facet_grid(criteres ~ ., scales = "free", space = "free")
           # p <- ggplotly(p, width=1100, height=800)
@@ -366,7 +400,7 @@ output$plot_gains <- renderPlot({
       }else{
         shinyjs::hide("dwnlgains")
         dat1 <- NULL
-        p <- plotly_empty(type = "scatter", mode = "markers")
+        p <- ggplot() + theme_void()
       }
     }else if(input$selectniveaugain == '3'){
       
@@ -397,11 +431,31 @@ output$plot_gains <- renderPlot({
         # Etat initial
         name <- paste("DC no.", input$selectspeciesSC2)
         if(input$selecttypegraphgain == '1'){
+          partial_select <- c(1,2,15,16,17,18,19)
+          namesp  <- paste("Espece", input$selectspeciesSC2)
+          if(ecoval[[namesp]][3,2] != "7"){ # Faune
+            partial_select <- c(partial_select, c(3))
+          }
+          if(ecoval[[namesp]][3,2] == "1"){ # Avifaune
+            partial_select <- c(partial_select, c(4,5,6))
+          }else if(ecoval[[namesp]][3,2] == "2"){ # Chiroptere
+            partial_select <- c(partial_select, c(7,8))
+          }else if(ecoval[[namesp]][3,2] == "4"){ # Amphibien
+            partial_select <- c(partial_select, c(9,10))
+          }else if(ecoval[[namesp]][3,2] == "6"){ # Insecte
+            partial_select <- c(partial_select, c(11))
+          }else if(ecoval[[namesp]][3,2] == "7"){ # Flore
+            partial_select <- c(partial_select, c(12))
+          }else if(ecoval[[namesp]][3,2] == "10"){ # Communaute faunistique
+            partial_select <- c(partial_select, c(13,14))
+          }
+          tabsp <- ecoval[[name]][partial_select,]
+          tabsp[[3]] <- shortindicnames[partial_select]
           dat1 <- data.frame(
-            perimetres = ecoval[[name]][[1]],
-            indicateurs = ecoval[[name]][[3]],
-            criteres = factor(ecoval[[name]][[2]], levels=c("Diversité espèce", "Fonctionnalité", "Pression", "Connectivité", "Représentativité")),
-            valeurs = as.numeric(ecoval[[name]][[4]]))
+            perimetres = tabsp[[1]],
+            indicateurs = tabsp[[3]],
+            criteres = factor(tabsp[[2]], levels=c("Diversité espèce", "Fonctionnalité", "Pression", "Connectivité", "Représentativité")),
+            valeurs = as.numeric(tabsp[[4]]))
           
             couleurs <- c("Diversité habitat" = "#83D072",
                         "Diversité Espèce" ="#1E6218",
@@ -423,19 +477,38 @@ output$plot_gains <- renderPlot({
               labs(x="Indicateurs", y="Valeur à l'état initial")+
               facet_grid(.~criteres, scales = "free", space ="free")+
               theme (axis.text.x = element_text(colour="black", angle = 45, size = 10, hjust = 1))
-            # p <- ggplotly(p, width=800, height=800)
           
         }else if(input$selecttypegraphgain == '2'){
           
           # Gains CT
+          partial_select <- c(1,2,15,16,17,18,19)
+          namesp  <- paste("Espece", input$selectspeciesSC2)
+          if(ecoval[[namesp]][3,2] != "7"){ # Faune
+            partial_select <- c(partial_select, c(3))
+          }
+          if(ecoval[[namesp]][3,2] == "1"){ # Avifaune
+            partial_select <- c(partial_select, c(4,5,6))
+          }else if(ecoval[[namesp]][3,2] == "2"){ # Chiroptere
+            partial_select <- c(partial_select, c(7,8))
+          }else if(ecoval[[namesp]][3,2] == "4"){ # Amphibien
+            partial_select <- c(partial_select, c(9,10))
+          }else if(ecoval[[namesp]][3,2] == "6"){ # Insecte
+            partial_select <- c(partial_select, c(11))
+          }else if(ecoval[[namesp]][3,2] == "7"){ # Flore
+            partial_select <- c(partial_select, c(12))
+          }else if(ecoval[[namesp]][3,2] == "10"){ # Communaute faunistique
+            partial_select <- c(partial_select, c(13,14))
+          }
+          tabsp <- ecoval[[name]][partial_select,]
+          tabsp[[3]] <- shortindicnames[partial_select]
           dat1 <- data.frame(
-            perimetres = ecoval[[name]][[1]],
-            indicateurs = ecoval[[name]][[3]],
-            criteres = factor(ecoval[[name]][[2]], levels=c("Diversité habitat","Diversité Espèce","Patrimonialité_PS","Fonctionnalité","Pression_PS","Connectivité","Représentativité","Patrimonialité_PE","Pression_PE", "Structure")),
-            # valeurs = as.numeric(ecoval[[name]][[7]]),
-            incertitudes <- ecoval[[name]][[6]],
-            gains_bruts <- as.numeric(ecoval[[name]][[7]]) - as.numeric(ecoval[[name]][[4]]),
-            gains_relatifs <- as.numeric(ecoval[[name]][[7]]) - as.numeric(ecoval[[name]][[4]]) * 100 / as.numeric(ecoval[[name]][[4]])
+            perimetres = tabsp[[1]],
+            indicateurs = tabsp[[3]],
+            criteres = factor(tabsp[[2]], levels=c("Diversité habitat","Diversité Espèce","Patrimonialité_PS","Fonctionnalité","Pression_PS","Connectivité","Représentativité","Patrimonialité_PE","Pression_PE", "Structure")),
+            # valeurs = as.numeric(tabsp[[7]]),
+            incertitudes <- tabsp[[6]],
+            gains_bruts <- as.numeric(tabsp[[7]]) - as.numeric(tabsp[[4]]),
+            gains_relatifs <- (as.numeric(tabsp[[7]]) - as.numeric(tabsp[[4]])) * 100 / as.numeric(tabsp[[4]])
           )
           
           p <- ggplot(data=dat1, aes(x=indicateurs, y=gains_relatifs)) +
@@ -445,9 +518,9 @@ output$plot_gains <- renderPlot({
             scale_fill_manual(values=c("#C67677", "#7FDD4C", "#7FDD4C"))+
             theme_bw()+
             theme(legend.position="none")+
-            geom_text(aes(label=gains_bruts, hjust="center", vjust="center", y=gains_bruts*0.5), size=3)+
+            geom_text(aes(label=gains_bruts, hjust="center", vjust="center", y=gains_relatifs*0.5), size=3)+
             theme(axis.text.x=element_text(colour="black", size = 11))+
-            geom_text(aes(label=incertitudes, hjust="center", vjust="top", y= gains_bruts))+
+            geom_text(aes(label=incertitudes, hjust="center", vjust="bottom", y= gains_relatifs))+
             theme(panel.grid.major = element_line(size = 0.5, colour = "light grey"))+
             facet_grid(criteres ~ ., scales = "free", space = "free")
           # p <- ggplotly(p, width=1000, height=800)
@@ -455,14 +528,34 @@ output$plot_gains <- renderPlot({
         }else if(input$selecttypegraphgain == '3'){
           
           # Gains LT
+          partial_select <- c(1,2,15,16,17,18,19)
+          namesp  <- paste("Espece", input$selectspeciesSC2)
+          if(ecoval[[namesp]][3,2] != "7"){ # Faune
+            partial_select <- c(partial_select, c(3))
+          }
+          if(ecoval[[namesp]][3,2] == "1"){ # Avifaune
+            partial_select <- c(partial_select, c(4,5,6))
+          }else if(ecoval[[namesp]][3,2] == "2"){ # Chiroptere
+            partial_select <- c(partial_select, c(7,8))
+          }else if(ecoval[[namesp]][3,2] == "4"){ # Amphibien
+            partial_select <- c(partial_select, c(9,10))
+          }else if(ecoval[[namesp]][3,2] == "6"){ # Insecte
+            partial_select <- c(partial_select, c(11))
+          }else if(ecoval[[namesp]][3,2] == "7"){ # Flore
+            partial_select <- c(partial_select, c(12))
+          }else if(ecoval[[namesp]][3,2] == "10"){ # Communaute faunistique
+            partial_select <- c(partial_select, c(13,14))
+          }
+          tabsp <- ecoval[[name]][partial_select,]
+          tabsp[[3]] <- shortindicnames[partial_select]
           dat1 <- data.frame(
-            perimetres = ecoval[[name]][[1]],
-            indicateurs = ecoval[[name]][[3]],
-            criteres = factor(ecoval[[name]][[2]], levels=c("Diversité habitat","Diversité Espèce","Patrimonialité_PS","Fonctionnalité","Pression_PS","Connectivité","Représentativité","Patrimonialité_PE","Pression_PE", "Structure")),
-            # valeurs = as.numeric(ecoval[[name]][[7]]),
-            incertitudes <- ecoval[[name]][[6]],
-            gains_bruts <- as.numeric(ecoval[[name]][[10]]) - as.numeric(ecoval[[name]][[4]]),
-            gains_relatifs <- as.numeric(ecoval[[name]][[10]]) - as.numeric(ecoval[[name]][[4]]) * 100 / as.numeric(ecoval[[name]][[4]])
+            perimetres = tabsp[[1]],
+            indicateurs = tabsp[[3]],
+            criteres = factor(tabsp[[2]], levels=c("Diversité habitat","Diversité Espèce","Patrimonialité_PS","Fonctionnalité","Pression_PS","Connectivité","Représentativité","Patrimonialité_PE","Pression_PE", "Structure")),
+            # valeurs = as.numeric(tabsp[[7]]),
+            incertitudes <- tabsp[[6]],
+            gains_bruts <- as.numeric(tabsp[[10]]) - as.numeric(tabsp[[4]]),
+            gains_relatifs <- (as.numeric(tabsp[[10]]) - as.numeric(tabsp[[4]])) * 100 / as.numeric(tabsp[[4]])
           )
           
           p <- ggplot(data=dat1, aes(x=indicateurs, y=gains_relatifs)) +
@@ -472,9 +565,9 @@ output$plot_gains <- renderPlot({
             scale_fill_manual(values=c("#C67677", "#7FDD4C", "#7FDD4C"))+
             theme_bw()+
             theme(legend.position="none")+
-            geom_text(aes(label=gains_bruts, hjust="center", vjust="center", y=gains_bruts*0.5), size=3)+
+            geom_text(aes(label=gains_bruts, hjust="center", vjust="center", y=gains_relatifs*0.5), size=3)+
             theme(axis.text.x=element_text(colour="black", size = 11))+
-            geom_text(aes(label=incertitudes, hjust="center", vjust="top", y= gains_bruts))+
+            geom_text(aes(label=incertitudes, hjust="center", vjust="bottom", y= gains_relatifs))+
             theme(panel.grid.major = element_line(size = 0.5, colour = "light grey"))+
             facet_grid(criteres ~ ., scales = "free", space = "free")
           # p <- ggplotly(p, width=1000, height=800)
@@ -483,20 +576,26 @@ output$plot_gains <- renderPlot({
       }else{
         shinyjs::hide("dwnlgains")
         dat1 <- NULL
-        p <- plotly_empty(type = "scatter", mode = "markers")
+        p <- ggplot() + theme_void()
       }
     }
     gains$tableau <- dat1
   }else{
-    p <- plotly_empty(type = "scatter", mode = "markers")
-    p <- ggplotly(p)
+    p <- ggplot() + theme_void()
     gains$tableau <- NULL
   }
   p
 })
 
 output$SCcalcul <- DT::renderDataTable({
-  dat <- datatable(gains$tableau, rownames = FALSE, options = list(pageLength = dim.data.frame(gains$tableau)[1], searching = TRUE, dom = 'ft', ordering = FALSE), filter = "top")
+  if(dim(gains$tableau)[2] < 5){
+    mydata <- gains$tableau
+    mycolnames <- c("perimetres" = 1, "indicateurs" = 2, "criteres" = 3, "valeurs"= 4)
+  }else{
+    mydata <- gains$tableau[, c(1,2,3,4,5)]
+    mycolnames <- c("perimetres" = 1, "indicateurs" = 2, "criteres" = 3, "incertitudes"= 4, "gains bruts" = 5)
+  }
+  dat <- datatable(mydata, rownames = FALSE, colnames = mycolnames, options = list(pageLength = dim.data.frame(gains$tableau)[1], searching = TRUE, dom = 'ft', ordering = FALSE), filter = "top")
   return(dat)
 })
 

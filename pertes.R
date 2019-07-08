@@ -235,7 +235,7 @@ output$plot_pertes <- renderPlot({
           scale_fill_manual(values=c("#C67677", "#7FDD4C", "#7FDD4C"))+
           theme_bw()+
           theme(legend.position="none")+
-          geom_text(aes(label=pertes_brutes, hjust="center", vjust="center", y=pertes_brutes*0.5), size=3)+
+          geom_text(aes(label=pertes_brutes, hjust="center", vjust="center", y=pertes_relatives*0.5), size=3)+
           theme(axis.text.x=element_text(colour="black", size = 11))+
           geom_text(aes(label=incertitudes, hjust="center", vjust="top", y= pertes_brutes))+
           theme(panel.grid.major = element_line(size = 0.5, colour = "light grey"))+
@@ -277,11 +277,22 @@ output$plot_pertes <- renderPlot({
                              "Surface d'habitat dans le PE",
                              "% surf hab _ PE")
         if(input$selecttypegraphperte == '1'){
+          namehab <- paste("Habitat", input$selecthabitatSI2)
+          partial_select <- c(1,2,3,4,5,6,7,8,9,16,17,18,19,20,24,25,26)
+          if(ecoval[[namehab]][4,2] == "1"){ # Fermé
+            partial_select <- c(partial_select, c(10,11,12,13,14,21))
+          }else if(ecoval[[namehab]][4,2] == "2"){ # Ouvert
+            partial_select <- c(partial_select, c(15, 22))
+          }else if(ecoval[[namehab]][4,2] == "4"){ # Zone humide
+            partial_select <- c(partial_select, c(16, 23))
+          }
+          tabhab <- ecoval[[name]][partial_select,]
+          tabhab[[3]] <- shortindicnames[partial_select]
           dat1 <- data.frame(
-            perimetres = ecoval[[name]][[1]],
-            indicateurs = shortindicnames, # ecoval[[name]][[3]],
-            criteres = factor(ecoval[[name]][[2]], levels=c("Diversité habitat","Diversité Espèce","Patrimonialité_PS","Fonctionnalité","Pression_PS","Connectivité","Représentativité","Patrimonialité_PE","Pression_PE", "Structure")),
-            valeurs = as.numeric(ecoval[[name]][[4]])
+            perimetres = tabhab[[1]],
+            indicateurs = tabhab[[3]],
+            criteres = factor(tabhab[[2]], levels=c("Diversité habitat","Diversité Espèce","Patrimonialité_PS","Fonctionnalité","Pression_PS","Connectivité","Représentativité","Patrimonialité_PE","Pression_PE", "Structure")),
+            valeurs = as.numeric(tabhab[[4]])
           )
           couleurs <- c("Diversité habitat" = "#83D072",
                         "Diversité Espèce" ="#1E6218",
@@ -307,14 +318,25 @@ output$plot_pertes <- renderPlot({
         }else if(input$selecttypegraphperte == '2'){
           
         # Pertes CT
+          namehab <- paste("Habitat", input$selecthabitatSI2)
+          partial_select <- c(1,2,3,4,5,6,7,8,9,16,17,18,19,20,24,25,26)
+          if(ecoval[[namehab]][4,2] == "1"){ # Fermé
+            partial_select <- c(partial_select, c(10,11,12,13,14,21))
+          }else if(ecoval[[namehab]][4,2] == "2"){ # Ouvert
+            partial_select <- c(partial_select, c(15, 22))
+          }else if(ecoval[[namehab]][4,2] == "4"){ # Zone humide
+            partial_select <- c(partial_select, c(16, 23))
+          }
+          tabhab <- ecoval[[name]][partial_select,]
+          tabhab[[3]] <- shortindicnames[partial_select]
           dat1 <- data.frame(
-            perimetres = ecoval[[name]][[1]],
-            indicateurs = shortindicnames, # ecoval[[name]][[3]],
-            criteres = factor(ecoval[[name]][[2]], levels=c("Diversité habitat","Diversité Espèce","Patrimonialité_PS","Fonctionnalité","Pression_PS","Connectivité","Représentativité","Patrimonialité_PE","Pression_PE", "Structure")),
-            #valeurs = as.numeric(ecoval[[name]][[4]],
-            incertitudes <- ecoval[[name]][[7]],
-            pertes_brutes <- as.numeric(ecoval[[name]][[8]]) - as.numeric(ecoval[[name]][[4]]),
-            pertes_relatives <- as.numeric(ecoval[[name]][[8]]) - as.numeric(ecoval[[name]][[4]]) * 100 / as.numeric(ecoval[[name]][[4]])
+            perimetres = tabhab[[1]],
+            indicateurs = tabhab[[3]],
+            criteres = factor(tabhab[[2]], levels=c("Diversité habitat","Diversité Espèce","Patrimonialité_PS","Fonctionnalité","Pression_PS","Connectivité","Représentativité","Patrimonialité_PE","Pression_PE", "Structure")),
+            #valeurs = as.numeric(tabhab[[4]],
+            incertitudes <- tabhab[[7]],
+            pertes_brutes <- as.numeric(tabhab[[8]]) - as.numeric(tabhab[[4]]),
+            pertes_relatives <- as.numeric(tabhab[[8]]) - as.numeric(tabhab[[4]]) * 100 / as.numeric(tabhab[[4]])
           )
           
           p <- ggplot(data=dat1, aes(x=indicateurs, y=pertes_relatives)) +
@@ -324,7 +346,7 @@ output$plot_pertes <- renderPlot({
             scale_fill_manual(values=c("#C67677", "#7FDD4C", "#7FDD4C"))+
             theme_bw()+
             theme(legend.position="none")+
-            geom_text(aes(label=pertes_brutes, hjust="center", vjust="center", y=pertes_brutes*0.5), size=3)+
+            geom_text(aes(label=pertes_brutes, hjust="center", vjust="center", y=pertes_relatives*0.5), size=3)+
             theme(axis.text.x=element_text(colour="black", size = 11))+
             geom_text(aes(label=incertitudes, hjust="center", vjust="top", y= pertes_brutes))+
             theme(panel.grid.major = element_line(size = 0.5, colour = "light grey"))+
@@ -333,14 +355,25 @@ output$plot_pertes <- renderPlot({
         }else if(input$selecttypegraphperte == '3'){
           
         # Pertes LT
+          namehab <- paste("Habitat", input$selecthabitatSI2)
+          partial_select <- c(1,2,3,4,5,6,7,8,9,16,17,18,19,20,24,25,26)
+          if(ecoval[[namehab]][4,2] == "1"){ # Fermé
+            partial_select <- c(partial_select, c(10,11,12,13,14,21))
+          }else if(ecoval[[namehab]][4,2] == "2"){ # Ouvert
+            partial_select <- c(partial_select, c(15, 22))
+          }else if(ecoval[[namehab]][4,2] == "4"){ # Zone humide
+            partial_select <- c(partial_select, c(16, 23))
+          }
+          tabhab <- ecoval[[name]][partial_select,]
+          tabhab[[3]] <- shortindicnames[partial_select]
           dat1 <- data.frame(
-            perimetres = ecoval[[name]][[1]],
-            indicateurs = shortindicnames, # ecoval[[name]][[3]],
-            criteres = factor(ecoval[[name]][[2]], levels=c("Diversité habitat","Diversité Espèce","Patrimonialité_PS","Fonctionnalité","Pression_PS","Connectivité","Représentativité","Patrimonialité_PE","Pression_PE", "Structure")),
-            #valeurs = as.numeric(ecoval[[name]][[4]],
-            incertitudes <- ecoval[[name]][[10]],
-            pertes_brutes <- as.numeric(ecoval[[name]][[11]]) - as.numeric(ecoval[[name]][[4]]),
-            pertes_relatives <- as.numeric(ecoval[[name]][[11]]) - as.numeric(ecoval[[name]][[4]]) * 100 / as.numeric(ecoval[[name]][[4]])
+            perimetres = tabhab[[1]],
+            indicateurs = tabhab[[3]],
+            criteres = factor(tabhab[[2]], levels=c("Diversité habitat","Diversité Espèce","Patrimonialité_PS","Fonctionnalité","Pression_PS","Connectivité","Représentativité","Patrimonialité_PE","Pression_PE", "Structure")),
+            #valeurs = as.numeric(tabhab[[4]],
+            incertitudes <- tabhab[[10]],
+            pertes_brutes <- as.numeric(tabhab[[11]]) - as.numeric(tabhab[[4]]),
+            pertes_relatives <- as.numeric(tabhab[[11]]) - as.numeric(tabhab[[4]]) * 100 / as.numeric(tabhab[[4]])
           )
           
           p <- ggplot(data=dat1, aes(x=indicateurs, y=pertes_relatives)) +
@@ -350,7 +383,7 @@ output$plot_pertes <- renderPlot({
             scale_fill_manual(values=c("#C67677", "#7FDD4C", "#7FDD4C"))+
             theme_bw()+
             theme(legend.position="none")+
-            geom_text(aes(label=pertes_brutes, hjust="center", vjust="center", y=pertes_brutes*0.5), size=3)+
+            geom_text(aes(label=pertes_brutes, hjust="center", vjust="center", y=pertes_relatives*0.5), size=3)+
             theme(axis.text.x=element_text(colour="black", size = 11))+
             geom_text(aes(label=incertitudes, hjust="center", vjust="top", y= pertes_brutes))+
             theme(panel.grid.major = element_line(size = 0.5, colour = "light grey"))+
@@ -359,7 +392,7 @@ output$plot_pertes <- renderPlot({
       }else{
         shinyjs::hide("dwnlpertes")
         dat1 <- NULL
-        p <- ggplotly() + theme_void()
+        p <- ggplot() + theme_void()
       }
     }else if(input$selectniveauperte == '3'){
       
@@ -391,11 +424,31 @@ output$plot_pertes <- renderPlot({
                              "Nb zones connectées entre elles")
         
         if(input$selecttypegraphperte == '1'){
+          partial_select <- c(1,2,15,16,17,18,19)
+          namesp  <- paste("Espece", input$selectspeciesSI2)
+          if(ecoval[[namesp]][3,2] != "7"){ # Faune
+            partial_select <- c(partial_select, c(3))
+          }
+          if(ecoval[[namesp]][3,2] == "1"){ # Avifaune
+            partial_select <- c(partial_select, c(4,5,6))
+          }else if(ecoval[[namesp]][3,2] == "2"){ # Chiroptere
+            partial_select <- c(partial_select, c(7,8))
+          }else if(ecoval[[namesp]][3,2] == "4"){ # Amphibien
+            partial_select <- c(partial_select, c(9,10))
+          }else if(ecoval[[namesp]][3,2] == "6"){ # Insecte
+            partial_select <- c(partial_select, c(11))
+          }else if(ecoval[[namesp]][3,2] == "7"){ # Flore
+            partial_select <- c(partial_select, c(12))
+          }else if(ecoval[[namesp]][3,2] == "10"){ # Communaute faunistique
+            partial_select <- c(partial_select, c(13,14))
+          }
+          tabsp <- ecoval[[name]][partial_select,]
+          tabsp[[3]] <- shortindicnames[partial_select]
           dat1 <- data.frame(
-            perimetres = ecoval[[name]][[1]],
-            indicateurs = shortindicnames, # ecoval[[name]][[3]],
-            criteres = factor(ecoval[[name]][[2]], levels=c("Diversité habitat","Diversité Espèce","Patrimonialité_PS","Fonctionnalité","Pression_PS","Connectivité","Représentativité","Patrimonialité_PE","Pression_PE", "Structure")),
-            valeurs = as.numeric(ecoval[[name]][[4]])
+            perimetres = tabsp[[1]],
+            indicateurs = tabsp[[3]],
+            criteres = factor(tabsp[[2]], levels=c("Diversité habitat","Diversité Espèce","Patrimonialité_PS","Fonctionnalité","Pression_PS","Connectivité","Représentativité","Patrimonialité_PE","Pression_PE", "Structure")),
+            valeurs = as.numeric(tabsp[[4]])
           )
           couleurs <- c("Diversité habitat" = "#83D072",
                         "Diversité Espèce" ="#1E6218",
@@ -421,14 +474,34 @@ output$plot_pertes <- renderPlot({
         }else if(input$selecttypegraphperte == '2'){
           
           # Pertes CT
+          partial_select <- c(1,2,15,16,17,18,19)
+          namesp  <- paste("Espece", input$selectspeciesSI2)
+          if(ecoval[[namesp]][3,2] != "7"){ # Faune
+            partial_select <- c(partial_select, c(3))
+          }
+          if(ecoval[[namesp]][3,2] == "1"){ # Avifaune
+            partial_select <- c(partial_select, c(4,5,6))
+          }else if(ecoval[[namesp]][3,2] == "2"){ # Chiroptere
+            partial_select <- c(partial_select, c(7,8))
+          }else if(ecoval[[namesp]][3,2] == "4"){ # Amphibien
+            partial_select <- c(partial_select, c(9,10))
+          }else if(ecoval[[namesp]][3,2] == "6"){ # Insecte
+            partial_select <- c(partial_select, c(11))
+          }else if(ecoval[[namesp]][3,2] == "7"){ # Flore
+            partial_select <- c(partial_select, c(12))
+          }else if(ecoval[[namesp]][3,2] == "10"){ # Communaute faunistique
+            partial_select <- c(partial_select, c(13,14))
+          }
+          tabsp <- ecoval[[name]][partial_select,]
+          tabsp[[3]] <- shortindicnames[partial_select]
           dat1 <- data.frame(
-            perimetres = ecoval[[name]][[1]],
-            indicateurs = shortindicnames, # ecoval[[name]][[3]],
-            criteres = factor(ecoval[[name]][[2]], levels=c("Diversité habitat","Diversité Espèce","Patrimonialité_PS","Fonctionnalité","Pression_PS","Connectivité","Représentativité","Patrimonialité_PE","Pression_PE", "Structure")),
-            # valeurs = as.numeric(ecoval[[name]][[4]]),
-            incertitudes <- ecoval[[name]][[7]],
-            pertes_brutes <- as.numeric(ecoval[[name]][[8]]) - as.numeric(ecoval[[name]][[4]]),
-            pertes_relatives <- as.numeric(ecoval[[name]][[8]]) - as.numeric(ecoval[[name]][[4]]) * 100 / as.numeric(ecoval[[name]][[4]])
+            perimetres = tabsp[[1]],
+            indicateurs = tabsp[[3]],
+            criteres = factor(tabsp[[2]], levels=c("Diversité habitat","Diversité Espèce","Patrimonialité_PS","Fonctionnalité","Pression_PS","Connectivité","Représentativité","Patrimonialité_PE","Pression_PE", "Structure")),
+            # valeurs = as.numeric(tabsp[[4]]),
+            incertitudes <- tabsp[[7]],
+            pertes_brutes <- as.numeric(tabsp[[8]]) - as.numeric(tabsp[[4]]),
+            pertes_relatives <- as.numeric(tabsp[[8]]) - as.numeric(tabsp[[4]]) * 100 / as.numeric(tabsp[[4]])
           )
           
           p <- ggplot(data=dat1, aes(x=indicateurs, y=pertes_relatives)) +
@@ -438,7 +511,7 @@ output$plot_pertes <- renderPlot({
             scale_fill_manual(values=c("#C67677", "#7FDD4C", "#7FDD4C"))+
             theme_bw()+
             theme(legend.position="none")+
-            geom_text(aes(label=pertes_brutes, hjust="center", vjust="center", y=pertes_brutes*0.5), size=3)+
+            geom_text(aes(label=pertes_brutes, hjust="center", vjust="center", y=pertes_relatives*0.5), size=3)+
             theme(axis.text.x=element_text(colour="black", size = 11))+
             geom_text(aes(label=incertitudes, hjust="center", vjust="top", y= pertes_brutes))+
             theme(panel.grid.major = element_line(size = 0.5, colour = "light grey"))+
@@ -447,14 +520,34 @@ output$plot_pertes <- renderPlot({
         }else if(input$selecttypegraphperte == '3'){
           
           # Pertes LT
+          partial_select <- c(1,2,15,16,17,18,19)
+          namesp  <- paste("Espece", input$selectspeciesSI2)
+          if(ecoval[[namesp]][3,2] != "7"){ # Faune
+            partial_select <- c(partial_select, c(3))
+          }
+          if(ecoval[[namesp]][3,2] == "1"){ # Avifaune
+            partial_select <- c(partial_select, c(4,5,6))
+          }else if(ecoval[[namesp]][3,2] == "2"){ # Chiroptere
+            partial_select <- c(partial_select, c(7,8))
+          }else if(ecoval[[namesp]][3,2] == "4"){ # Amphibien
+            partial_select <- c(partial_select, c(9,10))
+          }else if(ecoval[[namesp]][3,2] == "6"){ # Insecte
+            partial_select <- c(partial_select, c(11))
+          }else if(ecoval[[namesp]][3,2] == "7"){ # Flore
+            partial_select <- c(partial_select, c(12))
+          }else if(ecoval[[namesp]][3,2] == "10"){ # Communaute faunistique
+            partial_select <- c(partial_select, c(13,14))
+          }
+          tabsp <- ecoval[[name]][partial_select,]
+          tabsp[[3]] <- shortindicnames[partial_select]
           dat1 <- data.frame(
-            perimetres = ecoval[[name]][[1]],
-            indicateurs = shortindicnames, # ecoval[[name]][[3]],
-            criteres = factor(ecoval[[name]][[2]], levels=c("Diversité habitat","Diversité Espèce","Patrimonialité_PS","Fonctionnalité","Pression_PS","Connectivité","Représentativité","Patrimonialité_PE","Pression_PE", "Structure")),
-            #valeurs = as.numeric(ecoval[[name]][[4]],
-            incertitudes <- ecoval[[name]][[7]],
-            pertes_brutes <- as.numeric(ecoval[[name]][[11]]) - as.numeric(ecoval[[name]][[4]]),
-            pertes_relatives <- as.numeric(ecoval[[name]][[11]]) - as.numeric(ecoval[[name]][[4]]) * 100 / as.numeric(ecoval[[name]][[4]])
+            perimetres = tabsp[[1]],
+            indicateurs = tabsp[[3]],
+            criteres = factor(tabsp[[2]], levels=c("Diversité habitat","Diversité Espèce","Patrimonialité_PS","Fonctionnalité","Pression_PS","Connectivité","Représentativité","Patrimonialité_PE","Pression_PE", "Structure")),
+            #valeurs = as.numeric(tabsp[[4]],
+            incertitudes <- tabsp[[7]],
+            pertes_brutes <- as.numeric(tabsp[[11]]) - as.numeric(tabsp[[4]]),
+            pertes_relatives <- as.numeric(tabsp[[11]]) - as.numeric(tabsp[[4]]) * 100 / as.numeric(tabsp[[4]])
           )
           
           p <- ggplot(data=dat1, aes(x=indicateurs, y=pertes_relatives)) +
@@ -464,7 +557,7 @@ output$plot_pertes <- renderPlot({
             scale_fill_manual(values=c("#C67677", "#7FDD4C", "#7FDD4C"))+
             theme_bw()+
             theme(legend.position="none")+
-            geom_text(aes(label=pertes_brutes, hjust="center", vjust="center", y=pertes_brutes*0.5), size=3)+
+            geom_text(aes(label=pertes_brutes, hjust="center", vjust="center", y=pertes_relatives*0.5), size=3)+
             theme(axis.text.x=element_text(colour="black", size = 11))+
             geom_text(aes(label=incertitudes, hjust="center", vjust="top", y= pertes_brutes))+
             theme(panel.grid.major = element_line(size = 0.5, colour = "light grey"))+
@@ -473,12 +566,12 @@ output$plot_pertes <- renderPlot({
       }else{
         shinyjs::hide("dwnlpertes")
         dat1 <- NULL
-        p <- ggplotly() + theme_void()
+        p <- ggplot() + theme_void()
       }
     }
     pertes$tableau <- dat1
   }else{
-    p <- ggplotly() + theme_void()
+    p <- ggplot() + theme_void()
     pertes$tableau <- NULL
   }
   p

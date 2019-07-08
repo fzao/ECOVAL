@@ -241,7 +241,7 @@ output$plot_equivalence <- renderPlot({
           criteres = factor(ecoval[[nameImp]][[2]], levels=c("Diversité habitat","Diversité Espèce","Patrimonialité_PS","Fonctionnalité","Pression_PS","Connectivité","Représentativité","Patrimonialité_PE","Pression_PE")),
           equivalence = equivalCT)
         
-        p <- ggplot(data=dat1, aes(x=indicateurs, y= equivalence))
+        p <- ggplot(data=dat1, aes(x=indicateurs, y= equivalence)) +
         geom_bar(stat="identity",  width=0.5, aes(fill=as.factor(sign(equivalence))))+
           coord_flip()+
           labs(x="Indicateurs", y="Pertes / Gains NETS")+
@@ -249,7 +249,7 @@ output$plot_equivalence <- renderPlot({
           theme_bw()+
           theme(legend.position="none")+
           theme(axis.text.x=element_text(colour="black", size = 11))+
-          geom_text(aes(label=equivalence, hjust="center", vjust="top", y= equivalence))+
+          geom_text(aes(label=equivalence, hjust="center", vjust="center", y= equivalence))+
           theme(panel.grid.major = element_line(size = 0.5, colour = "light grey"))+
           facet_grid(criteres ~ ., scales = "free", space = "free")
 
@@ -272,7 +272,7 @@ output$plot_equivalence <- renderPlot({
           criteres = factor(ecoval[[nameImp]][[2]], levels=c("Diversité habitat","Diversité Espèce","Patrimonialité_PS","Fonctionnalité","Pression_PS","Connectivité","Représentativité","Patrimonialité_PE","Pression_PE")),
           equivalence = equivalLT)
         
-        p <- ggplot(data=dat1, aes(x=indicateurs, y= equivalence))
+        p <- ggplot(data=dat1, aes(x=indicateurs, y= equivalence)) +
         geom_bar(stat="identity",  width=0.5, aes(fill=as.factor(sign(equivalence))))+
           coord_flip()+
           labs(x="Indicateurs", y="Pertes / Gains NETS")+
@@ -280,7 +280,7 @@ output$plot_equivalence <- renderPlot({
           theme_bw()+
           theme(legend.position="none")+
           theme(axis.text.x=element_text(colour="black", size = 11))+
-          geom_text(aes(label=equivalence, hjust="center", vjust="top", y= equivalence))+
+          geom_text(aes(label=equivalence, hjust="center", vjust="center", y= equivalence))+
           theme(panel.grid.major = element_line(size = 0.5, colour = "light grey"))+
           facet_grid(criteres ~ ., scales = "free", space = "free")
       
@@ -289,7 +289,6 @@ output$plot_equivalence <- renderPlot({
         dat1["pertes brutes"] <- moins
         dat1["gains brutes"] <- plus
       }
-      # p <- ggplotly(p, width=500, height=1000)
       
     }else if(input$selectniveauequivalence == '2'){
       
@@ -379,7 +378,7 @@ output$plot_equivalence <- renderPlot({
           criteres = factor(ecoval[[nameIC]][[2]], levels=c("Diversité espèce", "Fonctionnalité", "Structure", "Pression", "Connectivité", "Représentativité")),
           equivalence = equival)
         
-        p <- ggplot(data=dat1, aes(x=indicateurs, y= equivalence))
+        p <- ggplot(data=dat1, aes(x=indicateurs, y= equivalence)) +
         geom_bar(stat="identity",  width=0.5, aes(fill=as.factor(sign(equivalence))))+
           coord_flip()+
           labs(x="Indicateurs", y="Pertes / Gains NETS")+
@@ -387,7 +386,7 @@ output$plot_equivalence <- renderPlot({
           theme_bw()+
           theme(legend.position="none")+
           theme(axis.text.x=element_text(colour="black", size = 11))+
-          geom_text(aes(label=equivalence, hjust="center", vjust="top", y= equivalence))+
+          geom_text(aes(label=equivalence, hjust="center", vjust="center", y= equivalence))+
           theme(panel.grid.major = element_line(size = 0.5, colour = "light grey"))+
           facet_grid(criteres ~ ., scales = "free", space = "free")
       
@@ -398,9 +397,8 @@ output$plot_equivalence <- renderPlot({
       }else{
         shinyjs::hide("dwnlequivalence")
         dat1 <- NULL
-        p <- plotly_empty(type = "scatter", mode = "markers")
+        p <- ggplot() + theme_void()
       }
-      # p <- ggplotly(p, width=500, height=1000)
       
     }else if(input$selectniveauequivalence == '3'){
       
@@ -483,7 +481,7 @@ output$plot_equivalence <- renderPlot({
           criteres = factor(ecoval[[nameIC]][[2]], levels=c("Diversité espèce", "Fonctionnalité", "Pression", "Connectivité", "Représentativité")),
           equivalence = equival)
         
-        p <- ggplot(data=dat1, aes(x=indicateurs, y= equivalence))
+        p <- ggplot(data=dat1, aes(x=indicateurs, y= equivalence)) +
         geom_bar(stat="identity",  width=0.5, aes(fill=as.factor(sign(equivalence))))+
           coord_flip()+
           labs(x="Indicateurs", y="Pertes / Gains NETS")+
@@ -491,7 +489,7 @@ output$plot_equivalence <- renderPlot({
           theme_bw()+
           theme(legend.position="none")+
           theme(axis.text.x=element_text(colour="black", size = 11))+
-          geom_text(aes(label=equivalence, hjust="center", vjust="top", y= equivalence))+
+          geom_text(aes(label=equivalence, hjust="center", vjust="center", y= equivalence))+
           theme(panel.grid.major = element_line(size = 0.5, colour = "light grey"))+
           facet_grid(criteres ~ ., scales = "free", space = "free")
       
@@ -502,14 +500,13 @@ output$plot_equivalence <- renderPlot({
       }else{
         shinyjs::hide("dwnlequivalence")
         dat1 <- NULL
-        p <- plotly_empty(type = "scatter", mode = "markers")
+        p <- ggplot() + theme_void()
       }
-      p <- ggplotly(p, width=500, height=1000)
+      # p <- ggplotly(p, width=500, height=1000)
     }
     equivalence$tableau <- dat1
   }else{
-    p <- plotly_empty(type = "scatter", mode = "markers")
-    p <- ggplotly(p)
+    p <- ggplot() + theme_void()
     equivalence$tableau <- NULL
   }
   p
