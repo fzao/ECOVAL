@@ -92,6 +92,35 @@ observeEvent(input$selecttypegraphgain, updateTabsetPanel(session, "resultgains"
 observeEvent(input$selecthabitatSC2, updateTabsetPanel(session, "resultgains", selected = "graphe"))
 observeEvent(input$selectspeciesSC2, updateTabsetPanel(session, "resultgains", selected = "graphe"))
 
+output$plot_gains_ui <- renderUI({
+  if(input$selectniveaugain == '1'){ # Niveau General
+    if(input$selecttypegraphgain == '1'){ # Etat initial
+      plot.width = 1600
+      plot.height = 400
+    }else{ # Autres
+      plot.width = 650
+      plot.height = 1000
+    }
+  }else if(input$selectniveaugain == '2'){ # Niveau Habitat
+    if(input$selecttypegraphgain == '1'){ # Etat initial
+      plot.width = 650
+      plot.height = 400
+    }else{ # Autres
+      plot.width = 650
+      plot.height = 700
+    } 
+  }else if(input$selectniveaugain == '3'){ # Niveau Espece
+    if(input$selecttypegraphgain == '1'){ # Etat initial
+      plot.width = 650
+      plot.height = 400
+    }else{ # Autres
+      plot.width = 650
+      plot.height = 600
+    } 
+  }
+  plotOutput('plot_gains', width = plot.width, height = plot.height)
+})
+
 output$plot_gains <- renderPlot({
   if(input$selectsitecompens2 != '0'){
     

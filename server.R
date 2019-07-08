@@ -17,11 +17,11 @@
 
 # Define server logic required to draw a histogram
 shinyServer(function(input, output, session) {
-
+  
+  source('init.R', local = TRUE)
   source('site.R', local =TRUE)
   source('species.R', local = TRUE)
   source('habitat.R', local = TRUE)
-  source('init.R', local = TRUE)
   source('synthese.R', local = TRUE)
   
   observeEvent(input$redir1, {

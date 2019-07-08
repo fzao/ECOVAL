@@ -92,6 +92,35 @@ observeEvent(input$selecttypegraphperte, updateTabsetPanel(session, "resultperte
 observeEvent(input$selecthabitatSI2, updateTabsetPanel(session, "resultpertes", selected = "graphe"))
 observeEvent(input$selectspeciesSI2, updateTabsetPanel(session, "resultpertes", selected = "graphe"))
 
+output$plot_pertes_ui <- renderUI({
+  if(input$selectniveauperte == '1'){ # Niveau General
+    if(input$selecttypegraphperte == '1'){ # Etat initial
+      plot.width = 1600
+      plot.height = 400
+    }else{ # Autres
+      plot.width = 650
+      plot.height = 1000
+    }
+  }else if(input$selectniveauperte == '2'){ # Niveau Habitat
+    if(input$selecttypegraphperte == '1'){ # Etat initial
+      plot.width = 650
+      plot.height = 400
+    }else{ # Autres
+      plot.width = 650
+      plot.height = 700
+    } 
+  }else if(input$selectniveauperte == '3'){ # Niveau Espece
+    if(input$selecttypegraphperte == '1'){ # Etat initial
+      plot.width = 650
+      plot.height = 400
+    }else{ # Autres
+      plot.width = 650
+      plot.height = 600
+    } 
+  }
+  plotOutput('plot_pertes', width = plot.width, height = plot.height)
+})
+
 output$plot_pertes <- renderPlot({
   if(input$selectsiteimpact2 != '0'){
     
