@@ -339,9 +339,9 @@ output$plot_gains <- renderPlot({
             indicateurs = tabhab[[3]],
             criteres = factor(tabhab[[2]], levels=c("Diversité habitat","Diversité Espèce","Patrimonialité_PS","Fonctionnalité","Pression_PS","Connectivité","Représentativité","Patrimonialité_PE","Pression_PE", "Structure")),
             # valeurs = as.numeric(tabhab[[7]]),
-            incertitudes <- tabhab[[6]],
-            gains_bruts <- as.numeric(tabhab[[7]]) - as.numeric(tabhab[[4]]),
-            gains_relatifs <- (as.numeric(tabhab[[7]]) - as.numeric(tabhab[[4]])) * 100 / as.numeric(tabhab[[4]])
+            incertitudes <- tabhab[[7]],
+            gains_bruts <- as.numeric(tabhab[[8]]) - as.numeric(tabhab[[4]]),
+            gains_relatifs <- (as.numeric(tabhab[[8]]) - as.numeric(tabhab[[4]])) * 100 / as.numeric(tabhab[[4]])
           )
           
           p <- ggplot(data=dat1, aes(x=indicateurs, y=gains_relatifs)) +
@@ -377,9 +377,9 @@ output$plot_gains <- renderPlot({
             indicateurs = tabhab[[3]],
             criteres = factor(tabhab[[2]], levels=c("Diversité habitat","Diversité Espèce","Patrimonialité_PS","Fonctionnalité","Pression_PS","Connectivité","Représentativité","Patrimonialité_PE","Pression_PE", "Structure")),
             #valeurs = as.numeric(tabhab[[7]]),
-            incertitudes <- tabhab[[6]],
-            gains_bruts <- as.numeric(tabhab[[10]]) - as.numeric(tabhab[[4]]),
-            gains_relatifs <- (as.numeric(tabhab[[10]]) - as.numeric(tabhab[[4]])) * 100 / as.numeric(tabhab[[4]])
+            incertitudes <- tabhab[[7]],
+            gains_bruts <- as.numeric(tabhab[[11]]) - as.numeric(tabhab[[4]]),
+            gains_relatifs <- (as.numeric(tabhab[[11]]) - as.numeric(tabhab[[4]])) * 100 / as.numeric(tabhab[[4]])
           )
           
           p <- ggplot(data=dat1, aes(x=indicateurs, y=gains_relatifs)) +
@@ -506,11 +506,10 @@ output$plot_gains <- renderPlot({
             indicateurs = tabsp[[3]],
             criteres = factor(tabsp[[2]], levels=c("Diversité habitat","Diversité Espèce","Patrimonialité_PS","Fonctionnalité","Pression_PS","Connectivité","Représentativité","Patrimonialité_PE","Pression_PE", "Structure")),
             # valeurs = as.numeric(tabsp[[7]]),
-            incertitudes <- tabsp[[6]],
-            gains_bruts <- as.numeric(tabsp[[7]]) - as.numeric(tabsp[[4]]),
-            gains_relatifs <- (as.numeric(tabsp[[7]]) - as.numeric(tabsp[[4]])) * 100 / as.numeric(tabsp[[4]])
+            incertitudes <- tabsp[[7]],
+            gains_bruts <- as.numeric(tabsp[[8]]) - as.numeric(tabsp[[4]]),
+            gains_relatifs <- (as.numeric(tabsp[[8]]) - as.numeric(tabsp[[4]])) * 100 / as.numeric(tabsp[[4]])
           )
-          
           p <- ggplot(data=dat1, aes(x=indicateurs, y=gains_relatifs)) +
             geom_bar(stat="identity",  width=0.5, aes(fill=as.factor(sign(gains_relatifs))))+
             coord_flip()+
@@ -553,9 +552,9 @@ output$plot_gains <- renderPlot({
             indicateurs = tabsp[[3]],
             criteres = factor(tabsp[[2]], levels=c("Diversité habitat","Diversité Espèce","Patrimonialité_PS","Fonctionnalité","Pression_PS","Connectivité","Représentativité","Patrimonialité_PE","Pression_PE", "Structure")),
             # valeurs = as.numeric(tabsp[[7]]),
-            incertitudes <- tabsp[[6]],
-            gains_bruts <- as.numeric(tabsp[[10]]) - as.numeric(tabsp[[4]]),
-            gains_relatifs <- (as.numeric(tabsp[[10]]) - as.numeric(tabsp[[4]])) * 100 / as.numeric(tabsp[[4]])
+            incertitudes <- tabsp[[7]],
+            gains_bruts <- as.numeric(tabsp[[11]]) - as.numeric(tabsp[[4]]),
+            gains_relatifs <- (as.numeric(tabsp[[11]]) - as.numeric(tabsp[[4]])) * 100 / as.numeric(tabsp[[4]])
           )
           
           p <- ggplot(data=dat1, aes(x=indicateurs, y=gains_relatifs)) +

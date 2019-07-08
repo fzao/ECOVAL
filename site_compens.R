@@ -742,7 +742,7 @@ observeEvent(input$renseignerNSP2,{
     tableau$D[pointer2row[rs],5] <- input$justifySCNSP
     # update array visu CT
     tableau$D[pointer2row[rs],6] <- input$SCjustifCTNSP
-    if(is.null(input$SCdegincCTNSP)) tableau$D[pointer2row[rs]] <- ""
+    if(is.null(input$SCdegincCTNSP)) tableau$D[pointer2row[rs],7] <- ""
     else{
       dimselect <- length(input$SCdegincCTNSP)
       if(dimselect == 1) tableau$D[pointer2row[rs],7] <- "*"

@@ -372,10 +372,27 @@ output$plot_equivalence <- renderPlot({
         natzero[natzero==TRUE] <- '*'
         natzero[natzero==FALSE] <- ''
         
+        #cfz
+        namehab <- paste("Habitat", input$selecthabitatSE)
+        partial_select <- c(1,2,3,4,5,6,7,8,9,16,17,18,19,20,24,25,26)
+        if(ecoval[[namehab]][4,2] == "1"){ # Fermé
+          partial_select <- c(partial_select, c(10,11,12,13,14,21))
+        }else if(ecoval[[namehab]][4,2] == "2"){ # Ouvert
+          partial_select <- c(partial_select, c(15, 22))
+        }else if(ecoval[[namehab]][4,2] == "4"){ # Zone humide
+          partial_select <- c(partial_select, c(16, 23))
+        }
+        tabhab <- ecoval[[nameIC]][partial_select,]
+        tabhab[[3]] <- shortindicnames[partial_select]
+        equival <- equival[partial_select]
+        natzero <- natzero[partial_select]
+        plus <- plus[partial_select]
+        moins <- moins[partial_select]
+
         dat1 <- data.frame(
-          perimetres = ecoval[[nameIC]][[1]],
-          indicateurs = shortindicnames, #ecoval[[nameIC]][[3]],
-          criteres = factor(ecoval[[nameIC]][[2]], levels=c("Diversité espèce", "Fonctionnalité", "Structure", "Pression", "Connectivité", "Représentativité")),
+          perimetres = tabhab[[1]],
+          indicateurs = tabhab[[3]],
+          criteres = factor(tabhab[[2]], levels=c("Diversité espèce", "Fonctionnalité", "Structure", "Pression_PS", "Connectivité", "Représentativité")),
           equivalence = equival)
         
         p <- ggplot(data=dat1, aes(x=indicateurs, y= equivalence)) +
@@ -475,10 +492,35 @@ output$plot_equivalence <- renderPlot({
         natzero[natzero==TRUE] <- '*'
         natzero[natzero==FALSE] <- ''
         
+        partial_select <- c(1,2,15,16,17,18,19)
+        namesp  <- paste("Espece", input$selectspeciesSE)
+        if(ecoval[[namesp]][3,2] != "7"){ # Faune
+          partial_select <- c(partial_select, c(3))
+        }
+        if(ecoval[[namesp]][3,2] == "1"){ # Avifaune
+          partial_select <- c(partial_select, c(4,5,6))
+        }else if(ecoval[[namesp]][3,2] == "2"){ # Chiroptere
+          partial_select <- c(partial_select, c(7,8))
+        }else if(ecoval[[namesp]][3,2] == "4"){ # Amphibien
+          partial_select <- c(partial_select, c(9,10))
+        }else if(ecoval[[namesp]][3,2] == "6"){ # Insecte
+          partial_select <- c(partial_select, c(11))
+        }else if(ecoval[[namesp]][3,2] == "7"){ # Flore
+          partial_select <- c(partial_select, c(12))
+        }else if(ecoval[[namesp]][3,2] == "10"){ # Communaute faunistique
+          partial_select <- c(partial_select, c(13,14))
+        }
+        tabsp <- ecoval[[nameIC]][partial_select,]
+        tabsp[[3]] <- shortindicnames[partial_select]
+        equival <- equival[partial_select]
+        natzero <- natzero[partial_select]
+        plus <- plus[partial_select]
+        moins <- moins[partial_select]
+        
         dat1 <- data.frame(
-          perimetres = ecoval[[nameIC]][[1]],
-          indicateurs = shortindicnames, #ecoval[[nameIC]][[3]],
-          criteres = factor(ecoval[[nameIC]][[2]], levels=c("Diversité espèce", "Fonctionnalité", "Pression", "Connectivité", "Représentativité")),
+          perimetres = tabsp[[1]],
+          indicateurs = tabsp[[3]],
+          criteres = factor(tabsp[[2]], levels=c("Diversité espèce", "Fonctionnalité", "Pression_PS", "Connectivité", "Représentativité")),
           equivalence = equival)
         
         p <- ggplot(data=dat1, aes(x=indicateurs, y= equivalence)) +
