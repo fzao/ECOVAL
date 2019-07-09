@@ -41,7 +41,7 @@ shinyUI(fluidPage(HTML("<!DOCTYPE html>
                   fluidRow(
                     column(10, align="left",
                            HTML('<h1 style="color: #FFA02F; background-color: #FFFFFF;"><b>ECOVAL</b></h1>'),
-                           HTML('<h2 style="color: #FF0000; background-color: #FFFFFF;"><b>version beta 090719</b></h1>'),
+                           HTML('<h3 style="color: #FF0000; background-color: #FFFFFF;"><b>version beta 090719</b></h1>'),
                            HTML('<h4 style="color: #A5C226; background-color: #FFFFFF;"><b>Cadre méthodologique pour le calcul de l\'équivalence écologique dans le contexte de la séquence ERC en France</b></h5>')),
                     column(2, align="right",
                            img(height=40, width=80, src="edf.jpg"),
@@ -99,7 +99,7 @@ shinyUI(fluidPage(HTML("<!DOCTYPE html>
                                                                column(4, align = "left", selectInput("intensite", label = NA, choices = list("Peu Intense" = 1, "Intense" = 2, "Très Intense" = 3))),
                                                                column(4, align = "left",    selectInput("portee", label = NA, choices = list("Ponctuelle Faible Surface" = 1, "Ponctuelle Surface Importante" = 2, "Linéaire" = 3))))
                                              ),
-                                             tabPanel(HTML('<h4 style="color: #005BBB; ">Identification Des Enjeux</h4>'), value="identification", br(),
+                                             tabPanel(HTML('<h4 style="color: #005BBB; ">Identification des enjeux</h4>'), value="identification", br(),
                                                       fluidRow(column(12, align="center", htmlOutput("enjeusiteno", inline = TRUE))),
                                                       fluidRow(column(6, align="center", HTML('<h4 style="color: #878F99; "><b>ESP\u00C8CE(S) \u00C0 ENJEUX</b></h4>')), column(6, align="center", HTML('<h4 style="color: #878F99; "><b>HABITAT(S) \u00C0 ENJEUX</b></h4>'))), br(),
                                                       fluidPage(
