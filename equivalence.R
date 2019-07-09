@@ -155,6 +155,20 @@ observeEvent(input$selecttypegraphequivalence, updateTabsetPanel(session, "resul
 observeEvent(input$selecthabitatSE, updateTabsetPanel(session, "resultequivalence", selected = "graphe"))
 observeEvent(input$selectspeciesSE, updateTabsetPanel(session, "resultequivalence", selected = "graphe"))
 
+output$plot_equivalence_ui <- renderUI({
+  if(input$selectniveauequivalence == '1'){ # Niveau General
+      plot.width = 650
+      plot.height = 1000
+  }else if(input$selectniveauequivalence == '2'){ # Niveau Habitat
+      plot.width = 650
+      plot.height = 700
+  }else if(input$selectniveauequivalence == '3'){ # Niveau Espece
+      plot.width = 650
+      plot.height = 400
+  }
+  plotOutput('plot_equivalence', width = plot.width, height = plot.height)
+})
+
 output$plot_equivalence <- renderPlot({
   if(input$selectsiteimpact3 != '0' & input$selectsitecompens3 != '0'){
     
@@ -253,9 +267,9 @@ output$plot_equivalence <- renderPlot({
           theme(panel.grid.major = element_line(size = 0.5, colour = "light grey"))+
           facet_grid(criteres ~ ., scales = "free", space = "free")
 
-        dat1["100% compensé"] <- natzero
+        dat1["absence perte nette"] <- natzero
         dat1["pertes brutes"] <- moins
-        dat1["gains brutes"] <- plus
+        dat1["gains bruts"] <- plus
       }else if(input$selecttypegraphequivalence == '2'){
         
       # Equivalence LT
@@ -285,9 +299,9 @@ output$plot_equivalence <- renderPlot({
           facet_grid(criteres ~ ., scales = "free", space = "free")
       
         
-        dat1["100% compensé"] <- natzero
+        dat1["absence perte nette"] <- natzero
         dat1["pertes brutes"] <- moins
-        dat1["gains brutes"] <- plus
+        dat1["gains bruts"] <- plus
       }
       
     }else if(input$selectniveauequivalence == '2'){
@@ -331,7 +345,6 @@ output$plot_equivalence <- renderPlot({
         moins <- c(rep(0., dim(model_C)[1]))
         plus <- c(rep(0., dim(model_C)[1]))
         if(input$selecttypegraphequivalence == '1'){
-          
         # Equivalence CT
           for(i in indicehabitat){
             hname <- listhabitat$habitat[i]
@@ -339,12 +352,12 @@ output$plot_equivalence <- renderPlot({
               if(ecoval[[hname]][7,2] == ecoval[[nameI]][12,2]){ # Pertes
                 nameImp <- paste("CI no.", as.character(listhabitat$index[i]))
                 nameIC <- nameImp
-                moins <- as.numeric(ecoval[[nameImp]][[7]]) - as.numeric(ecoval[[nameImp]][[4]])
+                moins <- as.numeric(ecoval[[nameImp]][[8]]) - as.numeric(ecoval[[nameImp]][[4]])
               }
               if(ecoval[[hname]][7,2] == ecoval[[nameC]][12,2]){ # Gains
                 nameComp <- paste("CC no.", as.character(listhabitat$index[i]))
                 nameIC <- nameComp
-                plus <- as.numeric(ecoval[[nameComp]][[7]]) - as.numeric(ecoval[[nameComp]][[4]])
+                plus <- as.numeric(ecoval[[nameComp]][[8]]) - as.numeric(ecoval[[nameComp]][[4]])
               }
             }
           }
@@ -357,12 +370,12 @@ output$plot_equivalence <- renderPlot({
               if(ecoval[[hname]][7,2] == ecoval[[nameI]][12,2]){ # Pertes
                 nameImp <- paste("CI no.", as.character(listhabitat$index[i]))
                 nameIC <- nameImp
-                moins <- as.numeric(ecoval[[nameImp]][[10]]) - as.numeric(ecoval[[nameImp]][[4]])
+                moins <- as.numeric(ecoval[[nameImp]][[11]]) - as.numeric(ecoval[[nameImp]][[4]])
               }
               if(ecoval[[hname]][7,2] == ecoval[[nameC]][12,2]){ # Gains
                 nameComp <- paste("CC no.", as.character(listhabitat$index[i]))
                 nameIC <- nameComp
-                plus <- as.numeric(ecoval[[nameComp]][[10]]) - as.numeric(ecoval[[nameComp]][[4]])
+                plus <- as.numeric(ecoval[[nameComp]][[11]]) - as.numeric(ecoval[[nameComp]][[4]])
               }
             }
           }
@@ -408,9 +421,9 @@ output$plot_equivalence <- renderPlot({
           facet_grid(criteres ~ ., scales = "free", space = "free")
       
         
-        dat1["100% compensé"] <- natzero
+        dat1["absence perte nette"] <- natzero
         dat1["pertes brutes"] <- moins
-        dat1["gains brutes"] <- plus
+        dat1["gains bruts"] <- plus
       }else{
         shinyjs::hide("dwnlequivalence")
         dat1 <- NULL
@@ -459,12 +472,12 @@ output$plot_equivalence <- renderPlot({
               if(ecoval[[sname]][6,2] == ecoval[[nameI]][12,2]){ # Pertes
                 nameImp <- paste("DI no.", as.character(listspecies$index[i]))
                 nameIC <- nameImp
-                moins <- as.numeric(ecoval[[nameImp]][[7]]) - as.numeric(ecoval[[nameImp]][[4]])
+                moins <- as.numeric(ecoval[[nameImp]][[8]]) - as.numeric(ecoval[[nameImp]][[4]])
               }
               if(ecoval[[sname]][6,2] == ecoval[[nameC]][12,2]){ # Gains
                 nameComp <- paste("DC no.", as.character(listspecies$index[i]))
                 nameIC <- nameComp
-                plus <- as.numeric(ecoval[[nameComp]][[7]]) - as.numeric(ecoval[[nameComp]][[4]])
+                plus <- as.numeric(ecoval[[nameComp]][[8]]) - as.numeric(ecoval[[nameComp]][[4]])
               }
             }
           }
@@ -477,12 +490,12 @@ output$plot_equivalence <- renderPlot({
               if(ecoval[[sname]][6,2] == ecoval[[nameI]][12,2]){ # Pertes
                 nameImp <- paste("DI no.", as.character(listspecies$index[i]))
                 nameIC <- nameImp
-                moins <- as.numeric(ecoval[[nameImp]][[10]]) - as.numeric(ecoval[[nameImp]][[4]])
+                moins <- as.numeric(ecoval[[nameImp]][[11]]) - as.numeric(ecoval[[nameImp]][[4]])
               }
               if(ecoval[[sname]][6,2] == ecoval[[nameC]][12,2]){ # Gains
                 nameComp <- paste("DC no.", as.character(listspecies$index[i]))
                 nameIC <- nameComp
-                plus <- as.numeric(ecoval[[nameComp]][[10]]) - as.numeric(ecoval[[nameComp]][[4]])
+                plus <- as.numeric(ecoval[[nameComp]][[11]]) - as.numeric(ecoval[[nameComp]][[4]])
               }
             }
           }
@@ -536,9 +549,9 @@ output$plot_equivalence <- renderPlot({
           facet_grid(criteres ~ ., scales = "free", space = "free")
       
         
-        dat1["100% compensé"] <- natzero
+        dat1["absence perte nette"] <- natzero
         dat1["pertes brutes"] <- moins
-        dat1["gains brutes"] <- plus
+        dat1["gains bruts"] <- plus
       }else{
         shinyjs::hide("dwnlequivalence")
         dat1 <- NULL
@@ -546,6 +559,7 @@ output$plot_equivalence <- renderPlot({
       }
       # p <- ggplotly(p, width=500, height=1000)
     }
+    dat1[['colour']] <- NULL
     equivalence$tableau <- dat1
   }else{
     p <- ggplot() + theme_void()

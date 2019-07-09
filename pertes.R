@@ -598,6 +598,7 @@ output$plot_pertes <- renderPlot({
         p <- ggplot() + theme_void()
       }
     }
+    dat1[['colour']] <- NULL
     pertes$tableau <- dat1
   }else{
     p <- ggplot() + theme_void()

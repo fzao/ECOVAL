@@ -608,6 +608,7 @@ output$plot_gains <- renderPlot({
         p <- ggplot() + theme_void()
       }
     }
+    dat1[['colour']] <- NULL
     gains$tableau <- dat1
   }else{
     p <- ggplot() + theme_void()
@@ -652,6 +653,6 @@ output$dwnlgains  <- downloadHandler(
     paste(radix, type, '_', niveau, habitat, species, ".csv", sep = "")
   },
   content = function(file) {
-    write.csv(pertes$tableau, file, row.names = FALSE)
+    write.csv(gains$tableau, file, row.names = FALSE)
   }
 )
