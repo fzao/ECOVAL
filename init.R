@@ -39,11 +39,11 @@ tableau <- reactiveValues(A1=NULL, A2=NULL, A3=NULL, B=NULL, C=NULL, D=NULL)
 tableau$A1 <- model_A1
 A1listtype <- list("1"="Fermé" , "2"="Ouvert", "3"="Buissonnant", "4"="Zone humide", "5"="Aquatique", "6"="Rocheux", "7"="Cultivé", "8"="Imperméabilisé")
 A1listetat <- list("1"="Bon", "2"="Mauvais", "3"="Moyen")
-A1listinter <- list("1"="Oui", "2"="Non")
+A1listinter <- list("1"="Non", "2"="Oui")
 tableau$A2 <- model_A2
 A2listtype1 <- list("1"="Avifaune","2"="Chiroptère","3"="Mammifère","4"="Amphibien","5"="Reptile","6"="Insecte","7"="Flore","8"="Poisson","9"="Crustacé/Mollusque")
 A2listtype2 <- list("0"="-","1"="Cortège forestier","2"="Cortège agricole","3"="Cortège du bâti","4"="Cortège généraliste","5"="Odonate","6"="Lépidoptère","7"="Orthoptère","8"="Coléoptère")
-A2listprot <- list("1"="Oui", "2"="Non")
+A2listprot <- list("1"="Non", "2"="Oui")
 A2listdir <- list("0"="-","1"="Annexe II DFFH","2"="Annexe I DO")
 A2listrepro <- list("0"="-","1"="Certaine","2"="Possible")
 tableau$A3 <- model_A3
