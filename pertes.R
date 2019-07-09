@@ -230,12 +230,12 @@ output$plot_pertes <- renderPlot({
           pertes_brutes <- as.numeric(ecoval[[name]][[7]]) - as.numeric(ecoval[[name]][[4]]),
           pertes_relatives <- as.numeric(ecoval[[name]][[7]]) - as.numeric(ecoval[[name]][[4]]) * 100 / as.numeric(ecoval[[name]][[4]])
         )
-          
+        dat1$colour <- ifelse(dat1$pertes_relatives < 0, "negative","positive")
         p <- ggplot(data=dat1, aes(x=indicateurs, y=pertes_relatives)) +
-          geom_bar(stat="identity",  width=0.5, aes(fill=as.factor(sign(pertes_relatives))))+
+          geom_bar(stat="identity",  width=0.5, aes(fill=colour))+
           coord_flip()+
           labs(x="Indicateurs", y="Pertes relatives (barre) et brutes (nombre)")+
-          scale_fill_manual(values=c("#C67677", "#7FDD4C", "#7FDD4C"))+
+          scale_fill_manual(values=c(positive="#7FDD4C",negative="#C67677")) +
           theme_bw()+
           theme(legend.position="none")+
           geom_text(aes(label=pertes_brutes, hjust="center", vjust="center", y=pertes_relatives*0.5), size=3)+
@@ -256,12 +256,12 @@ output$plot_pertes <- renderPlot({
           pertes_brutes <- as.numeric(ecoval[[name]][[10]]) - as.numeric(ecoval[[name]][[4]]),
           pertes_relatives <- as.numeric(ecoval[[name]][[10]]) - as.numeric(ecoval[[name]][[4]]) * 100 / as.numeric(ecoval[[name]][[4]])
         )
-        
+        dat1$colour <- ifelse(dat1$pertes_relatives < 0, "negative","positive")
         p <- ggplot(data=dat1, aes(x=indicateurs, y=pertes_relatives)) +
-          geom_bar(stat="identity",  width=0.5, aes(fill=as.factor(sign(pertes_relatives))))+
+          geom_bar(stat="identity",  width=0.5, aes(fill=colour))+
           coord_flip()+
           labs(x="Indicateurs", y="Pertes relatives (barre) et brutes (nombre)")+
-          scale_fill_manual(values=c("#C67677", "#7FDD4C", "#7FDD4C"))+
+          scale_fill_manual(values=c(positive="#7FDD4C",negative="#C67677")) +
           theme_bw()+
           theme(legend.position="none")+
           geom_text(aes(label=pertes_brutes, hjust="center", vjust="center", y=pertes_relatives*0.5), size=3)+
@@ -367,12 +367,12 @@ output$plot_pertes <- renderPlot({
             pertes_brutes <- as.numeric(tabhab[[8]]) - as.numeric(tabhab[[4]]),
             pertes_relatives <- as.numeric(tabhab[[8]]) - as.numeric(tabhab[[4]]) * 100 / as.numeric(tabhab[[4]])
           )
-          
+          dat1$colour <- ifelse(dat1$pertes_relatives < 0, "negative","positive")
           p <- ggplot(data=dat1, aes(x=indicateurs, y=pertes_relatives)) +
-            geom_bar(stat="identity",  width=0.5, aes(fill=as.factor(sign(pertes_relatives))))+
+            geom_bar(stat="identity",  width=0.5, aes(fill=colour))+
             coord_flip()+
             labs(x="Indicateurs", y="Pertes relatives (barre) et brutes (nombre)")+
-            scale_fill_manual(values=c("#C67677", "#7FDD4C", "#7FDD4C"))+
+            scale_fill_manual(values=c(positive="#7FDD4C",negative="#C67677")) +
             theme_bw()+
             theme(legend.position="none")+
             geom_text(aes(label=pertes_brutes, hjust="center", vjust="center", y=pertes_relatives*0.5), size=3)+
@@ -404,12 +404,12 @@ output$plot_pertes <- renderPlot({
             pertes_brutes <- as.numeric(tabhab[[11]]) - as.numeric(tabhab[[4]]),
             pertes_relatives <- as.numeric(tabhab[[11]]) - as.numeric(tabhab[[4]]) * 100 / as.numeric(tabhab[[4]])
           )
-          
+          dat1$colour <- ifelse(dat1$pertes_relatives < 0, "negative","positive")
           p <- ggplot(data=dat1, aes(x=indicateurs, y=pertes_relatives)) +
-            geom_bar(stat="identity",  width=0.5, aes(fill=as.factor(sign(pertes_relatives))))+
+            geom_bar(stat="identity",  width=0.5, aes(fill=colour))+
             coord_flip()+
             labs(x="Indicateurs", y="Pertes relatives (barre) et brutes (nombre)")+
-            scale_fill_manual(values=c("#C67677", "#7FDD4C", "#7FDD4C"))+
+            scale_fill_manual(values=c(positive="#7FDD4C",negative="#C67677")) +
             theme_bw()+
             theme(legend.position="none")+
             geom_text(aes(label=pertes_brutes, hjust="center", vjust="center", y=pertes_relatives*0.5), size=3)+
@@ -532,12 +532,12 @@ output$plot_pertes <- renderPlot({
             pertes_brutes <- as.numeric(tabsp[[8]]) - as.numeric(tabsp[[4]]),
             pertes_relatives <- as.numeric(tabsp[[8]]) - as.numeric(tabsp[[4]]) * 100 / as.numeric(tabsp[[4]])
           )
-          
+          dat1$colour <- ifelse(dat1$pertes_relatives < 0, "negative","positive")
           p <- ggplot(data=dat1, aes(x=indicateurs, y=pertes_relatives)) +
-            geom_bar(stat="identity",  width=0.5, aes(fill=as.factor(sign(pertes_relatives))))+
+            geom_bar(stat="identity",  width=0.5, aes(fill=colour))+
             coord_flip()+
             labs(x="Indicateurs", y="Pertes relatives (barre) et brutes (nombre)")+
-            scale_fill_manual(values=c("#C67677", "#7FDD4C", "#7FDD4C"))+
+            scale_fill_manual(values=c(positive="#7FDD4C",negative="#C67677")) +
             theme_bw()+
             theme(legend.position="none")+
             geom_text(aes(label=pertes_brutes, hjust="center", vjust="center", y=pertes_relatives*0.5), size=3)+
@@ -578,12 +578,12 @@ output$plot_pertes <- renderPlot({
             pertes_brutes <- as.numeric(tabsp[[11]]) - as.numeric(tabsp[[4]]),
             pertes_relatives <- as.numeric(tabsp[[11]]) - as.numeric(tabsp[[4]]) * 100 / as.numeric(tabsp[[4]])
           )
-          
+          dat1$colour <- ifelse(dat1$pertes_relatives < 0, "negative","positive")
           p <- ggplot(data=dat1, aes(x=indicateurs, y=pertes_relatives)) +
-            geom_bar(stat="identity",  width=0.5, aes(fill=as.factor(sign(pertes_relatives))))+
+            geom_bar(stat="identity",  width=0.5, aes(fill=colour))+
             coord_flip()+
             labs(x="Indicateurs", y="Pertes relatives (barre) et brutes (nombre)")+
-            scale_fill_manual(values=c("#C67677", "#7FDD4C", "#7FDD4C"))+
+            scale_fill_manual(values=c(positive="#7FDD4C",negative="#C67677")) +
             theme_bw()+
             theme(legend.position="none")+
             geom_text(aes(label=pertes_brutes, hjust="center", vjust="center", y=pertes_relatives*0.5), size=3)+

@@ -231,12 +231,12 @@ output$plot_gains <- renderPlot({
           gains_bruts <- as.numeric(ecoval[[name]][[7]]) - as.numeric(ecoval[[name]][[4]]),
           gains_relatifs <- (as.numeric(ecoval[[name]][[7]]) - as.numeric(ecoval[[name]][[4]])) * 100 / as.numeric(ecoval[[name]][[4]])
         )
-        
+        dat1$colour <- ifelse(dat1$gains_relatifs < 0, "negative","positive")
         p <- ggplot(data=dat1, aes(x=indicateurs, y=gains_relatifs)) +
-          geom_bar(stat="identity",  width=0.5, aes(fill=as.factor(sign(gains_relatifs))))+
+          geom_bar(stat="identity",  width=0.5, aes(fill=colour))+
           coord_flip()+
-          labs(x="Indicateurs", y="Pertes relatives (barre) et brutes (nombre)")+
-          scale_fill_manual(values=c("#C67677", "#7FDD4C", "#7FDD4C"))+
+          labs(x="Indicateurs", y="Gains relatifs (barre) et bruts (nombre)")+
+          scale_fill_manual(values=c(positive="#7FDD4C",negative="#C67677")) +
           theme_bw()+
           theme(legend.position="none")+
           geom_text(aes(label=gains_bruts, hjust="center", vjust="center", y=gains_relatifs*0.5), size=3)+
@@ -258,12 +258,12 @@ output$plot_gains <- renderPlot({
           gains_bruts <- as.numeric(ecoval[[name]][[10]]) - as.numeric(ecoval[[name]][[4]]),
           gains_relatifs <- (as.numeric(ecoval[[name]][[10]]) - as.numeric(ecoval[[name]][[4]])) * 100 / as.numeric(ecoval[[name]][[4]])
         )
-        
+        dat1$colour <- ifelse(dat1$gains_relatifs < 0, "negative","positive")
         p <- ggplot(data=dat1, aes(x=indicateurs, y=gains_relatifs)) +
-          geom_bar(stat="identity",  width=0.5, aes(fill=as.factor(sign(gains_relatifs))))+
+          geom_bar(stat="identity",  width=0.5, aes(fill=colour))+
           coord_flip()+
-          labs(x="Indicateurs", y="Pertes relatives (barre) et brutes (nombre)")+
-          scale_fill_manual(values=c("#C67677", "#7FDD4C", "#7FDD4C"))+
+          labs(x="Indicateurs", y="Gains relatifs (barre) et bruts (nombre)")+
+          scale_fill_manual(values=c(positive="#7FDD4C",negative="#C67677")) +
           theme_bw()+
           theme(legend.position="none")+
           geom_text(aes(label=gains_bruts, hjust="center", vjust="center", y=gains_relatifs*0.5), size=3)+
@@ -372,12 +372,12 @@ output$plot_gains <- renderPlot({
             gains_bruts <- as.numeric(tabhab[[8]]) - as.numeric(tabhab[[4]]),
             gains_relatifs <- (as.numeric(tabhab[[8]]) - as.numeric(tabhab[[4]])) * 100 / as.numeric(tabhab[[4]])
           )
-          
+          dat1$colour <- ifelse(dat1$gains_relatifs < 0, "negative","positive")
           p <- ggplot(data=dat1, aes(x=indicateurs, y=gains_relatifs)) +
-            geom_bar(stat="identity",  width=0.5, aes(fill=as.factor(sign(gains_relatifs))))+
+            geom_bar(stat="identity",  width=0.5, aes(fill=colour))+
             coord_flip()+
-            labs(x="Indicateurs", y="Pertes relatives (barre) et brutes (nombre)")+
-            scale_fill_manual(values=c("#C67677", "#7FDD4C", "#7FDD4C"))+
+            labs(x="Indicateurs", y="Gains relatifs (barre) et bruts (nombre)")+
+            scale_fill_manual(values=c(positive="#7FDD4C",negative="#C67677")) +
             theme_bw()+
             theme(legend.position="none")+
             geom_text(aes(label=gains_bruts, hjust="center", vjust="center", y=gains_relatifs*0.5), size=3)+
@@ -410,12 +410,12 @@ output$plot_gains <- renderPlot({
             gains_bruts <- as.numeric(tabhab[[11]]) - as.numeric(tabhab[[4]]),
             gains_relatifs <- (as.numeric(tabhab[[11]]) - as.numeric(tabhab[[4]])) * 100 / as.numeric(tabhab[[4]])
           )
-          
+          dat1$colour <- ifelse(dat1$gains_relatifs < 0, "negative","positive")
           p <- ggplot(data=dat1, aes(x=indicateurs, y=gains_relatifs)) +
-            geom_bar(stat="identity",  width=0.5, aes(fill=as.factor(sign(gains_relatifs))))+
+            geom_bar(stat="identity",  width=0.5, aes(fill=colour))+
             coord_flip()+
-            labs(x="Indicateurs", y="Pertes relatives (barre) et brutes (nombre)")+
-            scale_fill_manual(values=c("#C67677", "#7FDD4C", "#7FDD4C"))+
+            labs(x="Indicateurs", y="Gains relatifs (barre) et bruts (nombre)")+
+            scale_fill_manual(values=c(positive="#7FDD4C",negative="#C67677")) +
             theme_bw()+
             theme(legend.position="none")+
             geom_text(aes(label=gains_bruts, hjust="center", vjust="center", y=gains_relatifs*0.5), size=3)+
@@ -539,11 +539,12 @@ output$plot_gains <- renderPlot({
             gains_bruts <- as.numeric(tabsp[[8]]) - as.numeric(tabsp[[4]]),
             gains_relatifs <- (as.numeric(tabsp[[8]]) - as.numeric(tabsp[[4]])) * 100 / as.numeric(tabsp[[4]])
           )
+          dat1$colour <- ifelse(dat1$gains_relatifs < 0, "negative","positive")
           p <- ggplot(data=dat1, aes(x=indicateurs, y=gains_relatifs)) +
-            geom_bar(stat="identity",  width=0.5, aes(fill=as.factor(sign(gains_relatifs))))+
+            geom_bar(stat="identity",  width=0.5, aes(fill=colour)) +
             coord_flip()+
-            labs(x="Indicateurs", y="Pertes relatives (barre) et brutes (nombre)")+
-            scale_fill_manual(values=c("#C67677", "#7FDD4C", "#7FDD4C"))+
+            labs(x="Indicateurs", y="Gains relatifs (barre) et bruts (nombre)")+
+            scale_fill_manual(values=c(positive="#7FDD4C",negative="#C67677")) +
             theme_bw()+
             theme(legend.position="none")+
             geom_text(aes(label=gains_bruts, hjust="center", vjust="center", y=gains_relatifs*0.5), size=3)+
@@ -585,12 +586,12 @@ output$plot_gains <- renderPlot({
             gains_bruts <- as.numeric(tabsp[[11]]) - as.numeric(tabsp[[4]]),
             gains_relatifs <- (as.numeric(tabsp[[11]]) - as.numeric(tabsp[[4]])) * 100 / as.numeric(tabsp[[4]])
           )
-          
+          dat1$colour <- ifelse(dat1$gains_relatifs < 0, "negative","positive")
           p <- ggplot(data=dat1, aes(x=indicateurs, y=gains_relatifs)) +
-            geom_bar(stat="identity",  width=0.5, aes(fill=as.factor(sign(gains_relatifs))))+
+            geom_bar(stat="identity",  width=0.5, aes(fill=colour))+
             coord_flip()+
-            labs(x="Indicateurs", y="Pertes relatives (barre) et brutes (nombre)")+
-            scale_fill_manual(values=c("#C67677", "#7FDD4C", "#7FDD4C"))+
+            labs(x="Indicateurs", y="Gains relatifs (barre) et bruts (nombre)")+
+            scale_fill_manual(values=c(positive="#7FDD4C",negative="#C67677")) +
             theme_bw()+
             theme(legend.position="none")+
             geom_text(aes(label=gains_bruts, hjust="center", vjust="center", y=gains_relatifs*0.5), size=3)+
