@@ -22,6 +22,7 @@ cleanHabitat <- function(){
   updateSelectInput(session, "typehabitat", selected = 1)
   updateTextAreaInput(session, "justifyhabitat", value = "")
   updateSelectInput(session, "presencehabitat", selected = 1)
+  updateNumericInput(session, "perimelarghab", value = 0)
 }
 
 updateListHabitat <- function(name, inplace=FALSE){
@@ -122,12 +123,14 @@ observeEvent(input$selecthabitat, {
     shinyjs::hide("typehabitat")
     shinyjs::hide("justifyhabitat")
     shinyjs::hide("presencehabitat")
+    shinyjs::hide("perimelarghab")
   }else{
     shinyjs::show("namehabitat")
     shinyjs::show("codecorinehabitat")
     shinyjs::show("codeeunishabitat")
     shinyjs::show("typehabitat")
     shinyjs::show("justifyhabitat")
+    shinyjs::show("perimelarghab")
     if(input$sitetype == 2) shinyjs::show("presencehabitat")
     name  <- paste("Habitat", as.character(numero))
     if(exists(name, where = ecoval)){
@@ -138,6 +141,7 @@ observeEvent(input$selecthabitat, {
       if(ecoval[[name]][4,2] != "NA") updateSelectInput(session, "typehabitat", selected = as.integer(ecoval[[name]][4,2]))
       if(ecoval[[name]][5,2] != "NA") updateTextAreaInput(session, "justifyhabitat", value = ecoval[[name]][5,2])
       if(ecoval[[name]][6,2] != "NA") updateSelectInput(session, "presencehabitat", selected = as.integer(ecoval[[name]][6,2]))
+      if(ecoval[[name]][9,2] != "NA") updateNumericInput(session, "perimelarghab", value = as.numeric(ecoval[[name]][9,2]))
     }
   }
 })
@@ -158,6 +162,7 @@ observeEvent(input$codeeunishabitat, {saveHabitat(as.integer(input$selecthabitat
 observeEvent(input$typehabitat, {saveHabitat(as.integer(input$selecthabitat))})
 observeEvent(input$justifyhabitat, {saveHabitat(as.integer(input$selecthabitat))})
 observeEvent(input$presencehabitat, {saveHabitat(as.integer(input$selecthabitat))})
+observeEvent(input$perimelarghab, {saveHabitat(as.integer(input$selecthabitat))})
 
 saveHabitat <- function(numero){
   if(numero > 0){
@@ -168,5 +173,6 @@ saveHabitat <- function(numero){
     ecoval[[name]][4,2] <<- input$typehabitat
     ecoval[[name]][5,2] <<- input$justifyhabitat
     ecoval[[name]][6,2] <<- input$presencehabitat
+    ecoval[[name]][9,2] <<- input$perimelarghab
   }
 }

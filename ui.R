@@ -80,7 +80,7 @@ shinyUI(fluidPage(HTML("<!DOCTYPE html>
                                          ),
                                          mainPanel(
                                            tabsetPanel(id="prjtabs",
-                                             tabPanel(HTML('<h4 style="color: #005BBB; ">Description</h4>'), value="description", br(),
+                                             tabPanel(HTML('<h4 style="color: #005BBB; ">Description du site</h4>'), value="description", br(),
                                                       fluidRow(column(12, align="center", htmlOutput("viewsiteno", inline = TRUE))), br(), br(),
                                                       fluidRow(column(4, align="left", textInput("sitename", "NOM", placeholder = "Nom du site...")),
                                                                column(4, align="left", selectInput("sitetype", label = "TYPE", choices = list("Impacté" = 1, "Compensatoire" = 2, "Impacté et Compensatoire" = 3))),
@@ -100,7 +100,7 @@ shinyUI(fluidPage(HTML("<!DOCTYPE html>
                                              ),
                                              tabPanel(HTML('<h4 style="color: #005BBB; ">Identification Des Enjeux</h4>'), value="identification", br(),
                                                       fluidRow(column(12, align="center", htmlOutput("enjeusiteno", inline = TRUE))),
-                                                      fluidRow(column(6, align="center", HTML('<h4 style="color: #878F99; "><b>ESPECES</b></h4>')), column(6, align="center", HTML('<h4 style="color: #878F99; "><b>HABITATS</b></h4>'))),
+                                                      fluidRow(column(6, align="center", HTML('<h4 style="color: #878F99; "><b>ESP\u00C8CE(S) \u00C0 ENJEUX</b></h4>')), column(6, align="center", HTML('<h4 style="color: #878F99; "><b>HABITAT(S) \u00C0 ENJEUX</b></h4>'))), br(),
                                                       fluidPage(
                                                         column(6, align="center",
                                                                selectInput("selectspecies", label = NULL, 
@@ -112,8 +112,9 @@ shinyUI(fluidPage(HTML("<!DOCTYPE html>
                                                                fluidRow(column(4, align="left", textInput("latinnamespecies", "Nom Latin")), 
                                                                         column(4, align="left", textInput("frenchnamespecies", "Nom Français")),
                                                                         column(4, align="left", selectInput("typespecies", label = "Type", choices = list("Avifaune" = 1, "Chiroptère" = 2, "Mammifère" = 3, "Amphibien" = 4, "Reptile" = 5, "Insecte" = 6, "Flore" = 7, "Poisson" = 8, "Crustacé/Mollusque" = 9, "Communauté faunistique" = 10)))), br(),
-                                                               fluidRow(column(8, align="left", textAreaInput("justifyspecies", label = "Justification de l'enjeu", height='200px', width='390px')),
-                                                                        column(4, align="left", selectInput("presencespecies", label = "Présence sur site impacté", choices = list("Oui" = 1, "Non" = 2))))
+                                                               fluidRow(column(4, align="left", textAreaInput("justifyspecies", label = "Justification de l'enjeu", height='200px')),
+                                                                        column(4, align="left", selectInput("presencespecies", label = "Présence sur site impacté", choices = list("Oui" = 1, "Non" = 2))),
+                                                                        column(4, align="left", numericInput("perimelargsp", "Périmètre élargi (km)", value = 0., min = 0., max = 1e6, step = 1.)))
                                                                ),
                                                         column(6, align="center",
                                                                selectInput("selecthabitat", label = NULL, 
@@ -126,8 +127,9 @@ shinyUI(fluidPage(HTML("<!DOCTYPE html>
                                                                         column(3, align="left", textInput("codecorinehabitat", "Code Corine")),
                                                                         column(3, align="left", textInput("codeeunishabitat", "Code Eunis")),
                                                                         column(3, align="left", selectInput("typehabitat", label = "Type", choices = list("Fermé" = 1, "Ouvert" = 2, "Buissonnant" = 3, "Zone humide" = 4, "Aquatique" = 5, "Rocheux" = 6, "Cultivé" = 7, "Imperméabilisé" = 8)))), br(),
-                                                               fluidRow(column(8, align="left", textAreaInput("justifyhabitat", label = "Justification de l'enjeu", height='200px', width='390px')),
-                                                                        column(4, align="left", selectInput("presencehabitat", label = "Présence sur site impacté", choices = list("Oui" = 1, "Non" = 2))))
+                                                               fluidRow(column(4, align="left", textAreaInput("justifyhabitat", label = "Justification de l'enjeu", height='200px')),
+                                                                        column(4, align="left", selectInput("presencehabitat", label = "Présence sur site impacté", choices = list("Oui" = 1, "Non" = 2))),
+                                                                        column(4, align="left", numericInput("perimelarghab", "Périmètre élargi (km)", value = 0., min = 0., max = 1e6, step = 1.)))
                                                                )
                                                       )
                                              )
