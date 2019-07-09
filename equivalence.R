@@ -240,12 +240,12 @@ output$plot_equivalence <- renderPlot({
           indicateurs = shortindicnames, #ecoval[[nameImp]][[3]],
           criteres = factor(ecoval[[nameImp]][[2]], levels=c("Diversité habitat","Diversité Espèce","Patrimonialité_PS","Fonctionnalité","Pression_PS","Connectivité","Représentativité","Patrimonialité_PE","Pression_PE")),
           equivalence = equivalCT)
-        
+        dat1$colour <- ifelse(dat1$equivalence < 0, "negative","positive")
         p <- ggplot(data=dat1, aes(x=indicateurs, y= equivalence)) +
-        geom_bar(stat="identity",  width=0.5, aes(fill=as.factor(sign(equivalence))))+
+        geom_bar(stat="identity",  width=0.5, aes(fill=colour))+
           coord_flip()+
           labs(x="Indicateurs", y="Pertes / Gains NETS")+
-          scale_fill_manual(values=c("#C67677", "#7FDD4C", "#7FDD4C"))+
+          scale_fill_manual(values=c(positive="#7FDD4C",negative="#C67677")) +
           theme_bw()+
           theme(legend.position="none")+
           theme(axis.text.x=element_text(colour="black", size = 11))+
@@ -271,12 +271,12 @@ output$plot_equivalence <- renderPlot({
           indicateurs = shortindicnames, #ecoval[[nameImp]][[3]],
           criteres = factor(ecoval[[nameImp]][[2]], levels=c("Diversité habitat","Diversité Espèce","Patrimonialité_PS","Fonctionnalité","Pression_PS","Connectivité","Représentativité","Patrimonialité_PE","Pression_PE")),
           equivalence = equivalLT)
-        
+        dat1$colour <- ifelse(dat1$equivalence < 0, "negative","positive")
         p <- ggplot(data=dat1, aes(x=indicateurs, y= equivalence)) +
-        geom_bar(stat="identity",  width=0.5, aes(fill=as.factor(sign(equivalence))))+
+        geom_bar(stat="identity",  width=0.5, aes(fill=colour))+
           coord_flip()+
           labs(x="Indicateurs", y="Pertes / Gains NETS")+
-          scale_fill_manual(values=c("#C67677", "#7FDD4C", "#7FDD4C"))+
+          scale_fill_manual(values=c(positive="#7FDD4C",negative="#C67677")) +
           theme_bw()+
           theme(legend.position="none")+
           theme(axis.text.x=element_text(colour="black", size = 11))+
@@ -394,12 +394,12 @@ output$plot_equivalence <- renderPlot({
           indicateurs = tabhab[[3]],
           criteres = factor(tabhab[[2]], levels=c("Diversité espèce", "Fonctionnalité", "Structure", "Pression_PS", "Connectivité", "Représentativité")),
           equivalence = equival)
-        
+        dat1$colour <- ifelse(dat1$equivalence < 0, "negative","positive")
         p <- ggplot(data=dat1, aes(x=indicateurs, y= equivalence)) +
-        geom_bar(stat="identity",  width=0.5, aes(fill=as.factor(sign(equivalence))))+
+        geom_bar(stat="identity",  width=0.5, aes(fill=colour))+
           coord_flip()+
           labs(x="Indicateurs", y="Pertes / Gains NETS")+
-          scale_fill_manual(values=c("#C67677", "#7FDD4C", "#7FDD4C"))+
+          scale_fill_manual(values=c(positive="#7FDD4C",negative="#C67677")) +
           theme_bw()+
           theme(legend.position="none")+
           theme(axis.text.x=element_text(colour="black", size = 11))+
@@ -522,12 +522,12 @@ output$plot_equivalence <- renderPlot({
           indicateurs = tabsp[[3]],
           criteres = factor(tabsp[[2]], levels=c("Diversité espèce", "Fonctionnalité", "Pression_PS", "Connectivité", "Représentativité")),
           equivalence = equival)
-        
+        dat1$colour <- ifelse(dat1$equivalence < 0, "negative","positive")
         p <- ggplot(data=dat1, aes(x=indicateurs, y= equivalence)) +
-        geom_bar(stat="identity",  width=0.5, aes(fill=as.factor(sign(equivalence))))+
+        geom_bar(stat="identity",  width=0.5, aes(fill=colour))+
           coord_flip()+
           labs(x="Indicateurs", y="Pertes / Gains NETS")+
-          scale_fill_manual(values=c("#C67677", "#7FDD4C", "#7FDD4C"))+
+          scale_fill_manual(values=c(positive="#7FDD4C",negative="#C67677")) +
           theme_bw()+
           theme(legend.position="none")+
           theme(axis.text.x=element_text(colour="black", size = 11))+
