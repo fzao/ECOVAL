@@ -324,11 +324,11 @@ output$plot_gains <- renderPlot({
           dat1 <- data.frame(
             perimetres = tabhab[[1]],
             indicateurs = tabhab[[3]],
-            criteres = factor(tabhab[[2]], levels=c("Diversité espèce", "Fonctionnalité", "Structure", "Pression", "Connectivité", "Représentativité")),
+            criteres = factor(tabhab[[2]], levels=c("Diversité espèce", "Fonctionnalité", "Structure", "Pression_PS", "Connectivité", "Représentativité")),
             valeurs = as.numeric(tabhab[[4]])
           )
           couleurs <- c("Diversité habitat" = "#83D072",
-                        "Diversité Espèce" ="#1E6218",
+                        "Diversité espèce" ="#1E6218",
                         "Patrimonialité_PS" = "#9D403E",
                         "Fonctionnalité" = "#4894DC",
                         "Pression_PS" = "#E6A936",
@@ -366,7 +366,7 @@ output$plot_gains <- renderPlot({
           dat1 <- data.frame(
             perimetres = tabhab[[1]],
             indicateurs = tabhab[[3]],
-            criteres = factor(tabhab[[2]], levels=c("Diversité habitat","Diversité Espèce","Patrimonialité_PS","Fonctionnalité","Pression_PS","Connectivité","Représentativité","Patrimonialité_PE","Pression_PE", "Structure")),
+            criteres = factor(tabhab[[2]], levels=c("Diversité habitat","Diversité espèce","Patrimonialité_PS","Fonctionnalité","Pression_PS","Connectivité","Représentativité","Patrimonialité_PE","Pression_PE", "Structure")),
             # valeurs = as.numeric(tabhab[[7]]),
             incertitudes <- tabhab[[7]],
             gains_bruts <- as.numeric(tabhab[[8]]) - as.numeric(tabhab[[4]]),
@@ -404,7 +404,7 @@ output$plot_gains <- renderPlot({
           dat1 <- data.frame(
             perimetres = tabhab[[1]],
             indicateurs = tabhab[[3]],
-            criteres = factor(tabhab[[2]], levels=c("Diversité habitat","Diversité Espèce","Patrimonialité_PS","Fonctionnalité","Pression_PS","Connectivité","Représentativité","Patrimonialité_PE","Pression_PE", "Structure")),
+            criteres = factor(tabhab[[2]], levels=c("Diversité habitat","Diversité espèce","Patrimonialité_PS","Fonctionnalité","Pression_PS","Connectivité","Représentativité","Patrimonialité_PE","Pression_PE", "Structure")),
             #valeurs = as.numeric(tabhab[[7]]),
             incertitudes <- tabhab[[7]],
             gains_bruts <- as.numeric(tabhab[[11]]) - as.numeric(tabhab[[4]]),
@@ -483,11 +483,11 @@ output$plot_gains <- renderPlot({
           dat1 <- data.frame(
             perimetres = tabsp[[1]],
             indicateurs = tabsp[[3]],
-            criteres = factor(tabsp[[2]], levels=c("Diversité espèce", "Fonctionnalité", "Pression", "Connectivité", "Représentativité")),
+            criteres = factor(tabsp[[2]], levels=c("Diversité espèce", "Fonctionnalité", "Pression_PS", "Connectivité", "Représentativité")),
             valeurs = as.numeric(tabsp[[4]]))
           
             couleurs <- c("Diversité habitat" = "#83D072",
-                        "Diversité Espèce" ="#1E6218",
+                        "Diversité espèce" ="#1E6218",
                         "Patrimonialité_PS" = "#9D403E",
                         "Fonctionnalité" = "#4894DC",
                         "Pression_PS" = "#E6A936",
@@ -533,7 +533,7 @@ output$plot_gains <- renderPlot({
           dat1 <- data.frame(
             perimetres = tabsp[[1]],
             indicateurs = tabsp[[3]],
-            criteres = factor(tabsp[[2]], levels=c("Diversité habitat","Diversité Espèce","Patrimonialité_PS","Fonctionnalité","Pression_PS","Connectivité","Représentativité","Patrimonialité_PE","Pression_PE", "Structure")),
+            criteres = factor(tabsp[[2]], levels=c("Diversité habitat","Diversité espèce","Patrimonialité_PS","Fonctionnalité","Pression_PS","Connectivité","Représentativité","Patrimonialité_PE","Pression_PE", "Structure")),
             # valeurs = as.numeric(tabsp[[7]]),
             incertitudes <- tabsp[[7]],
             gains_bruts <- as.numeric(tabsp[[8]]) - as.numeric(tabsp[[4]]),
@@ -579,7 +579,7 @@ output$plot_gains <- renderPlot({
           dat1 <- data.frame(
             perimetres = tabsp[[1]],
             indicateurs = tabsp[[3]],
-            criteres = factor(tabsp[[2]], levels=c("Diversité habitat","Diversité Espèce","Patrimonialité_PS","Fonctionnalité","Pression_PS","Connectivité","Représentativité","Patrimonialité_PE","Pression_PE", "Structure")),
+            criteres = factor(tabsp[[2]], levels=c("Diversité habitat","Diversité espèce","Patrimonialité_PS","Fonctionnalité","Pression_PS","Connectivité","Représentativité","Patrimonialité_PE","Pression_PE", "Structure")),
             # valeurs = as.numeric(tabsp[[7]]),
             incertitudes <- tabsp[[7]],
             gains_bruts <- as.numeric(tabsp[[11]]) - as.numeric(tabsp[[4]]),

@@ -320,11 +320,11 @@ output$plot_pertes <- renderPlot({
           dat1 <- data.frame(
             perimetres = tabhab[[1]],
             indicateurs = tabhab[[3]],
-            criteres = factor(tabhab[[2]], levels=c("Diversité habitat","Diversité Espèce","Patrimonialité_PS","Fonctionnalité","Pression_PS","Connectivité","Représentativité","Patrimonialité_PE","Pression_PE", "Structure")),
+            criteres = factor(tabhab[[2]], levels=c("Diversité habitat","Diversité espèce","Patrimonialité_PS","Fonctionnalité","Pression_PS","Connectivité","Représentativité","Patrimonialité_PE","Pression_PE", "Structure")),
             valeurs = as.numeric(tabhab[[4]])
           )
           couleurs <- c("Diversité habitat" = "#83D072",
-                        "Diversité Espèce" ="#1E6218",
+                        "Diversité espèce" ="#1E6218",
                         "Patrimonialité_PS" = "#9D403E",
                         "Fonctionnalité" = "#4894DC",
                         "Pression_PS" = "#E6A936",
@@ -361,7 +361,7 @@ output$plot_pertes <- renderPlot({
           dat1 <- data.frame(
             perimetres = tabhab[[1]],
             indicateurs = tabhab[[3]],
-            criteres = factor(tabhab[[2]], levels=c("Diversité habitat","Diversité Espèce","Patrimonialité_PS","Fonctionnalité","Pression_PS","Connectivité","Représentativité","Patrimonialité_PE","Pression_PE", "Structure")),
+            criteres = factor(tabhab[[2]], levels=c("Diversité habitat","Diversité espèce","Patrimonialité_PS","Fonctionnalité","Pression_PS","Connectivité","Représentativité","Patrimonialité_PE","Pression_PE", "Structure")),
             #valeurs = as.numeric(tabhab[[4]],
             incertitudes <- tabhab[[7]],
             pertes_brutes <- as.numeric(tabhab[[8]]) - as.numeric(tabhab[[4]]),
@@ -398,7 +398,7 @@ output$plot_pertes <- renderPlot({
           dat1 <- data.frame(
             perimetres = tabhab[[1]],
             indicateurs = tabhab[[3]],
-            criteres = factor(tabhab[[2]], levels=c("Diversité habitat","Diversité Espèce","Patrimonialité_PS","Fonctionnalité","Pression_PS","Connectivité","Représentativité","Patrimonialité_PE","Pression_PE", "Structure")),
+            criteres = factor(tabhab[[2]], levels=c("Diversité habitat","Diversité espèce","Patrimonialité_PS","Fonctionnalité","Pression_PS","Connectivité","Représentativité","Patrimonialité_PE","Pression_PE", "Structure")),
             #valeurs = as.numeric(tabhab[[4]],
             incertitudes <- tabhab[[10]],
             pertes_brutes <- as.numeric(tabhab[[11]]) - as.numeric(tabhab[[4]]),
