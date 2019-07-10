@@ -12,7 +12,7 @@ en permettant l’import et la saisie des données, le calcul automatisé des in
 la transparence des prédictions et la génération automatisée des sorties graphiques.
 
 <p align="center">
-  <img src="./www/Image1.png" width="800"/>
+  <img src="./www/Image2.png" width="800"/>
 </p>
 <p align="center">
    <b>Principe méthodologique</b> 
