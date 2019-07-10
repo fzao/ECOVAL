@@ -28,6 +28,6 @@ la transparence des prédictions et la génération automatisée des sorties gra
 
 # Contribution
 
-Pour toute demande veuillez faire une demande via l'onglet  *Issues*.
+Pour toute demande veuillez considérer l'onglet  *Issues*.
 
 
