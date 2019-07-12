@@ -20,6 +20,12 @@ fileName <- inFile$name
 
 _Rapport généré le_ `r format(Sys.time(), "%a %d %b %Y %H:%M:%S")`
 
+<form>
+  <label>Commentaires :</label><br>
+  <textarea id="txt_comment1" name="txt_comment1" rows="10" cols="125">
+  </textarea>
+</form>
+
 --------------------------------------
 
 # <span style='color:#C0504D'>**Site Impacté -- `r listsite$name[as.numeric(input$selectsiteimpact4)+1]`**</span>
