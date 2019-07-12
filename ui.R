@@ -177,7 +177,7 @@ shinyUI(fluidPage(HTML("<!DOCTYPE html>
                                                               fluidRow(column(3, align="left", selectInput("SIpertype", label = "Type", choices = list("Fermé" = 1, "Ouvert" = 2, "Buissonnant" = 3, "Zone Humide" = 4, "Aquatique" = 5, "Rocheux" = 6, "Cultivé" = 7, "Imperméabilisé" = 8))),
                                                                        column(3, align="left", textInput("SIpercouche", "Couche SIG EUNIS", placeholder = "ex. : 41 (forêt décidue)")),
                                                                        column(3, align="left", textInput("SIpercode", "Code SIG OSO", placeholder = "ex. : 34 (pelouse)")),
-                                                                       column(3, align="left", numericInput("SIpersurf", "Surface (ha)", value = 0., min = 0., step = 0.01))),
+                                                                       column(3, align="left", numericInput("SIpersurf", "Surface (ha)", value = 0., min = 0., step = 0.01))), br(),
                                                               fluidRow(column(4, align="right", actionButton("addlistper", "AJOUTER")), column(4, align="center", actionButton("chglistper", "MODIFIER")), column(4, align="left", actionButton("dellistper", "SUPPRIMER"))), br(),
                                                               DT::dataTableOutput("SItable3"), DT::dataTableOutput("SItable3rowselected")
                                                      ),
@@ -266,7 +266,7 @@ shinyUI(fluidPage(HTML("<!DOCTYPE html>
                                                                             fluidRow(column(3, align="left", selectInput("SCpertype", label = "Type", choices = list("Fermé" = 1, "Ouvert" = 2, "Buissonnant" = 3, "Zone Humide" = 4, "Aquatique" = 5, "Rocheux" = 6, "Cultivé" = 7, "Imperméabilisé" = 8))),
                                                                                      column(3, align="left", textInput("SCpercouche", "Couche SIG EUNIS", placeholder = "ex. : 41 (forêt décidue)")),
                                                                                      column(3, align="left", textInput("SCpercode", "Code SIG OSO", placeholder = "ex. : 34 (pelouse)")),
-                                                                                     column(3, align="left", numericInput("SCpersurf", "Surface (ha)", value = 0., min = 0., step = 0.01))),
+                                                                                     column(3, align="left", numericInput("SCpersurf", "Surface (ha)", value = 0., min = 0., step = 0.01))), br(),
                                                                             fluidRow(column(4, align="right", actionButton("addlistper2", "AJOUTER")), column(4, align="center", actionButton("chglistper2", "MODIFIER")), column(4, align="left", actionButton("dellistper2", "SUPPRIMER"))), br(),
                                                                             DT::dataTableOutput("SCtable3"), DT::dataTableOutput("SCtable3rowselected")
                                                                    ),
