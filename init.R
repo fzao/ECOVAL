@@ -26,6 +26,7 @@ model_B <- read.xlsx2('model/ECOVAL.xlsx', sheetIndex = 8, header = TRUE, string
 model_C <- read.xlsx2('model/ECOVAL.xlsx', sheetIndex = 9, header = TRUE, stringsAsFactors = FALSE)
 model_D <- read.xlsx2('model/ECOVAL.xlsx', sheetIndex = 10, header = TRUE, stringsAsFactors = FALSE)
 SSI <- readRDS('data/Species_SSI.rds')
+Species <- readRDS("model/Species_names.rds")
 park <- readRDS('data/Park.rds')
 ecoval <- list()
 ecoval[["General"]] <- model_info_general

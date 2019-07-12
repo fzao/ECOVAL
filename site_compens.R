@@ -72,7 +72,19 @@ observeEvent(input$selectsitecompens, {
 })
 
 ## SC A1
-observeEvent(input$addlisthab2,{
+cleanwidgetsA1sc <- function(){
+  updateTextInput(session, "SCnamehabitat", value = "")
+  updateTextInput(session, "SCcodecorine", value = "")
+  updateTextInput(session, "SCcodeeunis", value = "")
+  updateNumericInput(session, "SCsurface", value = 0.)
+  updateSelectInput(session, "SCtype", selected = "1")
+  updateSelectInput(session, "SCetat", selected = "1")
+  updateSelectInput(session, "SCinteret", selected = "1")
+  updateSelectInput(session, "SCmenace", selected = "1")
+  updateNumericInput(session, "SCsurfacedeg", value = 0.)
+}
+
+myA1sc <- function(rs){
   # test validation 0
   if(is.na(input$SIsurface) | is.na(input$SIsurfacedeg)){
     showModal(modalDialog(h5("ERREUR SUR LES SURFACES"), hr(), "Une valeur numérique n'est pas correcte", easyClose = TRUE, footer = NULL))
@@ -85,14 +97,14 @@ observeEvent(input$addlisthab2,{
   }
   # test validation 2
   name <- paste("Site no.", input$selectsitecompens)
-  surfacesite <- as.numeric(ecoval[[name]][3,2])
-  if(is.na(surfacesite)) surfacesite <- 0.
+  surfacesite <- 0.
+  if(ecoval[[name]][3,2] != "NA") surfacesite <- as.numeric(ecoval[[name]][3,2])
   surfsomme <- 0.
   name <- paste("SCA1 no.", input$selectsitecompens)
   dimrow <- dim(ecoval[[name]])[1]
   if(dimrow > 0){
     for(i in 1:dimrow){
-      surfsomme <- surfsomme + as.numeric(ecoval[[name]][i,4])
+      if(i != rs) surfsomme <- surfsomme + as.numeric(ecoval[[name]][i,4])
     }
   }
   surfsomme <- surfsomme + input$SCsurface
@@ -112,20 +124,22 @@ observeEvent(input$addlisthab2,{
     "En.danger.ou.menacé.localement"=as.character(A1listinter[input$SCmenace]),
     "Surface.dégradée"=as.character(input$SCsurfacedeg), stringsAsFactors=FALSE)
   # array visu
-  tableau$A1 <- rbind(tableau$A1, newDF)
+  if(rs == 0) tableau$A1 <- rbind(tableau$A1, newDF)
+  else tableau$A1[rs,] <- newDF
   # save ecoval
   ecoval[[name]] <<- tableau$A1
   updateTabB2()
   # clean widgets
-  updateTextInput(session, "SCnamehabitat", value = "")
-  updateTextInput(session, "SCcodecorine", value = "")
-  updateTextInput(session, "SCcodeeunis", value = "")
-  updateNumericInput(session, "SCsurface", value = 0.)
-  updateSelectInput(session, "SCtype", selected = "1")
-  updateSelectInput(session, "SCetat", selected = "1")
-  updateSelectInput(session, "SCinteret", selected = "1")
-  updateSelectInput(session, "SCmenace", selected = "1")
-  updateNumericInput(session, "SCsurfacedeg", value = 0.)
+  cleanwidgetsA1sc()
+}
+
+observeEvent(input$addlisthab2,{
+  myA1sc(0)
+})
+
+observeEvent(input$chglisthab2,{
+  rs <- as.numeric(input$SCtable1_rows_selected)
+  if(length(rs) > 0) myA1sc(rs)
 })
 
 observeEvent(input$dellisthab2,{
@@ -143,15 +157,54 @@ observeEvent(input$dellisthab2,{
 output$SCtable1 <- DT::renderDataTable({
   dat <- datatable(tableau$A1, rownames = TRUE,
                    colnames = c("Nom habitat" = 2, "Code Corine" = 3, "Code Eunis" = 4, "Etat conservation" = 7, "Intérêt communautaire" = 8, "En danger ou menacé localement" = 9, "Surface dégradée" = 10),
-                   options = list(pageLength = dim.data.frame(tableau$A1)[1], searching = FALSE, dom = 'ft', ordering = FALSE))
+                   selection = 'single',
+                   options = list(scrollY='300px', scrollCollapse=TRUE, pageLength = dim.data.frame(tableau$A1)[1], searching = FALSE, dom = 'ft', ordering = FALSE))
   return(dat)
 })
 
+output$SCtable1rowselected <- DT::renderDataTable({
+  rs <- as.numeric(input$SCtable1_rows_selected)
+  if(length(rs) > 0){ # update contents of widgets
+    updateTextInput(session, "SCnamehabitat", value = tableau$A1[rs, 1])
+    updateTextInput(session, "SCcodecorine", value = tableau$A1[rs, 2])
+    updateTextInput(session, "SCcodeeunis", value = tableau$A1[rs, 3])
+    updateNumericInput(session, "SCsurface", value = as.numeric(tableau$A1[rs, 4]))
+    updateSelectInput(session, "SCtype", selected = names(A1listtype)[match(tableau$A1[rs, 5], A1listtype)])
+    updateSelectInput(session, "SCetat", selected = names(A1listetat)[match(tableau$A1[rs, 6], A1listetat)])
+    updateSelectInput(session, "SCinteret", selected = names(A1listinter)[match(tableau$A1[rs, 7], A1listinter)])
+    updateSelectInput(session, "SCmenace", selected = names(A1listinter)[match(tableau$A1[rs, 8], A1listinter)])
+    updateNumericInput(session, "SCsurfacedeg", value = as.numeric(tableau$A1[rs, 9]))
+  }else cleanwidgetsA1sc()
+  return(NULL)
+})
+
 ## SC A2
-observeEvent(input$addlistesp2,{
+cleanwidgetsA2sc <- function(){
+  updateTextInput(session, "SClatinnamespecies", value = "")
+  updateTextInput(session, "SCfrenchnamespecies", value = "")
+  updateSelectInput(session, "SCtype1", selected = "1")
+  updateSelectInput(session, "SCtype2", selected = "1")
+  updateSelectInput(session, "SCprotect", selected = "1")
+  updateSelectInput(session, "SCrougeF", selected = "1")
+  updateSelectInput(session, "SCrougeR", selected = "1")
+  updateSelectInput(session, "SCdirect", selected = "0")
+  updateSelectInput(session, "SCreprod", selected = "0")
+  updateSelectInput(session, "SCexo", selected = "1")
+  updateSelectInput(session, "SCtvb", selected = "1")
+  updateSelectInput(session, "SCdet", selected = "1")
+  updateSelectInput(session, "SCindssi", selected = "0")
+}
+
+myA2sc <- function(rs){
   # data
-  if(input$SCtype1 == "1") ssival = SSI[as.integer(input$SCindssi)]
-  else ssival = NA
+  if(input$SCtype1 == "1"){
+    if(rs == 0){
+      ssival <- SSI[as.integer(input$SCindssi)]
+    }else{
+      if(input$SCindssi != as.character(length(Species))) ssival <- SSI[as.integer(input$SCindssi)]
+      else ssival <- as.numeric(tableau$A2[rs, 10])
+    }
+  }else ssival = NA
   newDF <- data.frame(
     "Nom.Latin"=input$SClatinnamespecies,
     "Nom.français"=input$SCfrenchnamespecies,
@@ -167,25 +220,23 @@ observeEvent(input$addlistesp2,{
     "Déterminant.Znieff.dans.le.PE"=as.character(A2listprot[input$SCdet]),
     "Espèce.Exotique.Envahissante"=as.character(A2listprot[input$SCexo]),stringsAsFactors=FALSE)
   # array visu
-  tableau$A2 <- rbind(tableau$A2, newDF)
+  if(rs == 0) tableau$A2 <- rbind(tableau$A2, newDF)
+  else tableau$A2[rs,] <- newDF
   # save ecoval
   name <- paste("SCA2 no.", input$selectsitecompens)
   ecoval[[name]] <<- tableau$A2
   updateTabB2()
   # clean widgets
-  updateTextInput(session, "SClatinnamespecies", value = "")
-  updateTextInput(session, "SCfrenchnamespecies", value = "")
-  updateSelectInput(session, "SCtype1", selected = "1")
-  updateSelectInput(session, "SCtype2", selected = "1")
-  updateSelectInput(session, "SCprotect", selected = "1")
-  updateSelectInput(session, "SCrougeF", selected = "1")
-  updateSelectInput(session, "SCrougeR", selected = "1")
-  updateSelectInput(session, "SCdirect", selected = "0")
-  updateSelectInput(session, "SCreprod", selected = "0")
-  updateSelectInput(session, "SCexo", selected = "1")
-  updateSelectInput(session, "SCtvb", selected = "1")
-  updateSelectInput(session, "SCdet", selected = "1")
-  updateSelectInput(session, "SCindssi", selected = "0")
+  cleanwidgetsA2sc()
+}
+
+observeEvent(input$addlistesp2,{
+  myA2sc(0)
+})
+
+observeEvent(input$chglistesp2,{
+  rs <- as.numeric(input$SCtable2_rows_selected)
+  if(length(rs) > 0) myA2sc(rs)
 })
 
 observeEvent(input$dellistesp2,{
@@ -203,8 +254,29 @@ observeEvent(input$dellistesp2,{
 output$SCtable2 <- DT::renderDataTable({
   dat <- datatable(tableau$A2, rownames = TRUE,
                    colnames = c("Nom Latin" = 2, "Nom français" = 3, "Type 1" = 4, "Type 2" = 5, "Protection nationale ou régionale" = 6, "Liste rouge (CR,VU,EN) France" = 7, "Liste rouge (CR,VU,EN) Régional" = 8, "Directives Européennes" = 9, "Indice spécialisation" = 11, "Déterminant Znieff dans le PE" = 13, "Espèce Exotique Envahissante" = 14),
-                   options = list(pageLength = dim.data.frame(tableau$A2)[1], searching = FALSE, dom = 'ft', ordering = FALSE))
+                   selection = 'single',
+                   options = list(scrollY='300px', scrollCollapse=TRUE, pageLength = dim.data.frame(tableau$A2)[1], searching = FALSE, dom = 'ft', ordering = FALSE))
   return(dat)
+})
+
+output$SCtable2rowselected <- DT::renderDataTable({
+  rs <- as.numeric(input$SCtable2_rows_selected)
+  if(length(rs) > 0){ # update contents of widgets
+    updateTextInput(session, "SClatinnamespecies", value = tableau$A2[rs, 1])
+    updateTextInput(session, "SCfrenchnamespecies", value = tableau$A2[rs, 2])
+    updateSelectInput(session, "SCtype1", selected = names(A2listtype1)[match(tableau$A2[rs, 3], A2listtype1)])
+    updateSelectInput(session, "SCtype2", selected = names(A2listtype2)[match(tableau$A2[rs, 4], A2listtype2)])
+    updateSelectInput(session, "SCprotect", selected = names(A2listprot)[match(tableau$A2[rs, 5], A2listprot)])
+    updateSelectInput(session, "SCrougeF", selected = names(A2listprot)[match(tableau$A2[rs, 6], A2listprot)])
+    updateSelectInput(session, "SCrougeR", selected = names(A2listprot)[match(tableau$A2[rs, 7], A2listprot)])
+    updateSelectInput(session, "SCdirect", selected = names(A2listdir)[match(tableau$A2[rs, 8], A2listdir)])
+    updateSelectInput(session, "SCreprod", selected = names(A2listrepro)[match(tableau$A2[rs, 9], A2listrepro)])
+    updateSelectInput(session, "SCexo", selected = names(A2listprot)[match(tableau$A2[rs, 13], A2listprot)])
+    updateSelectInput(session, "SCtvb", selected = names(A2listprot)[match(tableau$A2[rs, 11], A2listprot)])
+    updateSelectInput(session, "SCdet", selected = names(A2listprot)[match(tableau$A2[rs, 12], A2listprot)])
+    updateSelectInput(session, "SCindssi", selected = as.character(length(Species))) # unable to recover the species
+  }else cleanwidgetsA2sc()
+  return(NULL)
 })
 
 observeEvent(input$SCtype1,{
@@ -219,7 +291,14 @@ observeEvent(input$SCtype1,{
 })
 
 ## SC A3
-observeEvent(input$addlistper2,{
+cleanwidgetsA3sc <- function(){
+  updateSelectInput(session, "SCpertype", selected = "1")
+  updateTextInput(session, "SCpercouche", value = "")
+  updateTextInput(session, "SCpercode", value = "")
+  updateNumericInput(session, "SCpersurf", value = 0.)
+}
+
+myA3sc <- function(rs){
   # data
   newDF <- data.frame(
     "Type"=as.character(A3listtype[input$SCpertype]),
@@ -228,16 +307,23 @@ observeEvent(input$addlistper2,{
     "Surface"=as.character(input$SCpersurf),stringsAsFactors=FALSE
   )
   # array visu
-  tableau$A3 <- rbind(tableau$A3, newDF)
+  if(rs == 0) tableau$A3 <- rbind(tableau$A3, newDF)
+  else tableau$A3[rs,] <- newDF
   # save ecoval
   name <- paste("SCA3 no.", input$selectsitecompens)
   ecoval[[name]] <<- tableau$A3
   updateTabB2()
   # clean widgets
-  updateSelectInput(session, "SCpertype", selected = "1")
-  updateTextInput(session, "SCpercouche", value = "")
-  updateTextInput(session, "SCpercode", value = "")
-  updateNumericInput(session, "SCpersurf", value = 0.)
+  cleanwidgetsA3sc()
+}
+
+observeEvent(input$addlistper2,{
+  myA3sc(0)
+})
+
+observeEvent(input$chglistper2,{
+  rs <- as.numeric(input$SCtable3_rows_selected)
+  if(length(rs) > 0) myA3sc(rs)
 })
 
 observeEvent(input$dellistper2,{
@@ -259,6 +345,16 @@ output$SCtable3 <- DT::renderDataTable({
   return(dat)
 })
 
+output$SCtable3rowselected <- DT::renderDataTable({
+  rs <- as.numeric(input$SCtable3_rows_selected)
+  if(length(rs) > 0){ # update contents of widgets
+    updateSelectInput(session, "SCpertype", selected = names(A1listtype)[match(tableau$A3[rs, 1], A1listtype)])
+    updateTextInput(session, "SCpercouche", value = tableau$A3[rs, 2])
+    updateTextInput(session, "SCpercode", value = tableau$A3[rs, 3])
+    updateNumericInput(session, "SCpersurf", value = as.numeric(tableau$A3[rs, 4]))
+  }else cleanwidgetsA3sc()
+  return(NULL)
+})
 
 ## SC B
 observeEvent(input$renseigner2,{
