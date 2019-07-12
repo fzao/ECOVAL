@@ -72,7 +72,19 @@ observeEvent(input$selectsiteimpact, {
 })
 
 ## SI A1
-observeEvent(input$addlisthab,{
+cleanwidgetsA1 <- function(){
+  updateTextInput(session, "SInamehabitat", value = "")
+  updateTextInput(session, "SIcodecorine", value = "")
+  updateTextInput(session, "SIcodeeunis", value = "")
+  updateNumericInput(session, "SIsurface", value = 0.)
+  updateSelectInput(session, "SItype", selected = "1")
+  updateSelectInput(session, "SIetat", selected = "1")
+  updateSelectInput(session, "SIinteret", selected = "1")
+  updateSelectInput(session, "SImenace", selected = "1")
+  updateNumericInput(session, "SIsurfacedeg", value = 0.)
+}
+
+myA1 <- function(rs){
   # test validation 0
   if(is.na(input$SIsurface) | is.na(input$SIsurfacedeg)){
     showModal(modalDialog(h5("ERREUR SUR LES SURFACES"), hr(), "Une valeur numérique n'est pas correcte", easyClose = TRUE, footer = NULL))
@@ -85,14 +97,14 @@ observeEvent(input$addlisthab,{
   }
   # test validation 2
   name <- paste("Site no.", input$selectsiteimpact)
-  surfacesite <- as.numeric(ecoval[[name]][3,2])
-  if(is.na(surfacesite)) surfacesite <- 0.
+  surfacesite <- 0.
+  if(ecoval[[name]][3,2] != "NA") surfacesite <- as.numeric(ecoval[[name]][3,2])
   surfsomme <- 0.
   name <- paste("SIA1 no.", input$selectsiteimpact)
   dimrow <- dim(ecoval[[name]])[1]
   if(dimrow > 0){
     for(i in 1:dimrow){
-      surfsomme <- surfsomme + as.numeric(ecoval[[name]][i,4])
+      if(i != rs) surfsomme <- surfsomme + as.numeric(ecoval[[name]][i,4])
     }
   }
   surfsomme <- surfsomme + input$SIsurface
@@ -112,20 +124,22 @@ observeEvent(input$addlisthab,{
     "En.danger.ou.menacé.localement"=as.character(A1listinter[input$SImenace]),
     "Surface.dégradée"=as.character(input$SIsurfacedeg), stringsAsFactors=FALSE)
   # array visu
-  tableau$A1 <- rbind(tableau$A1, newDF)
+  if(rs == 0) tableau$A1 <- rbind(tableau$A1, newDF)
+  else tableau$A1[rs,] <- newDF
   # save ecoval
   ecoval[[name]] <<- tableau$A1
   updateTabB()
   # clean widgets
-  updateTextInput(session, "SInamehabitat", value = "")
-  updateTextInput(session, "SIcodecorine", value = "")
-  updateTextInput(session, "SIcodeeunis", value = "")
-  updateNumericInput(session, "SIsurface", value = 0.)
-  updateSelectInput(session, "SItype", selected = "1")
-  updateSelectInput(session, "SIetat", selected = "1")
-  updateSelectInput(session, "SIinteret", selected = "1")
-  updateSelectInput(session, "SImenace", selected = "1")
-  updateNumericInput(session, "SIsurfacedeg", value = 0.)
+  cleanwidgetsA1()
+}
+
+observeEvent(input$addlisthab,{
+  myA1(0)
+})
+
+observeEvent(input$chglisthab,{
+  rs <- as.numeric(input$SItable1_rows_selected)
+  if(length(rs) > 0) myA1(rs)
 })
 
 observeEvent(input$dellisthab,{
@@ -143,15 +157,54 @@ observeEvent(input$dellisthab,{
 output$SItable1 <- DT::renderDataTable({
   dat <- datatable(tableau$A1, rownames = TRUE,
                    colnames = c("Nom habitat" = 2, "Code Corine" = 3, "Code Eunis" = 4, "Etat conservation" = 7, "Intérêt communautaire" = 8, "En danger ou menacé localement" = 9, "Surface dégradée" = 10),
+                   selection = 'single',
                    options = list(pageLength = dim.data.frame(tableau$A1)[1], searching = FALSE, dom = 'ft', ordering = FALSE))
   return(dat)
 })
 
+output$SItable1rowselected <- DT::renderDataTable({
+  rs <- as.numeric(input$SItable1_rows_selected)
+  if(length(rs) > 0){ # update contents of widgets
+    updateTextInput(session, "SInamehabitat", value = tableau$A1[rs, 1])
+    updateTextInput(session, "SIcodecorine", value = tableau$A1[rs, 2])
+    updateTextInput(session, "SIcodeeunis", value = tableau$A1[rs, 3])
+    updateNumericInput(session, "SIsurface", value = as.numeric(tableau$A1[rs, 4]))
+    updateSelectInput(session, "SItype", selected = names(A1listtype)[match(tableau$A1[rs, 5], A1listtype)])
+    updateSelectInput(session, "SIetat", selected = names(A1listetat)[match(tableau$A1[rs, 6], A1listetat)])
+    updateSelectInput(session, "SIinteret", selected = names(A1listinter)[match(tableau$A1[rs, 7], A1listinter)])
+    updateSelectInput(session, "SImenace", selected = names(A1listinter)[match(tableau$A1[rs, 8], A1listinter)])
+    updateNumericInput(session, "SIsurfacedeg", value = as.numeric(tableau$A1[rs, 9]))
+  }else cleanwidgetsA1()
+  return(NULL)
+})
+
 ## SI A2
-observeEvent(input$addlistesp,{
+cleanwidgetsA2 <- function(){
+  updateTextInput(session, "SIlatinnamespecies", value = "")
+  updateTextInput(session, "SIfrenchnamespecies", value = "")
+  updateSelectInput(session, "SItype1", selected = "1")
+  updateSelectInput(session, "SItype2", selected = "1")
+  updateSelectInput(session, "SIprotect", selected = "1")
+  updateSelectInput(session, "SIrougeF", selected = "1")
+  updateSelectInput(session, "SIrougeR", selected = "1")
+  updateSelectInput(session, "SIdirect", selected = "0")
+  updateSelectInput(session, "SIreprod", selected = "0")
+  updateSelectInput(session, "SIexo", selected = "1")
+  updateSelectInput(session, "SItvb", selected = "1")
+  updateSelectInput(session, "SIdet", selected = "1")
+  updateSelectInput(session, "SIindssi", selected = "0")
+}
+
+myA2 <- function(rs){
   # data
-  if(input$SItype1 == "1") ssival = SSI[as.integer(input$SIindssi)]
-  else ssival = NA
+  if(input$SItype1 == "1"){
+    if(rs == 0){
+      ssival <- SSI[as.integer(input$SIindssi)]
+    }else{
+      if(input$SIindssi != as.character(length(Species))) ssival <- SSI[as.integer(input$SIindssi)]
+      else ssival <- as.numeric(tableau$A2[rs, 10])
+    }
+  }else ssival = NA
   newDF <- data.frame(
     "Nom.Latin"=input$SIlatinnamespecies,
     "Nom.français"=input$SIfrenchnamespecies,
@@ -167,25 +220,23 @@ observeEvent(input$addlistesp,{
     "Déterminant.Znieff.dans.le.PE"=as.character(A2listprot[input$SIdet]),
     "Espèce.Exotique.Envahissante"=as.character(A2listprot[input$SIexo]),stringsAsFactors=FALSE)
   # array visu
-  tableau$A2 <- rbind(tableau$A2, newDF)
+  if(rs == 0) tableau$A2 <- rbind(tableau$A2, newDF)
+  else tableau$A2[rs,] <- newDF
   # save ecoval
   name <- paste("SIA2 no.", input$selectsiteimpact)
   ecoval[[name]] <<- tableau$A2
   updateTabB()
   # clean widgets
-  updateTextInput(session, "SIlatinnamespecies", value = "")
-  updateTextInput(session, "SIfrenchnamespecies", value = "")
-  updateSelectInput(session, "SItype1", selected = "1")
-  updateSelectInput(session, "SItype2", selected = "1")
-  updateSelectInput(session, "SIprotect", selected = "1")
-  updateSelectInput(session, "SIrougeF", selected = "1")
-  updateSelectInput(session, "SIrougeR", selected = "1")
-  updateSelectInput(session, "SIdirect", selected = "0")
-  updateSelectInput(session, "SIreprod", selected = "0")
-  updateSelectInput(session, "SIexo", selected = "1")
-  updateSelectInput(session, "SItvb", selected = "1")
-  updateSelectInput(session, "SIdet", selected = "1")
-  updateSelectInput(session, "SIindssi", selected = "0")
+  cleanwidgetsA2()
+}
+
+observeEvent(input$addlistesp,{
+  myA2(0)
+})
+
+observeEvent(input$chglistesp,{
+  rs <- as.numeric(input$SItable2_rows_selected)
+  if(length(rs) > 0) myA2(rs)
 })
 
 observeEvent(input$dellistesp,{
@@ -203,8 +254,29 @@ observeEvent(input$dellistesp,{
 output$SItable2 <- DT::renderDataTable({
   dat <- datatable(tableau$A2, rownames = TRUE,
                    colnames = c("Nom Latin" = 2, "Nom français" = 3, "Type 1" = 4, "Type 2" = 5, "Protection nationale ou régionale" = 6, "Liste rouge (CR,VU,EN) France" = 7, "Liste rouge (CR,VU,EN) Régional" = 8, "Directives Européennes" = 9, "Indice spécialisation" = 11, "Déterminant Znieff dans le PE" = 13, "Espèce Exotique Envahissante" = 14),
+                   selection = 'single',
                    options = list(pageLength = dim.data.frame(tableau$A2)[1], searching = FALSE, dom = 'ft', ordering = FALSE))
   return(dat)
+})
+
+output$SItable2rowselected <- DT::renderDataTable({
+  rs <- as.numeric(input$SItable2_rows_selected)
+  if(length(rs) > 0){ # update contents of widgets
+    updateTextInput(session, "SIlatinnamespecies", value = tableau$A2[rs, 1])
+    updateTextInput(session, "SIfrenchnamespecies", value = tableau$A2[rs, 2])
+    updateSelectInput(session, "SItype1", selected = names(A2listtype1)[match(tableau$A2[rs, 3], A2listtype1)])
+    updateSelectInput(session, "SItype2", selected = names(A2listtype2)[match(tableau$A2[rs, 4], A2listtype2)])
+    updateSelectInput(session, "SIprotect", selected = names(A2listprot)[match(tableau$A2[rs, 5], A2listprot)])
+    updateSelectInput(session, "SIrougeF", selected = names(A2listprot)[match(tableau$A2[rs, 6], A2listprot)])
+    updateSelectInput(session, "SIrougeR", selected = names(A2listprot)[match(tableau$A2[rs, 7], A2listprot)])
+    updateSelectInput(session, "SIdirect", selected = names(A2listdir)[match(tableau$A2[rs, 8], A2listdir)])
+    updateSelectInput(session, "SIreprod", selected = names(A2listrepro)[match(tableau$A2[rs, 9], A2listrepro)])
+    updateSelectInput(session, "SIexo", selected = names(A2listprot)[match(tableau$A2[rs, 13], A2listprot)])
+    updateSelectInput(session, "SItvb", selected = names(A2listprot)[match(tableau$A2[rs, 11], A2listprot)])
+    updateSelectInput(session, "SIdet", selected = names(A2listprot)[match(tableau$A2[rs, 12], A2listprot)])
+    updateSelectInput(session, "SIindssi", selected = as.character(length(Species))) # unable to recover the species
+  }else cleanwidgetsA2()
+  return(NULL)
 })
 
 observeEvent(input$SItype1,{
@@ -219,7 +291,14 @@ observeEvent(input$SItype1,{
 })
 
 ## SI A3
-observeEvent(input$addlistper,{
+cleanwidgetsA3 <- function(){
+  updateSelectInput(session, "SIpertype", selected = "1")
+  updateTextInput(session, "SIpercouche", value = "")
+  updateTextInput(session, "SIpercode", value = "")
+  updateNumericInput(session, "SIpersurf", value = 0.)
+}
+
+myA3 <- function(rs){
   # data
   newDF <- data.frame(
     "Type"=as.character(A3listtype[input$SIpertype]),
@@ -228,16 +307,23 @@ observeEvent(input$addlistper,{
     "Surface"=as.character(input$SIpersurf),stringsAsFactors=FALSE
   )
   # array visu
-  tableau$A3 <- rbind(tableau$A3, newDF)
+  if(rs == 0) tableau$A3 <- rbind(tableau$A3, newDF)
+  else tableau$A3[rs,] <- newDF
   # save ecoval
   name <- paste("SIA3 no.", input$selectsiteimpact)
   ecoval[[name]] <<- tableau$A3
   updateTabB()
   # clean widgets
-  updateSelectInput(session, "SIpertype", selected = "1")
-  updateTextInput(session, "SIpercouche", value = "")
-  updateTextInput(session, "SIpercode", value = "")
-  updateNumericInput(session, "SIpersurf", value = 0.)
+  cleanwidgetsA3()
+}
+
+observeEvent(input$addlistper,{
+  myA3(0)
+})
+
+observeEvent(input$chglistper,{
+  rs <- as.numeric(input$SItable3_rows_selected)
+  if(length(rs) > 0) myA3(rs)
 })
 
 observeEvent(input$dellistper,{
@@ -255,10 +341,21 @@ observeEvent(input$dellistper,{
 output$SItable3 <- DT::renderDataTable({
   dat <- datatable(tableau$A3, rownames = TRUE,
                    colnames = c("Couche SIG EUNIS" = 3, "Couche SIG OSO" = 4),
+                   selection = 'single',
                    options = list(pageLength = dim.data.frame(tableau$A3)[1], searching = FALSE, dom = 'ft', ordering = FALSE))
   return(dat)
 })
 
+output$SItable3rowselected <- DT::renderDataTable({
+  rs <- as.numeric(input$SItable3_rows_selected)
+  if(length(rs) > 0){ # update contents of widgets
+    updateSelectInput(session, "SIpertype", selected = names(A1listtype)[match(tableau$A3[rs, 1], A1listtype)])
+    updateTextInput(session, "SIpercouche", value = tableau$A3[rs, 2])
+    updateTextInput(session, "SIpercode", value = tableau$A3[rs, 3])
+    updateNumericInput(session, "SIpersurf", value = as.numeric(tableau$A3[rs, 4]))
+  }else cleanwidgetsA3()
+  return(NULL)
+})
 
 ## SI B
 observeEvent(input$renseigner,{
