@@ -158,7 +158,7 @@ output$SItable1 <- DT::renderDataTable({
   dat <- datatable(tableau$A1, rownames = TRUE,
                    colnames = c("Nom habitat" = 2, "Code Corine" = 3, "Code Eunis" = 4, "Etat conservation" = 7, "Intérêt communautaire" = 8, "En danger ou menacé localement" = 9, "Surface dégradée" = 10),
                    selection = 'single',
-                   options = list(pageLength = dim.data.frame(tableau$A1)[1], searching = FALSE, dom = 'ft', ordering = FALSE))
+                   options = list(scrollY='300px', scrollCollapse=TRUE, pageLength = dim.data.frame(tableau$A1)[1], searching = FALSE, dom = 'ft', ordering = FALSE))
   return(dat)
 })
 
@@ -255,7 +255,7 @@ output$SItable2 <- DT::renderDataTable({
   dat <- datatable(tableau$A2, rownames = TRUE,
                    colnames = c("Nom Latin" = 2, "Nom français" = 3, "Type 1" = 4, "Type 2" = 5, "Protection nationale ou régionale" = 6, "Liste rouge (CR,VU,EN) France" = 7, "Liste rouge (CR,VU,EN) Régional" = 8, "Directives Européennes" = 9, "Indice spécialisation" = 11, "Déterminant Znieff dans le PE" = 13, "Espèce Exotique Envahissante" = 14),
                    selection = 'single',
-                   options = list(pageLength = dim.data.frame(tableau$A2)[1], searching = FALSE, dom = 'ft', ordering = FALSE))
+                   options = list(scrollY='300px', scrollCollapse=TRUE, pageLength = dim.data.frame(tableau$A2)[1], searching = FALSE, dom = 'ft', ordering = FALSE))
   return(dat)
 })
 
@@ -342,7 +342,7 @@ output$SItable3 <- DT::renderDataTable({
   dat <- datatable(tableau$A3, rownames = TRUE,
                    colnames = c("Couche SIG EUNIS" = 3, "Couche SIG OSO" = 4),
                    selection = 'single',
-                   options = list(pageLength = dim.data.frame(tableau$A3)[1], searching = FALSE, dom = 'ft', ordering = FALSE))
+                   options = list(scrollY='300px', scrollCollapse=TRUE, pageLength = dim.data.frame(tableau$A3)[1], searching = FALSE, dom = 'ft', ordering = FALSE))
   return(dat)
 })
 
