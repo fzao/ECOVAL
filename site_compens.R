@@ -368,20 +368,14 @@ observeEvent(input$renseigner2,{
     tableau$B[rs,5] <- input$SCjustifCT
     if(is.null(input$SCdegincCT)) tableau$B[rs,6] <- ""
     else{
-      dimselect <- length(input$SCdegincCT)
-      if(dimselect == 1) tableau$B[rs,6] <- "*"
-      else if(dimselect == 2) tableau$B[rs,6] <- "**"
-      else if(dimselect == 3) tableau$B[rs,6] <- "***"
+      tableau$B[rs,6] <- paste(input$SCdegincCT, collapse = "")
     }
     tableau$B[rs,7] <- input$SCvalCT
     # update array visu LT
     tableau$B[rs,8] <- input$SCjustifLT
     if(is.null(input$SCdegincLT)) tableau$B[rs,9] <- ""
     else{
-      dimselect <- length(input$SCdegincLT)
-      if(dimselect == 1) tableau$B[rs,9] <- "*"
-      else if(dimselect == 2) tableau$B[rs,9] <- "**"
-      else if(dimselect == 3) tableau$B[rs,9] <- "***"
+      tableau$B[rs,9] <- paste(input$SCdegincLT, collapse = "")
     }
     tableau$B[rs,10] <- input$SCvalLT
     # save ecoval
@@ -725,20 +719,14 @@ observeEvent(input$renseignerNH2,{
     tableau$C[pointer2row[rs],6] <- input$SCjustifCTNH
     if(is.null(input$SCdegincCTNH)) tableau$C[pointer2row[rs],7] <- ""
     else{
-      dimselect <- length(input$SCdegincCTNH)
-      if(dimselect == 1) tableau$C[pointer2row[rs],7] <- "*"
-      else if(dimselect == 2) tableau$C[pointer2row[rs],7] <- "**"
-      else if(dimselect == 3) tableau$C[pointer2row[rs],7] <- "***"
+      tableau$C[pointer2row[rs],7] <- paste(input$SCdegincCTNH, collapse = "")
     }
     tableau$C[pointer2row[rs],8] <- input$SCvalCTNH
     # update array visu LT
     tableau$C[pointer2row[rs],9] <- input$SCjustifLTNH
     if(is.null(input$SCdegincLTNH)) tableau$C[pointer2row[rs],10] <- ""
     else{
-      dimselect <- length(input$SCdegincLTNH)
-      if(dimselect == 1) tableau$C[pointer2row[rs],10] <- "*"
-      else if(dimselect == 2) tableau$C[pointer2row[rs],10] <- "**"
-      else if(dimselect == 3) tableau$C[pointer2row[rs],10] <- "***"
+      tableau$C[pointer2row[rs],10] <- paste(input$SCdegincLTNH, collapse = "")
     }
     tableau$C[pointer2row[rs],11] <- input$SCvalLTNH
     # save ecoval
@@ -840,20 +828,14 @@ observeEvent(input$renseignerNSP2,{
     tableau$D[pointer2row[rs],6] <- input$SCjustifCTNSP
     if(is.null(input$SCdegincCTNSP)) tableau$D[pointer2row[rs],7] <- ""
     else{
-      dimselect <- length(input$SCdegincCTNSP)
-      if(dimselect == 1) tableau$D[pointer2row[rs],7] <- "*"
-      else if(dimselect == 2) tableau$D[pointer2row[rs],7] <- "**"
-      else if(dimselect == 3) tableau$D[pointer2row[rs],7] <- "***"
+      tableau$D[pointer2row[rs],7] <- paste(input$SCdegincCTNSP, collapse = "")
     }
     tableau$D[pointer2row[rs],8] <- input$SCvalCTNSP
     # update array visu LT
     tableau$D[pointer2row[rs],9] <- input$SCjustifLTNSP
     if(is.null(input$SCdegincLTNSP)) tableau$D[pointer2row[rs],10] <- ""
     else{
-      dimselect <- length(input$SCdegincLTNSP)
-      if(dimselect == 1) tableau$D[pointer2row[rs],10] <- "*"
-      else if(dimselect == 2) tableau$D[pointer2row[rs],10] <- "**"
-      else if(dimselect == 3) tableau$D[pointer2row[rs],10] <- "***"
+      tableau$D[pointer2row[rs],10] <- paste(input$SCdegincLTNSP, collapse = "")
     }
     tableau$D[pointer2row[rs],11] <- input$SCvalLTNSP
     # save ecoval

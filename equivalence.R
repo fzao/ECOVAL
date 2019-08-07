@@ -384,8 +384,6 @@ output$plot_equivalence <- renderPlot({
         natzero <- (equival == 0) & (moins != 0)
         natzero[natzero==TRUE] <- '*'
         natzero[natzero==FALSE] <- ''
-        
-        #cfz
         namehab <- paste("Habitat", input$selecthabitatSE)
         partial_select <- c(1,2,3,4,5,6,7,8,9,16,17,18,19,20,24,25,26)
         if(ecoval[[namehab]][4,2] == "1"){ # Fermé

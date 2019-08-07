@@ -450,8 +450,6 @@ observeEvent(input$new, {
   n <- 8
   code <- substr(tmpf, (nchar(tmpf)+1)-n, nchar(tmpf))
   ecoval[[newname]][12,2] <<- code
-  # back to description (comment: bug with tabset title?...)
-  #cfz updateTabsetPanel(session, "prjtabs", selected = "description")
   # clean window
   cleanWindow()
   # SIC

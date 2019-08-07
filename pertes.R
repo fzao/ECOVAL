@@ -226,7 +226,7 @@ output$plot_pertes <- renderPlot({
           indicateurs = shortindicnames, # ecoval[[name]][[3]],
           criteres = factor(ecoval[[name]][[2]], levels=c("Diversité habitat","Diversité Espèce","Patrimonialité_PS","Fonctionnalité","Pression_PS","Connectivité","Représentativité","Patrimonialité_PE","Pression_PE", "Structure")),
           # valeurs = as.numeric(ecoval[[name]][[4]]),
-          incertitudes <- ecoval[[name]][[6]],
+          incertitudes <- gsub("[ABC]", "*", ecoval[[name]][[6]]),
           pertes_brutes <- as.numeric(ecoval[[name]][[7]]) - as.numeric(ecoval[[name]][[4]]),
           pertes_relatives <- as.numeric(ecoval[[name]][[7]]) - as.numeric(ecoval[[name]][[4]]) * 100 / as.numeric(ecoval[[name]][[4]])
         )
@@ -252,7 +252,7 @@ output$plot_pertes <- renderPlot({
           indicateurs = shortindicnames, # ecoval[[name]][[3]],
           criteres = factor(ecoval[[name]][[2]], levels=c("Diversité habitat","Diversité Espèce","Patrimonialité_PS","Fonctionnalité","Pression_PS","Connectivité","Représentativité","Patrimonialité_PE","Pression_PE", "Structure")),
           #valeurs = as.numeric(ecoval[[name]][[4]],
-          incertitudes <- ecoval[[name]][[9]],
+          incertitudes <- gsub("[ABC]", "*", ecoval[[name]][[9]]),
           pertes_brutes <- as.numeric(ecoval[[name]][[10]]) - as.numeric(ecoval[[name]][[4]]),
           pertes_relatives <- as.numeric(ecoval[[name]][[10]]) - as.numeric(ecoval[[name]][[4]]) * 100 / as.numeric(ecoval[[name]][[4]])
         )
@@ -363,7 +363,7 @@ output$plot_pertes <- renderPlot({
             indicateurs = tabhab[[3]],
             criteres = factor(tabhab[[2]], levels=c("Diversité habitat","Diversité espèce","Patrimonialité_PS","Fonctionnalité","Pression_PS","Connectivité","Représentativité","Patrimonialité_PE","Pression_PE", "Structure")),
             #valeurs = as.numeric(tabhab[[4]],
-            incertitudes <- tabhab[[7]],
+            incertitudes <- gsub("[ABC]", "*", tabhab[[7]]),
             pertes_brutes <- as.numeric(tabhab[[8]]) - as.numeric(tabhab[[4]]),
             pertes_relatives <- as.numeric(tabhab[[8]]) - as.numeric(tabhab[[4]]) * 100 / as.numeric(tabhab[[4]])
           )
@@ -400,7 +400,7 @@ output$plot_pertes <- renderPlot({
             indicateurs = tabhab[[3]],
             criteres = factor(tabhab[[2]], levels=c("Diversité habitat","Diversité espèce","Patrimonialité_PS","Fonctionnalité","Pression_PS","Connectivité","Représentativité","Patrimonialité_PE","Pression_PE", "Structure")),
             #valeurs = as.numeric(tabhab[[4]],
-            incertitudes <- tabhab[[10]],
+            incertitudes <- gsub("[ABC]", "*", tabhab[[10]]),
             pertes_brutes <- as.numeric(tabhab[[11]]) - as.numeric(tabhab[[4]]),
             pertes_relatives <- as.numeric(tabhab[[11]]) - as.numeric(tabhab[[4]]) * 100 / as.numeric(tabhab[[4]])
           )
@@ -528,7 +528,7 @@ output$plot_pertes <- renderPlot({
             indicateurs = tabsp[[3]],
             criteres = factor(tabsp[[2]], levels=c("Diversité habitat","Diversité Espèce","Patrimonialité_PS","Fonctionnalité","Pression_PS","Connectivité","Représentativité","Patrimonialité_PE","Pression_PE", "Structure")),
             # valeurs = as.numeric(tabsp[[4]]),
-            incertitudes <- tabsp[[7]],
+            incertitudes <- gsub("[ABC]", "*", tabsp[[7]]),
             pertes_brutes <- as.numeric(tabsp[[8]]) - as.numeric(tabsp[[4]]),
             pertes_relatives <- as.numeric(tabsp[[8]]) - as.numeric(tabsp[[4]]) * 100 / as.numeric(tabsp[[4]])
           )
@@ -574,7 +574,7 @@ output$plot_pertes <- renderPlot({
             indicateurs = tabsp[[3]],
             criteres = factor(tabsp[[2]], levels=c("Diversité habitat","Diversité Espèce","Patrimonialité_PS","Fonctionnalité","Pression_PS","Connectivité","Représentativité","Patrimonialité_PE","Pression_PE", "Structure")),
             #valeurs = as.numeric(tabsp[[4]],
-            incertitudes <- tabsp[[7]],
+            incertitudes <- gsub("[ABC]", "*", tabsp[[10]]),
             pertes_brutes <- as.numeric(tabsp[[11]]) - as.numeric(tabsp[[4]]),
             pertes_relatives <- as.numeric(tabsp[[11]]) - as.numeric(tabsp[[4]]) * 100 / as.numeric(tabsp[[4]])
           )

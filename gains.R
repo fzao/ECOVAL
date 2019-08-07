@@ -227,7 +227,7 @@ output$plot_gains <- renderPlot({
           indicateurs = shortindicnames, # ecoval[[name]][[3]],
           criteres = factor(ecoval[[name]][[2]], levels=c("Diversité habitat","Diversité Espèce","Patrimonialité_PS","Fonctionnalité","Pression_PS","Connectivité","Représentativité","Patrimonialité_PE","Pression_PE", "Structure")),
           # valeurs = as.numeric(ecoval[[name]][[7]]),
-          incertitudes <- ecoval[[name]][[6]],
+          incertitudes <- gsub("[ABC]", "*", ecoval[[name]][[6]]),
           gains_bruts <- as.numeric(ecoval[[name]][[7]]) - as.numeric(ecoval[[name]][[4]]),
           gains_relatifs <- (as.numeric(ecoval[[name]][[7]]) - as.numeric(ecoval[[name]][[4]])) * 100 / as.numeric(ecoval[[name]][[4]])
         )
@@ -254,7 +254,7 @@ output$plot_gains <- renderPlot({
           indicateurs = shortindicnames, # ecoval[[name]][[3]],
           criteres = factor(ecoval[[name]][[2]], levels=c("Diversité habitat","Diversité Espèce","Patrimonialité_PS","Fonctionnalité","Pression_PS","Connectivité","Représentativité","Patrimonialité_PE","Pression_PE", "Structure")),
           # valeurs = as.numeric(ecoval[[name]][[7]]),
-          incertitudes <- ecoval[[name]][[6]],
+          incertitudes <- gsub("[ABC]", "*", ecoval[[name]][[9]]),
           gains_bruts <- as.numeric(ecoval[[name]][[10]]) - as.numeric(ecoval[[name]][[4]]),
           gains_relatifs <- (as.numeric(ecoval[[name]][[10]]) - as.numeric(ecoval[[name]][[4]])) * 100 / as.numeric(ecoval[[name]][[4]])
         )
@@ -309,7 +309,6 @@ output$plot_gains <- renderPlot({
         # Etat initial
         name <- paste("CC no.", input$selecthabitatSC2)
         if(input$selecttypegraphgain == '1'){
-          # cfz
           namehab <- paste("Habitat", input$selecthabitatSC2)
           partial_select <- c(1,2,3,4,5,6,7,8,9,16,17,18,19,20,24,25,26)
           if(ecoval[[namehab]][4,2] == "1"){ # Fermé
@@ -368,7 +367,7 @@ output$plot_gains <- renderPlot({
             indicateurs = tabhab[[3]],
             criteres = factor(tabhab[[2]], levels=c("Diversité habitat","Diversité espèce","Patrimonialité_PS","Fonctionnalité","Pression_PS","Connectivité","Représentativité","Patrimonialité_PE","Pression_PE", "Structure")),
             # valeurs = as.numeric(tabhab[[7]]),
-            incertitudes <- tabhab[[7]],
+            incertitudes <- gsub("[ABC]", "*", tabhab[[7]]),
             gains_bruts <- as.numeric(tabhab[[8]]) - as.numeric(tabhab[[4]]),
             gains_relatifs <- (as.numeric(tabhab[[8]]) - as.numeric(tabhab[[4]])) * 100 / as.numeric(tabhab[[4]])
           )
@@ -406,7 +405,7 @@ output$plot_gains <- renderPlot({
             indicateurs = tabhab[[3]],
             criteres = factor(tabhab[[2]], levels=c("Diversité habitat","Diversité espèce","Patrimonialité_PS","Fonctionnalité","Pression_PS","Connectivité","Représentativité","Patrimonialité_PE","Pression_PE", "Structure")),
             #valeurs = as.numeric(tabhab[[7]]),
-            incertitudes <- tabhab[[7]],
+            incertitudes <- gsub("[ABC]", "*", tabhab[[10]]),
             gains_bruts <- as.numeric(tabhab[[11]]) - as.numeric(tabhab[[4]]),
             gains_relatifs <- (as.numeric(tabhab[[11]]) - as.numeric(tabhab[[4]])) * 100 / as.numeric(tabhab[[4]])
           )
@@ -535,7 +534,7 @@ output$plot_gains <- renderPlot({
             indicateurs = tabsp[[3]],
             criteres = factor(tabsp[[2]], levels=c("Diversité habitat","Diversité espèce","Patrimonialité_PS","Fonctionnalité","Pression_PS","Connectivité","Représentativité","Patrimonialité_PE","Pression_PE", "Structure")),
             # valeurs = as.numeric(tabsp[[7]]),
-            incertitudes <- tabsp[[7]],
+            incertitudes <- gsub("[ABC]", "*", tabsp[[7]]),
             gains_bruts <- as.numeric(tabsp[[8]]) - as.numeric(tabsp[[4]]),
             gains_relatifs <- (as.numeric(tabsp[[8]]) - as.numeric(tabsp[[4]])) * 100 / as.numeric(tabsp[[4]])
           )
@@ -582,7 +581,7 @@ output$plot_gains <- renderPlot({
             indicateurs = tabsp[[3]],
             criteres = factor(tabsp[[2]], levels=c("Diversité habitat","Diversité espèce","Patrimonialité_PS","Fonctionnalité","Pression_PS","Connectivité","Représentativité","Patrimonialité_PE","Pression_PE", "Structure")),
             # valeurs = as.numeric(tabsp[[7]]),
-            incertitudes <- tabsp[[7]],
+            incertitudes <- gsub("[ABC]", "*", tabsp[[10]]),
             gains_bruts <- as.numeric(tabsp[[11]]) - as.numeric(tabsp[[4]]),
             gains_relatifs <- (as.numeric(tabsp[[11]]) - as.numeric(tabsp[[4]])) * 100 / as.numeric(tabsp[[4]])
           )
