@@ -679,7 +679,7 @@ output$SItable4rowselected <- DT::renderDataTable({
     updateTextAreaInput(session, "SIjustifLT", value = tableau$B[rs, 8])
     updateCheckboxGroupInput(session, "SIdegincLT", selected = strsplit(tableau$B[rs, 9], "")[[1]])
     updateNumericInput(session, "SIvalLT", value = as.numeric(tableau$B[rs, 10]))
-    updateNumericInput(session, "Manuel", value = as.numeric(as.numeric(tableau$B[rs, 4])))
+    updateNumericInput(session, "Manuel", value = as.numeric(tableau$B[rs, 4]))
   }else cleanwidgetsB()
   return(NULL)
 })

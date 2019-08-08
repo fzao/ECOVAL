@@ -281,7 +281,7 @@ shinyUI(fluidPage(HTML("<!DOCTYPE html>
                                                                                      column(2, align="center", actionLink(inputId = "linkC2", label=HTML('<h5><b>Niveau d\'incertitudes ?</b></h5>')), checkboxGroupInput("SCdegincLT", NA, c("A", "B", "C"), inline = TRUE)),
                                                                                      column(2, align="left", numericInput("SCvalLT", "Valeur après compensation", value = 0.))), br(),
                                                                             fluidRow(column(12, align="center", actionButton("renseigner2", "RENSEIGNER"))), br(),
-                                                                            DT::dataTableOutput("SCtable4"), br()
+                                                                            DT::dataTableOutput("SCtable4"), DT::dataTableOutput("SCtable4rowselected"), br()
                                                                    ),
                                                                    tabPanel(HTML('<h4 style="color: #005BBB; ">Niveau Habitat</h4>'), value="compensindicnh", br(),
                                                                             selectInput("selecthabitatSC", label = "HABITAT", choices = list("-" = 0), selected = 0), br(),
@@ -296,7 +296,7 @@ shinyUI(fluidPage(HTML("<!DOCTYPE html>
                                                                                      column(2, align="center", actionLink(inputId = "linkC4", label=HTML('<h5><b>Niveau d\'incertitudes ?</b></h5>')), checkboxGroupInput("SCdegincLTNH", NA, c("A", "B", "C"), inline = TRUE)),
                                                                                      column(2, align="left", numericInput("SCvalLTNH", "Valeur après compensation LT", value = 0.))), br(),
                                                                             fluidRow(column(12, align="center", actionButton("renseignerNH2", "RENSEIGNER"))), br(),
-                                                                            DT::dataTableOutput("SCtable5"), br()
+                                                                            DT::dataTableOutput("SCtable5"), DT::dataTableOutput("SCtable5rowselected"), br()
                                                                    ),
                                                                    tabPanel(HTML('<h4 style="color: #005BBB; ">Niveau Espèce</h4>'), value="compensindicnsp", br(),
                                                                             selectInput("selectspeciesSC", label = "ESPECE", choices = list("-" = 0), selected = 0), br(),
@@ -311,7 +311,7 @@ shinyUI(fluidPage(HTML("<!DOCTYPE html>
                                                                                      column(2, align="center", actionLink(inputId = "linkC6", label=HTML('<h5><b>Niveau d\'incertitudes ?</b></h5>')), checkboxGroupInput("SCdegincLTNSP", NA, c("A", "B", "C"), inline = TRUE)),
                                                                                      column(2, align="left", numericInput("SCvalLTNSP", "Valeur après compensation LT", value = 0.))), br(),
                                                                             fluidRow(column(12, align="center", actionButton("renseignerNSP2", "RENSEIGNER"))), br(),
-                                                                            DT::dataTableOutput("SCtable6"), br()
+                                                                            DT::dataTableOutput("SCtable6"), DT::dataTableOutput("SCtable6rowselected"), br()
                                                                             
                                                                    )
                                                        )
