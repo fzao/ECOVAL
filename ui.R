@@ -192,7 +192,7 @@ shinyUI(fluidPage(HTML("<!DOCTYPE html>
                                                                        column(2, align="center", actionLink(inputId = "linkI2", label=HTML('<h5><b>Niveau d\'incertitudes ?</b></h5>')), checkboxGroupInput("SIdegincLT", NA, c("A", "B", "C"), inline = TRUE)),
                                                                        column(2, align="left", numericInput("SIvalLT", "Valeur après impact", value = 0.))), br(),
                                                               fluidRow(column(12, align="center", actionButton("renseigner", "RENSEIGNER"))),
-                                                              DT::dataTableOutput("SItable4"), br()
+                                                              DT::dataTableOutput("SItable4"), DT::dataTableOutput("SItable4rowselected"), br()
                                                      ),
                                                      tabPanel(HTML('<h4 style="color: #005BBB; ">Niveau Habitat</h4>'), value="impactindicnh", br(),
                                                               selectInput("selecthabitatSI", label = "HABITAT", choices = list("-" = 0), selected = 0), br(),
@@ -207,7 +207,7 @@ shinyUI(fluidPage(HTML("<!DOCTYPE html>
                                                                        column(2, align="center", actionLink(inputId = "linkI4", label=HTML('<h5><b>Niveau d\'incertitudes ?</b></h5>')), checkboxGroupInput("SIdegincLTNH", NA, c("A", "B", "C"), inline = TRUE)),
                                                                        column(2, align="left", numericInput("SIvalLTNH", "Valeur après impact LT", value = 0.))), br(),
                                                               fluidRow(column(12, align="center", actionButton("renseignerNH", "RENSEIGNER"))), br(),
-                                                              DT::dataTableOutput("SItable5"), br()
+                                                              DT::dataTableOutput("SItable5"), DT::dataTableOutput("SItable5rowselected"), br()
                                                      ),
                                                      tabPanel(HTML('<h4 style="color: #005BBB; ">Niveau Espèce</h4>'), value="impactindicnsp", br(),
                                                               selectInput("selectspeciesSI", label = "ESPECE", choices = list("-" = 0), selected = 0), br(),
@@ -222,7 +222,7 @@ shinyUI(fluidPage(HTML("<!DOCTYPE html>
                                                                        column(2, align="center", actionLink(inputId = "linkI6", label=HTML('<h5><b>Niveau d\'incertitudes ?</b></h5>')), checkboxGroupInput("SIdegincLTNSP", NA, c("A", "B", "C"), inline = TRUE)),
                                                                        column(2, align="left", numericInput("SIvalLTNSP", "Valeur après impact LT", value = 0.))), br(),
                                                               fluidRow(column(12, align="center", actionButton("renseignerNSP", "RENSEIGNER"))),
-                                                              DT::dataTableOutput("SItable6"), br()
+                                                              DT::dataTableOutput("SItable6"), DT::dataTableOutput("SItable6rowselected"), br()
                                                               
                                                      )
                                          )

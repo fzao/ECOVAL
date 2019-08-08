@@ -358,6 +358,16 @@ output$SItable3rowselected <- DT::renderDataTable({
 })
 
 ## SI B
+cleanwidgetsB <- function(){
+  updateTextAreaInput(session, "SIjustifCT", value ="")
+  updateCheckboxGroupInput(session, "SIdegincCT", selected = character(0))
+  updateNumericInput(session, "SIvalCT", value = 0.)
+  updateTextAreaInput(session, "SIjustifLT", value ="")
+  updateCheckboxGroupInput(session, "SIdegincLT", selected = character(0))
+  updateNumericInput(session, "SIvalLT", value = 0.)
+  updateNumericInput(session, "Manuel", value = 0.)
+}
+
 observeEvent(input$renseigner,{
   rs <- as.numeric(input$SItable4_rows_selected)
   if(length(rs) == 1){
@@ -383,13 +393,7 @@ observeEvent(input$renseigner,{
     name <- paste("SIB no.", input$selectsiteimpact)
     ecoval[[name]] <<- tableau$B
     # clean widgets
-    updateTextAreaInput(session, "SIjustifCT", value ="")
-    updateCheckboxGroupInput(session, "SIdegincCT", selected = character(0))
-    updateNumericInput(session, "SIvalCT", value = 0.)
-    updateTextAreaInput(session, "SIjustifLT", value ="")
-    updateCheckboxGroupInput(session, "SIdegincLT", selected = character(0))
-    updateNumericInput(session, "SIvalLT", value = 0.)
-    updateNumericInput(session, "Manuel", value = 0.)
+    cleanwidgetsB()
   }
 })
 
@@ -666,7 +670,33 @@ output$SItable4<- DT::renderDataTable({
   return(dat)
 })
 
+output$SItable4rowselected <- DT::renderDataTable({
+  rs <- as.numeric(input$SItable4_rows_selected)
+  if(length(rs) > 0){ # update contents of widgets
+    updateTextAreaInput(session, "SIjustifCT", value = tableau$B[rs, 5])
+    updateCheckboxGroupInput(session, "SIdegincCT", selected = strsplit(tableau$B[rs, 6], "")[[1]])
+    updateNumericInput(session, "SIvalCT", value = as.numeric(tableau$B[rs, 7]))
+    updateTextAreaInput(session, "SIjustifLT", value = tableau$B[rs, 8])
+    updateCheckboxGroupInput(session, "SIdegincLT", selected = strsplit(tableau$B[rs, 9], "")[[1]])
+    updateNumericInput(session, "SIvalLT", value = as.numeric(tableau$B[rs, 10]))
+    updateNumericInput(session, "Manuel", value = as.numeric(as.numeric(tableau$B[rs, 4])))
+  }else cleanwidgetsB()
+  return(NULL)
+})
+
+
 ## SI C
+cleanwidgetsC <- function(){
+  updateTextAreaInput(session, "SIjustifCTNH", value ="")
+  updateCheckboxGroupInput(session, "SIdegincCTNH", selected = character(0))
+  updateNumericInput(session, "SIvalCTNH", value = 0.)
+  updateTextAreaInput(session, "SIjustifLTNH", value ="")
+  updateCheckboxGroupInput(session, "SIdegincLTNH", selected = character(0))
+  updateNumericInput(session, "SIvalLTNH", value = 0.)
+  updateNumericInput(session, "ManuelNH", value = 0.)
+  updateTextInput(session, "justifySINH", value ="")
+}
+
 observeEvent(input$selecthabitatSI, {
   if(input$selecthabitatSI != '0'){
     name <- paste("CI no.", input$selecthabitatSI)
@@ -735,13 +765,7 @@ observeEvent(input$renseignerNH,{
     name <- paste("CI no.", input$selecthabitatSI)
     ecoval[[name]] <<- tableau$C
     # clean widgets
-    updateTextAreaInput(session, "SIjustifCTNH", value ="")
-    updateCheckboxGroupInput(session, "SIdegincCTNH", selected = character(0))
-    updateNumericInput(session, "SIvalCTNH", value = 0.)
-    updateTextAreaInput(session, "SIjustifLTNH", value ="")
-    updateCheckboxGroupInput(session, "SIdegincLTNH", selected = character(0))
-    updateNumericInput(session, "SIvalLTNH", value = 0.)
-    updateNumericInput(session, "ManuelNH", value = 0.)
+    cleanwidgetsC()
   }
 })
 
@@ -766,7 +790,46 @@ output$SItable5<- DT::renderDataTable({
   return(dat)
 })
 
+output$SItable5rowselected <- DT::renderDataTable({
+  rs <- as.numeric(input$SItable5_rows_selected)
+  if(length(rs) > 0){ # update contents of widgets
+    partial_select <- c(1,2,3,4,5,6,7,8,9,16,17,18,19,20,24,25,26)
+    name  <- paste("Habitat", input$selecthabitatSI)
+    if(ecoval[[name]][4,2] == "1"){ # Fermé
+      partial_select <- c(partial_select, c(10,11,12,13,14,21))
+    }else if(ecoval[[name]][4,2] == "2"){ # Ouvert
+      partial_select <- c(partial_select, c(15, 22))
+    }else if(ecoval[[name]][4,2] == "4"){ # Zone humide
+      partial_select <- c(partial_select, c(16, 23))
+    }
+    pointer2row <- list()
+    for(i in 1:length(partial_select)) pointer2row[i] <- partial_select[i]
+    pointer2row <- as.integer(pointer2row)
+    updateTextAreaInput(session, "SIjustifCTNH", value = tableau$C[pointer2row[rs], 6])
+    updateCheckboxGroupInput(session, "SIdegincCTNH", selected = strsplit(tableau$C[pointer2row[rs], 7], "")[[1]])
+    updateNumericInput(session, "SIvalCTNH", value = as.numeric(tableau$C[pointer2row[rs], 8]))
+    updateTextAreaInput(session, "SIjustifLTNH", value = tableau$C[pointer2row[rs], 9])
+    updateCheckboxGroupInput(session, "SIdegincLTNH", selected = strsplit(tableau$C[pointer2row[rs], 10], "")[[1]])
+    updateNumericInput(session, "SIvalLTNH", value = as.numeric(tableau$C[pointer2row[rs], 11]))
+    updateNumericInput(session, "ManuelNH", value = as.numeric(tableau$C[pointer2row[rs], 4]))
+    updateTextInput(session, "justifySINH", value = tableau$C[pointer2row[rs], 5])
+  }else cleanwidgetsC()
+  return(NULL)
+})
+
+
 ## SI D
+cleanwidgetsD <- function(){
+  updateTextAreaInput(session, "SIjustifCTNSP", value ="")
+  updateCheckboxGroupInput(session, "SIdegincCTNSP", selected = character(0))
+  updateNumericInput(session, "SIvalCTNSP", value = 0.)
+  updateTextAreaInput(session, "SIjustifLTNSP", value ="")
+  updateCheckboxGroupInput(session, "SIdegincLTNSP", selected = character(0))
+  updateNumericInput(session, "SIvalLTNSP", value = 0.)
+  updateNumericInput(session, "ManuelNSP", value = 0.)
+  updateTextInput(session, "justifySINSP", value ="")
+}
+
 observeEvent(input$selectspeciesSI, {
   if(input$selectspeciesSI != '0'){
     name <- paste("DI no.", input$selectspeciesSI)
@@ -844,13 +907,7 @@ observeEvent(input$renseignerNSP,{
     name <- paste("DI no.", input$selectspeciesSI)
     ecoval[[name]] <<- tableau$D
     # clean widgets
-    updateTextAreaInput(session, "SIjustifCTNSP", value ="")
-    updateCheckboxGroupInput(session, "SIdegincCTNSP", selected = character(0))
-    updateNumericInput(session, "SIvalCTNSP", value = 0.)
-    updateTextAreaInput(session, "SIjustifLTNSP", value ="")
-    updateCheckboxGroupInput(session, "SIdegincLTNSP", selected = character(0))
-    updateNumericInput(session, "SIvalLTNSP", value = 0.)
-    updateNumericInput(session, "ManuelNSP", value = 0.)
+    cleanwidgetsD()
   }
 })
 
@@ -882,4 +939,40 @@ output$SItable6<- DT::renderDataTable({
       formatStyle(4, 3, backgroundColor = '#FFA02F')
   }
   return(dat)
+})
+
+output$SItable6rowselected <- DT::renderDataTable({
+  rs <- as.numeric(input$SItable6_rows_selected)
+  if(length(rs) > 0){ # update contents of widgets
+    partial_select <- c(1,2,15,16,17,18,19)
+    name  <- paste("Espece", input$selectspeciesSI)
+    if(ecoval[[name]][3,2] != "7"){ # Faune
+      partial_select <- c(partial_select, c(3))
+    }
+    if(ecoval[[name]][3,2] == "1"){ # Avifaune
+      partial_select <- c(partial_select, c(4,5,6))
+    }else if(ecoval[[name]][3,2] == "2"){ # Chiroptere
+      partial_select <- c(partial_select, c(7,8))
+    }else if(ecoval[[name]][3,2] == "4"){ # Amphibien
+      partial_select <- c(partial_select, c(9,10))
+    }else if(ecoval[[name]][3,2] == "6"){ # Insecte
+      partial_select <- c(partial_select, c(11))
+    }else if(ecoval[[name]][3,2] == "7"){ # Flore
+      partial_select <- c(partial_select, c(12))
+    }else if(ecoval[[name]][3,2] == "10"){ # Communaute faunistique
+      partial_select <- c(partial_select, c(13,14))
+    }
+    pointer2row <- list()
+    for(i in 1:length(partial_select)) pointer2row[i] <- partial_select[i]
+    pointer2row <- as.integer(pointer2row)
+    updateTextAreaInput(session, "SIjustifCTNSP", value = tableau$D[pointer2row[rs], 6])
+    updateCheckboxGroupInput(session, "SIdegincCTNSP", selected = strsplit(tableau$D[pointer2row[rs], 7], "")[[1]])
+    updateNumericInput(session, "SIvalCTNSP", value = as.numeric(tableau$D[pointer2row[rs], 8]))
+    updateTextAreaInput(session, "SIjustifLTNSP", value = tableau$D[pointer2row[rs], 9])
+    updateCheckboxGroupInput(session, "SIdegincLTNSP", selected = strsplit(tableau$D[pointer2row[rs], 10], "")[[1]])
+    updateNumericInput(session, "SIvalLTNSP", value = as.numeric(tableau$D[pointer2row[rs], 11]))
+    updateNumericInput(session, "ManuelNSP", value = as.numeric(tableau$D[pointer2row[rs], 4]))
+    updateTextInput(session, "justifySINSP", value = tableau$D[pointer2row[rs], 5])
+  }else cleanwidgetsD()
+  return(NULL)
 })
