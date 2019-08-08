@@ -615,8 +615,9 @@ output$SIcalcul <- DT::renderDataTable({
       mydata <- pertes$tableau[, c(1,2,3,4,5)]
       mycolnames <- c("perimetres" = 1, "indicateurs" = 2, "criteres" = 3, "incertitudes"= 4, "pertes brutes" = 5)
     }
-
   dat <- datatable(mydata, rownames = FALSE, colnames = mycolnames, options = list(pageLength = dim.data.frame(pertes$tableau)[1], searching = TRUE, dom = 'ft', ordering = FALSE), filter = "top")
+  pertes$tableau <- mydata
+  colnames(pertes$tableau) <- names(mycolnames)
   return(dat)
 })
 

@@ -625,6 +625,8 @@ output$SCcalcul <- DT::renderDataTable({
     mycolnames <- c("perimetres" = 1, "indicateurs" = 2, "criteres" = 3, "incertitudes"= 4, "gains bruts" = 5)
   }
   dat <- datatable(mydata, rownames = FALSE, colnames = mycolnames, options = list(pageLength = dim.data.frame(gains$tableau)[1], searching = TRUE, dom = 'ft', ordering = FALSE), filter = "top")
+  gains$tableau <- mydata
+  colnames(gains$tableau) <- names(mycolnames)
   return(dat)
 })
 
