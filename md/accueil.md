@@ -3,11 +3,10 @@ title: "ECOVAL"
 author: "Lucie Bezombes & Fabrice Zaoui"
 output: html_document
 ---
+
 ## Qu'est-ce qu'ECOVAL ?
 
 <img style="float: right; max-width: 40%" src="Image0.png">
-
-* * *
 
 <font size="4">
 <span style="color:#00B057">**ECOVAL**</span> est un cadre méthodologique qui permet d’évaluer <span style="color:#00B057">**l’équivalence écologique**</span>
