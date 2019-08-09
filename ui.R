@@ -363,7 +363,11 @@ shinyUI(fluidPage(HTML("<!DOCTYPE html>
                                        fluidRow(column(2, align="left", downloadButton("genere", "Générer un rapport")))
                               ),
                               # A PROPOS ----------------------------------------------
-                              tabPanel(value="propos", HTML('<h4 style="color: #005BBB; "><b>A propos</b></h4>'))
+                              tabPanel(value="propos", HTML('<h4 style="color: #005BBB; "><b>A propos</b></h4>'),
+                                       tabsetPanel(
+                                         tabPanel(HTML('<h4 style="color: #005BBB; ">Ecoval</h4>')),
+                                         tabPanel(HTML('<h4 style="color: #005BBB; ">Logiciel</h4>')))
+                              )
                   )
         )
 )
