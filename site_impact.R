@@ -657,16 +657,60 @@ output$SItable4<- DT::renderDataTable({
   dat <- datatable(tableau$B, rownames = TRUE,
                    colnames = c("Valeur à l'état initial" = 5, "Justification de l'estimation CT" = 6, "Degré d'incertitude CT" = 7, "Valeur après impact CT" = 8, "Justification de l'estimation LT" = 9, "Degré d'incertitude LT" = 10, "Valeur après impact LT" = 11),
                    selection = 'single', options = list(scrollY='300px', scrollCollapse=TRUE, pageLength = dim.data.frame(tableau$B)[1], searching = TRUE, dom = 'ft', ordering = FALSE), filter = "top") %>%
-    formatStyle(4, 3, backgroundColor = styleEqual(c('Longueur de lisière (Km) / surface de milieu forestier (Ha)',
-                                                     'Proportion des chiroptères spécialistes',
-                                                     'Nombre de patchs d\\\'EEE',
-                                                     '% recouvrement des EEE',
-                                                     'Longueur de linéaire de transport (Km)',
-                                                     'Longueur de linéaire de haie (PS et PE)',
-                                                     'Surface (Ha) de corridor traversant le site',
-                                                     'Nombre d\\\'espaces protégé ou à enjeu (au moins 1/3 de la surface dans le PE)',
-                                                     'Surface d\\\'EEE à proximité immédiate du PS'),
-                                                   c(rep('#FFA02F', 9))))
+    formatStyle(4, 3, backgroundColor = styleEqual(
+                                                   c('Nombre d\\\'habitat forestier',
+                                                     'Surface (ha) d\\\'habitat forestier',
+                                                     'Nombre d\\\'habitat ouvert',
+                                                     'Surface (ha) d\\\'habitat ouvert',
+                                                     'Nombre d\\\'habitat buissonnant',
+                                                     'Surface (ha) d\\\'habitat buissonnant',
+                                                     'Nombre d\\\'habitat rocheux',
+                                                     'Surface (ha) d\\\'habitat rocheux',
+                                                     'Nombre de zone humide',
+                                                     'Surface (ha) de zone humide',
+                                                     'Nombre d\\\'habitat aquatique',
+                                                     'Surface (ha) d\\\'habitat aquatique',
+                                                     'Diversité avifaune',
+                                                     'Diversité chiroptères',
+                                                     'Diversité reptiles',
+                                                     'Diversité amphibiens',
+                                                     'Diversité mammifères',
+                                                     'Diversité insectes',
+                                                     'Diversité lépidoptères',
+                                                     'Diversité odonates',
+                                                     'Diversité orthoptères',
+                                                     'Diversité coléoptères',
+                                                     'Diversité flore totale',
+                                                     'Proportion surfacique des habitat menacés/en danger localement',
+                                                     'Proportion surfacique des habitat d\\\'intérêt communautaires (et prioritaires)',
+                                                     'Proportion d\\\'espèces protégées faune au niveau national et regional',
+                                                     'Proportion d\\\'espèces protégées flore au niveau national et regional',
+                                                     'Proportion d\\\'espèces menacées faune au niveau national',
+                                                     'Proportion d\\\'espèces menacées flore au niveau national',
+                                                     'Proportion d\\\'espèces menacées faune au niveau regional',
+                                                     'Proportion d\\\'espèces menacées flore au niveau regional',
+                                                     'Proportion d\\\'espèces faune sur l\\\'annexe II de la DFFH',
+                                                     'Proportion d\\\'espèces flore sur l\\\'annexe II de la DFFH',
+                                                     'Proportion d\\\'avifaune sur la DO',
+                                                     'Proportion d\\\'oiseaux nicheurs',
+                                                     'Proportion d\\\'espèces (hors oiseaux) se reproduisant sur le site',
+                                                     'Indice de spécialisation de l\\\'avifaune',
+                                                     'Proportion surfacique des habitats en bon état de conservation',
+                                                     '% de milieux NON cultivées',
+                                                     '% de zones NON imperméabilisées',
+                                                     'Nombre d\\\'espèces d\\\'EEE',
+                                                     'Nombre d\\\'espèces de cohérence régional TVB dans PS',
+                                                     '% Habitat forestier PS /PE',
+                                                     '% Habitat ouvert PS /PE',
+                                                     '% Habitat buissonnant PS /PE',
+                                                     '% Habitat rocheux PS /PE',
+                                                     '% Habitat humide PS /PE',
+                                                     '% Habitat aquatique PS /PE',
+                                                     'Nb espèces faune déterminante des Znieffs du PE',
+                                                     'Nb espèces flore déterminante des Znieffs du PE',
+                                                     '% Milieux cultivés',
+                                                     '% Zones urbanisées'),
+                                                   c(rep('#EBE491', 52))))
   return(dat)
 })
 
@@ -788,8 +832,7 @@ output$SItable5<- DT::renderDataTable({
     viewTabC <- tableau$C[partial_select,]
     dat <- datatable(viewTabC, rownames = TRUE,
                      colnames = c("Valeur à l'état initial" = 5, "Détail" = 6, "Justification prédiction CT" = 7, "Incertitudes CT" = 8, "Valeur après impact CT" = 9, "Justification prédiction LT" = 10, "Incertitudes LT" = 11, "Valeur après impact LT" = 12),
-                     selection = 'single', options = list(scrollY='300px', scrollCollapse=TRUE, pageLength = dim.data.frame(tableau$C)[1], searching = TRUE, dom = 'ft', ordering = FALSE), filter = "top")%>%
-      formatStyle(4, 3, backgroundColor = '#FFA02F')
+                     selection = 'single', options = list(scrollY='300px', scrollCollapse=TRUE, pageLength = dim.data.frame(tableau$C)[1], searching = TRUE, dom = 'ft', ordering = FALSE), filter = "top")
   }
   return(dat)
 })
@@ -943,8 +986,7 @@ output$SItable6<- DT::renderDataTable({
     viewTabD <- tableau$D[partial_select,]
     dat <- datatable(viewTabD, rownames = TRUE,
                      colnames = c("Valeur à l'état initial" = 5, "Détail" = 6, "Justification prédiction CT" = 7, "Incertitudes CT" = 8, "Valeur après impact CT" = 9, "Justification prédiction LT" = 10, "Incertitudes LT" = 11, "Valeur après impact LT" = 12),
-                     selection = 'single', options = list(scrollY='300px', scrollCollapse=TRUE, pageLength = dim.data.frame(tableau$D)[1], searching = TRUE, dom = 'ft', ordering = FALSE), filter = "top")%>%
-      formatStyle(4, 3, backgroundColor = '#FFA02F')
+                     selection = 'single', options = list(scrollY='300px', scrollCollapse=TRUE, pageLength = dim.data.frame(tableau$D)[1], searching = TRUE, dom = 'ft', ordering = FALSE), filter = "top")
   }
   return(dat)
 })
