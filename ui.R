@@ -41,7 +41,7 @@ shinyUI(fluidPage(HTML("<!DOCTYPE html>
                   fluidRow(
                     column(10, align="left",
                            HTML('<h1 style="color: #FFA02F; background-color: #FFFFFF;"><b>ECOVAL</b></h1>'),
-                           HTML('<h3 style="color: #FF0000; background-color: #FFFFFF;"><b>version beta 090719</b></h1>'),
+                           #cfz HTML('<h3 style="color: #FF0000; background-color: #FFFFFF;"><b>version beta 090719</b></h1>'),
                            HTML('<h4 style="color: #A5C226; background-color: #FFFFFF;"><b>Cadre méthodologique pour le calcul de l\'équivalence écologique dans le contexte de la séquence ERC en France</b></h5>')),
                     column(2, align="right",
                            img(height=40, width=80, src="edf.jpg"),
@@ -368,7 +368,10 @@ shinyUI(fluidPage(HTML("<!DOCTYPE html>
                                                   includeMarkdown("md/a_propos_1.md")
                                                   # actionLink(inputId = "redir7", label=HTML('<h4 style="color: #005BBB;" >Pour la phase d’interprétation des résultats, veuillez vous référer à la notice explicative disponible dans l’onglet «à propos»</h4>'))),
                                           ),
-                                         tabPanel(HTML('<h4 style="color: #005BBB; ">Logiciel</h4>')))
+                                         tabPanel(HTML('<h4 style="color: #005BBB; ">Logiciel</h4>'), br(),
+                                                  includeMarkdown("md/a_propos_2.md")
+                                          )
+                                      )
                               )
                   )
         )
