@@ -415,6 +415,22 @@ observeEvent(input$linkC4, descrIncertC())
 observeEvent(input$linkC5, descrIncertC())
 observeEvent(input$linkC6, descrIncertC())
 
+descrJustC <- function(){
+  text1 <- h5("Pour vous aider dans l'estimation de la valeur des indicateurs après compensation vous pouvez vous référer au document :\n")
+  text2 <- h5(em("Développement d'un cadre méthodologique pour l'évaluation de l'équivalence écologique"))
+  text3 <- h5("à télécharger dans l'onglet :")
+  text4 <- h5(em("A propos --> ECOVAL"))
+  showModal(modalDialog(
+    h5("JUSTIFICATION"), hr(), text1, text2, text3, text4, easyClose = TRUE, footer = NULL))
+}
+
+observeEvent(input$linkJC1, descrJustC())
+observeEvent(input$linkJC2, descrJustC())
+observeEvent(input$linkJC3, descrJustC())
+observeEvent(input$linkJC4, descrJustC())
+observeEvent(input$linkJC5, descrJustC())
+observeEvent(input$linkJC6, descrJustC())
+
 descrIncertI <- function(){
   text1 <- h5(strong("-- Niveau A --\n"))
   text2 <- h5("Influence du projet : la prédiction de la valeur de l'indicateur dépend-elle essentiellement des actions réalisées par le maître d'ouvrage ? Y a-t-il une part qu'il ne peut pas maîtriser ?")
@@ -432,6 +448,22 @@ observeEvent(input$linkI3, descrIncertI())
 observeEvent(input$linkI4, descrIncertI())
 observeEvent(input$linkI5, descrIncertI())
 observeEvent(input$linkI6, descrIncertI())
+
+descrJustI <- function(){
+  text1 <- h5("Pour vous aider dans l'estimation de la valeur des indicateurs après impact vous pouvez vous référer au document :\n")
+  text2 <- h5(em("Développement d'un cadre méthodologique pour l'évaluation de l'équivalence écologique"))
+  text3 <- h5("à télécharger dans l'onglet :")
+  text4 <- h5(em("A propos --> ECOVAL"))
+  showModal(modalDialog(
+    h5("JUSTIFICATION"), hr(), text1, text2, text3, text4, easyClose = TRUE, footer = NULL))
+}
+
+observeEvent(input$linkJ1, descrJustI())
+observeEvent(input$linkJ2, descrJustI())
+observeEvent(input$linkJ3, descrJustI())
+observeEvent(input$linkJ4, descrJustI())
+observeEvent(input$linkJ5, descrJustI())
+observeEvent(input$linkJ6, descrJustI())
 
 
 observeEvent(input$new, {
