@@ -371,9 +371,10 @@ observeEvent(input$renseigner2,{
   rs <- as.numeric(input$SCtable4_rows_selected)
   if(length(rs) == 1){
     # initial state
-    if(rs %in% c(13,39,44,45,46,47,48,56,61)){
-      tableau$B[rs,4] <- input$Manuel2
+    if(!(rs %in% c(13,39,44,45,46,47,48,56,61))){
+      if(input$Manuel2 != tableau$B[rs,4]) showModal(modalDialog(h5("La valeur de l'état initial a été modifiée !"), easyClose = TRUE, footer = NULL))
     }
+    tableau$B[rs,4] <- input$Manuel2
     # update array visu CT
     tableau$B[rs,5] <- input$SCjustifCT
     if(is.null(input$SCdegincCT)) tableau$B[rs,6] <- ""
