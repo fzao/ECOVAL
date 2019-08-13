@@ -655,7 +655,11 @@ updateTabB <- function(){
 }
 
 output$SItable4<- DT::renderDataTable({
-  dat <- datatable(tableau$B, rownames = TRUE,
+  dat1 <- tableau$B
+  dat1[, 1] <- as.factor(dat1[, 1])
+  dat1[, 2] <- as.factor(dat1[, 2])
+  dat1[, 3] <- as.factor(dat1[, 3])
+  dat <- datatable(dat1, rownames = TRUE,
                    colnames = c("Valeur à l'état initial" = 5, "Justification de l'estimation CT" = 6, "Degré d'incertitude CT" = 7, "Valeur après impact CT" = 8, "Justification de l'estimation LT" = 9, "Degré d'incertitude LT" = 10, "Valeur après impact LT" = 11),
                    selection = 'single', options = list(scrollY='300px', scrollCollapse=TRUE, pageLength = dim.data.frame(tableau$B)[1], searching = TRUE, dom = 'ft', ordering = FALSE), filter = "top") %>%
     formatStyle(4, 3, backgroundColor = styleEqual(
@@ -831,6 +835,9 @@ output$SItable5<- DT::renderDataTable({
       partial_select <- c(partial_select, c(16, 23))
     }
     viewTabC <- tableau$C[partial_select,]
+    viewTabC[, 1] <- as.factor(viewTabC[, 1])
+    viewTabC[, 2] <- as.factor(viewTabC[, 2])
+    viewTabC[, 3] <- as.factor(viewTabC[, 3])
     dat <- datatable(viewTabC, rownames = TRUE,
                      colnames = c("Valeur à l'état initial" = 5, "Détail" = 6, "Justification prédiction CT" = 7, "Incertitudes CT" = 8, "Valeur après impact CT" = 9, "Justification prédiction LT" = 10, "Incertitudes LT" = 11, "Valeur après impact LT" = 12),
                      selection = 'single', options = list(scrollY='300px', scrollCollapse=TRUE, pageLength = dim.data.frame(tableau$C)[1], searching = TRUE, dom = 'ft', ordering = FALSE), filter = "top")
@@ -985,6 +992,9 @@ output$SItable6<- DT::renderDataTable({
       partial_select <- c(partial_select, c(13,14))
     }
     viewTabD <- tableau$D[partial_select,]
+    viewTabD[, 1] <- as.factor(viewTabD[, 1])
+    viewTabD[, 2] <- as.factor(viewTabD[, 2])
+    viewTabD[, 3] <- as.factor(viewTabD[, 3])
     dat <- datatable(viewTabD, rownames = TRUE,
                      colnames = c("Valeur à l'état initial" = 5, "Détail" = 6, "Justification prédiction CT" = 7, "Incertitudes CT" = 8, "Valeur après impact CT" = 9, "Justification prédiction LT" = 10, "Incertitudes LT" = 11, "Valeur après impact LT" = 12),
                      selection = 'single', options = list(scrollY='300px', scrollCollapse=TRUE, pageLength = dim.data.frame(tableau$D)[1], searching = TRUE, dom = 'ft', ordering = FALSE), filter = "top")
