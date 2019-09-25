@@ -204,7 +204,7 @@ output$plot_gains <- renderPlot({
                       "Pression_PS" = "#E6A936",
                       "Connectivité" = "#AF76C4",
                       "Représentativité" = "#68DDEA",
-                      "Patrimonialite_PE" = "#842D2A",
+                      "Patrimonialité_PE" = "#842D2A",
                       "Pression_PE" = "#DE9830",
                       "Structure" = "grey")
         
@@ -333,7 +333,7 @@ output$plot_gains <- renderPlot({
                         "Pression_PS" = "#E6A936",
                         "Connectivité" = "#AF76C4",
                         "Représentativité" = "#68DDEA",
-                        "Patrimonialite_PE" = "#842D2A",
+                        "Patrimonialité_PE" = "#842D2A",
                         "Pression_PE" = "#DE9830",
                         "Structure" = "grey")
           
@@ -492,7 +492,7 @@ output$plot_gains <- renderPlot({
                         "Pression_PS" = "#E6A936",
                         "Connectivité" = "#AF76C4",
                         "Représentativité" = "#68DDEA",
-                        "Patrimonialite_PE" = "#842D2A",
+                        "Patrimonialité_PE" = "#842D2A",
                         "Pression_PE" = "#DE9830",
                         "Structure" = "grey")
           
