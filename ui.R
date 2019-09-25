@@ -51,8 +51,8 @@ shinyUI(fluidPage(HTML("<!DOCTYPE html>
                               # ACCUEIL ---------------------------------------------------
                               tabPanel(value="accueil", HTML('<h4 style="color: #005BBB; "><b>Accueil</b></h4>'), br(),
                                        includeMarkdown("md/accueil.md"), br(),
-                                       fluidRow(column(6, align="center", HTML('<h4 style="color: #005BBB; "><b>Tuto #1</b>   (version beta - juillet 2019)</h4>'), tags$video(src="ECOVAL-1.mp4", width="500px", height="272px", type="video/mp4", controls="controls")),
-                                                column(6, align="center", HTML('<h4 style="color: #005BBB; "><b>Tuto #2</b>   (version beta - juillet 2019)</h4>'), tags$video(src="ECOVAL-2.mp4", width="500px", height="272px", type="video/mp4", controls="controls")))),
+                                       fluidRow(column(6, align="center", HTML('<h4 style="color: #005BBB; "><b>Tuto #1</b>   (version beta - juillet 2019)</h4>'), HTML('<iframe width="560" height="315" src="https://www.youtube.com/embed/sktibtPlT9o" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>')),
+                                                column(6, align="center", HTML('<h4 style="color: #005BBB; "><b>Tuto #2</b>   (version beta - juillet 2019)</h4>'), HTML('<iframe width="560" height="315" src="https://www.youtube.com/embed/DmwFXCOCAsA" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>')))),
                               # PROJET ----------------------------------------------------
                               tabPanel(value="projet", HTML('<h4 style="color: #005BBB; "><b>Projet</b></h4>'), br(),
                                        sidebarLayout(
