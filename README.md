@@ -17,7 +17,7 @@ la transparence des prédictions et la génération automatisée des sorties gra
 
 
 <p align="center">
-  <img src="./www/Image2.png" width="800"/>
+  <img src="./app/www/Image2.png" width="800"/>
 </p>
 <p align="center">
    <b>Principe méthodologique</b> 
