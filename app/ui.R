@@ -1,9 +1,9 @@
 #
-#   ______ _____ ______      __     _      
-#  |  ____/ ____/ __ \ \    / /\   | |     
-#  | |__ | |   | |  | \ \  / /  \  | |     
-#  |  __|| |   | |  | |\ \/ / /\ \ | |     
-#  | |___| |___| |__| | \  / ____ \| |____ 
+#   ______ _____ ______      __     _
+#  |  ____/ ____/ __ \ \    / /\   | |
+#  | |__ | |   | |  | \ \  / /  \  | |
+#  |  __|| |   | |  | |\ \/ / /\ \ | |
+#  | |___| |___| |__| | \  / ____ \| |____
 #  |______\_____\____/   \/_/    \_\______|
 #
 # Cadre methodologique pour le calcul de l'equivalence ecologique dans le contexte de la sequence ERC en France
@@ -17,9 +17,9 @@
 
 library(shiny)
 library(shinyjs)
-library(plotly)
 library(xlsx)
 library(DT)
+library(plotly)
 library(leaflet)
 library(rmarkdown)
 library(knitr)
@@ -63,8 +63,8 @@ shinyUI(fluidPage(HTML("<!DOCTYPE html>
                                            fluidRow(column(7, align="left", textInput("projectname", "TITRE", placeholder = "Titre du projet ECOVAL...")),
                                                     column(5, align="left", tags$div(title="Date de réalisation du projet", dateInput("date", label = "DATE", format = "dd-mm-yyyy", value = Sys.Date())))),
                                            textAreaInput("projectcontext", "CONTEXTE", height='300px', placeholder = "Décrire le contexte du projet ici..."), br(),
-                                           selectInput("selectsite", label = "SITE ECOLOGIQUE", 
-                                                       choices = list("-" = 0), 
+                                           selectInput("selectsite", label = "SITE ECOLOGIQUE",
+                                                       choices = list("-" = 0),
                                                        selected = 0),
                                            fluidRow(column(4, align="center", tags$div(title="Créer un nouveau site", actionButton("new", "AJOUTER"))),
                                                     column(4, align="center", tags$div(title="Effacer la description du site en cours", actionButton("delete", "EFFACER"))),
@@ -88,22 +88,22 @@ shinyUI(fluidPage(HTML("<!DOCTYPE html>
                                                                column(4, align="left", actionLink(inputId = "link2", label=HTML('<h5><b>INTENSITE ?</b></h5>'))),
                                                                column(4, align="left", actionLink(inputId = "link3", label=HTML('<h5><b>PORTEE SPATIALE ?</b></h5>')))
                                                                ),
-                                                      fluidRow(column(4, align = "left", selectInput("duree", label = NA, choices = list("Temporaire Courte Durée" = 1, "Temporaire Longue Durée" = 2, "Permanent" = 3))),
-                                                               column(4, align = "left", selectInput("intensite", label = NA, choices = list("Peu Intense" = 1, "Intense" = 2, "Très Intense" = 3))),
-                                                               column(4, align = "left",    selectInput("portee", label = NA, choices = list("Ponctuelle Faible Surface" = 1, "Ponctuelle Surface Importante" = 2, "Linéaire" = 3))))
+                                                      fluidRow(column(4, align = "left", selectInput("duree", label = NULL, choices = list("Temporaire Courte Durée" = 1, "Temporaire Longue Durée" = 2, "Permanent" = 3))),
+                                                               column(4, align = "left", selectInput("intensite", label = NULL, choices = list("Peu Intense" = 1, "Intense" = 2, "Très Intense" = 3))),
+                                                               column(4, align = "left",    selectInput("portee", label = NULL, choices = list("Ponctuelle Faible Surface" = 1, "Ponctuelle Surface Importante" = 2, "Linéaire" = 3))))
                                              ),
                                              tabPanel(HTML('<h4 style="color: #005BBB; ">Identification des enjeux</h4>'), value="identification", br(),
                                                       fluidRow(column(12, align="center", htmlOutput("enjeusiteno", inline = TRUE))),
                                                       fluidRow(column(6, align="center", HTML('<h4 style="color: #878F99; "><b>ESP\u00C8CE(S) \u00C0 ENJEUX</b></h4>')), column(6, align="center", HTML('<h4 style="color: #878F99; "><b>HABITAT(S) \u00C0 ENJEUX</b></h4>'))), br(),
                                                       fluidPage(
                                                         column(6, align="center",
-                                                               selectInput("selectspecies", label = NULL, 
-                                                                           choices = list("-" = 0), 
+                                                               selectInput("selectspecies", label = NULL,
+                                                                           choices = list("-" = 0),
                                                                            selected = 0),
                                                                fluidRow(column(4, align="right", tags$div(title="Créer une nouvelle espèce", actionButton("newspecies", "AJOUTER"))),
                                                                         column(4, align="center", tags$div(title="Effacer le contenu de l'espèce en cours", actionButton("deletespecies", "EFFACER"))),
                                                                         column(4, align="left", tags$div(title="Supprime définitivement l'espèce en cours", actionButton("destroyspecies", "ENLEVER")))), br(), br(),
-                                                               fluidRow(column(4, align="left", textInput("latinnamespecies", "Nom Latin")), 
+                                                               fluidRow(column(4, align="left", textInput("latinnamespecies", "Nom Latin")),
                                                                         column(4, align="left", textInput("frenchnamespecies", "Nom Français")),
                                                                         column(4, align="left", selectInput("typespecies", label = "Type", choices = list("Avifaune" = 1, "Chiroptère" = 2, "Mammifère" = 3, "Amphibien" = 4, "Reptile" = 5, "Insecte" = 6, "Flore" = 7, "Poisson" = 8, "Crustacé/Mollusque" = 9, "Communauté faunistique" = 10)))), br(),
                                                                fluidRow(column(4, align="left", textAreaInput("justifyspecies", label = "Justification de l'enjeu", height='200px')),
@@ -111,8 +111,8 @@ shinyUI(fluidPage(HTML("<!DOCTYPE html>
                                                                         column(4, align="left", numericInput("perimelargsp", "Périmètre élargi (km)", value = 0., min = 0., max = 1e6, step = 1.)))
                                                                ),
                                                         column(6, align="center",
-                                                               selectInput("selecthabitat", label = NULL, 
-                                                                           choices = list("-" = 0), 
+                                                               selectInput("selecthabitat", label = NULL,
+                                                                           choices = list("-" = 0),
                                                                            selected = 0),
                                                                fluidRow(column(4, align="right", tags$div(title="Créer un nouvel habitat", actionButton("newhabitat", "AJOUTER"))),
                                                                         column(4, align="center", tags$div(title="Effacer le contenu de l'habitat en cours", actionButton("deletehabitat", "EFFACER"))),
@@ -149,7 +149,7 @@ shinyUI(fluidPage(HTML("<!DOCTYPE html>
                                                                        column(3, align="left", selectInput("SImenace", label = "En danger ou menacé localement", choices = list("Non" = 1, "Oui" = 2)))),
                                                               fluidRow(column(3, align="left", numericInput("SIsurfacedeg", "Surface dégradée (ha)", value = 0., min = 0., step = 0.01))),
                                                               fluidRow(column(4, align="right", actionButton("addlisthab", "AJOUTER")), column(4, align="center", actionButton("chglisthab", "MODIFIER")), column(4, align="left", actionButton("dellisthab", "SUPPRIMER"))), br(),
-                                                              DT::dataTableOutput("SItable1"), DT::dataTableOutput("SItable1rowselected"), br(), br(), br(), hr(), br(), br(), br(), 
+                                                              DT::dataTableOutput("SItable1"), DT::dataTableOutput("SItable1rowselected"), br(), br(), br(), hr(), br(), br(), br(),
                                                               fluidRow(column(12, align="center", HTML('<h4 style="color: #A5C226; ">LISTE DES ESP\u00C8CES - P\u00C9RIM\u00C8TRE SITE</h4>'))), br(),
                                                               fluidRow(column(2, align="left", textInput("SIlatinnamespecies", "Nom latin")),
                                                                        column(2, align="left", textInput("SIfrenchnamespecies", "Nom français")),
@@ -176,13 +176,13 @@ shinyUI(fluidPage(HTML("<!DOCTYPE html>
                                                      ),
                                                      tabPanel(HTML('<h4 style="color: #005BBB; ">Niveau Général</h4>'), value="impactindicng", br(),
                                                               fluidRow(column(12, align="center", HTML('<h4 style="color: #A5C226; ">ETAT INITIAL</h4>'))), br(),
-                                                              fluidRow(column(12, align="center", numericInput("Manuel", NA, value = 0.))),
+                                                              fluidRow(column(12, align="center", numericInput("Manuel", NULL, value = 0.))),
                                                               fluidRow(column(6, align="center", HTML('<h4 style="color: #A5C226; ">COURT TERME</h4>')), column(6, align="center", HTML('<h4 style="color: #A5C226; ">LONG TERME</h4>'))), br(),
-                                                              fluidRow(column(2, align="left", actionLink(inputId = "linkJ1", label=HTML('<h5><b>Justification de l\'estimation</b></h5>')), textAreaInput("SIjustifCT", NA, height='125px', placeholder = "justification de l'estimation faite")),
-                                                                       column(2, align="center", actionLink(inputId = "linkI1", label=HTML('<h5><b>Niveau d\'incertitudes ?</b></h5>')), checkboxGroupInput("SIdegincCT", NA, c("A", "B", "C"), inline = TRUE)),
+                                                              fluidRow(column(2, align="left", actionLink(inputId = "linkJ1", label=HTML('<h5><b>Justification de l\'estimation</b></h5>')), textAreaInput("SIjustifCT", NULL, height='125px', placeholder = "justification de l'estimation faite")),
+                                                                       column(2, align="center", actionLink(inputId = "linkI1", label=HTML('<h5><b>Niveau d\'incertitudes ?</b></h5>')), checkboxGroupInput("SIdegincCT", NULL, c("A", "B", "C"), inline = TRUE)),
                                                                        column(2, align="left", numericInput("SIvalCT", "Valeur après impact", value = 0.)),
-                                                                       column(2, align="left", actionLink(inputId = "linkJ2", label=HTML('<h5><b>Justification de l\'estimation</b></h5>')), textAreaInput("SIjustifLT", NA, height='125px', placeholder = "justification de l'estimation faite")),
-                                                                       column(2, align="center", actionLink(inputId = "linkI2", label=HTML('<h5><b>Niveau d\'incertitudes ?</b></h5>')), checkboxGroupInput("SIdegincLT", NA, c("A", "B", "C"), inline = TRUE)),
+                                                                       column(2, align="left", actionLink(inputId = "linkJ2", label=HTML('<h5><b>Justification de l\'estimation</b></h5>')), textAreaInput("SIjustifLT", NULL, height='125px', placeholder = "justification de l'estimation faite")),
+                                                                       column(2, align="center", actionLink(inputId = "linkI2", label=HTML('<h5><b>Niveau d\'incertitudes ?</b></h5>')), checkboxGroupInput("SIdegincLT", NULL, c("A", "B", "C"), inline = TRUE)),
                                                                        column(2, align="left", numericInput("SIvalLT", "Valeur après impact", value = 0.))), br(),
                                                               fluidRow(column(12, align="center", actionButton("renseigner", "RENSEIGNER"))),
                                                               DT::dataTableOutput("SItable4"), DT::dataTableOutput("SItable4rowselected"), br()
@@ -190,14 +190,14 @@ shinyUI(fluidPage(HTML("<!DOCTYPE html>
                                                      tabPanel(HTML('<h4 style="color: #005BBB; ">Niveau Habitat</h4>'), value="impactindicnh", br(),
                                                               selectInput("selecthabitatSI", label = "HABITAT", choices = list("-" = 0), selected = 0), br(),
                                                               fluidRow(column(12, align="center", HTML('<h4 style="color: #A5C226; ">ETAT INITIAL</h4>'))), br(),
-                                                              fluidRow(column(6, align="right", numericInput("ManuelNH", NA, value = 0.)), 
-                                                                       column(6, align="left", textInput("justifySINH", NA, placeholder = "détail"))), br(),
+                                                              fluidRow(column(6, align="right", numericInput("ManuelNH", NULL, value = 0.)),
+                                                                       column(6, align="left", textInput("justifySINH", NULL, placeholder = "détail"))), br(),
                                                               fluidRow(column(6, align="center", HTML('<h4 style="color: #A5C226; ">COURT TERME</h4>')), column(6, align="center", HTML('<h4 style="color: #A5C226; ">LONG TERME</h4>'))), br(),
-                                                              fluidRow(column(2, align="left", actionLink(inputId = "linkJ3", label=HTML('<h5><b>Justification de l\'estimation</b></h5>')), textAreaInput("SIjustifCTNH", NA, height='125px', placeholder = "justification de l'estimation court terme")),
-                                                                       column(2, align="center", actionLink(inputId = "linkI3", label=HTML('<h5><b>Niveau d\'incertitudes ?</b></h5>')), checkboxGroupInput("SIdegincCTNH", NA, c("A", "B", "C"), inline = TRUE)),
+                                                              fluidRow(column(2, align="left", actionLink(inputId = "linkJ3", label=HTML('<h5><b>Justification de l\'estimation</b></h5>')), textAreaInput("SIjustifCTNH", NULL, height='125px', placeholder = "justification de l'estimation court terme")),
+                                                                       column(2, align="center", actionLink(inputId = "linkI3", label=HTML('<h5><b>Niveau d\'incertitudes ?</b></h5>')), checkboxGroupInput("SIdegincCTNH", NULL, c("A", "B", "C"), inline = TRUE)),
                                                                        column(2, align="left", numericInput("SIvalCTNH", "Valeur après impact CT", value = 0.)),
-                                                                       column(2, align="left", actionLink(inputId = "linkJ4", label=HTML('<h5><b>Justification de l\'estimation</b></h5>')), textAreaInput("SIjustifLTNH", NA, height='125px', placeholder = "justification de l'estimation long terme")),
-                                                                       column(2, align="center", actionLink(inputId = "linkI4", label=HTML('<h5><b>Niveau d\'incertitudes ?</b></h5>')), checkboxGroupInput("SIdegincLTNH", NA, c("A", "B", "C"), inline = TRUE)),
+                                                                       column(2, align="left", actionLink(inputId = "linkJ4", label=HTML('<h5><b>Justification de l\'estimation</b></h5>')), textAreaInput("SIjustifLTNH", NULL, height='125px', placeholder = "justification de l'estimation long terme")),
+                                                                       column(2, align="center", actionLink(inputId = "linkI4", label=HTML('<h5><b>Niveau d\'incertitudes ?</b></h5>')), checkboxGroupInput("SIdegincLTNH", NULL, c("A", "B", "C"), inline = TRUE)),
                                                                        column(2, align="left", numericInput("SIvalLTNH", "Valeur après impact LT", value = 0.))), br(),
                                                               fluidRow(column(12, align="center", actionButton("renseignerNH", "RENSEIGNER"))), br(),
                                                               DT::dataTableOutput("SItable5"), DT::dataTableOutput("SItable5rowselected"), br()
@@ -205,18 +205,18 @@ shinyUI(fluidPage(HTML("<!DOCTYPE html>
                                                      tabPanel(HTML('<h4 style="color: #005BBB; ">Niveau Espèce</h4>'), value="impactindicnsp", br(),
                                                               selectInput("selectspeciesSI", label = "ESPECE", choices = list("-" = 0), selected = 0), br(),
                                                               fluidRow(column(12, align="center", HTML('<h4 style="color: #A5C226; ">ETAT INITIAL</h4>'))), br(),
-                                                              fluidRow(column(6, align="right", numericInput("ManuelNSP", NA, value = 0.)), 
-                                                                       column(6, align="left", textInput("justifySINSP", NA, placeholder = "détail"))), br(),
+                                                              fluidRow(column(6, align="right", numericInput("ManuelNSP", NULL, value = 0.)),
+                                                                       column(6, align="left", textInput("justifySINSP", NULL, placeholder = "détail"))), br(),
                                                               fluidRow(column(6, align="center", HTML('<h4 style="color: #A5C226; ">COURT TERME</h4>')), column(6, align="center", HTML('<h4 style="color: #A5C226; ">LONG TERME</h4>'))), br(),
-                                                              fluidRow(column(2, align="left", actionLink(inputId = "linkJ5", label=HTML('<h5><b>Justification de l\'estimation</b></h5>')), textAreaInput("SIjustifCTNSP", NA, height='125px', placeholder = "justification de l'estimation court terme")),
-                                                                       column(2, align="center", actionLink(inputId = "linkI5", label=HTML('<h5><b>Niveau d\'incertitudes ?</b></h5>')), checkboxGroupInput("SIdegincCTNSP", NA, c("A", "B", "C"), inline = TRUE)),
+                                                              fluidRow(column(2, align="left", actionLink(inputId = "linkJ5", label=HTML('<h5><b>Justification de l\'estimation</b></h5>')), textAreaInput("SIjustifCTNSP", NULL, height='125px', placeholder = "justification de l'estimation court terme")),
+                                                                       column(2, align="center", actionLink(inputId = "linkI5", label=HTML('<h5><b>Niveau d\'incertitudes ?</b></h5>')), checkboxGroupInput("SIdegincCTNSP", NULL, c("A", "B", "C"), inline = TRUE)),
                                                                        column(2, align="left", numericInput("SIvalCTNSP", "Valeur après impact CT", value = 0.)),
-                                                                       column(2, align="left", actionLink(inputId = "linkJ6", label=HTML('<h5><b>Justification de l\'estimation</b></h5>')), textAreaInput("SIjustifLTNSP", NA, height='125px', placeholder = "justification de l'estimation long terme")),
-                                                                       column(2, align="center", actionLink(inputId = "linkI6", label=HTML('<h5><b>Niveau d\'incertitudes ?</b></h5>')), checkboxGroupInput("SIdegincLTNSP", NA, c("A", "B", "C"), inline = TRUE)),
+                                                                       column(2, align="left", actionLink(inputId = "linkJ6", label=HTML('<h5><b>Justification de l\'estimation</b></h5>')), textAreaInput("SIjustifLTNSP", NULL, height='125px', placeholder = "justification de l'estimation long terme")),
+                                                                       column(2, align="center", actionLink(inputId = "linkI6", label=HTML('<h5><b>Niveau d\'incertitudes ?</b></h5>')), checkboxGroupInput("SIdegincLTNSP", NULL, c("A", "B", "C"), inline = TRUE)),
                                                                        column(2, align="left", numericInput("SIvalLTNSP", "Valeur après impact LT", value = 0.))), br(),
                                                               fluidRow(column(12, align="center", actionButton("renseignerNSP", "RENSEIGNER"))),
                                                               DT::dataTableOutput("SItable6"), DT::dataTableOutput("SItable6rowselected"), br()
-                                                              
+
                                                      )
                                          )
                                        )
@@ -238,7 +238,7 @@ shinyUI(fluidPage(HTML("<!DOCTYPE html>
                                                                                      column(3, align="left", selectInput("SCmenace", label = "En danger ou menacé localement", choices = list("Non" = 1, "Oui" = 2)))),
                                                                             fluidRow(column(3, align="left", numericInput("SCsurfacedeg", "Surface dégradée (ha)", value = 0., min = 0., step = 0.01))),
                                                                             fluidRow(column(4, align="right", actionButton("addlisthab2", "AJOUTER")), column(4, align="center", actionButton("chglisthab2", "MODIFIER")), column(4, align="left", actionButton("dellisthab2", "SUPPRIMER"))), br(),
-                                                                            DT::dataTableOutput("SCtable1"), DT::dataTableOutput("SCtable1rowselected"), br(), br(), br(), hr(), br(), br(), br(), 
+                                                                            DT::dataTableOutput("SCtable1"), DT::dataTableOutput("SCtable1rowselected"), br(), br(), br(), hr(), br(), br(), br(),
                                                                             fluidRow(column(12, align="center", HTML('<h4 style="color: #A5C226; ">LISTE DES ESP\u00C8CES - P\u00C9RIM\u00C8TRE SITE</h4>'))), br(),
                                                                             fluidRow(column(2, align="left", textInput("SClatinnamespecies", "Nom latin")),
                                                                                      column(2, align="left", textInput("SCfrenchnamespecies", "Nom français")),
@@ -265,13 +265,13 @@ shinyUI(fluidPage(HTML("<!DOCTYPE html>
                                                                    ),
                                                                    tabPanel(HTML('<h4 style="color: #005BBB; ">Niveau Général</h4>'), value="compensindicng", br(),
                                                                             fluidRow(column(12, align="center", HTML('<h4 style="color: #A5C226; ">ETAT INITIAL</h4>'))), br(),
-                                                                            fluidRow(column(12, align="center", numericInput("Manuel2", NA, value = 0.))),
+                                                                            fluidRow(column(12, align="center", numericInput("Manuel2", NULL, value = 0.))),
                                                                             fluidRow(column(6, align="center", HTML('<h4 style="color: #A5C226; ">COURT TERME</h4>')), column(6, align="center", HTML('<h4 style="color: #A5C226; ">LONG TERME</h4>'))), br(),
-                                                                            fluidRow(column(2, align="left", actionLink(inputId = "linkJC1", label=HTML('<h5><b>Justification de l\'estimation</b></h5>')), textAreaInput("SCjustifCT", NA, height='125px', placeholder = "justification de l'estimation faite")),
-                                                                                     column(2, align="center", actionLink(inputId = "linkC1", label=HTML('<h5><b>Niveau d\'incertitudes ?</b></h5>')), checkboxGroupInput("SCdegincCT", NA, c("A", "B", "C"), inline = TRUE)),
+                                                                            fluidRow(column(2, align="left", actionLink(inputId = "linkJC1", label=HTML('<h5><b>Justification de l\'estimation</b></h5>')), textAreaInput("SCjustifCT", NULL, height='125px', placeholder = "justification de l'estimation faite")),
+                                                                                     column(2, align="center", actionLink(inputId = "linkC1", label=HTML('<h5><b>Niveau d\'incertitudes ?</b></h5>')), checkboxGroupInput("SCdegincCT", NULL, c("A", "B", "C"), inline = TRUE)),
                                                                                      column(2, align="left", numericInput("SCvalCT", "Valeur après compensation", value = 0.)),
-                                                                                     column(2, align="left", actionLink(inputId = "linkJC2", label=HTML('<h5><b>Justification de l\'estimation</b></h5>')), textAreaInput("SCjustifLT", NA, height='125px', placeholder = "justification de l'estimation faite")),
-                                                                                     column(2, align="center", actionLink(inputId = "linkC2", label=HTML('<h5><b>Niveau d\'incertitudes ?</b></h5>')), checkboxGroupInput("SCdegincLT", NA, c("A", "B", "C"), inline = TRUE)),
+                                                                                     column(2, align="left", actionLink(inputId = "linkJC2", label=HTML('<h5><b>Justification de l\'estimation</b></h5>')), textAreaInput("SCjustifLT", NULL, height='125px', placeholder = "justification de l'estimation faite")),
+                                                                                     column(2, align="center", actionLink(inputId = "linkC2", label=HTML('<h5><b>Niveau d\'incertitudes ?</b></h5>')), checkboxGroupInput("SCdegincLT", NULL, c("A", "B", "C"), inline = TRUE)),
                                                                                      column(2, align="left", numericInput("SCvalLT", "Valeur après compensation", value = 0.))), br(),
                                                                             fluidRow(column(12, align="center", actionButton("renseigner2", "RENSEIGNER"))), br(),
                                                                             DT::dataTableOutput("SCtable4"), DT::dataTableOutput("SCtable4rowselected"), br()
@@ -279,14 +279,14 @@ shinyUI(fluidPage(HTML("<!DOCTYPE html>
                                                                    tabPanel(HTML('<h4 style="color: #005BBB; ">Niveau Habitat</h4>'), value="compensindicnh", br(),
                                                                             selectInput("selecthabitatSC", label = "HABITAT", choices = list("-" = 0), selected = 0), br(),
                                                                             fluidRow(column(12, align="center", HTML('<h4 style="color: #A5C226; ">ETAT INITIAL</h4>'))), br(),
-                                                                            fluidRow(column(6, align="right", numericInput("ManuelNH2", NA, value = 0.)), 
-                                                                                     column(6, align="left", textInput("justifySCNH", NA, placeholder = "détail"))), br(),
+                                                                            fluidRow(column(6, align="right", numericInput("ManuelNH2", NULL, value = 0.)),
+                                                                                     column(6, align="left", textInput("justifySCNH", NULL, placeholder = "détail"))), br(),
                                                                             fluidRow(column(6, align="center", HTML('<h4 style="color: #A5C226; ">COURT TERME</h4>')), column(6, align="center", HTML('<h4 style="color: #A5C226; ">LONG TERME</h4>'))), br(),
-                                                                            fluidRow(column(2, align="left", actionLink(inputId = "linkJC3", label=HTML('<h5><b>Justification de l\'estimation</b></h5>')), textAreaInput("SCjustifCTNH", NA, height='125px', placeholder = "justification de l'estimation court terme")),
-                                                                                     column(2, align="center", actionLink(inputId = "linkC3", label=HTML('<h5><b>Niveau d\'incertitudes ?</b></h5>')), checkboxGroupInput("SCdegincCTNH", NA, c("A", "B", "C"), inline = TRUE)),
+                                                                            fluidRow(column(2, align="left", actionLink(inputId = "linkJC3", label=HTML('<h5><b>Justification de l\'estimation</b></h5>')), textAreaInput("SCjustifCTNH", NULL, height='125px', placeholder = "justification de l'estimation court terme")),
+                                                                                     column(2, align="center", actionLink(inputId = "linkC3", label=HTML('<h5><b>Niveau d\'incertitudes ?</b></h5>')), checkboxGroupInput("SCdegincCTNH", NULL, c("A", "B", "C"), inline = TRUE)),
                                                                                      column(2, align="left", numericInput("SCvalCTNH", "Valeur après compensation CT", value = 0.)),
-                                                                                     column(2, align="left", actionLink(inputId = "linkJC4", label=HTML('<h5><b>Justification de l\'estimation</b></h5>')), textAreaInput("SCjustifLTNH", NA, height='125px', placeholder = "justification de l'estimation long terme")),
-                                                                                     column(2, align="center", actionLink(inputId = "linkC4", label=HTML('<h5><b>Niveau d\'incertitudes ?</b></h5>')), checkboxGroupInput("SCdegincLTNH", NA, c("A", "B", "C"), inline = TRUE)),
+                                                                                     column(2, align="left", actionLink(inputId = "linkJC4", label=HTML('<h5><b>Justification de l\'estimation</b></h5>')), textAreaInput("SCjustifLTNH", NULL, height='125px', placeholder = "justification de l'estimation long terme")),
+                                                                                     column(2, align="center", actionLink(inputId = "linkC4", label=HTML('<h5><b>Niveau d\'incertitudes ?</b></h5>')), checkboxGroupInput("SCdegincLTNH", NULL, c("A", "B", "C"), inline = TRUE)),
                                                                                      column(2, align="left", numericInput("SCvalLTNH", "Valeur après compensation LT", value = 0.))), br(),
                                                                             fluidRow(column(12, align="center", actionButton("renseignerNH2", "RENSEIGNER"))), br(),
                                                                             DT::dataTableOutput("SCtable5"), DT::dataTableOutput("SCtable5rowselected"), br()
@@ -294,18 +294,18 @@ shinyUI(fluidPage(HTML("<!DOCTYPE html>
                                                                    tabPanel(HTML('<h4 style="color: #005BBB; ">Niveau Espèce</h4>'), value="compensindicnsp", br(),
                                                                             selectInput("selectspeciesSC", label = "ESPECE", choices = list("-" = 0), selected = 0), br(),
                                                                             fluidRow(column(12, align="center", HTML('<h4 style="color: #A5C226; ">ETAT INITIAL</h4>'))), br(),
-                                                                            fluidRow(column(6, align="right", numericInput("ManuelNSP2", NA, value = 0.)), 
-                                                                                     column(6, align="left", textInput("justifySCNSP", NA, placeholder = "détail"))), br(),
+                                                                            fluidRow(column(6, align="right", numericInput("ManuelNSP2", NULL, value = 0.)),
+                                                                                     column(6, align="left", textInput("justifySCNSP", NULL, placeholder = "détail"))), br(),
                                                                             fluidRow(column(6, align="center", HTML('<h4 style="color: #A5C226; ">COURT TERME</h4>')), column(6, align="center", HTML('<h4 style="color: #A5C226; ">LONG TERME</h4>'))), br(),
-                                                                            fluidRow(column(2, align="left", actionLink(inputId = "linkJC5", label=HTML('<h5><b>Justification de l\'estimation</b></h5>')), textAreaInput("SCjustifCTNSP", NA, height='125px', placeholder = "justification de l'estimation court terme")),
-                                                                                     column(2, align="center", actionLink(inputId = "linkC5", label=HTML('<h5><b>Niveau d\'incertitudes ?</b></h5>')), checkboxGroupInput("SCdegincCTNSP", NA, c("A", "B", "C"), inline = TRUE)),
+                                                                            fluidRow(column(2, align="left", actionLink(inputId = "linkJC5", label=HTML('<h5><b>Justification de l\'estimation</b></h5>')), textAreaInput("SCjustifCTNSP", NULL, height='125px', placeholder = "justification de l'estimation court terme")),
+                                                                                     column(2, align="center", actionLink(inputId = "linkC5", label=HTML('<h5><b>Niveau d\'incertitudes ?</b></h5>')), checkboxGroupInput("SCdegincCTNSP", NULL, c("A", "B", "C"), inline = TRUE)),
                                                                                      column(2, align="left", numericInput("SCvalCTNSP", "Valeur après compensation CT", value = 0.)),
-                                                                                     column(2, align="left", actionLink(inputId = "linkJC6", label=HTML('<h5><b>Justification de l\'estimation</b></h5>')), textAreaInput("SCjustifLTNSP", NA, height='125px', placeholder = "justification de l'estimation long terme")),
-                                                                                     column(2, align="center", actionLink(inputId = "linkC6", label=HTML('<h5><b>Niveau d\'incertitudes ?</b></h5>')), checkboxGroupInput("SCdegincLTNSP", NA, c("A", "B", "C"), inline = TRUE)),
+                                                                                     column(2, align="left", actionLink(inputId = "linkJC6", label=HTML('<h5><b>Justification de l\'estimation</b></h5>')), textAreaInput("SCjustifLTNSP", NULL, height='125px', placeholder = "justification de l'estimation long terme")),
+                                                                                     column(2, align="center", actionLink(inputId = "linkC6", label=HTML('<h5><b>Niveau d\'incertitudes ?</b></h5>')), checkboxGroupInput("SCdegincLTNSP", NULL, c("A", "B", "C"), inline = TRUE)),
                                                                                      column(2, align="left", numericInput("SCvalLTNSP", "Valeur après compensation LT", value = 0.))), br(),
                                                                             fluidRow(column(12, align="center", actionButton("renseignerNSP2", "RENSEIGNER"))), br(),
                                                                             DT::dataTableOutput("SCtable6"), DT::dataTableOutput("SCtable6rowselected"), br()
-                                                                            
+
                                                                    )
                                                        )
                                       )
@@ -319,7 +319,7 @@ shinyUI(fluidPage(HTML("<!DOCTYPE html>
                                                                      column(2, align="left", selectInput("selectniveauperte", label = "NIVEAU", choices = list("Général" = 1, "Habitat" = 2, "Espèce" = 3), selected = 1)),
                                                                      column(2, align="left", selectInput("selecthabitatSI2", label = "HABITAT", choices = list("-" = 0), selected = 0)),
                                                                      column(2, align="left", selectInput("selectspeciesSI2", label = "ESPECE", choices = list("-" = 0), selected = 0))),
-                                                            tabsetPanel(id="resultpertes", 
+                                                            tabsetPanel(id="resultpertes",
                                                                        tabPanel(value="graphe"," Graphe", fluidRow(column(12, align="center", br(), uiOutput('plot_pertes_ui')))),
                                                                        tabPanel(value="tableau", "Tableau", fluidRow(column(8, align="left", br(), DT::dataTableOutput("SIcalcul")), column(4, align="left", br(), downloadButton("dwnlpertes", "TELECHARGER LA TABLE"))))
                                                             )
@@ -330,7 +330,7 @@ shinyUI(fluidPage(HTML("<!DOCTYPE html>
                                                                      column(2, align="left", selectInput("selectniveaugain", label = "NIVEAU", choices = list("Général" = 1, "Habitat" = 2, "Espèce" = 3), selected = 1)),
                                                                      column(2, align="left", selectInput("selecthabitatSC2", label = "HABITAT", choices = list("-" = 0), selected = 0)),
                                                                      column(2, align="left", selectInput("selectspeciesSC2", label = "ESPECE", choices = list("-" = 0), selected = 0))),
-                                                            tabsetPanel(id="resultgains", 
+                                                            tabsetPanel(id="resultgains",
                                                                         tabPanel(value="graphe", "Graphe", fluidRow(column(12, align="center", br(), uiOutput('plot_gains_ui')))),
                                                                         tabPanel(value="tableau", "Tableau", fluidRow(column(8, align="left", br(), DT::dataTableOutput("SCcalcul")), column(4, align="left", br(), downloadButton("dwnlgains", "TELECHARGER LA TABLE"))))
                                                             )
@@ -342,7 +342,7 @@ shinyUI(fluidPage(HTML("<!DOCTYPE html>
                                                                      column(2, align="left", selectInput("selectniveauequivalence", label = "NIVEAU", choices = list("Général" = 1, "Habitat" = 2, "Espèce" = 3), selected = 1)),
                                                                      column(2, align="left", selectInput("selecthabitatSE", label = "HABITAT", choices = list("-" = 0), selected = 0)),
                                                                      column(2, align="left", selectInput("selectspeciesSE", label = "ESPECE", choices = list("-" = 0), selected = 0))),
-                                                            tabsetPanel(id="resultequivalence", 
+                                                            tabsetPanel(id="resultequivalence",
                                                                         tabPanel(value="graphe", "Graphe", fluidRow(column(12, align="center", br(), uiOutput('plot_equivalence_ui')))),
                                                                         tabPanel(value="tableau", "Tableau", fluidRow(column(8, align="left", br(), DT::dataTableOutput("SEcalcul")), column(4, align="left", br(), downloadButton("dwnlequivalence", "TELECHARGER LA TABLE"))))
                                                             )
