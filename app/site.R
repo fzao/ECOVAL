@@ -465,6 +465,45 @@ observeEvent(input$linkJ4, descrJustI())
 observeEvent(input$linkJ5, descrJustI())
 observeEvent(input$linkJ6, descrJustI())
 
+descrJustICT <- function(){
+  text1 <- h5("Le délai correspondant aux estimations des indicateurs après impacts à court terme est à déterminer par l'utilisateur mais doit refléter l'effet court terme des impacts. Il peut correspondre à l'année après travaux, ou bien la phase chantier si les impacts sont temporaires. Attention, le délai court terme doit être le même pour le site impacté et compensatoire.\n")
+  showModal(modalDialog(
+    h5("COURT TERME"), hr(), text1, easyClose = TRUE, footer = NULL))
+}
+
+observeEvent(input$linkCT1, descrJustICT())
+observeEvent(input$linkCT2, descrJustICT())
+observeEvent(input$linkCT3, descrJustICT())
+
+descrJustCCT <- function(){
+  text1 <- h5("Le délai correspondant aux estimations des indicateurs après compensation à court terme est à déterminer par l'utilisateur mais doit refléter l'effet court terme des mesures compensatoires. Il peut correspondre au délai fixé pour les premiers suivis après mise en place des mesures. Attention, le délai court terme doit être le même pour le site impacté et compensatoire.\n")
+  showModal(modalDialog(
+    h5("COURT TERME"), hr(), text1, easyClose = TRUE, footer = NULL))
+}
+
+observeEvent(input$linkCT4, descrJustCCT())
+observeEvent(input$linkCT5, descrJustCCT())
+observeEvent(input$linkCT6, descrJustCCT())
+
+descrJustILT <- function(){
+  text1 <- h5("Le délai correspondant aux estimations des indicateurs après impacts à long terme est à déterminer par l'utilisateur mais doit refléter l'effet des impacts sur le long (ou moyen) terme. Selon l'écosystème visé, il peut correspondre à plusieurs années après travaux (mare), à plusieurs dizaines d'années après (milieu forestier). Attention, le délai long terme doit être le même pour le site impacté et compensatoire.\n")
+  showModal(modalDialog(
+    h5("LONG TERME"), hr(), text1, easyClose = TRUE, footer = NULL))
+}
+
+observeEvent(input$linkLT1, descrJustILT())
+observeEvent(input$linkLT2, descrJustILT())
+observeEvent(input$linkLT3, descrJustILT())
+
+descrJustCLT <- function(){
+  text1 <- h5("Le délai correspondant aux estimations des indicateurs après compensation à long terme est à déterminer par l'utilisateur mais doit refléter l'effet des mesures sur le long (ou moyen) terme. Selon l'écosystème visé, il peut correspondre à plusieurs années après mesures (mare), à plusieurs dizaines d'années après (milieu forestier). Attention, le délai long terme doit être le même pour le site impacté et compensatoire.\n")
+  showModal(modalDialog(
+    h5("LONG TERME"), hr(), text1, easyClose = TRUE, footer = NULL))
+}
+
+observeEvent(input$linkLT4, descrJustCLT())
+observeEvent(input$linkLT5, descrJustCLT())
+observeEvent(input$linkLT6, descrJustCLT())
 
 observeEvent(input$new, {
   numsite <<- numsite + 1
