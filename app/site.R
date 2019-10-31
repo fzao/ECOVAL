@@ -707,9 +707,9 @@ cleanWindow <- function(){
   updateTextAreaInput(session, "sitecontext", value = "", placeholder = "Décrire le contexte du site ici...")
   updateTextAreaInput(session, "descqual", value = "", placeholder = "Nature, emprise, effets indirects...")
   updateTextAreaInput(session, "tempo", value = "", placeholder = "Plusieurs phases? Court/long terme...")
-  updateSelectInput(session, "duree", selected = "1")
-  updateSelectInput(session, "intensite", selected = "1")
-  updateSelectInput(session, "portee", selected = "1")
+  updateSelectInput(session, "duree", selected = "0")
+  updateSelectInput(session, "intensite", selected = "0")
+  updateSelectInput(session, "portee", selected = "0")
 }
 
 updateSiteName <- function(numero, sitename){

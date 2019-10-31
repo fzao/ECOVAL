@@ -88,9 +88,9 @@ shinyUI(fluidPage(HTML("<!DOCTYPE html>
                                                                column(4, align="left", actionLink(inputId = "link2", label=HTML('<h5><b>INTENSITE ?</b></h5>'))),
                                                                column(4, align="left", actionLink(inputId = "link3", label=HTML('<h5><b>PORTEE SPATIALE ?</b></h5>')))
                                                                ),
-                                                      fluidRow(column(4, align = "left", selectInput("duree", label = NULL, choices = list("Temporaire Courte Durée" = 1, "Temporaire Longue Durée" = 2, "Permanent" = 3))),
-                                                               column(4, align = "left", selectInput("intensite", label = NULL, choices = list("Peu Intense" = 1, "Intense" = 2, "Très Intense" = 3))),
-                                                               column(4, align = "left",    selectInput("portee", label = NULL, choices = list("Ponctuelle Faible Surface" = 1, "Ponctuelle Surface Importante" = 2, "Linéaire" = 3))))
+                                                      fluidRow(column(4, align = "left", selectInput("duree", label = NULL, choices = list("-" = 0, "Temporaire Courte Durée" = 1, "Temporaire Longue Durée" = 2, "Permanent" = 3))),
+                                                               column(4, align = "left", selectInput("intensite", label = NULL, choices = list("-" = 0, "Peu Intense" = 1, "Intense" = 2, "Très Intense" = 3))),
+                                                               column(4, align = "left",    selectInput("portee", label = NULL, choices = list("-" = 0, "Ponctuelle Faible Surface" = 1, "Ponctuelle Surface Importante" = 2, "Linéaire" = 3))))
                                              ),
                                              tabPanel(HTML('<h4 style="color: #005BBB; ">Identification des enjeux</h4>'), value="identification", br(),
                                                       fluidRow(column(12, align="center", htmlOutput("enjeusiteno", inline = TRUE))),
