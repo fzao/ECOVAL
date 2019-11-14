@@ -21,13 +21,16 @@ output$genere <- downloadHandler(
   },
   
   content = function(file) {
+    showModal(modalDialog(h5("GENERATION DU RAPPORT EN COURS"), hr(), "Veuillez patienter svp ceci peut prendre du temps !", footer = NULL))
     src <- normalizePath('md/rapport.Rmd')
     owd <- setwd(tempdir())
     on.exit(setwd(owd))
     file.copy(src, 'rapport.Rmd', overwrite = TRUE)
-    
+    #shinyjs::disable("genere")
     out <- rmarkdown::render('rapport.Rmd', html_document())
+    #shinyjs::enable("genere")
     file.rename(out, file)
+    removeModal()
   }
 )
 
