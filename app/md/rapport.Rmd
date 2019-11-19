@@ -447,15 +447,15 @@ _Rapport généré le_ `r format(Sys.time(), "%a %d %b %Y %H:%M:%S")`
 
 #### **Durée**
 
-`r duree[input$duree]`
+`r if(input$duree != '0') duree[input$duree]`
 
 #### **Intensité**
 
-`r intensite[input$intensite]`
+`r if(input$intensite != '0') intensite[input$intensite]`
 
 #### **Portée spatiale**
 
-`r portee[input$portee]`
+`r if(input$portee != '0') portee[input$portee]`
 
 ## <span style='color:#C0504D'>Pertes</span>
 
