@@ -321,7 +321,7 @@ observeEvent(input$link1, {
       text3 <- h5(em("Ex. Impacts: bâtiment, retenue d'eau / Ex. MC: arrêt d'une activité agricole")) 
     }
   }
-  showModal(modalDialog(
+  if(input$duree != '0') showModal(modalDialog(
     h5("DUREE DES PERTURBATIONS"), hr(), text1, text2, text3, easyClose = TRUE, footer = NULL))
 })
 
@@ -357,7 +357,7 @@ observeEvent(input$link2, {
       text3 <- h5(em("Ex. Impacts: destruction totale par imperméabilisation / Ex. MC: création d'une mare")) 
     }
   }
-  showModal(modalDialog(
+  if(input$intensite != '0') showModal(modalDialog(
     h5("INTENSITE DES MODIFICATIONS"), hr(), text1, text2, text3, easyClose = TRUE, footer = NULL))
 })
 
@@ -393,7 +393,7 @@ observeEvent(input$link3, {
       text3 <- h5(em("Ex. Impacts: ligne grande vitesse, autoroute / Ex. MC: plantation de haie, reméandrage d'un tronçon de rivière")) 
     }
   }
-  showModal(modalDialog(
+  if(input$portee != '0') showModal(modalDialog(
     h5("PORTEE DES PERTURBATIONS"), hr(), text1, text2, text3, easyClose = TRUE, footer = NULL))
 })
 

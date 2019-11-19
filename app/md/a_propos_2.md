@@ -6,7 +6,7 @@ output: html_document
 
 
 ### **Version du logiciel**
-<font size="4">Version Beta 0.1 (août 2019)</font>
+<font size="4">Version Beta 0.1 (novembre 2019)</font>
 
 ### **Auteurs**
 <font size="4">Lucie Bezombes & Fabrice Zaoui</font>
