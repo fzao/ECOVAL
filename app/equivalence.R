@@ -594,6 +594,6 @@ output$dwnlequivalence  <- downloadHandler(
     paste(radix, type, '_', niveau, habitat, species, ".csv", sep = "")
   },
   content = function(file) {
-    write.csv2(equivalence$tableau, file, row.names = FALSE)
+    write.csv2(equivalence$tableau, file, row.names = FALSE, fileEncoding = "latin1")
   }
 )
