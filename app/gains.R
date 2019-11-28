@@ -654,6 +654,6 @@ output$dwnlgains  <- downloadHandler(
     paste(radix, type, '_', niveau, habitat, species, ".csv", sep = "")
   },
   content = function(file) {
-    write.csv(gains$tableau, file, row.names = FALSE)
+    write.csv2(gains$tableau, file, row.names = FALSE)
   }
 )
