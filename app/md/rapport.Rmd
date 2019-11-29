@@ -238,7 +238,7 @@ _Rapport généré le_ `r format(Sys.time(), "%a %d %b %Y %H:%M:%S")`
 
 ### <span style='color:#C0504D'>*Niveau Habitat*</span>
 
-```{r echo=FALSE, warning=FALSE}
+```{r echo=FALSE, warning=FALSE, fig.align='left', results='asis'}
     # liste les habitats du site impacte
     name <- paste("Site no.", input$selectsiteimpact4)
     habitat <- list()
@@ -305,7 +305,7 @@ _Rapport généré le_ `r format(Sys.time(), "%a %d %b %Y %H:%M:%S")`
           }
           tabhab <- ecoval[[name]][partial_select,]
           tabhab[[3]] <- shortindicnames[partial_select]
-          cat(ecoval[[namehab]][1,2], sep="\n")
+          cat(paste("\n\n", "**", toupper(ecoval[[namehab]][1,2]), "**", "\n\n", sep=''))
           dat1 <- data.frame(
             perimetres = tabhab[[1]],
             indicateurs = tabhab[[3]],
@@ -337,7 +337,7 @@ _Rapport généré le_ `r format(Sys.time(), "%a %d %b %Y %H:%M:%S")`
 
 ### <span style='color:#C0504D'>*Niveau Espèce*</span>
 
-```{r echo=FALSE, warning=FALSE}
+```{r echo=FALSE, warning=FALSE, fig.align='left', results='asis'}
       # liste les especes du site impacte
       name <- paste("Site no.", input$selectsiteimpact4)
       species <- list()
@@ -406,7 +406,7 @@ _Rapport généré le_ `r format(Sys.time(), "%a %d %b %Y %H:%M:%S")`
               }
               tabsp <- ecoval[[name]][partial_select,]
               tabsp[[3]] <- shortindicnames[partial_select]
-              cat(ecoval[[namesp]][2,2], sep="\n")
+              cat(paste("\n\n", "**", toupper(ecoval[[namesp]][2,2]), "**", "\n\n", sep=''))
               dat1 <- data.frame(
                 perimetres = tabsp[[1]],
                 indicateurs = tabsp[[3]],
@@ -664,9 +664,7 @@ _Rapport généré le_ `r format(Sys.time(), "%a %d %b %Y %H:%M:%S")`
 
 ### <span style='color:#C0504D'>*Niveau Habitat*</span>
 
-#### **Court Terme**
-
-```{r echo=FALSE, warning=FALSE, fig.width=6, fig.height=6,  fig.align='left'}
+```{r echo=FALSE, warning=FALSE, fig.width=6, fig.height=6,  fig.align='left', results='asis'}
 # liste les habitats du site impacte
 name <- paste("Site no.", input$selectsiteimpact4)
 habitat <- list()
@@ -709,7 +707,7 @@ if(nbhabitat > 0){
                       "Indice frag type hab",
                       "Surface d'habitat dans le PE",
                       "% surf hab _ PE")
-    # Pertes CT
+
     for(i in 1:length(habitat)){
       name <- paste("CI no.", habitat[i])
       if(exists(name, where = ecoval)){
@@ -724,7 +722,7 @@ if(nbhabitat > 0){
         }
         tabhab <- ecoval[[name]][partial_select,]
         tabhab[[3]] <- shortindicnames[partial_select]
-        cat(ecoval[[namehab]][1,2], sep="\n")
+        cat(paste("\n\n", "**", toupper(ecoval[[namehab]][1,2]), " - Court Terme", "**", "\n\n", sep=''))
         dat1 <- data.frame(
           perimetres = tabhab[[1]],
           indicateurs = tabhab[[3]],
@@ -748,96 +746,31 @@ if(nbhabitat > 0){
           theme(panel.grid.major = element_line(size = 0.5, colour = "light grey"))+
           facet_grid(criteres ~ ., scales = "free", space = "free")
        print(p)
-     }
-   }
- }
+       cat(paste("\n\n", "**", toupper(ecoval[[namehab]][1,2]), " - Long Terme", "**", "\n\n", sep=''))
+       dat1 <- data.frame(
+         perimetres = tabhab[[1]],
+         indicateurs = tabhab[[3]],
+         criteres = factor(tabhab[[2]], levels=c("Diversité habitat","Diversité espèce","Patrimonialité_PS","Fonctionnalité","Pression_PS","Connectivité","Représentativité","Patrimonialité_PE","Pression_PE", "Structure")),
+         #valeurs = as.numeric(tabhab[[4]],
+         incertitudes <- gsub("[ABC]", "*", tabhab[[10]]),
+         pertes_brutes <- as.numeric(tabhab[[11]]) - as.numeric(tabhab[[4]]),
+         pertes_relatives <- as.numeric(tabhab[[11]]) - as.numeric(tabhab[[4]]) * 100 / as.numeric(tabhab[[4]])
+       )
+       dat1$colour <- ifelse(dat1$pertes_relatives < 0, "negative","positive")
+       p <- ggplot(data=dat1, aes(x=indicateurs, y=pertes_relatives)) +
+         geom_bar(stat="identity",  width=0.5, aes(fill=colour))+
+         coord_flip()+
+         labs(x="Indicateurs", y="Pertes relatives (barre) et brutes (nombre)")+
+         scale_fill_manual(values=c(positive="#7FDD4C",negative="#C67677")) +
+         theme_bw()+
+         theme(legend.position="none")+
+         geom_text(aes(label=pertes_brutes, hjust="center", vjust="center", y=pertes_relatives*0.5), size=3)+
+         theme(axis.text.x=element_text(colour="black", size = 11))+
+         geom_text(aes(label=incertitudes, hjust="center", vjust="top", y= pertes_brutes))+
+         theme(panel.grid.major = element_line(size = 0.5, colour = "light grey"))+
+         facet_grid(criteres ~ ., scales = "free", space = "free")
+      print(p)
 
-```
-
-#### **Long Terme**
-
-```{r echo=FALSE, warning=FALSE, fig.width=6, fig.height=6,  fig.align='left'}
-# liste les habitats du site impacte
-name <- paste("Site no.", input$selectsiteimpact4)
-habitat <- list()
-nbhabitat <- dim(listhabitat)[1] - 1
-if(nbhabitat > 0){
-  for(i in 1:nbhabitat){
-    hname <- listhabitat$habitat[i+1]
-    if(exists(hname, where = ecoval)){
-      if(ecoval[[hname]][7,2] == ecoval[[name]][12,2]){
-        habitat[[listhabitat$name[i+1]]] <- listhabitat$index[i+1]
-      }
-    }
-  }
-}
- # affichage
- if(length(habitat) > 0){
-    shortindicnames <- c("Nb sp faune dep hab",
-                      "Nb sp flore",
-                      "Surface totale habitat",
-                      "Nombre de patches d'habitat",
-                      "Nombre de micro-habitats",
-                      "Nb horizons sol",
-                      "Epaisseur d'horizons sol",
-                      "Abondance relative de faune détritivore",
-                      "Nb sp faune dep hab reproduction",
-                      "Nb TGB",
-                      "% bois mort",
-                      "Nb sp bio-indicatrices",
-                      "Densité de lichen",
-                      "Ancienneté de la forêt",
-                      "Nb sp pollinisatrices",
-                      "% flore dominante",
-                      "Nb strates végétation",
-                      "Hauteur strates",
-                      "% sol dégradé",
-                      "Nb sp indicatrices de pression",
-                      "Tps depuis dernière coupe",
-                      "Tx recouvrement ligneux",
-                      "Tx couvert algues eutrophisation",
-                      "Indice frag type hab",
-                      "Surface d'habitat dans le PE",
-                      "% surf hab _ PE")
-    # Pertes CT
-    for(i in 1:length(habitat)){
-      name <- paste("CI no.", habitat[i])
-      if(exists(name, where = ecoval)){
-        namehab <- paste("Habitat", habitat[i])
-        partial_select <- c(1,2,3,4,5,6,7,8,9,16,17,18,19,20,24,25,26)
-        if(ecoval[[namehab]][4,2] == "1"){ # Fermé
-          partial_select <- c(partial_select, c(10,11,12,13,14,21))
-        }else if(ecoval[[namehab]][4,2] == "2"){ # Ouvert
-          partial_select <- c(partial_select, c(15, 22))
-        }else if(ecoval[[namehab]][4,2] == "4"){ # Zone humide
-          partial_select <- c(partial_select, c(16, 23))
-        }
-        tabhab <- ecoval[[name]][partial_select,]
-        tabhab[[3]] <- shortindicnames[partial_select]
-        cat(ecoval[[namehab]][1,2], sep="\n")
-        dat1 <- data.frame(
-          perimetres = tabhab[[1]],
-          indicateurs = tabhab[[3]],
-          criteres = factor(tabhab[[2]], levels=c("Diversité habitat","Diversité espèce","Patrimonialité_PS","Fonctionnalité","Pression_PS","Connectivité","Représentativité","Patrimonialité_PE","Pression_PE", "Structure")),
-          #valeurs = as.numeric(tabhab[[4]],
-          incertitudes <- gsub("[ABC]", "*", tabhab[[10]]),
-          pertes_brutes <- as.numeric(tabhab[[11]]) - as.numeric(tabhab[[4]]),
-          pertes_relatives <- as.numeric(tabhab[[11]]) - as.numeric(tabhab[[4]]) * 100 / as.numeric(tabhab[[4]])
-        )
-        dat1$colour <- ifelse(dat1$pertes_relatives < 0, "negative","positive")
-        p <- ggplot(data=dat1, aes(x=indicateurs, y=pertes_relatives)) +
-          geom_bar(stat="identity",  width=0.5, aes(fill=colour))+
-          coord_flip()+
-          labs(x="Indicateurs", y="Pertes relatives (barre) et brutes (nombre)")+
-          scale_fill_manual(values=c(positive="#7FDD4C",negative="#C67677")) +
-          theme_bw()+
-          theme(legend.position="none")+
-          geom_text(aes(label=pertes_brutes, hjust="center", vjust="center", y=pertes_relatives*0.5), size=3)+
-          theme(axis.text.x=element_text(colour="black", size = 11))+
-          geom_text(aes(label=incertitudes, hjust="center", vjust="top", y= pertes_brutes))+
-          theme(panel.grid.major = element_line(size = 0.5, colour = "light grey"))+
-          facet_grid(criteres ~ ., scales = "free", space = "free")
-       print(p)
      }
    }
  }
@@ -853,9 +786,7 @@ if(nbhabitat > 0){
 
 ### <span style='color:#C0504D'>*Niveau Espèce*</span>
 
-#### **Court Terme**
-
-```{r echo=FALSE, warning=FALSE, fig.width=6, fig.height=6,  fig.align='left'}
+```{r echo=FALSE, warning=FALSE, fig.width=6, fig.height=6,  fig.align='left', results='asis'}
       # liste les especes du site impacte
       name <- paste("Site no.", input$selectsiteimpact4)
       species <- list()
@@ -914,7 +845,7 @@ if(nbhabitat > 0){
             }
             tabsp <- ecoval[[name]][partial_select,]
             tabsp[[3]] <- shortindicnames[partial_select]
-            cat(ecoval[[namesp]][2,2], sep="\n")
+            cat(paste("\n\n", "**", toupper(ecoval[[namesp]][2,2]), " - Court Terme", "**", "\n\n", sep=''))
             dat1 <- data.frame(
               perimetres = tabsp[[1]],
               indicateurs = tabsp[[3]],
@@ -938,73 +869,7 @@ if(nbhabitat > 0){
               theme(panel.grid.major = element_line(size = 0.5, colour = "light grey"))+
               facet_grid(criteres ~ ., scales = "free", space = "free")
             print(p)
-          }
-        }
-     }
-```
-
-#### **Long Terme**
-
-```{r echo=FALSE, warning=FALSE, fig.width=6, fig.height=6,  fig.align='left'}
-      # liste les especes du site impacte
-      name <- paste("Site no.", input$selectsiteimpact4)
-      species <- list()
-      nbspecies <- dim(listspecies)[1] - 1
-      if(nbspecies > 0){
-        for(i in 1:nbspecies){
-          sname <- listspecies$species[i+1]
-          if(exists(sname, where = ecoval)){
-            if(ecoval[[sname]][6,2] == ecoval[[name]][12,2]){
-              species[[listspecies$name[i+1]]] <- listspecies$index[i+1]
-            }
-          }
-        }
-      }
-     # affichage
-     if(length(species) > 0){
-        shortindicnames <- c("Surf tot hab favorable",
-                             "Nb patchs hab favorable",
-                             "Estimation nb indiv",
-                             "Surf nourrissage favorable",
-                             "Surf reproduction favorable",
-                             "Estimation nb couples",
-                             "Surf chasse favorable",
-                             "Nb gîtes favorables",
-                             "Nb mâles chanteurs",
-                             "Nb pontes",
-                             "% plante(s) hôte(s)",
-                             "Nb station / pieds",
-                             "Nombre d'sp",
-                             "Nombre de familles",
-                             "% Surf SANS perturbation",
-                             "Surf hab favorable _ PE",
-                             "Nb osb sp",
-                             "Surf hab favorable connecté _ PE",
-                             "Nb zones connectées entre elles")
-       for(i in 1:length(species)){
-         name <- paste("DI no.", species[i])
-         if(exists(name, where = ecoval)){
-             namesp  <- paste("Espece", species[i])
-             partial_select <- c(1,2,15,16,17,18,19)
-            if(ecoval[[namesp]][3,2] != "7"){ # Faune
-              partial_select <- c(partial_select, c(3))
-            }
-            if(ecoval[[namesp]][3,2] == "1"){ # Avifaune
-              partial_select <- c(partial_select, c(4,5,6))
-            }else if(ecoval[[namesp]][3,2] == "2"){ # Chiroptere
-              partial_select <- c(partial_select, c(7,8))
-            }else if(ecoval[[namesp]][3,2] == "4"){ # Amphibien
-              partial_select <- c(partial_select, c(9,10))
-            }else if(ecoval[[namesp]][3,2] == "6"){ # Insecte
-              partial_select <- c(partial_select, c(11))
-            }else if(ecoval[[namesp]][3,2] == "7"){ # Flore
-              partial_select <- c(partial_select, c(12))
-            }else if(ecoval[[namesp]][3,2] == "10"){ # Communaute faunistique
-              partial_select <- c(partial_select, c(13,14))
-            }
-            tabsp <- ecoval[[name]][partial_select,]
-            tabsp[[3]] <- shortindicnames[partial_select]
-            cat(ecoval[[namesp]][2,2], sep="\n")
+            cat(paste("\n\n", "**", toupper(ecoval[[namesp]][2,2]), " - Long Terme", "**", "\n\n", sep=''))
             dat1 <- data.frame(
               perimetres = tabsp[[1]],
               indicateurs = tabsp[[3]],
