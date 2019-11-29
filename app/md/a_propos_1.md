@@ -88,4 +88,4 @@ avec tous les acteurs lors de la phase de construction du projet).
 <a href="http://www.set-revue.fr/un-cadre-methodologique-pour-evaluer-lequivalence-entre-pertes-et-gains-de-biodiversite-induits-par" target="_blank">Bezombes L., Kerbiriou C., Spiegelberger T., Gouraud V., Gaucherand S. (2018) Un cadre méthodologique pour évaluer l’équivalence entre pertes et gains de biodiversité induits par les projets d’aménagement et leurs mesures compensatoires, Revue Science Eaux & Territoires, article hors-série, 9 p.</a>
 
 ### Thèse de Lucie Bezombes
-<a href="BEZOMBES_2017_diffusion.pdf" target="_blank"><img src="these_small.png" alt="these"></a>
+<a href="BEZOMBES_2017_diffusion.pdf" target="_blank"><img src="these_small.png" alt="these"></a>&emsp;&emsp;&emsp;&emsp;&emsp;<a href="BEZOMBES_2017_presentation.pdf" target="_blank"><img src="presentation_small.png" alt="these_presentation"></a>
