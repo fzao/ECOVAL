@@ -78,7 +78,7 @@ cleanwidgetsA1 <- function(){
   updateTextInput(session, "SIcodeeunis", value = "")
   updateNumericInput(session, "SIsurface", value = 0.)
   updateSelectInput(session, "SItype", selected = "1")
-  updateSelectInput(session, "SIetat", selected = "1")
+  updateSelectInput(session, "SIetat", selected = "0")
   updateSelectInput(session, "SIinteret", selected = "1")
   updateSelectInput(session, "SImenace", selected = "1")
   updateNumericInput(session, "SIsurfacedeg", value = 0.)

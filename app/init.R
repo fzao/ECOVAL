@@ -39,7 +39,7 @@ listhabitat <- data.frame("habitat" = '-', "index" = 0, "name" = '-', stringsAsF
 tableau <- reactiveValues(A1=NULL, A2=NULL, A3=NULL, B=NULL, C=NULL, D=NULL)
 tableau$A1 <- model_A1
 A1listtype <- list("1"="Fermé" , "2"="Ouvert", "3"="Buissonnant", "4"="Zone humide", "5"="Aquatique", "6"="Rocheux", "7"="Cultivé", "8"="Imperméabilisé")
-A1listetat <- list("1"="Bon", "2"="Mauvais", "3"="Moyen")
+A1listetat <- list("0"="", "1"="Bon", "2"="Mauvais", "3"="Moyen")
 A1listinter <- list("1"="Non", "2"="Oui")
 tableau$A2 <- model_A2
 A2listtype1 <- list("1"="Avifaune","2"="Chiroptère","3"="Mammifère","4"="Amphibien","5"="Reptile","6"="Insecte","7"="Flore","8"="Poisson","9"="Crustacé/Mollusque")

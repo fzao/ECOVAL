@@ -78,7 +78,7 @@ cleanwidgetsA1sc <- function(){
   updateTextInput(session, "SCcodeeunis", value = "")
   updateNumericInput(session, "SCsurface", value = 0.)
   updateSelectInput(session, "SCtype", selected = "1")
-  updateSelectInput(session, "SCetat", selected = "1")
+  updateSelectInput(session, "SCetat", selected = "0")
   updateSelectInput(session, "SCinteret", selected = "1")
   updateSelectInput(session, "SCmenace", selected = "1")
   updateNumericInput(session, "SCsurfacedeg", value = 0.)
