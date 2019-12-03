@@ -241,7 +241,7 @@ output$plot_gains <- renderPlot({
           theme(legend.position="none")+
           geom_text(aes(label=gains_bruts, hjust="center", vjust="center", y=gains_relatifs*0.5), size=3)+
           theme(axis.text.x=element_text(colour="black", size = 11))+
-          geom_text(aes(label=incertitudes, hjust="center", vjust="bottom", y= gains_relatifs))+
+          geom_text(aes(label=incertitudes, hjust="center", vjust="bottom", y= gains_bruts))+
           theme(panel.grid.major = element_line(size = 0.5, colour = "light grey"))+
           facet_grid(criteres ~ ., scales = "free", space = "free")
         # plotOutput(p, width = "80%", height = "100%")
@@ -268,7 +268,7 @@ output$plot_gains <- renderPlot({
           theme(legend.position="none")+
           geom_text(aes(label=gains_bruts, hjust="center", vjust="center", y=gains_relatifs*0.5), size=3)+
           theme(axis.text.x=element_text(colour="black", size = 11))+
-          geom_text(aes(label=incertitudes, hjust="center", vjust="bottom", y= gains_relatifs))+
+          geom_text(aes(label=incertitudes, hjust="center", vjust="bottom", y= gains_bruts))+
           theme(panel.grid.major = element_line(size = 0.5, colour = "light grey"))+
           facet_grid(criteres ~ ., scales = "free", space = "free")
         
@@ -381,7 +381,7 @@ output$plot_gains <- renderPlot({
             theme(legend.position="none")+
             geom_text(aes(label=gains_bruts, hjust="center", vjust="center", y=gains_relatifs*0.5), size=3)+
             theme(axis.text.x=element_text(colour="black", size = 11))+
-            geom_text(aes(label=incertitudes, hjust="center", vjust="bottom", y= gains_relatifs))+
+            geom_text(aes(label=incertitudes, hjust="center", vjust="bottom", y= gains_bruts))+
             theme(panel.grid.major = element_line(size = 0.5, colour = "light grey"))+
             facet_grid(criteres ~ ., scales = "free", space = "free")
           # p <- ggplotly(p, width=1100, height=800)
@@ -419,7 +419,7 @@ output$plot_gains <- renderPlot({
             theme(legend.position="none")+
             geom_text(aes(label=gains_bruts, hjust="center", vjust="center", y=gains_relatifs*0.5), size=3)+
             theme(axis.text.x=element_text(colour="black", size = 11))+
-            geom_text(aes(label=incertitudes, hjust="center", vjust="bottom", y= gains_relatifs))+
+            geom_text(aes(label=incertitudes, hjust="center", vjust="bottom", y= gains_bruts))+
             theme(panel.grid.major = element_line(size = 0.5, colour = "light grey"))+
             facet_grid(criteres ~ ., scales = "free", space = "free")
           # p <- ggplotly(p, width=1100, height=800)
@@ -548,7 +548,7 @@ output$plot_gains <- renderPlot({
             theme(legend.position="none")+
             geom_text(aes(label=gains_bruts, hjust="center", vjust="center", y=gains_relatifs*0.5), size=3)+
             theme(axis.text.x=element_text(colour="black", size = 11))+
-            geom_text(aes(label=incertitudes, hjust="center", vjust="bottom", y= gains_relatifs))+
+            geom_text(aes(label=incertitudes, hjust="center", vjust="bottom", y= gains_bruts))+
             theme(panel.grid.major = element_line(size = 0.5, colour = "light grey"))+
             facet_grid(criteres ~ ., scales = "free", space = "free")
           # p <- ggplotly(p, width=1000, height=800)
@@ -595,7 +595,7 @@ output$plot_gains <- renderPlot({
             theme(legend.position="none")+
             geom_text(aes(label=gains_bruts, hjust="center", vjust="center", y=gains_relatifs*0.5), size=3)+
             theme(axis.text.x=element_text(colour="black", size = 11))+
-            geom_text(aes(label=incertitudes, hjust="center", vjust="bottom", y= gains_relatifs))+
+            geom_text(aes(label=incertitudes, hjust="center", vjust="bottom", y= gains_bruts))+
             theme(panel.grid.major = element_line(size = 0.5, colour = "light grey"))+
             facet_grid(criteres ~ ., scales = "free", space = "free")
           # p <- ggplotly(p, width=1000, height=800)
