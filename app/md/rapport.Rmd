@@ -25,8 +25,12 @@ fileName <- inFile$name
 _Rapport généré le_ `r format(Sys.time(), "%a %d %b %Y %H:%M:%S")`
 
 --------------------------------------
+[Site Impacté](#link1)
+[Site Compensatoire](#link2)
+[Equivalence](#link3)
+--------------------------------------
 
-# <span style='color:#C0504D'>**Site Impacté --> `r listsite$name[as.numeric(input$selectsiteimpact4)+1]`**</span>
+# <span style='color:#C0504D'>**Site Impacté --> `r listsite$name[as.numeric(input$selectsiteimpact4)+1]`**</span> {#link1}
 
 #### **Coordonnées géographiques**
 
@@ -909,7 +913,7 @@ if(nbhabitat > 0){
 
 --------------------------------------
 
-# <span style='color:#9BBB59'>**Site compensatoire -- `r listsite$name[as.numeric(input$selectsitecompens4)+1]`**</span>
+# <span style='color:#9BBB59'>**Site Compensatoire -- `r listsite$name[as.numeric(input$selectsitecompens4)+1]`**</span> {#link2}
 
 #### **Coordonnées géographiques**
 
@@ -1781,4 +1785,4 @@ if(nbhabitat > 0){
 
 --------------------------------------
 
-# <span style='color:#B2A1C7'>**Equivalence `r listsite$name[as.numeric(input$selectsiteimpact4)+1]` -- `r listsite$name[as.numeric(input$selectsitecompens4)+1]`**</span>
+# <span style='color:#B2A1C7'>**Equivalence `r listsite$name[as.numeric(input$selectsiteimpact4)+1]` -- `r listsite$name[as.numeric(input$selectsitecompens4)+1]`**</span> {#link3}
