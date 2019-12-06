@@ -65,12 +65,16 @@ observeEvent(input$selectsitecompens2, {
     shinyjs::hide("dwnlgains")
     shinyjs::hide("selecttypegraphgain")
     shinyjs::hide("selectniveaugain")
+    shinyjs::hide("selecthabitatSC2")
+    shinyjs::hide("selectspeciesSC2")
   }else{
     shinyjs::show("plot_gains")
     shinyjs::show("SCcalcul")
     shinyjs::show("dwnlgains")
     shinyjs::show("selecttypegraphgain")
     shinyjs::show("selectniveaugain")
+    updateSelectInput(session, "selecttypegraphgain", selected = '1')
+    updateSelectInput(session, "selectniveaugain", selected = '1')
   }
 })
 

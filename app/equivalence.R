@@ -93,6 +93,8 @@ observeEvent(input$selectsiteimpact3, {
     shinyjs::hide("dwnlequivalence")
     shinyjs::hide("selecttypegraphequivalence")
     shinyjs::hide("selectniveauequivalence")
+    shinyjs::hide("selecthabitatSE")
+    shinyjs::hide("selectspeciesSE")
   }else{
     if(input$selectsitecompens3 == '0'){
       shinyjs::hide("plot_equivalence")
@@ -100,12 +102,16 @@ observeEvent(input$selectsiteimpact3, {
       shinyjs::hide("dwnlequivalence")
       shinyjs::hide("selecttypegraphequivalence")
       shinyjs::hide("selectniveauequivalence")
+      shinyjs::hide("selecthabitatSE")
+      shinyjs::hide("selectspeciesSE")
     }else{
       shinyjs::show("plot_equivalence")
       shinyjs::show("SEcalcul")
       shinyjs::show("dwnlequivalence")
       shinyjs::show("selecttypegraphequivalence")
       shinyjs::show("selectniveauequivalence")
+      updateSelectInput(session, "selecttypegraphequivalence", selected = '1')
+      updateSelectInput(session, "selectniveauequivalence", selected = '1')
     }
   }
 })
@@ -120,6 +126,8 @@ observeEvent(input$selectsitecompens3, {
     shinyjs::hide("dwnlequivalence")
     shinyjs::hide("selecttypegraphequivalence")
     shinyjs::hide("selectniveauequivalence")
+    shinyjs::hide("selecthabitatSE")
+    shinyjs::hide("selectspeciesSE")
   }else{
     if(input$selectsiteimpact3 == '0'){
       shinyjs::hide("plot_equivalence")
@@ -127,12 +135,16 @@ observeEvent(input$selectsitecompens3, {
       shinyjs::hide("dwnlequivalence")
       shinyjs::hide("selecttypegraphequivalence")
       shinyjs::hide("selectniveauequivalence")
+      shinyjs::hide("selecthabitatSE")
+      shinyjs::hide("selectspeciesSE")
     }else{
       shinyjs::show("plot_equivalence")
       shinyjs::show("SEcalcul")
       shinyjs::show("dwnlequivalence")
       shinyjs::show("selecttypegraphequivalence")
       shinyjs::show("selectniveauequivalence")
+      updateSelectInput(session, "selecttypegraphequivalence", selected = '1')
+      updateSelectInput(session, "selectniveauequivalence", selected = '1')
     }
   }
 })

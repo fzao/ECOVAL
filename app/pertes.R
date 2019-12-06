@@ -65,12 +65,16 @@ observeEvent(input$selectsiteimpact2, {
     shinyjs::hide("dwnlpertes")
     shinyjs::hide("selecttypegraphperte")
     shinyjs::hide("selectniveauperte")
+    shinyjs::hide("selecthabitatSI2")
+    shinyjs::hide("selectspeciesSI2")
   }else{
     shinyjs::show("plot_pertes")
     shinyjs::show("SIcalcul")
     shinyjs::show("dwnlpertes")
     shinyjs::show("selecttypegraphperte")
     shinyjs::show("selectniveauperte")
+    updateSelectInput(session, "selecttypegraphperte", selected = '1')
+    updateSelectInput(session, "selectniveauperte", selected = '1')
   }
 })
 
