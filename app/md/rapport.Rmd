@@ -1541,7 +1541,7 @@ if(nbhabitat > 0){
 ### <span style='color:#9BBB59'>*Niveau Habitat*</span>
 
 ```{r echo=FALSE, warning=FALSE, fig.width=6, fig.height=6,  fig.align='left', results='asis'}
-# liste les habitats du site impacte
+# liste les habitats du site compensatoire
 name <- paste("Site no.", input$selectsitecompens4)
 habitat <- list()
 nbhabitat <- dim(listhabitat)[1] - 1
@@ -1664,7 +1664,7 @@ if(nbhabitat > 0){
 ### <span style='color:#9BBB59'>*Niveau Espèce*</span>
 
 ```{r echo=FALSE, warning=FALSE, fig.width=6, fig.height=6,  fig.align='left', results='asis'}
-      # liste les especes du site impacte
+      # liste les especes du site compensatoire
       name <- paste("Site no.", input$selectsitecompens4)
       species <- list()
       nbspecies <- dim(listspecies)[1] - 1
@@ -1786,3 +1786,513 @@ if(nbhabitat > 0){
 --------------------------------------
 
 # <span style='color:#B2A1C7'>**Equivalence `r listsite$name[as.numeric(input$selectsiteimpact4)+1]` -- `r listsite$name[as.numeric(input$selectsitecompens4)+1]`**</span> {#link3}
+
+### <span style='color:#B2A1C7'>*Niveau Général*</span>
+
+#### **Court Terme**
+
+```{r echo=FALSE, warning=FALSE, fig.width=6, fig.height=12,  fig.align='left'}
+nameImp <- paste("SIB no.", input$selectsiteimpact4)
+nameComp <- paste("SCB no.", input$selectsitecompens4)
+shortindicnames <- c("Nb hab forestier",
+               "Surf hab forestier",
+               "Nb hab ouvert",
+               "Surf hab ouvert",
+               "Nb hab buiss",
+               "Surf hab buiss",
+               "Nb hab rocheux",
+               "Surf hab rocheux",
+               "Nb hab humide",
+               "Surf hab humide",
+               "Nb hab aqua",
+               "Surf hab aqua",
+               "Lg lisière _ ha forêt",
+               "Diversité avifaune",
+               "Diversité chiroptères",
+               "Diversité reptiles",
+               "Diversité amphibiens",
+               "Diversité mammifères",
+               "Diversité insectes",
+               "Diversité lépidoptères",
+               "Diversité odonates",
+               "Diversité orthoptères",
+               "Diversité coléoptères",
+               "Diversité flore totale",
+               "% habitat en danger localement",
+               "% habitat d'intérêt comm +prio",
+               "% sp protégées faune national et regional",
+               "% sp protégées flore national et regional",
+               "% sp menacées faune national",
+               "% sp menacées flore national",
+               "% sp menacées faune regional",
+               "% sp menacées flore regional",
+               "% sp faune DFFH",
+               "% sp flore DFFH",
+               "% avifaune DO",
+               "% oiseaux nicheurs",
+               "% sp repro site",
+               "Indice de spé avifaune",
+               "% chiroptères spécialistes",
+               "% hab bon état conservation",
+               "Surf milieux NON cultivés",
+               "Surf zones NON urbanisées",
+               "Nb sp EEE",
+               "Nb patchs EEE",
+               "% recouvrement EEE",
+               "Lg linéaire transpt",
+               "Lg linéaire haie",
+               "Surf corridor",
+               "Nb Sp TVB",
+               "% hab forestier _ PE",
+               "% hab ouvert _ PE",
+               "% hab rocheux _ PE",
+               "% hab aqua _ PE",
+               "% hab humide _ PE",
+               "% hab buiss _ PE",
+               "Nb zonage",
+               "Nb Sp faune ZNIEFF",
+               "Nb Sp flore ZNIEFF",
+               "% milieu cultivés_PE",
+               "% zones arti_PE",
+               "Surf EEE prox")
+
+        # Equivalence CT
+        moins <- as.numeric(ecoval[[nameImp]][[7]]) - as.numeric(ecoval[[nameImp]][[4]])
+        plus <- as.numeric(ecoval[[nameComp]][[7]]) - as.numeric(ecoval[[nameComp]][[4]])
+        equivalCT <- moins + plus
+        dat1 <- data.frame(
+          perimetres = ecoval[[nameImp]][[1]],
+          indicateurs = shortindicnames, #ecoval[[nameImp]][[3]],
+          criteres = factor(ecoval[[nameImp]][[2]], levels=c("Diversité habitat","Diversité Espèce","Patrimonialité_PS","Fonctionnalité","Pression_PS","Connectivité","Représentativité","Patrimonialité_PE","Pression_PE")),
+          equivalence = equivalCT)
+        dat1$colour <- ifelse(dat1$equivalence < 0, "negative","positive")
+        p <- ggplot(data=dat1, aes(x=indicateurs, y= equivalence)) +
+        geom_bar(stat="identity",  width=0.5, aes(fill=colour))+
+          coord_flip()+
+          labs(x="Indicateurs", y="Pertes / Gains NETS")+
+          scale_fill_manual(values=c(positive="#7FDD4C",negative="#C67677")) +
+          theme_bw()+
+          theme(legend.position="none")+
+          theme(axis.text.x=element_text(colour="black", size = 11))+
+          geom_text(aes(label=equivalence, hjust="center", vjust="center", y= equivalence))+
+          theme(panel.grid.major = element_line(size = 0.5, colour = "light grey"))+
+          facet_grid(criteres ~ ., scales = "free", space = "free")
+      print(p)
+```
+
+#### **Long Terme**
+
+```{r echo=FALSE, warning=FALSE, fig.width=6, fig.height=12,  fig.align='left'}
+nameImp <- paste("SIB no.", input$selectsiteimpact4)
+nameComp <- paste("SCB no.", input$selectsitecompens4)
+shortindicnames <- c("Nb hab forestier",
+               "Surf hab forestier",
+               "Nb hab ouvert",
+               "Surf hab ouvert",
+               "Nb hab buiss",
+               "Surf hab buiss",
+               "Nb hab rocheux",
+               "Surf hab rocheux",
+               "Nb hab humide",
+               "Surf hab humide",
+               "Nb hab aqua",
+               "Surf hab aqua",
+               "Lg lisière _ ha forêt",
+               "Diversité avifaune",
+               "Diversité chiroptères",
+               "Diversité reptiles",
+               "Diversité amphibiens",
+               "Diversité mammifères",
+               "Diversité insectes",
+               "Diversité lépidoptères",
+               "Diversité odonates",
+               "Diversité orthoptères",
+               "Diversité coléoptères",
+               "Diversité flore totale",
+               "% habitat en danger localement",
+               "% habitat d'intérêt comm +prio",
+               "% sp protégées faune national et regional",
+               "% sp protégées flore national et regional",
+               "% sp menacées faune national",
+               "% sp menacées flore national",
+               "% sp menacées faune regional",
+               "% sp menacées flore regional",
+               "% sp faune DFFH",
+               "% sp flore DFFH",
+               "% avifaune DO",
+               "% oiseaux nicheurs",
+               "% sp repro site",
+               "Indice de spé avifaune",
+               "% chiroptères spécialistes",
+               "% hab bon état conservation",
+               "Surf milieux NON cultivés",
+               "Surf zones NON urbanisées",
+               "Nb sp EEE",
+               "Nb patchs EEE",
+               "% recouvrement EEE",
+               "Lg linéaire transpt",
+               "Lg linéaire haie",
+               "Surf corridor",
+               "Nb Sp TVB",
+               "% hab forestier _ PE",
+               "% hab ouvert _ PE",
+               "% hab rocheux _ PE",
+               "% hab aqua _ PE",
+               "% hab humide _ PE",
+               "% hab buiss _ PE",
+               "Nb zonage",
+               "Nb Sp faune ZNIEFF",
+               "Nb Sp flore ZNIEFF",
+               "% milieu cultivés_PE",
+               "% zones arti_PE",
+               "Surf EEE prox")
+
+        # Equivalence LT
+        moins <- as.numeric(ecoval[[nameImp]][[10]]) - as.numeric(ecoval[[nameImp]][[4]])
+        plus <- as.numeric(ecoval[[nameComp]][[10]]) - as.numeric(ecoval[[nameComp]][[4]])
+        equivalLT <- moins + plus
+        dat1 <- data.frame(
+          perimetres = ecoval[[nameImp]][[1]],
+          indicateurs = shortindicnames, #ecoval[[nameImp]][[3]],
+          criteres = factor(ecoval[[nameImp]][[2]], levels=c("Diversité habitat","Diversité Espèce","Patrimonialité_PS","Fonctionnalité","Pression_PS","Connectivité","Représentativité","Patrimonialité_PE","Pression_PE")),
+          equivalence = equivalLT)
+        dat1$colour <- ifelse(dat1$equivalence < 0, "negative","positive")
+        p <- ggplot(data=dat1, aes(x=indicateurs, y= equivalence)) +
+        geom_bar(stat="identity",  width=0.5, aes(fill=colour))+
+          coord_flip()+
+          labs(x="Indicateurs", y="Pertes / Gains NETS")+
+          scale_fill_manual(values=c(positive="#7FDD4C",negative="#C67677")) +
+          theme_bw()+
+          theme(legend.position="none")+
+          theme(axis.text.x=element_text(colour="black", size = 11))+
+          geom_text(aes(label=equivalence, hjust="center", vjust="center", y= equivalence))+
+          theme(panel.grid.major = element_line(size = 0.5, colour = "light grey"))+
+          facet_grid(criteres ~ ., scales = "free", space = "free")
+        print(p)
+```
+
+<form>
+  <label>Commentaires :</label><br>
+  <textarea id="txt_comment1" name="txt_comment1" rows="10" cols="110">
+  </textarea>
+</form>
+
+### <span style='color:#B2A1C7'>*Niveau Habitat*</span>
+
+```{r echo=FALSE, warning=FALSE, fig.width=6, fig.height=6,  fig.align='left', results='asis'}
+  # liste les habitats
+  nameI <- paste("Site no.", input$selectsiteimpact4)
+  nameC <- paste("Site no.", input$selectsitecompens4)
+  namehabitat <- list()
+  indexhabitat <- list()
+  nbhabitat <- dim(listhabitat)[1] - 1
+  if(nbhabitat > 0){
+    for(i in 1:nbhabitat){
+      hname <- listhabitat$habitat[i+1]
+      if(exists(hname, where = ecoval)){
+        if(ecoval[[hname]][7,2] == ecoval[[nameI]][12,2]){
+          namehabitat[[listhabitat$name[i+1]]] <- listhabitat$name[i+1]
+          indexhabitat[[listhabitat$name[i+1]]] <- listhabitat$index[i+1]
+        }
+        if(ecoval[[hname]][7,2] == ecoval[[nameC]][12,2]){
+          namehabitat[[listhabitat$name[i+1]]] <- listhabitat$name[i+1]
+          indexhabitat[[listhabitat$name[i+1]]] <- listhabitat$index[i+1]
+        }
+      }
+    }
+  }
+ # affichage
+ if(length(namehabitat) > 0){
+    shortindicnames <- c("Nb sp faune dep hab",
+                             "Nb sp flore",
+                             "Surface totale habitat",
+                             "Nombre de patches d'habitat",
+                             "Nombre de micro-habitats",
+                             "Nb horizons sol",
+                             "Epaisseur d'horizons sol",
+                             "Abondance relative de faune détritivore",
+                             "Nb sp faune dep hab reproduction",
+                             "Nb TGB",
+                             "% bois mort",
+                             "Nb sp bio-indicatrices",
+                             "Densité de lichen",
+                             "Ancienneté de la forêt",
+                             "Nb sp pollinisatrices",
+                             "% flore dominante",
+                             "Nb strates végétation",
+                             "Hauteur strates",
+                             "% sol dégradé",
+                             "Nb sp indicatrices de pression",
+                             "Tps depuis dernière coupe",
+                             "Tx recouvrement ligneux",
+                             "Tx couvert algues eutrophisation",
+                             "Indice frag type hab",
+                             "Surface d'habitat dans le PE",
+                             "% surf hab _ PE")
+     for(j in 1:length(namehabitat)){
+        partial_select <- c(1,2,3,4,5,6,7,8,9,16,17,18,19,20,24,25,26)
+        namehab <- paste("Habitat", indexhabitat[j])
+        if(ecoval[[namehab]][4,2] == "1"){ # Fermé
+          partial_select <- c(partial_select, c(10,11,12,13,14,21))
+        }else if(ecoval[[namehab]][4,2] == "2"){ # Ouvert
+          partial_select <- c(partial_select, c(15, 22))
+        }else if(ecoval[[namehab]][4,2] == "4"){ # Zone humide
+          partial_select <- c(partial_select, c(16, 23))
+        }
+        indicehabitat <- which(listhabitat$name == namehabitat[[j]], arr.ind = TRUE)
+        # Equivalence CT
+        moins <- c(rep(0., dim(model_C)[1]))
+        plus <- c(rep(0., dim(model_C)[1]))
+        for(i in indicehabitat){
+            hname <- listhabitat$habitat[i]
+            if(exists(hname, where = ecoval)){
+              if(ecoval[[hname]][7,2] == ecoval[[nameI]][12,2]){ # Pertes
+                nameImp <- paste("CI no.", as.character(listhabitat$index[i]))
+                nameIC <- nameImp
+                moins <- as.numeric(ecoval[[nameImp]][[8]]) - as.numeric(ecoval[[nameImp]][[4]])
+              }
+              if(ecoval[[hname]][7,2] == ecoval[[nameC]][12,2]){ # Gains
+                nameComp <- paste("CC no.", as.character(listhabitat$index[i]))
+                nameIC <- nameComp
+                plus <- as.numeric(ecoval[[nameComp]][[8]]) - as.numeric(ecoval[[nameComp]][[4]])
+              }
+            }
+        }
+        tabhab <- ecoval[[nameIC]][partial_select,]
+        tabhab[[3]] <- shortindicnames[partial_select]
+        equival <- moins + plus
+        equival <- equival[partial_select]
+        plus <- plus[partial_select]
+        moins <- moins[partial_select]
+        cat(paste("\n\n", "**", toupper(ecoval[[namehab]][1,2]), " - Court Terme", "**", "\n\n", sep=''))
+        dat1 <- data.frame(
+          perimetres = tabhab[[1]],
+          indicateurs = tabhab[[3]],
+          criteres = factor(tabhab[[2]], levels=c("Diversité espèce", "Fonctionnalité", "Structure", "Pression_PS", "Connectivité", "Représentativité")),
+          equivalence = equival)
+        dat1$colour <- ifelse(dat1$equivalence < 0, "negative","positive")
+        p <- ggplot(data=dat1, aes(x=indicateurs, y= equivalence)) +
+             geom_bar(stat="identity",  width=0.5, aes(fill=colour))+
+             coord_flip()+
+             labs(x="Indicateurs", y="Pertes / Gains NETS")+
+             scale_fill_manual(values=c(positive="#7FDD4C",negative="#C67677")) +
+             theme_bw()+
+             theme(legend.position="none")+
+             theme(axis.text.x=element_text(colour="black", size = 11))+
+             geom_text(aes(label=equivalence, hjust="center", vjust="center", y= equivalence))+
+             theme(panel.grid.major = element_line(size = 0.5, colour = "light grey"))+
+             facet_grid(criteres ~ ., scales = "free", space = "free")
+        print(p)
+        # Equivalence LT
+        moins <- c(rep(0., dim(model_C)[1]))
+        plus <- c(rep(0., dim(model_C)[1]))
+        for(i in indicehabitat){
+            hname <- listhabitat$habitat[i]
+            if(exists(hname, where = ecoval)){
+              if(ecoval[[hname]][7,2] == ecoval[[nameI]][12,2]){ # Pertes
+                nameImp <- paste("CI no.", as.character(listhabitat$index[i]))
+                nameIC <- nameImp
+                moins <- as.numeric(ecoval[[nameImp]][[11]]) - as.numeric(ecoval[[nameImp]][[4]])
+              }
+              if(ecoval[[hname]][7,2] == ecoval[[nameC]][12,2]){ # Gains
+                nameComp <- paste("CC no.", as.character(listhabitat$index[i]))
+                nameIC <- nameComp
+                plus <- as.numeric(ecoval[[nameComp]][[11]]) - as.numeric(ecoval[[nameComp]][[4]])
+              }
+            }
+        }
+        tabhab <- ecoval[[nameIC]][partial_select,]
+        tabhab[[3]] <- shortindicnames[partial_select]
+        equival <- moins + plus
+        equival <- equival[partial_select]
+        plus <- plus[partial_select]
+        moins <- moins[partial_select]
+        cat(paste("\n\n", "**", toupper(ecoval[[namehab]][1,2]), " - Long Terme", "**", "\n\n", sep=''))
+        dat1 <- data.frame(
+          perimetres = tabhab[[1]],
+          indicateurs = tabhab[[3]],
+          criteres = factor(tabhab[[2]], levels=c("Diversité espèce", "Fonctionnalité", "Structure", "Pression_PS", "Connectivité", "Représentativité")),
+          equivalence = equival)
+        dat1$colour <- ifelse(dat1$equivalence < 0, "negative","positive")
+        p <- ggplot(data=dat1, aes(x=indicateurs, y= equivalence)) +
+             geom_bar(stat="identity",  width=0.5, aes(fill=colour))+
+             coord_flip()+
+             labs(x="Indicateurs", y="Pertes / Gains NETS")+
+             scale_fill_manual(values=c(positive="#7FDD4C",negative="#C67677")) +
+             theme_bw()+
+             theme(legend.position="none")+
+             theme(axis.text.x=element_text(colour="black", size = 11))+
+             geom_text(aes(label=equivalence, hjust="center", vjust="center", y= equivalence))+
+             theme(panel.grid.major = element_line(size = 0.5, colour = "light grey"))+
+             facet_grid(criteres ~ ., scales = "free", space = "free")
+        print(p)
+      }    
+  }                      
+```
+
+<form>
+  <label>Commentaires :</label><br>
+  <textarea id="txt_comment1" name="txt_comment1" rows="10" cols="110">
+  </textarea>
+</form>
+
+### <span style='color:#B2A1C7'>*Niveau Espèce*</span>
+
+```{r echo=FALSE, warning=FALSE, fig.width=6, fig.height=6,  fig.align='left', results='asis'}
+  # liste les especes
+  nameI <- paste("Site no.", input$selectsiteimpact4)
+  nameC <- paste("Site no.", input$selectsitecompens4)
+  namespecies <- list()
+  indexspecies <- list()
+  nbspecies <- dim(listspecies)[1] - 1
+  if(nbspecies > 0){
+    for(i in 1:nbspecies){
+      spname <- listspecies$species[i+1]
+      if(exists(spname, where = ecoval)){
+        if(ecoval[[spname]][6,2] == ecoval[[nameI]][12,2]){
+          namespecies[[listspecies$name[i+1]]] <- listspecies$name[i+1]
+          indexspecies[[listspecies$name[i+1]]] <- listspecies$index[i+1]
+        }
+        if(ecoval[[spname]][6,2] == ecoval[[nameC]][12,2]){
+          namespecies[[listspecies$name[i+1]]] <- listspecies$name[i+1]
+          indexspecies[[listspecies$name[i+1]]] <- listspecies$index[i+1]
+        }
+      }
+    }
+  }
+ # affichage
+ if(length(namespecies) > 0){
+    shortindicnames <- c("Surf tot hab favorable",
+                           "Nb patchs hab favorable",
+                           "Estimation nb indiv",
+                           "Surf nourrissage favorable",
+                           "Surf reproduction favorable",
+                           "Estimation nb couples",
+                           "Surf chasse favorable",
+                           "Nb gîtes favorables",
+                           "Nb mâles chanteurs",
+                           "Nb pontes",
+                           "% plante(s) hôte(s)",
+                           "Nb station / pieds",
+                           "Nombre d'sp",
+                           "Nombre de familles",
+                           "% Surf SANS perturbation",
+                           "Surf hab favorable _ PE",
+                           "Nb osb sp",
+                           "Surf hab favorable connecté _ PE",
+                           "Nb zones connectées entre elles")
+     for(j in 1:length(namespecies)){
+        partial_select <- c(1,2,15,16,17,18,19)
+        namesp  <- paste("Espece", indexspecies[j])
+        if(ecoval[[namesp]][3,2] != "7"){ # Faune
+          partial_select <- c(partial_select, c(3))
+        }
+        if(ecoval[[namesp]][3,2] == "1"){ # Avifaune
+          partial_select <- c(partial_select, c(4,5,6))
+        }else if(ecoval[[namesp]][3,2] == "2"){ # Chiroptere
+          partial_select <- c(partial_select, c(7,8))
+        }else if(ecoval[[namesp]][3,2] == "4"){ # Amphibien
+          partial_select <- c(partial_select, c(9,10))
+        }else if(ecoval[[namesp]][3,2] == "6"){ # Insecte
+          partial_select <- c(partial_select, c(11))
+        }else if(ecoval[[namesp]][3,2] == "7"){ # Flore
+          partial_select <- c(partial_select, c(12))
+        }else if(ecoval[[namesp]][3,2] == "10"){ # Communaute faunistique
+          partial_select <- c(partial_select, c(13,14))
+        }
+        indicespecies <- which(listspecies$name == namespecies[[j]], arr.ind = TRUE)
+        # Equivalence CT
+        moins <- c(rep(0., dim(model_D)[1]))
+        plus <- c(rep(0., dim(model_D)[1]))
+        for(i in indicespecies){
+            spname <- listspecies$species[i]
+            if(exists(spname, where = ecoval)){
+              if(ecoval[[spname]][6,2] == ecoval[[nameI]][12,2]){ # Pertes
+                nameImp <- paste("DI no.", as.character(listspecies$index[i]))
+                nameIC <- nameImp
+                moins <- as.numeric(ecoval[[nameImp]][[8]]) - as.numeric(ecoval[[nameImp]][[4]])
+              }
+              if(ecoval[[spname]][6,2] == ecoval[[nameC]][12,2]){ # Gains
+                nameComp <- paste("DC no.", as.character(listspecies$index[i]))
+                nameIC <- nameComp
+                plus <- as.numeric(ecoval[[nameComp]][[8]]) - as.numeric(ecoval[[nameComp]][[4]])
+              }
+            }
+        }
+        tabsp <- ecoval[[nameIC]][partial_select,]
+        tabsp[[3]] <- shortindicnames[partial_select]
+        equival <- moins + plus
+        equival <- equival[partial_select]
+        plus <- plus[partial_select]
+        moins <- moins[partial_select]
+        cat(paste("\n\n", "**", toupper(ecoval[[namesp]][2,2]), " - Court Terme", "**", "\n\n", sep=''))
+        dat1 <- data.frame(
+          perimetres = tabsp[[1]],
+          indicateurs = tabsp[[3]],
+          criteres = factor(tabsp[[2]], levels=c("Diversité espèce", "Fonctionnalité", "Pression_PS", "Connectivité", "Représentativité")),
+          equivalence = equival)
+        dat1$colour <- ifelse(dat1$equivalence < 0, "negative","positive")
+        p <- ggplot(data=dat1, aes(x=indicateurs, y= equivalence)) +
+             geom_bar(stat="identity",  width=0.5, aes(fill=colour))+
+             coord_flip()+
+             labs(x="Indicateurs", y="Pertes / Gains NETS")+
+             scale_fill_manual(values=c(positive="#7FDD4C",negative="#C67677")) +
+             theme_bw()+
+             theme(legend.position="none")+
+             theme(axis.text.x=element_text(colour="black", size = 11))+
+             geom_text(aes(label=equivalence, hjust="center", vjust="center", y= equivalence))+
+             theme(panel.grid.major = element_line(size = 0.5, colour = "light grey"))+
+             facet_grid(criteres ~ ., scales = "free", space = "free")
+        print(p)
+        # Equivalence LT
+        moins <- c(rep(0., dim(model_D)[1]))
+        plus <- c(rep(0., dim(model_D)[1]))
+        for(i in indicespecies){
+            spname <- listspecies$species[i]
+            if(exists(spname, where = ecoval)){
+              if(ecoval[[spname]][6,2] == ecoval[[nameI]][12,2]){ # Pertes
+                nameImp <- paste("DI no.", as.character(listspecies$index[i]))
+                nameIC <- nameImp
+                moins <- as.numeric(ecoval[[nameImp]][[11]]) - as.numeric(ecoval[[nameImp]][[4]])
+              }
+              if(ecoval[[spname]][6,2] == ecoval[[nameC]][12,2]){ # Gains
+                nameComp <- paste("DC no.", as.character(listspecies$index[i]))
+                nameIC <- nameComp
+                plus <- as.numeric(ecoval[[nameComp]][[11]]) - as.numeric(ecoval[[nameComp]][[4]])
+              }
+            }
+        }
+        tabsp <- ecoval[[nameIC]][partial_select,]
+        tabsp[[3]] <- shortindicnames[partial_select]
+        equival <- moins + plus
+        equival <- equival[partial_select]
+        plus <- plus[partial_select]
+        moins <- moins[partial_select]
+        cat(paste("\n\n", "**", toupper(ecoval[[namesp]][2,2]), " - Long Terme", "**", "\n\n", sep=''))
+        dat1 <- data.frame(
+          perimetres = tabsp[[1]],
+          indicateurs = tabsp[[3]],
+          criteres = factor(tabsp[[2]], levels=c("Diversité espèce", "Fonctionnalité", "Pression_PS", "Connectivité", "Représentativité")),
+          equivalence = equival)
+        dat1$colour <- ifelse(dat1$equivalence < 0, "negative","positive")
+        p <- ggplot(data=dat1, aes(x=indicateurs, y= equivalence)) +
+        geom_bar(stat="identity",  width=0.5, aes(fill=colour))+
+          coord_flip()+
+          labs(x="Indicateurs", y="Pertes / Gains NETS")+
+          scale_fill_manual(values=c(positive="#7FDD4C",negative="#C67677")) +
+          theme_bw()+
+          theme(legend.position="none")+
+          theme(axis.text.x=element_text(colour="black", size = 11))+
+          geom_text(aes(label=equivalence, hjust="center", vjust="center", y= equivalence))+
+          theme(panel.grid.major = element_line(size = 0.5, colour = "light grey"))+
+          facet_grid(criteres ~ ., scales = "free", space = "free")
+        print(p)
+      }    
+  }                      
+```
+
+<form>
+  <label>Commentaires :</label><br>
+  <textarea id="txt_comment1" name="txt_comment1" rows="10" cols="110">
+  </textarea>
+</form>
