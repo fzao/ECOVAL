@@ -15,7 +15,7 @@
 # Licence CeCILL v2.1
 #
 
-# Define server logic required to draw a histogram
+# Define server logic
 shinyServer(function(input, output, session) {
   
   source('init.R', local = TRUE)
