@@ -232,7 +232,7 @@ output$plot_pertes <- renderPlot({
           # valeurs = as.numeric(ecoval[[name]][[4]]),
           incertitudes <- gsub("[ABC]", "*", ecoval[[name]][[6]]),
           pertes_brutes <- as.numeric(ecoval[[name]][[7]]) - as.numeric(ecoval[[name]][[4]]),
-          pertes_relatives <- as.numeric(ecoval[[name]][[7]]) - as.numeric(ecoval[[name]][[4]]) * 100 / as.numeric(ecoval[[name]][[4]])
+          pertes_relatives <- (as.numeric(ecoval[[name]][[7]]) - as.numeric(ecoval[[name]][[4]])) * 100 / as.numeric(ecoval[[name]][[4]])
         )
         dat1$colour <- ifelse(dat1$pertes_relatives < 0, "negative","positive")
         p <- ggplot(data=dat1, aes(x=indicateurs, y=pertes_relatives)) +
@@ -258,7 +258,7 @@ output$plot_pertes <- renderPlot({
           #valeurs = as.numeric(ecoval[[name]][[4]],
           incertitudes <- gsub("[ABC]", "*", ecoval[[name]][[9]]),
           pertes_brutes <- as.numeric(ecoval[[name]][[10]]) - as.numeric(ecoval[[name]][[4]]),
-          pertes_relatives <- as.numeric(ecoval[[name]][[10]]) - as.numeric(ecoval[[name]][[4]]) * 100 / as.numeric(ecoval[[name]][[4]])
+          pertes_relatives <- (as.numeric(ecoval[[name]][[10]]) - as.numeric(ecoval[[name]][[4]])) * 100 / as.numeric(ecoval[[name]][[4]])
         )
         dat1$colour <- ifelse(dat1$pertes_relatives < 0, "negative","positive")
         p <- ggplot(data=dat1, aes(x=indicateurs, y=pertes_relatives)) +
@@ -369,7 +369,7 @@ output$plot_pertes <- renderPlot({
             #valeurs = as.numeric(tabhab[[4]],
             incertitudes <- gsub("[ABC]", "*", tabhab[[7]]),
             pertes_brutes <- as.numeric(tabhab[[8]]) - as.numeric(tabhab[[4]]),
-            pertes_relatives <- as.numeric(tabhab[[8]]) - as.numeric(tabhab[[4]]) * 100 / as.numeric(tabhab[[4]])
+            pertes_relatives <- (as.numeric(tabhab[[8]]) - as.numeric(tabhab[[4]])) * 100 / as.numeric(tabhab[[4]])
           )
           dat1$colour <- ifelse(dat1$pertes_relatives < 0, "negative","positive")
           p <- ggplot(data=dat1, aes(x=indicateurs, y=pertes_relatives)) +
@@ -406,7 +406,7 @@ output$plot_pertes <- renderPlot({
             #valeurs = as.numeric(tabhab[[4]],
             incertitudes <- gsub("[ABC]", "*", tabhab[[10]]),
             pertes_brutes <- as.numeric(tabhab[[11]]) - as.numeric(tabhab[[4]]),
-            pertes_relatives <- as.numeric(tabhab[[11]]) - as.numeric(tabhab[[4]]) * 100 / as.numeric(tabhab[[4]])
+            pertes_relatives <- (as.numeric(tabhab[[11]]) - as.numeric(tabhab[[4]])) * 100 / as.numeric(tabhab[[4]])
           )
           dat1$colour <- ifelse(dat1$pertes_relatives < 0, "negative","positive")
           p <- ggplot(data=dat1, aes(x=indicateurs, y=pertes_relatives)) +
@@ -534,7 +534,7 @@ output$plot_pertes <- renderPlot({
             # valeurs = as.numeric(tabsp[[4]]),
             incertitudes <- gsub("[ABC]", "*", tabsp[[7]]),
             pertes_brutes <- as.numeric(tabsp[[8]]) - as.numeric(tabsp[[4]]),
-            pertes_relatives <- as.numeric(tabsp[[8]]) - as.numeric(tabsp[[4]]) * 100 / as.numeric(tabsp[[4]])
+            pertes_relatives <- (as.numeric(tabsp[[8]]) - as.numeric(tabsp[[4]])) * 100 / as.numeric(tabsp[[4]])
           )
           dat1$colour <- ifelse(dat1$pertes_relatives < 0, "negative","positive")
           p <- ggplot(data=dat1, aes(x=indicateurs, y=pertes_relatives)) +
@@ -580,7 +580,7 @@ output$plot_pertes <- renderPlot({
             #valeurs = as.numeric(tabsp[[4]],
             incertitudes <- gsub("[ABC]", "*", tabsp[[10]]),
             pertes_brutes <- as.numeric(tabsp[[11]]) - as.numeric(tabsp[[4]]),
-            pertes_relatives <- as.numeric(tabsp[[11]]) - as.numeric(tabsp[[4]]) * 100 / as.numeric(tabsp[[4]])
+            pertes_relatives <- (as.numeric(tabsp[[11]]) - as.numeric(tabsp[[4]])) * 100 / as.numeric(tabsp[[4]])
           )
           dat1$colour <- ifelse(dat1$pertes_relatives < 0, "negative","positive")
           p <- ggplot(data=dat1, aes(x=indicateurs, y=pertes_relatives)) +
