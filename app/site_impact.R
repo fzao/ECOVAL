@@ -559,8 +559,10 @@ updateTabB <- function(){
       }
       val36den <- val35den
       if(tableau$A2[i,3] == "Avifaune"){
-        val38num <- val38num + as.numeric(tableau$A2[i,10])
-        val38den <- val38den + 1
+        if(!is.na(tableau$A2[i,10]) & tableau$A2[i,10] != ""){
+          val38num <- val38num + as.numeric(tableau$A2[i,10])
+          val38den <- val38den + 1
+        }
       }else{
         if(tableau$A2[i,3] != "Flore"){
           val37den <- val37den + 1
