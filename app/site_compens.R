@@ -514,11 +514,11 @@ updateTabB2 <- function(){
       else if(tableau$A2[i,3] == "Amphibien") val17 <- val17 + 1
       else if(tableau$A2[i,3] == "Mammifère") val18 <- val18 + 1
       else if(tableau$A2[i,3] == "Insecte") val19 <- val19 + 1
-      else if(tableau$A2[i,4] == "Lépidoptère") val20 <- val20 + 1
-      else if(tableau$A2[i,4] == "Odonate") val21 <- val21 + 1
-      else if(tableau$A2[i,4] == "Orthoptère") val22 <- val22 + 1
-      else if(tableau$A2[i,4] == "Coléoptère") val23 <- val23 + 1
       else if(tableau$A2[i,3] == "Flore") val24 <- val24 + 1
+      if(tableau$A2[i,4] == "Lépidoptère") val20 <- val20 + 1
+      if(tableau$A2[i,4] == "Odonate") val21 <- val21 + 1
+      if(tableau$A2[i,4] == "Orthoptère") val22 <- val22 + 1
+      if(tableau$A2[i,4] == "Coléoptère") val23 <- val23 + 1
       if(tableau$A2[i,3] != "Flore"){
         if(tableau$A2[i,5] == "Oui") val27num <- val27num + 1
         val27den <- val27den + 1
