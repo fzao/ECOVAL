@@ -415,8 +415,8 @@ updateTabB <- function(){
     val11 <- 0 # Nombre d'habitat aquatique
     val12 <- 0. # Surface (ha) d'habitat aquatique
     val25 <- 0. # Proportion surfacique des habitat menacés/en danger localement
-    valsurf <- 0. # Surface global
-    val26 <- 0.
+    val26 <- 0. # Proportion surfacique des habitats d'interet communautaire
+    valsurf1 <- 0. # Surface global
     val40num <- 0.
     val40den <- 0.
     val41num <- 0.
@@ -449,7 +449,7 @@ updateTabB <- function(){
         val11 <-val11 + 1
         val12 <- val12 + as.numeric(tableau$A1[i,4])
       }
-      valsurf <- valsurf + as.numeric(tableau$A1[i,4]) # surface totale
+      valsurf1 <- valsurf1 + as.numeric(tableau$A1[i,4]) # surface totale
       if(tableau$A1[i,8] == "Oui") val25 <- val25 + as.numeric(tableau$A1[i,4])
       if(tableau$A1[i,7] == "Oui") val26 <- val26 + as.numeric(tableau$A1[i,4])
       val40den <- val40den + as.numeric(tableau$A1[i,4])
@@ -582,9 +582,9 @@ updateTabB <- function(){
     val53den <- 0.
     val54den <- 0.
     val55den <- 0.
-    valsurf <- 0. # Surface global
+    valsurf3 <- 0. # Surface global
     for(i in 1:n3){
-      valsurf <- valsurf + as.numeric(tableau$A3[i,4]) # surface totale
+      valsurf3 <- valsurf3 + as.numeric(tableau$A3[i,4]) # surface totale
       if(tableau$A3[i,1] == "Cultivé") val59 <- val59 + as.numeric(tableau$A3[i,4])
       if(tableau$A3[i,1] == "Imperméabilisé") val60 <- val60 + as.numeric(tableau$A3[i,4])
       if(tableau$A3[i,1] == "Fermé") val50den <- val50den + as.numeric(tableau$A3[i,4])
@@ -608,8 +608,8 @@ updateTabB <- function(){
     tableau$B[10,4] <- as.character(round(val10,2))
     tableau$B[11,4] <- as.character(round(val11,2))
     tableau$B[12,4] <- as.character(round(val12,2))
-    tableau$B[25,4] <- as.character(round(val25 * 100. / valsurf,2))
-    tableau$B[26,4] <- as.character(round(val26 * 100. / valsurf,2))
+    tableau$B[25,4] <- as.character(round(val25 * 100. / valsurf1,2))
+    tableau$B[26,4] <- as.character(round(val26 * 100. / valsurf1,2))
     tableau$B[40,4] <- as.character(round(val40num * 100. / val40den,2))
     tableau$B[41,4] <- as.character(round(val41num * 100. / val41den,2))
     tableau$B[42,4] <- as.character(round(val42num * 100. / val42den,2))
@@ -640,8 +640,8 @@ updateTabB <- function(){
     tableau$B[49,4] <- as.character(round(val49,2))
     tableau$B[57,4] <- as.character(round(val57,2))
     tableau$B[58,4] <- as.character(round(val58,2))
-    tableau$B[59,4] <- as.character(round(val59 * 100. / valsurf,2))
-    tableau$B[60,4] <- as.character(round(val60 * 100. / valsurf,2))
+    tableau$B[59,4] <- as.character(round(val59 * 100. / valsurf3,2))
+    tableau$B[60,4] <- as.character(round(val60 * 100. / valsurf3,2))
     tableau$B[50,4] <- as.character(round(val50num * 100. / val50den,2))
     tableau$B[51,4] <- as.character(round(val51num * 100. / val51den,2))
     tableau$B[52,4] <- as.character(round(val52num * 100. / val52den,2))
