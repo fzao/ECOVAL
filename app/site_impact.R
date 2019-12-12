@@ -553,8 +553,10 @@ updateTabB <- function(){
         val34den <- val34den + 1
       }
       if(tableau$A2[i,8] == "Annexe I DO") val35num <- val35num + 1
-      if(tableau$A2[i,3] == "Avifaune") val35den <- val35den + 1
-      if(tableau$A2[i,9] == "Certaine") val36num <- val36num + 1
+      if(tableau$A2[i,3] == "Avifaune"){
+        val35den <- val35den + 1
+        if(tableau$A2[i,9] == "Certaine") val36num <- val36num + 1
+      }
       val36den <- val35den
       if(tableau$A2[i,3] == "Avifaune"){
         val38num <- val38num + as.numeric(tableau$A2[i,10])
