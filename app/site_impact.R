@@ -562,8 +562,10 @@ updateTabB <- function(){
         val38num <- val38num + as.numeric(tableau$A2[i,10])
         val38den <- val38den + 1
       }else{
-        if(tableau$A2[i,9] == "Certaine") val37num <- val37num + 1
-        val37den <- val37den + 1
+        if(tableau$A2[i,3] != "Flore"){
+          val37den <- val37den + 1
+          if(tableau$A2[i,9] == "Certaine") val37num <- val37num + 1
+        }
       }
       if(tableau$A2[i,13] == "Oui") val43 <- val43 + 1
       if(tableau$A2[i,11] == "Oui") val49 <- val49 + 1
