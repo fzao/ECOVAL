@@ -134,7 +134,7 @@ shinyUI(fluidPage(HTML("<!DOCTYPE html>
                                       ),
                               # SITE IMPACTE ----------------------------------------------
                               tabPanel(value="impact", HTML('<h4 style="color: #005BBB; "><b>Site impacté</b></h4>'), br(),
-                                       selectInput("selectsiteimpact", label = "SITE", choices = list("-" = 0), selected = 0), hr(),
+                                       fluidRow(column(6, align="left", selectInput("selectsiteimpact", label = "SITE", choices = list("-" = 0), selected = 0)), column(6, align="right", downloadButton("btn_telecharger2", "Sauver"))), hr(),
                                        conditionalPanel(condition = "input.selectsiteimpact != '0'",
                                          tabsetPanel(id="descrimpact",
                                                      tabPanel(HTML('<h4 style="color: #005BBB; ">Entrée des données</h4>'), value="impactindata", br(),
@@ -223,7 +223,7 @@ shinyUI(fluidPage(HTML("<!DOCTYPE html>
                               ),
                               # SITE COMPENSATOIRE ----------------------------------------------
                               tabPanel(value="compens", HTML('<h4 style="color: #005BBB; "><b>Site compensatoire</b></h4>'), br(),
-                                      selectInput("selectsitecompens", label = "SITE", choices = list("-" = 0), selected = 0), hr(),
+                                      fluidRow(column(6, align="left", selectInput("selectsitecompens", label = "SITE", choices = list("-" = 0), selected = 0)), column(6, align="right", downloadButton("btn_telecharger3", "Sauver"))), hr(),
                                       conditionalPanel(condition = "input.selectsitecompens != '0'",
                                                        tabsetPanel(id="descrcompens",
                                                                    tabPanel(HTML('<h4 style="color: #005BBB; ">Entrée des données</h4>'), value="compensindata", br(),

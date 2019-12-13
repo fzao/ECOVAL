@@ -129,6 +129,199 @@ output$btn_telecharger <- downloadHandler(
   }
 )
 
+# commentaire : factorisation du code a prevoir mais pas evidente pour btn2 et btn3 avec btn_telecharger ci-dessus
+output$btn_telecharger2 <- downloadHandler(
+  filename = function() {
+    if(input$projectname == ""){
+      paste('Ecoval-', Sys.Date(), '.xlsx', sep='')
+    }else{
+      paste(input$projectname, '.xlsx', sep='')
+    }
+  },
+  content = function(con) {
+    nbsite <- dim(listsite)[1] - 1
+    nbspecies <- dim(listspecies)[1] - 1
+    nbhabitats <- dim(listhabitat)[1] - 1
+    ecoval$General[4,2] <<- nbsite
+    ecoval$General[5,2] <<- nbspecies
+    ecoval$General[6,2] <<- nbhabitats
+    write.xlsx2(ecoval$General, con, sheetName = 'Général', row.names = FALSE, col.names = FALSE)
+    s <- 1
+    e <- 1
+    h <- 1
+    si <- 0
+    nbsite <- dim(listsite)[1] - 1
+    if(nbsite > 0){
+      for(i in 1:nbsite){
+        index <- listsite[1+i,2]
+        name <- paste("Site no.", as.character(s))
+        write.xlsx2(ecoval[[listsite[1+i,1]]], con, sheetName = name, row.names = FALSE, col.names = FALSE, append = TRUE)
+        if(ecoval[[listsite[1+i,1]]][2,2] == "1" | ecoval[[listsite[1+i,1]]][2,2] == "3"){ # info specifique site impacte
+          name <- paste("SIA1 no.", as.character(s))
+          siname <- paste("SIA1 no.", as.character(index))
+          write.xlsx2(ecoval[[siname]], con, sheetName = name, row.names = FALSE, col.names = TRUE, append = TRUE)
+          name <- paste("SIA2 no.", as.character(s))
+          siname <- paste("SIA2 no.", as.character(index))
+          write.xlsx2(ecoval[[siname]], con, sheetName = name, row.names = FALSE, col.names = TRUE, append = TRUE)
+          name <- paste("SIA3 no.", as.character(s))
+          siname <- paste("SIA3 no.", as.character(index))
+          write.xlsx2(ecoval[[siname]], con, sheetName = name, row.names = FALSE, col.names = TRUE, append = TRUE)
+          name <- paste("SIB no.", as.character(s))
+          siname <- paste("SIB no.", as.character(index))
+          write.xlsx2(ecoval[[siname]], con, sheetName = name, row.names = FALSE, col.names = TRUE, append = TRUE)
+        }
+        if(ecoval[[listsite[1+i,1]]][2,2] == "2" | ecoval[[listsite[1+i,1]]][2,2] == "3"){ # info specifique site compensatoire
+          name <- paste("SCA1 no.", as.character(s))
+          scname <- paste("SCA1 no.", as.character(index))
+          write.xlsx2(ecoval[[scname]], con, sheetName = name, row.names = FALSE, col.names = TRUE, append = TRUE)
+          name <- paste("SCA2 no.", as.character(s))
+          scname <- paste("SCA2 no.", as.character(index))
+          write.xlsx2(ecoval[[scname]], con, sheetName = name, row.names = FALSE, col.names = TRUE, append = TRUE)
+          name <- paste("SCA3 no.", as.character(s))
+          scname <- paste("SCA3 no.", as.character(index))
+          write.xlsx2(ecoval[[scname]], con, sheetName = name, row.names = FALSE, col.names = TRUE, append = TRUE)
+          name <- paste("SCB no.", as.character(s))
+          scname <- paste("SCB no.", as.character(index))
+          write.xlsx2(ecoval[[scname]], con, sheetName = name, row.names = FALSE, col.names = TRUE, append = TRUE)
+        }
+        s <- s + 1
+      }
+    }
+    nbspecies <- dim(listspecies)[1] - 1
+    if(nbspecies > 0){
+      for(i in 1:nbspecies){
+        index <- listspecies[1+i,2]
+        name <- paste("Espece", as.character(e))
+        write.xlsx2(ecoval[[listspecies[1+i,1]]], con, sheetName = name, row.names = FALSE, col.names = FALSE, append = TRUE)
+        type <- ecoval[[listspecies[1+i,1]]][7,2]
+        if(type == '1' | type == '3'){
+          sdname <- paste("DI no.", as.character(index))
+          write.xlsx2(ecoval[[sdname]], con, sheetName = paste("DI no.", as.character(e)), row.names = FALSE, col.names = TRUE, append = TRUE)
+        }
+        if(type == '2' | type == '3'){
+          sdname <- paste("DC no.", as.character(index))
+          write.xlsx2(ecoval[[sdname]], con, sheetName = paste("DC no.", as.character(e)), row.names = FALSE, col.names = TRUE, append = TRUE)
+        }
+        e <- e + 1
+      }
+    }
+    nbhabitat <- dim(listhabitat)[1] - 1
+    if(nbhabitat > 0){
+      for(i in 1:nbhabitat){
+        index <- listhabitat[1+i,2]
+        name <- paste("Habitat", as.character(h))
+        write.xlsx2(ecoval[[listhabitat[1+i,1]]], con, sheetName = paste("Habitat", as.character(h)), row.names = FALSE, col.names = FALSE, append = TRUE)
+        type <- ecoval[[listhabitat[1+i,1]]][8,2]
+        if(type == '1' | type == '3'){
+          scname <- paste("CI no.", as.character(index))
+          write.xlsx2(ecoval[[scname]], con, sheetName = paste("CI no.", as.character(h)), row.names = FALSE, col.names = TRUE, append = TRUE)
+        }
+        if(type == '2' | type == '3'){
+          scname <- paste("CC no.", as.character(index))
+          write.xlsx2(ecoval[[scname]], con, sheetName = paste("CC no.", as.character(h)), row.names = FALSE, col.names = TRUE, append = TRUE)
+        }
+        h <- h + 1
+      }
+    }
+  }
+)
+
+output$btn_telecharger3 <- downloadHandler(
+  filename = function() {
+    if(input$projectname == ""){
+      paste('Ecoval-', Sys.Date(), '.xlsx', sep='')
+    }else{
+      paste(input$projectname, '.xlsx', sep='')
+    }
+  },
+  content = function(con) {
+    nbsite <- dim(listsite)[1] - 1
+    nbspecies <- dim(listspecies)[1] - 1
+    nbhabitats <- dim(listhabitat)[1] - 1
+    ecoval$General[4,2] <<- nbsite
+    ecoval$General[5,2] <<- nbspecies
+    ecoval$General[6,2] <<- nbhabitats
+    write.xlsx2(ecoval$General, con, sheetName = 'Général', row.names = FALSE, col.names = FALSE)
+    s <- 1
+    e <- 1
+    h <- 1
+    si <- 0
+    nbsite <- dim(listsite)[1] - 1
+    if(nbsite > 0){
+      for(i in 1:nbsite){
+        index <- listsite[1+i,2]
+        name <- paste("Site no.", as.character(s))
+        write.xlsx2(ecoval[[listsite[1+i,1]]], con, sheetName = name, row.names = FALSE, col.names = FALSE, append = TRUE)
+        if(ecoval[[listsite[1+i,1]]][2,2] == "1" | ecoval[[listsite[1+i,1]]][2,2] == "3"){ # info specifique site impacte
+          name <- paste("SIA1 no.", as.character(s))
+          siname <- paste("SIA1 no.", as.character(index))
+          write.xlsx2(ecoval[[siname]], con, sheetName = name, row.names = FALSE, col.names = TRUE, append = TRUE)
+          name <- paste("SIA2 no.", as.character(s))
+          siname <- paste("SIA2 no.", as.character(index))
+          write.xlsx2(ecoval[[siname]], con, sheetName = name, row.names = FALSE, col.names = TRUE, append = TRUE)
+          name <- paste("SIA3 no.", as.character(s))
+          siname <- paste("SIA3 no.", as.character(index))
+          write.xlsx2(ecoval[[siname]], con, sheetName = name, row.names = FALSE, col.names = TRUE, append = TRUE)
+          name <- paste("SIB no.", as.character(s))
+          siname <- paste("SIB no.", as.character(index))
+          write.xlsx2(ecoval[[siname]], con, sheetName = name, row.names = FALSE, col.names = TRUE, append = TRUE)
+        }
+        if(ecoval[[listsite[1+i,1]]][2,2] == "2" | ecoval[[listsite[1+i,1]]][2,2] == "3"){ # info specifique site compensatoire
+          name <- paste("SCA1 no.", as.character(s))
+          scname <- paste("SCA1 no.", as.character(index))
+          write.xlsx2(ecoval[[scname]], con, sheetName = name, row.names = FALSE, col.names = TRUE, append = TRUE)
+          name <- paste("SCA2 no.", as.character(s))
+          scname <- paste("SCA2 no.", as.character(index))
+          write.xlsx2(ecoval[[scname]], con, sheetName = name, row.names = FALSE, col.names = TRUE, append = TRUE)
+          name <- paste("SCA3 no.", as.character(s))
+          scname <- paste("SCA3 no.", as.character(index))
+          write.xlsx2(ecoval[[scname]], con, sheetName = name, row.names = FALSE, col.names = TRUE, append = TRUE)
+          name <- paste("SCB no.", as.character(s))
+          scname <- paste("SCB no.", as.character(index))
+          write.xlsx2(ecoval[[scname]], con, sheetName = name, row.names = FALSE, col.names = TRUE, append = TRUE)
+        }
+        s <- s + 1
+      }
+    }
+    nbspecies <- dim(listspecies)[1] - 1
+    if(nbspecies > 0){
+      for(i in 1:nbspecies){
+        index <- listspecies[1+i,2]
+        name <- paste("Espece", as.character(e))
+        write.xlsx2(ecoval[[listspecies[1+i,1]]], con, sheetName = name, row.names = FALSE, col.names = FALSE, append = TRUE)
+        type <- ecoval[[listspecies[1+i,1]]][7,2]
+        if(type == '1' | type == '3'){
+          sdname <- paste("DI no.", as.character(index))
+          write.xlsx2(ecoval[[sdname]], con, sheetName = paste("DI no.", as.character(e)), row.names = FALSE, col.names = TRUE, append = TRUE)
+        }
+        if(type == '2' | type == '3'){
+          sdname <- paste("DC no.", as.character(index))
+          write.xlsx2(ecoval[[sdname]], con, sheetName = paste("DC no.", as.character(e)), row.names = FALSE, col.names = TRUE, append = TRUE)
+        }
+        e <- e + 1
+      }
+    }
+    nbhabitat <- dim(listhabitat)[1] - 1
+    if(nbhabitat > 0){
+      for(i in 1:nbhabitat){
+        index <- listhabitat[1+i,2]
+        name <- paste("Habitat", as.character(h))
+        write.xlsx2(ecoval[[listhabitat[1+i,1]]], con, sheetName = paste("Habitat", as.character(h)), row.names = FALSE, col.names = FALSE, append = TRUE)
+        type <- ecoval[[listhabitat[1+i,1]]][8,2]
+        if(type == '1' | type == '3'){
+          scname <- paste("CI no.", as.character(index))
+          write.xlsx2(ecoval[[scname]], con, sheetName = paste("CI no.", as.character(h)), row.names = FALSE, col.names = TRUE, append = TRUE)
+        }
+        if(type == '2' | type == '3'){
+          scname <- paste("CC no.", as.character(index))
+          write.xlsx2(ecoval[[scname]], con, sheetName = paste("CC no.", as.character(h)), row.names = FALSE, col.names = TRUE, append = TRUE)
+        }
+        h <- h + 1
+      }
+    }
+  }
+)
+
 observeEvent(input$userfile, {
   inFile <- input$userfile
   if (is.null(inFile)) return(NULL)
