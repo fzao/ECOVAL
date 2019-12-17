@@ -183,7 +183,8 @@ cleanwidgetsA2 <- function(){
   updateTextInput(session, "SIlatinnamespecies", value = "")
   updateTextInput(session, "SIfrenchnamespecies", value = "")
   updateSelectInput(session, "SItype1", selected = "1")
-  updateSelectInput(session, "SItype2", selected = "1")
+  type2selection <<- "0"
+  updateSelectInput(session, "SItype2", selected = type2selection)
   updateSelectInput(session, "SIprotect", selected = "1")
   updateSelectInput(session, "SIrougeF", selected = "1")
   updateSelectInput(session, "SIrougeR", selected = "1")
@@ -262,10 +263,12 @@ output$SItable2 <- DT::renderDataTable({
 output$SItable2rowselected <- DT::renderDataTable({
   rs <- as.numeric(input$SItable2_rows_selected)
   if(length(rs) > 0){ # update contents of widgets
+    from_row_selection <<- TRUE
     updateTextInput(session, "SIlatinnamespecies", value = tableau$A2[rs, 1])
     updateTextInput(session, "SIfrenchnamespecies", value = tableau$A2[rs, 2])
     updateSelectInput(session, "SItype1", selected = names(A2listtype1)[match(tableau$A2[rs, 3], A2listtype1)])
-    updateSelectInput(session, "SItype2", selected = names(A2listtype2)[match(tableau$A2[rs, 4], A2listtype2)])
+    type2selection <<- names(A2listtype2)[match(tableau$A2[rs, 4], A2listtype2)]
+    updateSelectInput(session, "SItype2", selected = type2selection)
     updateSelectInput(session, "SIprotect", selected = names(A2listprot)[match(tableau$A2[rs, 5], A2listprot)])
     updateSelectInput(session, "SIrougeF", selected = names(A2listprot)[match(tableau$A2[rs, 6], A2listprot)])
     updateSelectInput(session, "SIrougeR", selected = names(A2listprot)[match(tableau$A2[rs, 7], A2listprot)])
@@ -282,12 +285,12 @@ output$SItable2rowselected <- DT::renderDataTable({
 observeEvent(input$SItype1,{
   shinyjs::hide("SIindssi")
   if(input$SItype1 == "1"){
-    ltype2 <- list("Cortège forestier" = 1, "Cortège agricole" = 2, "Cortège du bâti" = 3, "Cortège généraliste" = 4)
+    ltype2 <- list("-"=0, "Cortège généraliste"=1, "Cortège forestier"=2, "Cortège agricole ou ouvert"=3, "Cortège zone humide"=4, "Cortège du bâti"=5)
     shinyjs::show("SIindssi")
   }
-  else if(input$SItype1 == "6") ltype2 <- list("Odonate" = 5, "Lépidoptère" = 6, "Orthoptère" = 7, "Coléoptère" = 8)
+  else if(input$SItype1 == "6") ltype2 <- list("-"=0, "Odonate"=6,"Lépidoptère"=7,"Orthoptère"=8,"Coléoptère"=9)
   else ltype2 <- list("-" = 0)
-  updateSelectInput(session, "SItype2", choices = ltype2, selected = ltype2[[1]])
+  updateSelectInput(session, "SItype2", choices = ltype2, selected = type2selection)
 })
 
 ## SI A3
@@ -669,7 +672,7 @@ output$SItable4<- DT::renderDataTable({
                    colnames = c("Valeur à l'état initial" = 5, "Justification de l'estimation CT" = 6, "Degré d'incertitude CT" = 7, "Valeur après impact CT" = 8, "Justification de l'estimation LT" = 9, "Degré d'incertitude LT" = 10, "Valeur après impact LT" = 11),
                    selection = 'single', options = list(scrollY='300px', scrollCollapse=TRUE, pageLength = dim.data.frame(tableau$B)[1], searching = TRUE, dom = 'ft', ordering = FALSE), filter = "top") %>%
     formatStyle(4, 3, backgroundColor = styleEqual(
-                                                   c('Nombre d\\\'habitat forestier',
+                                                   c('Nombre d\'habitat forestier',
                                                      'Surface (ha) d\\\'habitat forestier',
                                                      'Nombre d\\\'habitat ouvert',
                                                      'Surface (ha) d\\\'habitat ouvert',

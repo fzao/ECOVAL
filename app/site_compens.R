@@ -183,7 +183,8 @@ cleanwidgetsA2sc <- function(){
   updateTextInput(session, "SClatinnamespecies", value = "")
   updateTextInput(session, "SCfrenchnamespecies", value = "")
   updateSelectInput(session, "SCtype1", selected = "1")
-  updateSelectInput(session, "SCtype2", selected = "1")
+  type2selection <<- "0"
+  updateSelectInput(session, "SCtype2", selected = type2selection)
   updateSelectInput(session, "SCprotect", selected = "1")
   updateSelectInput(session, "SCrougeF", selected = "1")
   updateSelectInput(session, "SCrougeR", selected = "1")
@@ -265,7 +266,8 @@ output$SCtable2rowselected <- DT::renderDataTable({
     updateTextInput(session, "SClatinnamespecies", value = tableau$A2[rs, 1])
     updateTextInput(session, "SCfrenchnamespecies", value = tableau$A2[rs, 2])
     updateSelectInput(session, "SCtype1", selected = names(A2listtype1)[match(tableau$A2[rs, 3], A2listtype1)])
-    updateSelectInput(session, "SCtype2", selected = names(A2listtype2)[match(tableau$A2[rs, 4], A2listtype2)])
+    type2selection <<- names(A2listtype2)[match(tableau$A2[rs, 4], A2listtype2)]
+    updateSelectInput(session, "SCtype2", selected = type2selection)
     updateSelectInput(session, "SCprotect", selected = names(A2listprot)[match(tableau$A2[rs, 5], A2listprot)])
     updateSelectInput(session, "SCrougeF", selected = names(A2listprot)[match(tableau$A2[rs, 6], A2listprot)])
     updateSelectInput(session, "SCrougeR", selected = names(A2listprot)[match(tableau$A2[rs, 7], A2listprot)])
@@ -282,12 +284,12 @@ output$SCtable2rowselected <- DT::renderDataTable({
 observeEvent(input$SCtype1,{
   shinyjs::hide("SCindssi")
   if(input$SCtype1 == "1"){
-    ltype2 <- list("Cortège forestier" = 1, "Cortège agricole" = 2, "Cortège du bâti" = 3, "Cortège généraliste" = 4)
+    ltype2 <- list("-"=0, "Cortège généraliste"=1, "Cortège forestier"=2, "Cortège agricole ou ouvert"=3, "Cortège zone humide"=4, "Cortège du bâti"=5)
     shinyjs::show("SCindssi")
   }
-  else if(input$SCtype1 == "6") ltype2 <- list("Odonate" = 5, "Lépidoptère" = 6, "Orthoptère" = 7, "Coléoptère" = 8)
+  else if(input$SCtype1 == "6") ltype2 <- list("-"=0, "Odonate"=6, "Lépidoptère"=7, "Orthoptère"=8, "Coléoptère"=9)
   else ltype2 <- list("-" = 0)
-  updateSelectInput(session, "SCtype2", choices = ltype2, selected = ltype2[[1]])
+  updateSelectInput(session, "SCtype2", choices = ltype2, selected = type2selection)
 })
 
 ## SC A3

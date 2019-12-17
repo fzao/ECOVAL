@@ -43,7 +43,8 @@ A1listetat <- list("0"="", "1"="Bon", "2"="Mauvais", "3"="Moyen")
 A1listinter <- list("1"="Non", "2"="Oui")
 tableau$A2 <- model_A2
 A2listtype1 <- list("1"="Avifaune","2"="Chiroptère","3"="Mammifère","4"="Amphibien","5"="Reptile","6"="Insecte","7"="Flore","8"="Poisson","9"="Crustacé/Mollusque")
-A2listtype2 <- list("0"="-","1"="Cortège forestier","2"="Cortège agricole","3"="Cortège du bâti","4"="Cortège généraliste","5"="Odonate","6"="Lépidoptère","7"="Orthoptère","8"="Coléoptère")
+A2listtype2 <- list("0"="-", "1"="Cortège généraliste", "2"="Cortège forestier", "3"="Cortège agricole ou ouvert", "4"="Cortège zone humide", "5"="Cortège du bâti", "6"="Odonate", "7"="Lépidoptère", "8"="Orthoptère", "9"="Coléoptère")
+type2selection <- "0"
 A2listprot <- list("1"="Non", "2"="Oui")
 A2listdir <- list("0"="-","1"="Annexe II DFFH","2"="Annexe I DO")
 A2listrepro <- list("0"="-","1"="Certaine","2"="Possible")
