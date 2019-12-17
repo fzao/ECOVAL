@@ -671,6 +671,7 @@ output$SItable4<- DT::renderDataTable({
   dat <- datatable(dat1, rownames = TRUE,
                    colnames = c("Valeur à l'état initial" = 5, "Justification de l'estimation CT" = 6, "Degré d'incertitude CT" = 7, "Valeur après impact CT" = 8, "Justification de l'estimation LT" = 9, "Degré d'incertitude LT" = 10, "Valeur après impact LT" = 11),
                    selection = 'single', options = list(scrollY='300px', scrollCollapse=TRUE, pageLength = dim.data.frame(tableau$B)[1], searching = TRUE, dom = 'ft', ordering = FALSE), filter = "top") %>%
+<<<<<<< HEAD
     formatStyle(4, 3, backgroundColor = styleEqual(
                                                    c('Nombre d\'habitat forestier',
                                                      'Surface (ha) d\\\'habitat forestier',
@@ -725,6 +726,9 @@ output$SItable4<- DT::renderDataTable({
                                                      '% Milieux cultivés',
                                                      '% Zones urbanisées'),
                                                    c(rep('#EBE491', 52))))
+=======
+    formatStyle(4, 3, backgroundColor = styleEqual(colistcol, c(rep('#EBE491', 52))))
+>>>>>>> 2ac26a6961821e654cd1f4d3e275197eeaf6e72e
   return(dat)
 })
 

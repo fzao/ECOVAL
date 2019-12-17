@@ -25,9 +25,7 @@ model_A3 <- read.xlsx2('model/ECOVAL.xlsx', sheetIndex = 7, header = TRUE, strin
 model_B <- read.xlsx2('model/ECOVAL.xlsx', sheetIndex = 8, header = TRUE, stringsAsFactors = FALSE)
 model_C <- read.xlsx2('model/ECOVAL.xlsx', sheetIndex = 9, header = TRUE, stringsAsFactors = FALSE)
 model_D <- read.xlsx2('model/ECOVAL.xlsx', sheetIndex = 10, header = TRUE, stringsAsFactors = FALSE)
-SSI <- readRDS('data/Species_SSI.rds')
 Species <- readRDS("model/Species_names.rds")
-park <- readRDS('data/Park.rds')
 ecoval <- list()
 ecoval[["General"]] <- model_info_general
 numsite <- 0
@@ -59,3 +57,120 @@ equivalence <- reactiveValues(tableau=NULL)
 duree <- list("1"="Temporaire Courte Durée", "2"="Temporaire Longue Durée", "3"="Permanent")
 intensite <- list("1"="Peu Intense", "2"="Intense", "3"="Très Intense")
 portee <- list("1"="Ponctuelle Faible Surface", "2"="Ponctuelle Surface Importante", "3"="Linéaire")
+# OS specific (web server = GNU-Linux)
+if(Sys.info()['sysname'] == "Darwin"){
+  SSI <- readRDS('data/Species_SSI.rds')
+  park <- readRDS('data/Park.rds')
+  colistcol <- c('Nombre d\\\'habitat forestier',
+                 'Surface (ha) d\\\'habitat forestier',
+                 'Nombre d\\\'habitat ouvert',
+                 'Surface (ha) d\\\'habitat ouvert',
+                 'Nombre d\\\'habitat buissonnant',
+                 'Surface (ha) d\\\'habitat buissonnant',
+                 'Nombre d\\\'habitat rocheux',
+                 'Surface (ha) d\\\'habitat rocheux',
+                 'Nombre de zone humide',
+                 'Surface (ha) de zone humide',
+                 'Nombre d\\\'habitat aquatique',
+                 'Surface (ha) d\\\'habitat aquatique',
+                 'Diversité avifaune',
+                 'Diversité chiroptères',
+                 'Diversité reptiles',
+                 'Diversité amphibiens',
+                 'Diversité mammifères',
+                 'Diversité insectes',
+                 'Diversité lépidoptères',
+                 'Diversité odonates',
+                 'Diversité orthoptères',
+                 'Diversité coléoptères',
+                 'Diversité flore totale',
+                 'Proportion surfacique des habitat menacés/en danger localement',
+                 'Proportion surfacique des habitat d\\\'intérêt communautaires (et prioritaires)',
+                 'Proportion d\\\'espèces protégées faune au niveau national et regional',
+                 'Proportion d\\\'espèces protégées flore au niveau national et regional',
+                 'Proportion d\\\'espèces menacées faune au niveau national',
+                 'Proportion d\\\'espèces menacées flore au niveau national',
+                 'Proportion d\\\'espèces menacées faune au niveau regional',
+                 'Proportion d\\\'espèces menacées flore au niveau regional',
+                 'Proportion d\\\'espèces faune sur l\\\'annexe II de la DFFH',
+                 'Proportion d\\\'espèces flore sur l\\\'annexe II de la DFFH',
+                 'Proportion d\\\'avifaune sur la DO',
+                 'Proportion d\\\'oiseaux nicheurs',
+                 'Proportion d\\\'espèces (hors oiseaux) se reproduisant sur le site',
+                 'Indice de spécialisation de l\\\'avifaune',
+                 'Proportion surfacique des habitats en bon état de conservation',
+                 '% de milieux NON cultivées',
+                 '% de zones NON imperméabilisées',
+                 'Nombre d\\\'espèces d\\\'EEE',
+                 'Nombre d\\\'espèces de cohérence régional TVB dans PS',
+                 '% Habitat forestier PS /PE',
+                 '% Habitat ouvert PS /PE',
+                 '% Habitat buissonnant PS /PE',
+                 '% Habitat rocheux PS /PE',
+                 '% Habitat humide PS /PE',
+                 '% Habitat aquatique PS /PE',
+                 'Nb espèces faune déterminante des Znieffs du PE',
+                 'Nb espèces flore déterminante des Znieffs du PE',
+                 '% Milieux cultivés',
+                 '% Zones urbanisées')
+}else{
+  SSI <- readRDS('/home/ecoval/data/Species_SSI.rds')
+  park <- readRDS('/home/ecoval/data/Park.rds')
+  colistcol <- c('Nombre d\'habitat forestier',
+                 'Surface (ha) d\'habitat forestier',
+                 'Nombre d\'habitat ouvert',
+                 'Surface (ha) d\'habitat ouvert',
+                 'Nombre d\'habitat buissonnant',
+                 'Surface (ha) d\'habitat buissonnant',
+                 'Nombre d\'habitat rocheux',
+                 'Surface (ha) d\'habitat rocheux',
+                 'Nombre de zone humide',
+                 'Surface (ha) de zone humide',
+                 'Nombre d\'habitat aquatique',
+                 'Surface (ha) d\'habitat aquatique',
+                 'Diversité avifaune',
+                 'Diversité chiroptères',
+                 'Diversité reptiles',
+                 'Diversité amphibiens',
+                 'Diversité mammifères',
+                 'Diversité insectes',
+                 'Diversité lépidoptères',
+                 'Diversité odonates',
+                 'Diversité orthoptères',
+                 'Diversité coléoptères',
+                 'Diversité flore totale',
+                 'Proportion surfacique des habitat menacés/en danger localement',
+                 'Proportion surfacique des habitat d\'intérêt communautaires (et prioritaires)',
+                 'Proportion d\'espèces protégées faune au niveau national et regional',
+                 'Proportion d\'espèces protégées flore au niveau national et regional',
+                 'Proportion d\'espèces menacées faune au niveau national',
+                 'Proportion d\'espèces menacées flore au niveau national',
+                 'Proportion d\'espèces menacées faune au niveau regional',
+                 'Proportion d\'espèces menacées flore au niveau regional',
+                 'Proportion d\'espèces faune sur l\'annexe II de la DFFH',
+                 'Proportion d\'espèces flore sur l\'annexe II de la DFFH',
+                 'Proportion d\'avifaune sur la DO',
+                 'Proportion d\'oiseaux nicheurs',
+                 'Proportion d\'espèces (hors oiseaux) se reproduisant sur le site',
+                 'Indice de spécialisation de l\'avifaune',
+                 'Proportion surfacique des habitats en bon état de conservation',
+                 '% de milieux NON cultivées',
+                 '% de zones NON imperméabilisées',
+                 'Nombre d\'espèces d\'EEE',
+                 'Nombre d\'espèces de cohérence régional TVB dans PS',
+                 '% Habitat forestier PS /PE',
+                 '% Habitat ouvert PS /PE',
+                 '% Habitat buissonnant PS /PE',
+                 '% Habitat rocheux PS /PE',
+                 '% Habitat humide PS /PE',
+                 '% Habitat aquatique PS /PE',
+                 'Nb espèces faune déterminante des Znieffs du PE',
+                 'Nb espèces flore déterminante des Znieffs du PE',
+                 '% Milieux cultivés',
+                 '% Zones urbanisées')
+}
+
+
+
+
+
