@@ -169,19 +169,19 @@ observeEvent(input$selectspeciesSE, updateTabsetPanel(session, "resultequivalenc
 
 output$plot_equivalence_ui <- renderUI({
   if(input$selectniveauequivalence == '1'){ # Niveau General
-      plot.width = 650
-      plot.height = 1000
+      plot.width = "100%"
+      plot.height = "100%"
   }else if(input$selectniveauequivalence == '2'){ # Niveau Habitat
-      plot.width = 650
-      plot.height = 700
+      plot.width = "100%"
+      plot.height = "100%"
   }else if(input$selectniveauequivalence == '3'){ # Niveau Espece
-      plot.width = 650
-      plot.height = 400
+      plot.width = "100%"
+      plot.height = "100%"
   }
-  plotOutput('plot_equivalence', width = plot.width, height = plot.height)
+  plotlyOutput('plot_equivalence', width = plot.width, height = plot.height)
 })
 
-output$plot_equivalence <- renderPlot({
+output$plot_equivalence <- renderPlotly({
   if(input$selectsiteimpact3 != '0' & input$selectsitecompens3 != '0'){
     
     ### Niveau General
@@ -260,24 +260,93 @@ output$plot_equivalence <- renderPlot({
         natzero <- (equivalCT == 0) & (moins != 0)
         natzero[natzero==TRUE] <- '*'
         natzero[natzero==FALSE] <- ''
-  
+
         dat1 <- data.frame(
           perimetres = ecoval[[nameImp]][[1]],
-          indicateurs = shortindicnames, #ecoval[[nameImp]][[3]],
+          indicateurs = shortindicnames,
           criteres = factor(ecoval[[nameImp]][[2]], levels=c("Diversité habitat","Diversité espèce","Patrimonialité_PS","Fonctionnalité","Pression_PS","Connectivité","Représentativité","Patrimonialité_PE","Pression_PE")),
           equivalence = equivalCT)
-        dat1$colour <- ifelse(dat1$equivalence < 0, "negative","positive")
-        p <- ggplot(data=dat1, aes(x=indicateurs, y= equivalence)) +
-        geom_bar(stat="identity",  width=0.5, aes(fill=colour))+
-          coord_flip()+
-          labs(x="Indicateurs", y="Pertes / Gains NETS")+
-          scale_fill_manual(values=c(positive="#7FDD4C",negative="#C67677")) +
-          theme_bw()+
-          theme(legend.position="none")+
-          theme(axis.text.x=element_text(colour="black", size = 11))+
-          geom_text(aes(label=equivalence, hjust="center", vjust="center", y= equivalence))+
-          theme(panel.grid.major = element_line(size = 0.5, colour = "light grey"))+
-          facet_grid(criteres ~ ., scales = "free", space = "free")
+        
+        dat1[[4]][is.na(dat1[[4]])] <- 0
+        
+        data1 <- dat1[1:13,]
+        data2 <- dat1[14:24,]
+        data3 <- dat1[25:35,]
+        data4 <- dat1[36:40,]
+        data5 <- dat1[41:45,]
+        data6 <- dat1[46:49,]
+        data7 <- dat1[50:55,]
+        data8 <- dat1[56:58,]
+        data9 <- dat1[59:61,]
+        
+        couleurs <- c("negative" = "#C67677",
+                      "positive" ="#7FDD4C")
+        
+        p1 <- plot_ly(data1,
+                      y = as.character(data1$indicateurs), x = data1[[4]],
+                      type = 'bar', text = data1[[4]], textposition='auto', orientation = 'h',
+                      marker = list(color = ifelse(data1[[4]] < 0, couleurs[1], couleurs[2]))) %>%
+          layout(xaxis = list(title = "Diversité habitat", showticklabels=FALSE),
+                 yaxis = list(showticklabels=FALSE))
+        
+        p2 <- plot_ly(data2,
+                      y = as.character(data2$indicateurs), x = data2[[4]],
+                      type = 'bar', text = data2[[4]], textposition='auto', orientation = 'h',
+                      marker = list(color = ifelse(data2[[4]] < 0, couleurs[1], couleurs[2]))) %>%
+          layout(xaxis = list(title = "Diversité espèce", showticklabels=FALSE),
+                 yaxis = list(showticklabels=FALSE))
+        
+        p3 <- plot_ly(data3,
+                      y = as.character(data3$indicateurs), x = data3[[4]],
+                      type = 'bar', text = data3[[4]], textposition='auto', orientation = 'h',
+                      marker = list(color = ifelse(data3[[4]] < 0, couleurs[1], couleurs[2]))) %>%
+          layout(xaxis = list(title = "Patrimonialité_PS", showticklabels=FALSE),
+                 yaxis = list(showticklabels=FALSE))
+        
+        p4 <- plot_ly(data4,
+                      y = as.character(data4$indicateurs), x = data4[[4]],
+                      type = 'bar', text = data4[[4]], textposition='auto', orientation = 'h',
+                      marker = list(color = ifelse(data4[[4]] < 0, couleurs[1], couleurs[2]))) %>%
+          layout(xaxis = list(title = "Fonctionnalité", showticklabels=FALSE),
+                 yaxis = list(showticklabels=FALSE))
+        
+        p5 <- plot_ly(data5,
+                      y = as.character(data5$indicateurs), x = data5[[4]],
+                      type = 'bar', text = data5[[4]], textposition='auto', orientation = 'h',
+                      marker = list(color = ifelse(data5[[4]] < 0, couleurs[1], couleurs[2]))) %>%
+          layout(xaxis = list(title = "Pression_PS", showticklabels=FALSE),
+                 yaxis = list(showticklabels=FALSE))
+        
+        p6 <- plot_ly(data6,
+                      y = as.character(data6$indicateurs), x = data6[[4]],
+                      type = 'bar', text = data6[[4]], textposition='auto', orientation = 'h',
+                      marker = list(color = ifelse(data6[[4]] < 0, couleurs[1], couleurs[2]))) %>%
+          layout(xaxis = list(title = "Connectivité", showticklabels=FALSE),
+                 yaxis = list(showticklabels=FALSE))
+        
+        p7 <- plot_ly(data7,
+                      y = as.character(data7$indicateurs), x = data7[[4]],
+                      type = 'bar', text = data7[[4]], textposition='auto', orientation = 'h',
+                      marker = list(color = ifelse(data7[[4]] < 0, couleurs[1], couleurs[2]))) %>%
+          layout(xaxis = list(title = "Représentativité", showticklabels=FALSE),
+                 yaxis = list(showticklabels=FALSE))
+        
+        p8 <- plot_ly(data8,
+                      y = as.character(data8$indicateurs), x = data8[[4]],
+                      type = 'bar', text = data8[[4]], textposition='auto', orientation = 'h',
+                      marker = list(color = ifelse(data8[[4]] < 0, couleurs[1], couleurs[2]))) %>%
+          layout(xaxis = list(title = "Patrimonialité_PE", showticklabels=FALSE),
+                 yaxis = list(showticklabels=FALSE))
+        
+        p9 <- plot_ly(data9,
+                      y = as.character(data9$indicateurs), x = data9[[4]],
+                      type = 'bar', text = data9[[4]], textposition='auto', orientation = 'h',
+                      marker = list(color = ifelse(data9[[4]] < 0, couleurs[1], couleurs[2]))) %>%
+          layout(xaxis = list(title = "Pression_PE", showticklabels=FALSE),
+                 yaxis = list(showticklabels=FALSE))
+        
+        p <- subplot(p1, p2, p3, p4, p5, p6, p7, p8, p9, titleX = TRUE, titleY = FALSE) %>%
+          layout(title = "PERTES / GAINS NETS", showlegend=FALSE)
 
         dat1["absence perte nette"] <- natzero
         dat1["pertes brutes"] <- moins
@@ -297,20 +366,88 @@ output$plot_equivalence <- renderPlot({
           indicateurs = shortindicnames, #ecoval[[nameImp]][[3]],
           criteres = factor(ecoval[[nameImp]][[2]], levels=c("Diversité habitat","Diversité espèce","Patrimonialité_PS","Fonctionnalité","Pression_PS","Connectivité","Représentativité","Patrimonialité_PE","Pression_PE")),
           equivalence = equivalLT)
-        dat1$colour <- ifelse(dat1$equivalence < 0, "negative","positive")
-        p <- ggplot(data=dat1, aes(x=indicateurs, y= equivalence)) +
-        geom_bar(stat="identity",  width=0.5, aes(fill=colour))+
-          coord_flip()+
-          labs(x="Indicateurs", y="Pertes / Gains NETS")+
-          scale_fill_manual(values=c(positive="#7FDD4C",negative="#C67677")) +
-          theme_bw()+
-          theme(legend.position="none")+
-          theme(axis.text.x=element_text(colour="black", size = 11))+
-          geom_text(aes(label=equivalence, hjust="center", vjust="center", y= equivalence))+
-          theme(panel.grid.major = element_line(size = 0.5, colour = "light grey"))+
-          facet_grid(criteres ~ ., scales = "free", space = "free")
-      
+
+        dat1[[4]][is.na(dat1[[4]])] <- 0
         
+        data1 <- dat1[1:13,]
+        data2 <- dat1[14:24,]
+        data3 <- dat1[25:35,]
+        data4 <- dat1[36:40,]
+        data5 <- dat1[41:45,]
+        data6 <- dat1[46:49,]
+        data7 <- dat1[50:55,]
+        data8 <- dat1[56:58,]
+        data9 <- dat1[59:61,]
+        
+        couleurs <- c("negative" = "#C67677",
+                      "positive" ="#7FDD4C")
+        
+        p1 <- plot_ly(data1,
+                      y = as.character(data1$indicateurs), x = data1[[4]],
+                      type = 'bar', text = data1[[4]], textposition='auto', orientation = 'h',
+                      marker = list(color = ifelse(data1[[4]] < 0, couleurs[1], couleurs[2]))) %>%
+          layout(xaxis = list(title = "Diversité habitat", showticklabels=FALSE),
+                 yaxis = list(showticklabels=FALSE))
+        
+        p2 <- plot_ly(data2,
+                      y = as.character(data2$indicateurs), x = data2[[4]],
+                      type = 'bar', text = data2[[4]], textposition='auto', orientation = 'h',
+                      marker = list(color = ifelse(data2[[4]] < 0, couleurs[1], couleurs[2]))) %>%
+          layout(xaxis = list(title = "Diversité espèce", showticklabels=FALSE),
+                 yaxis = list(showticklabels=FALSE))
+        
+        p3 <- plot_ly(data3,
+                      y = as.character(data3$indicateurs), x = data3[[4]],
+                      type = 'bar', text = data3[[4]], textposition='auto', orientation = 'h',
+                      marker = list(color = ifelse(data3[[4]] < 0, couleurs[1], couleurs[2]))) %>%
+          layout(xaxis = list(title = "Patrimonialité_PS", showticklabels=FALSE),
+                 yaxis = list(showticklabels=FALSE))
+        
+        p4 <- plot_ly(data4,
+                      y = as.character(data4$indicateurs), x = data4[[4]],
+                      type = 'bar', text = data4[[4]], textposition='auto', orientation = 'h',
+                      marker = list(color = ifelse(data4[[4]] < 0, couleurs[1], couleurs[2]))) %>%
+          layout(xaxis = list(title = "Fonctionnalité", showticklabels=FALSE),
+                 yaxis = list(showticklabels=FALSE))
+        
+        p5 <- plot_ly(data5,
+                      y = as.character(data5$indicateurs), x = data5[[4]],
+                      type = 'bar', text = data5[[4]], textposition='auto', orientation = 'h',
+                      marker = list(color = ifelse(data5[[4]] < 0, couleurs[1], couleurs[2]))) %>%
+          layout(xaxis = list(title = "Pression_PS", showticklabels=FALSE),
+                 yaxis = list(showticklabels=FALSE))
+        
+        p6 <- plot_ly(data6,
+                      y = as.character(data6$indicateurs), x = data6[[4]],
+                      type = 'bar', text = data6[[4]], textposition='auto', orientation = 'h',
+                      marker = list(color = ifelse(data6[[4]] < 0, couleurs[1], couleurs[2]))) %>%
+          layout(xaxis = list(title = "Connectivité", showticklabels=FALSE),
+                 yaxis = list(showticklabels=FALSE))
+        
+        p7 <- plot_ly(data7,
+                      y = as.character(data7$indicateurs), x = data7[[4]],
+                      type = 'bar', text = data7[[4]], textposition='auto', orientation = 'h',
+                      marker = list(color = ifelse(data7[[4]] < 0, couleurs[1], couleurs[2]))) %>%
+          layout(xaxis = list(title = "Représentativité", showticklabels=FALSE),
+                 yaxis = list(showticklabels=FALSE))
+        
+        p8 <- plot_ly(data8,
+                      y = as.character(data8$indicateurs), x = data8[[4]],
+                      type = 'bar', text = data8[[4]], textposition='auto', orientation = 'h',
+                      marker = list(color = ifelse(data8[[4]] < 0, couleurs[1], couleurs[2]))) %>%
+          layout(xaxis = list(title = "Patrimonialité_PE", showticklabels=FALSE),
+                 yaxis = list(showticklabels=FALSE))
+        
+        p9 <- plot_ly(data9,
+                      y = as.character(data9$indicateurs), x = data9[[4]],
+                      type = 'bar', text = data9[[4]], textposition='auto', orientation = 'h',
+                      marker = list(color = ifelse(data9[[4]] < 0, couleurs[1], couleurs[2]))) %>%
+          layout(xaxis = list(title = "Pression_PE", showticklabels=FALSE),
+                 yaxis = list(showticklabels=FALSE))
+        
+        p <- subplot(p1, p2, p3, p4, p5, p6, p7, p8, p9, titleX = TRUE, titleY = FALSE) %>%
+          layout(title = "PERTES / GAINS NETS", showlegend=FALSE)
+
         dat1["absence perte nette"] <- natzero
         dat1["pertes brutes"] <- moins
         dat1["gains bruts"] <- plus
@@ -417,19 +554,63 @@ output$plot_equivalence <- renderPlot({
           indicateurs = tabhab[[3]],
           criteres = factor(tabhab[[2]], levels=c("Diversité espèce", "Fonctionnalité", "Structure", "Pression_PS", "Connectivité", "Représentativité")),
           equivalence = equival)
-        dat1$colour <- ifelse(dat1$equivalence < 0, "negative","positive")
-        p <- ggplot(data=dat1, aes(x=indicateurs, y= equivalence)) +
-        geom_bar(stat="identity",  width=0.5, aes(fill=colour))+
-          coord_flip()+
-          labs(x="Indicateurs", y="Pertes / Gains NETS")+
-          scale_fill_manual(values=c(positive="#7FDD4C",negative="#C67677")) +
-          theme_bw()+
-          theme(legend.position="none")+
-          theme(axis.text.x=element_text(colour="black", size = 11))+
-          geom_text(aes(label=equivalence, hjust="center", vjust="center", y= equivalence))+
-          theme(panel.grid.major = element_line(size = 0.5, colour = "light grey"))+
-          facet_grid(criteres ~ ., scales = "free", space = "free")
-      
+        
+        dat1[[4]][is.na(dat1[[4]])] <- 0
+        
+        couleurs <- c("negative" = "#C67677",
+                      "positive" ="#7FDD4C")
+        
+        data1 <- dat1[which(dat1$criteres == "Diversité espèce"),]
+        data2 <- dat1[which(dat1$criteres == "Fonctionnalité"),]
+        data3 <- dat1[which(dat1$criteres == "Pression_PS"),]
+        data4 <- dat1[which(dat1$criteres == "Connectivité"),]
+        data5 <- dat1[which(dat1$criteres == "Représentativité"),]
+        data6 <- dat1[which(dat1$criteres == "Structure"),]
+        
+        p1 <- plot_ly(data1,
+                      y = as.character(data1$indicateurs), x = data1[[4]],
+                      type = 'bar', text = data1[[4]], textposition='auto', orientation = 'h',
+                      marker = list(color = ifelse(data1[[4]] < 0, couleurs[1], couleurs[2]))) %>%
+          layout(xaxis = list(title = "Diversité espèce", showticklabels=FALSE),
+                 yaxis = list(showticklabels=FALSE))
+        
+        p2 <- plot_ly(data2,
+                      y = as.character(data2$indicateurs), x = data2[[4]],
+                      type = 'bar', text = data2[[4]], textposition='auto', orientation = 'h',
+                      marker = list(color = ifelse(data2[[4]] < 0, couleurs[1], couleurs[2]))) %>%
+          layout(xaxis = list(title = "Fonctionnalité", showticklabels=FALSE),
+                 yaxis = list(showticklabels=FALSE))
+        
+        p3 <- plot_ly(data3,
+                      y = as.character(data3$indicateurs), x = data3[[4]],
+                      type = 'bar', text = data3[[4]], textposition='auto', orientation = 'h',
+                      marker = list(color = ifelse(data3[[4]] < 0, couleurs[1], couleurs[2]))) %>%
+          layout(xaxis = list(title = "Pression_PS", showticklabels=FALSE),
+                 yaxis = list(showticklabels=FALSE))
+        
+        p4 <- plot_ly(data4,
+                      y = as.character(data4$indicateurs), x = data4[[4]],
+                      type = 'bar', text = data4[[4]], textposition='auto', orientation = 'h',
+                      marker = list(color = ifelse(data4[[4]] < 0, couleurs[1], couleurs[2]))) %>%
+          layout(xaxis = list(title = "Connectivité", showticklabels=FALSE),
+                 yaxis = list(showticklabels=FALSE))
+        
+        p5 <- plot_ly(data5,
+                      y = as.character(data5$indicateurs), x = data5[[4]],
+                      type = 'bar', text = data5[[4]], textposition='auto', orientation = 'h',
+                      marker = list(color = ifelse(data5[[4]] < 0, couleurs[1], couleurs[2]))) %>%
+          layout(xaxis = list(title = "Représentativité", showticklabels=FALSE),
+                 yaxis = list(showticklabels=FALSE))
+        
+        p6 <- plot_ly(data6,
+                      y = as.character(data6$indicateurs), x = data6[[4]],
+                      type = 'bar', text = data6[[4]], textposition='auto', orientation = 'h',
+                      marker = list(color = ifelse(data6[[4]] < 0, couleurs[1], couleurs[2]))) %>%
+          layout(xaxis = list(title = "Structure", showticklabels=FALSE),
+                 yaxis = list(showticklabels=FALSE))
+        
+        p <- subplot(p1, p2, p3, p4, p5, p6, titleX = TRUE, titleY = FALSE) %>%
+          layout(title = "PERTES / GAINS NETS", showlegend=FALSE)
         
         dat1["absence perte nette"] <- natzero
         dat1["pertes brutes"] <- moins
@@ -437,7 +618,7 @@ output$plot_equivalence <- renderPlot({
       }else{
         shinyjs::hide("dwnlequivalence")
         dat1 <- NULL
-        p <- ggplot() + theme_void()
+        p <- plotly_empty(type = "scatter", mode = "markers")
       }
       
     }else if(input$selectniveauequivalence == '3'){
@@ -545,18 +726,60 @@ output$plot_equivalence <- renderPlot({
           indicateurs = tabsp[[3]],
           criteres = factor(tabsp[[2]], levels=c("Diversité espèce", "Fonctionnalité", "Pression_PS", "Connectivité", "Représentativité")),
           equivalence = equival)
-        dat1$colour <- ifelse(dat1$equivalence < 0, "negative","positive")
-        p <- ggplot(data=dat1, aes(x=indicateurs, y= equivalence)) +
-        geom_bar(stat="identity",  width=0.5, aes(fill=colour))+
-          coord_flip()+
-          labs(x="Indicateurs", y="Pertes / Gains NETS")+
-          scale_fill_manual(values=c(positive="#7FDD4C",negative="#C67677")) +
-          theme_bw()+
-          theme(legend.position="none")+
-          theme(axis.text.x=element_text(colour="black", size = 11))+
-          geom_text(aes(label=equivalence, hjust="center", vjust="center", y= equivalence))+
-          theme(panel.grid.major = element_line(size = 0.5, colour = "light grey"))+
-          facet_grid(criteres ~ ., scales = "free", space = "free")
+        
+        dat1[[4]][is.na(dat1[[4]])] <- 0
+        
+        data1 <- dat1[which(dat1$criteres == "Fonctionnalité"),]
+        data2 <- dat1[which(dat1$criteres == "Pression_PS"),]
+        data3 <- dat1[which(dat1$criteres == "Connectivité"),]
+        data4 <- dat1[which(dat1$criteres == "Représentativité"),]
+        
+        couleurs <- c("negative" = "#C67677",
+                      "positive" ="#7FDD4C")
+        p1 <- plot_ly(data1,
+                      y = as.character(data1$indicateurs), x = data1[[4]],
+                      type = 'bar', text = data1[[4]], textposition='auto', orientation = 'h',
+                      marker = list(color = ifelse(data1[[4]] < 0, couleurs[1], couleurs[2]))) %>%
+          layout(xaxis = list(title = "Fonctionnalité", showticklabels=FALSE),
+                 yaxis = list(showticklabels=FALSE))
+        
+        p2 <- plot_ly(data2,
+                      y = as.character(data2$indicateurs), x = data2[[4]],
+                      type = 'bar', text = data2[[4]], textposition='auto', orientation = 'h',
+                      marker = list(color = ifelse(data2[[4]] < 0, couleurs[1], couleurs[2]))) %>%
+          layout(xaxis = list(title = "Pression_PS", showticklabels=FALSE),
+                 yaxis = list(showticklabels=FALSE))
+        
+        p3 <- plot_ly(data3,
+                      y = as.character(data3$indicateurs), x = data3[[4]],
+                      type = 'bar', text = data3[[4]], textposition='auto', orientation = 'h',
+                      marker = list(color = ifelse(data3[[4]] < 0, couleurs[1], couleurs[2]))) %>%
+          layout(xaxis = list(title = "Connectivité", showticklabels=FALSE),
+                 yaxis = list(showticklabels=FALSE))
+        
+        p4 <- plot_ly(data4,
+                      y = as.character(data4$indicateurs), x = data4[[4]],
+                      type = 'bar', text = data4[[4]], textposition='auto', orientation = 'h',
+                      marker = list(color = ifelse(data4[[4]] < 0, couleurs[1], couleurs[2]))) %>%
+          layout(xaxis = list(title = "Représentativité", showticklabels=FALSE),
+                 yaxis = list(showticklabels=FALSE))
+        
+        p <- subplot(p1, p2, p3, p4, titleX = TRUE, titleY = FALSE) %>%
+          layout(title = "PERTES / GAINS NETS", showlegend=FALSE)
+        
+        
+        # dat1$colour <- ifelse(dat1$equivalence < 0, "negative","positive")
+        # p <- ggplot(data=dat1, aes(x=indicateurs, y= equivalence)) +
+        # geom_bar(stat="identity",  width=0.5, aes(fill=colour))+
+        #   coord_flip()+
+        #   labs(x="Indicateurs", y="Pertes / Gains NETS")+
+        #   scale_fill_manual(values=c(positive="#7FDD4C",negative="#C67677")) +
+        #   theme_bw()+
+        #   theme(legend.position="none")+
+        #   theme(axis.text.x=element_text(colour="black", size = 11))+
+        #   geom_text(aes(label=equivalence, hjust="center", vjust="center", y= equivalence))+
+        #   theme(panel.grid.major = element_line(size = 0.5, colour = "light grey"))+
+        #   facet_grid(criteres ~ ., scales = "free", space = "free")
       
         
         dat1["absence perte nette"] <- natzero
@@ -565,14 +788,13 @@ output$plot_equivalence <- renderPlot({
       }else{
         shinyjs::hide("dwnlequivalence")
         dat1 <- NULL
-        p <- ggplot() + theme_void()
+        p <- plotly_empty(type = "scatter", mode = "markers")
       }
-      # p <- ggplotly(p, width=500, height=1000)
     }
     dat1[['colour']] <- NULL
     equivalence$tableau <- dat1
   }else{
-    p <- ggplot() + theme_void()
+    p <- plotly_empty(type = "scatter", mode = "markers")
     equivalence$tableau <- NULL
   }
   p
