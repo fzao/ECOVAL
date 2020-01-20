@@ -316,63 +316,63 @@ output$plot_pertes <- renderPlotly({
         
         p1 <- plot_ly(data1,
                       y = as.character(data1$indicateurs), x = data1[[6]],
-                      type = 'bar', text = paste(data1[[5]], gsub("[ABC]", "*", data1[[4]])), textposition='auto', orientation = 'h',
+                      type = 'bar', text = paste(data1[[5]], gsub("[ABC]", "*", data1[[4]])), textposition='outside', orientation = 'h',
                       marker = list(color = ifelse(data1[[6]] < 0, couleurs[1], couleurs[2]))) %>%
           layout(xaxis = list(title = "Diversité habitat", showticklabels=FALSE),
                  yaxis = list(showticklabels=FALSE))
         
         p2 <- plot_ly(data2,
                       y = as.character(data2$indicateurs), x = data2[[6]],
-                      type = 'bar', text = paste(data2[[5]], gsub("[ABC]", "*", data2[[4]])), textposition='auto', orientation = 'h',
+                      type = 'bar', text = paste(data2[[5]], gsub("[ABC]", "*", data2[[4]])), textposition='outside', orientation = 'h',
                       marker = list(color = ifelse(data2[[6]] < 0, couleurs[1], couleurs[2]))) %>%
           layout(xaxis = list(title = "Diversité espèce", showticklabels=FALSE),
                  yaxis = list(showticklabels=FALSE))
         
         p3 <- plot_ly(data3,
                       y = as.character(data3$indicateurs), x = data3[[6]],
-                      type = 'bar', text = paste(data3[[5]], gsub("[ABC]", "*", data3[[4]])), textposition='auto', orientation = 'h',
+                      type = 'bar', text = paste(data3[[5]], gsub("[ABC]", "*", data3[[4]])), textposition='outside', orientation = 'h',
                       marker = list(color = ifelse(data3[[6]] < 0, couleurs[1], couleurs[2]))) %>%
           layout(xaxis = list(title = "Patrimonialité_PS", showticklabels=FALSE),
                  yaxis = list(showticklabels=FALSE))
         
         p4 <- plot_ly(data4,
                       y = as.character(data4$indicateurs), x = data4[[6]],
-                      type = 'bar', text = paste(data4[[5]], gsub("[ABC]", "*", data4[[4]])), textposition='auto', orientation = 'h',
+                      type = 'bar', text = paste(data4[[5]], gsub("[ABC]", "*", data4[[4]])), textposition='outside', orientation = 'h',
                       marker = list(color = ifelse(data4[[6]] < 0, couleurs[1], couleurs[2]))) %>%
           layout(xaxis = list(title = "Fonctionnalité", showticklabels=FALSE),
                  yaxis = list(showticklabels=FALSE))
         
         p5 <- plot_ly(data5,
                       y = as.character(data5$indicateurs), x = data5[[6]],
-                      type = 'bar', text = paste(data5[[5]], gsub("[ABC]", "*", data5[[4]])), textposition='auto', orientation = 'h',
+                      type = 'bar', text = paste(data5[[5]], gsub("[ABC]", "*", data5[[4]])), textposition='outside', orientation = 'h',
                       marker = list(color = ifelse(data5[[6]] < 0, couleurs[1], couleurs[2]))) %>%
           layout(xaxis = list(title = "Pression_PS", showticklabels=FALSE),
                  yaxis = list(showticklabels=FALSE))
         
         p6 <- plot_ly(data6,
                       y = as.character(data6$indicateurs), x = data6[[6]],
-                      type = 'bar', text = paste(data6[[5]], gsub("[ABC]", "*", data6[[4]])), textposition='auto', orientation = 'h',
+                      type = 'bar', text = paste(data6[[5]], gsub("[ABC]", "*", data6[[4]])), textposition='outside', orientation = 'h',
                       marker = list(color = ifelse(data6[[6]] < 0, couleurs[1], couleurs[2]))) %>%
           layout(xaxis = list(title = "Connectivité", showticklabels=FALSE),
                  yaxis = list(showticklabels=FALSE))
         
         p7 <- plot_ly(data7,
                       y = as.character(data7$indicateurs), x = data7[[6]],
-                      type = 'bar', text = paste(data7[[5]], gsub("[ABC]", "*", data7[[4]])), textposition='auto', orientation = 'h',
+                      type = 'bar', text = paste(data7[[5]], gsub("[ABC]", "*", data7[[4]])), textposition='outside', orientation = 'h',
                       marker = list(color = ifelse(data7[[6]] < 0, couleurs[1], couleurs[2]))) %>%
           layout(xaxis = list(title = "Représentativité", showticklabels=FALSE),
                  yaxis = list(showticklabels=FALSE))
         
         p8 <- plot_ly(data8,
                       y = as.character(data8$indicateurs), x = data8[[6]],
-                      type = 'bar', text = paste(data8[[5]], gsub("[ABC]", "*", data8[[4]])), textposition='auto', orientation = 'h',
+                      type = 'bar', text = paste(data8[[5]], gsub("[ABC]", "*", data8[[4]])), textposition='outside', orientation = 'h',
                       marker = list(color = ifelse(data8[[6]] < 0, couleurs[1], couleurs[2]))) %>%
           layout(xaxis = list(title = "Patrimonialité_PE", showticklabels=FALSE),
                  yaxis = list(showticklabels=FALSE))
         
         p9 <- plot_ly(data9,
                       y = as.character(data9$indicateurs), x = data9[[6]],
-                      type = 'bar', text = paste(data9[[5]], gsub("[ABC]", "*", data9[[4]])), textposition='auto', orientation = 'h',
+                      type = 'bar', text = paste(data9[[5]], gsub("[ABC]", "*", data9[[4]])), textposition='outside', orientation = 'h',
                       marker = list(color = ifelse(data9[[6]] < 0, couleurs[1], couleurs[2]))) %>%
           layout(xaxis = list(title = "Pression_PE", showticklabels=FALSE),
                  yaxis = list(showticklabels=FALSE))
@@ -413,63 +413,63 @@ output$plot_pertes <- renderPlotly({
         
         p1 <- plot_ly(data1,
                       y = as.character(data1$indicateurs), x = data1[[6]],
-                      type = 'bar', text = paste(data1[[5]], gsub("[ABC]", "*", data1[[4]])), textposition='auto', orientation = 'h',
+                      type = 'bar', text = paste(data1[[5]], gsub("[ABC]", "*", data1[[4]])), textposition='outside', orientation = 'h',
                       marker = list(color = ifelse(data1[[6]] < 0, couleurs[1], couleurs[2]))) %>%
           layout(xaxis = list(title = "Diversité habitat", showticklabels=FALSE),
                  yaxis = list(showticklabels=FALSE))
         
         p2 <- plot_ly(data2,
                       y = as.character(data2$indicateurs), x = data2[[6]],
-                      type = 'bar', text = paste(data2[[5]], gsub("[ABC]", "*", data2[[4]])), textposition='auto', orientation = 'h',
+                      type = 'bar', text = paste(data2[[5]], gsub("[ABC]", "*", data2[[4]])), textposition='outside', orientation = 'h',
                       marker = list(color = ifelse(data2[[6]] < 0, couleurs[1], couleurs[2]))) %>%
           layout(xaxis = list(title = "Diversité espèce", showticklabels=FALSE),
                  yaxis = list(showticklabels=FALSE))
         
         p3 <- plot_ly(data3,
                       y = as.character(data3$indicateurs), x = data3[[6]],
-                      type = 'bar', text = paste(data3[[5]], gsub("[ABC]", "*", data3[[4]])), textposition='auto', orientation = 'h',
+                      type = 'bar', text = paste(data3[[5]], gsub("[ABC]", "*", data3[[4]])), textposition='outside', orientation = 'h',
                       marker = list(color = ifelse(data3[[6]] < 0, couleurs[1], couleurs[2]))) %>%
           layout(xaxis = list(title = "Patrimonialité_PS", showticklabels=FALSE),
                  yaxis = list(showticklabels=FALSE))
         
         p4 <- plot_ly(data4,
                       y = as.character(data4$indicateurs), x = data4[[6]],
-                      type = 'bar', text = paste(data4[[5]], gsub("[ABC]", "*", data4[[4]])), textposition='auto', orientation = 'h',
+                      type = 'bar', text = paste(data4[[5]], gsub("[ABC]", "*", data4[[4]])), textposition='outside', orientation = 'h',
                       marker = list(color = ifelse(data4[[6]] < 0, couleurs[1], couleurs[2]))) %>%
           layout(xaxis = list(title = "Fonctionnalité", showticklabels=FALSE),
                  yaxis = list(showticklabels=FALSE))
         
         p5 <- plot_ly(data5,
                       y = as.character(data5$indicateurs), x = data5[[6]],
-                      type = 'bar', text = paste(data5[[5]], gsub("[ABC]", "*", data5[[4]])), textposition='auto', orientation = 'h',
+                      type = 'bar', text = paste(data5[[5]], gsub("[ABC]", "*", data5[[4]])), textposition='outside', orientation = 'h',
                       marker = list(color = ifelse(data5[[6]] < 0, couleurs[1], couleurs[2]))) %>%
           layout(xaxis = list(title = "Pression_PS", showticklabels=FALSE),
                  yaxis = list(showticklabels=FALSE))
         
         p6 <- plot_ly(data6,
                       y = as.character(data6$indicateurs), x = data6[[6]],
-                      type = 'bar', text = paste(data6[[5]], gsub("[ABC]", "*", data6[[4]])), textposition='auto', orientation = 'h',
+                      type = 'bar', text = paste(data6[[5]], gsub("[ABC]", "*", data6[[4]])), textposition='outside', orientation = 'h',
                       marker = list(color = ifelse(data6[[6]] < 0, couleurs[1], couleurs[2]))) %>%
           layout(xaxis = list(title = "Connectivité", showticklabels=FALSE),
                  yaxis = list(showticklabels=FALSE))
         
         p7 <- plot_ly(data7,
                       y = as.character(data7$indicateurs), x = data7[[6]],
-                      type = 'bar', text = paste(data7[[5]], gsub("[ABC]", "*", data7[[4]])), textposition='auto', orientation = 'h',
+                      type = 'bar', text = paste(data7[[5]], gsub("[ABC]", "*", data7[[4]])), textposition='outside', orientation = 'h',
                       marker = list(color = ifelse(data7[[6]] < 0, couleurs[1], couleurs[2]))) %>%
           layout(xaxis = list(title = "Représentativité", showticklabels=FALSE),
                  yaxis = list(showticklabels=FALSE))
         
         p8 <- plot_ly(data8,
                       y = as.character(data8$indicateurs), x = data8[[6]],
-                      type = 'bar', text = paste(data8[[5]], gsub("[ABC]", "*", data8[[4]])), textposition='auto', orientation = 'h',
+                      type = 'bar', text = paste(data8[[5]], gsub("[ABC]", "*", data8[[4]])), textposition='outside', orientation = 'h',
                       marker = list(color = ifelse(data8[[6]] < 0, couleurs[1], couleurs[2]))) %>%
           layout(xaxis = list(title = "Patrimonialité_PE", showticklabels=FALSE),
                  yaxis = list(showticklabels=FALSE))
         
         p9 <- plot_ly(data9,
                       y = as.character(data9$indicateurs), x = data9[[6]],
-                      type = 'bar', text = paste(data9[[5]], gsub("[ABC]", "*", data9[[4]])), textposition='auto', orientation = 'h',
+                      type = 'bar', text = paste(data9[[5]], gsub("[ABC]", "*", data9[[4]])), textposition='outside', orientation = 'h',
                       marker = list(color = ifelse(data9[[6]] < 0, couleurs[1], couleurs[2]))) %>%
           layout(xaxis = list(title = "Pression_PE", showticklabels=FALSE),
                  yaxis = list(showticklabels=FALSE))
@@ -633,42 +633,42 @@ output$plot_pertes <- renderPlotly({
 
           p1 <- plot_ly(data1,
                         y = as.character(data1$indicateurs), x = data1[[6]],
-                        type = 'bar', text = paste(data1[[5]], gsub("[ABC]", "*", data1[[4]])), textposition='auto', orientation = 'h',
+                        type = 'bar', text = paste(data1[[5]], gsub("[ABC]", "*", data1[[4]])), textposition='outside', orientation = 'h',
                         marker = list(color = ifelse(data1[[6]] < 0, couleurs[1], couleurs[2]))) %>%
             layout(xaxis = list(title = "Diversité espèce", showticklabels=FALSE),
                    yaxis = list(showticklabels=FALSE))
           
           p2 <- plot_ly(data2,
                         y = as.character(data2$indicateurs), x = data2[[6]],
-                        type = 'bar', text = paste(data2[[5]], gsub("[ABC]", "*", data2[[4]])), textposition='auto', orientation = 'h',
+                        type = 'bar', text = paste(data2[[5]], gsub("[ABC]", "*", data2[[4]])), textposition='outside', orientation = 'h',
                         marker = list(color = ifelse(data2[[6]] < 0, couleurs[1], couleurs[2]))) %>%
             layout(xaxis = list(title = "Fonctionnalité", showticklabels=FALSE),
                    yaxis = list(showticklabels=FALSE))
           
           p3 <- plot_ly(data3,
                         y = as.character(data3$indicateurs), x = data3[[6]],
-                        type = 'bar', text = paste(data3[[5]], gsub("[ABC]", "*", data3[[4]])), textposition='auto', orientation = 'h',
+                        type = 'bar', text = paste(data3[[5]], gsub("[ABC]", "*", data3[[4]])), textposition='outside', orientation = 'h',
                         marker = list(color = ifelse(data3[[6]] < 0, couleurs[1], couleurs[2]))) %>%
             layout(xaxis = list(title = "Pression_PS", showticklabels=FALSE),
                    yaxis = list(showticklabels=FALSE))
           
           p4 <- plot_ly(data4,
                         y = as.character(data4$indicateurs), x = data4[[6]],
-                        type = 'bar', text = paste(data4[[5]], gsub("[ABC]", "*", data4[[4]])), textposition='auto', orientation = 'h',
+                        type = 'bar', text = paste(data4[[5]], gsub("[ABC]", "*", data4[[4]])), textposition='outside', orientation = 'h',
                         marker = list(color = ifelse(data4[[6]] < 0, couleurs[1], couleurs[2]))) %>%
             layout(xaxis = list(title = "Connectivité", showticklabels=FALSE),
                    yaxis = list(showticklabels=FALSE))
           
           p5 <- plot_ly(data5,
                         y = as.character(data5$indicateurs), x = data5[[6]],
-                        type = 'bar', text = paste(data5[[5]], gsub("[ABC]", "*", data5[[4]])), textposition='auto', orientation = 'h',
+                        type = 'bar', text = paste(data5[[5]], gsub("[ABC]", "*", data5[[4]])), textposition='outside', orientation = 'h',
                         marker = list(color = ifelse(data5[[6]] < 0, couleurs[1], couleurs[2]))) %>%
             layout(xaxis = list(title = "Représentativité", showticklabels=FALSE),
                    yaxis = list(showticklabels=FALSE))
           
           p6 <- plot_ly(data6,
                         y = as.character(data6$indicateurs), x = data6[[6]],
-                        type = 'bar', text = paste(data6[[5]], gsub("[ABC]", "*", data6[[4]])), textposition='auto', orientation = 'h',
+                        type = 'bar', text = paste(data6[[5]], gsub("[ABC]", "*", data6[[4]])), textposition='outside', orientation = 'h',
                         marker = list(color = ifelse(data6[[6]] < 0, couleurs[1], couleurs[2]))) %>%
             layout(xaxis = list(title = "Structure", showticklabels=FALSE),
                    yaxis = list(showticklabels=FALSE))
@@ -717,42 +717,42 @@ output$plot_pertes <- renderPlotly({
           
           p1 <- plot_ly(data1,
                         y = as.character(data1$indicateurs), x = data1[[6]],
-                        type = 'bar', text = paste(data1[[5]], gsub("[ABC]", "*", data1[[4]])), textposition='auto', orientation = 'h',
+                        type = 'bar', text = paste(data1[[5]], gsub("[ABC]", "*", data1[[4]])), textposition='outside', orientation = 'h',
                         marker = list(color = ifelse(data1[[6]] < 0, couleurs[1], couleurs[2]))) %>%
             layout(xaxis = list(title = "Diversité espèce", showticklabels=FALSE),
                    yaxis = list(showticklabels=FALSE))
           
           p2 <- plot_ly(data2,
                         y = as.character(data2$indicateurs), x = data2[[6]],
-                        type = 'bar', text = paste(data2[[5]], gsub("[ABC]", "*", data2[[4]])), textposition='auto', orientation = 'h',
+                        type = 'bar', text = paste(data2[[5]], gsub("[ABC]", "*", data2[[4]])), textposition='outside', orientation = 'h',
                         marker = list(color = ifelse(data2[[6]] < 0, couleurs[1], couleurs[2]))) %>%
             layout(xaxis = list(title = "Fonctionnalité", showticklabels=FALSE),
                    yaxis = list(showticklabels=FALSE))
           
           p3 <- plot_ly(data3,
                         y = as.character(data3$indicateurs), x = data3[[6]],
-                        type = 'bar', text = paste(data3[[5]], gsub("[ABC]", "*", data3[[4]])), textposition='auto', orientation = 'h',
+                        type = 'bar', text = paste(data3[[5]], gsub("[ABC]", "*", data3[[4]])), textposition='outside', orientation = 'h',
                         marker = list(color = ifelse(data3[[6]] < 0, couleurs[1], couleurs[2]))) %>%
             layout(xaxis = list(title = "Pression_PS", showticklabels=FALSE),
                    yaxis = list(showticklabels=FALSE))
           
           p4 <- plot_ly(data4,
                         y = as.character(data4$indicateurs), x = data4[[6]],
-                        type = 'bar', text = paste(data4[[5]], gsub("[ABC]", "*", data4[[4]])), textposition='auto', orientation = 'h',
+                        type = 'bar', text = paste(data4[[5]], gsub("[ABC]", "*", data4[[4]])), textposition='outside', orientation = 'h',
                         marker = list(color = ifelse(data4[[6]] < 0, couleurs[1], couleurs[2]))) %>%
             layout(xaxis = list(title = "Connectivité", showticklabels=FALSE),
                    yaxis = list(showticklabels=FALSE))
           
           p5 <- plot_ly(data5,
                         y = as.character(data5$indicateurs), x = data5[[6]],
-                        type = 'bar', text = paste(data5[[5]], gsub("[ABC]", "*", data5[[4]])), textposition='auto', orientation = 'h',
+                        type = 'bar', text = paste(data5[[5]], gsub("[ABC]", "*", data5[[4]])), textposition='outside', orientation = 'h',
                         marker = list(color = ifelse(data5[[6]] < 0, couleurs[1], couleurs[2]))) %>%
             layout(xaxis = list(title = "Représentativité", showticklabels=FALSE),
                    yaxis = list(showticklabels=FALSE))
           
           p6 <- plot_ly(data6,
                         y = as.character(data6$indicateurs), x = data6[[6]],
-                        type = 'bar', text = paste(data6[[5]], gsub("[ABC]", "*", data6[[4]])), textposition='auto', orientation = 'h',
+                        type = 'bar', text = paste(data6[[5]], gsub("[ABC]", "*", data6[[4]])), textposition='outside', orientation = 'h',
                         marker = list(color = ifelse(data6[[6]] < 0, couleurs[1], couleurs[2]))) %>%
             layout(xaxis = list(title = "Structure", showticklabels=FALSE),
                    yaxis = list(showticklabels=FALSE))
@@ -913,28 +913,28 @@ output$plot_pertes <- renderPlotly({
                         "positive" ="#7FDD4C")
           p1 <- plot_ly(data1,
                         y = as.character(data1$indicateurs), x = data1[[6]],
-                        type = 'bar', text = paste(data1[[5]], gsub("[ABC]", "*", data1[[4]])), textposition='auto', orientation = 'h',
+                        type = 'bar', text = paste(data1[[5]], gsub("[ABC]", "*", data1[[4]])), textposition='outside', orientation = 'h',
                         marker = list(color = ifelse(data1[[6]] < 0, couleurs[1], couleurs[2]))) %>%
             layout(xaxis = list(title = "Fonctionnalité", showticklabels=FALSE),
                    yaxis = list(showticklabels=FALSE))
           
           p2 <- plot_ly(data2,
                         y = as.character(data2$indicateurs), x = data2[[6]],
-                        type = 'bar', text = paste(data2[[5]], gsub("[ABC]", "*", data2[[4]])), textposition='auto', orientation = 'h',
+                        type = 'bar', text = paste(data2[[5]], gsub("[ABC]", "*", data2[[4]])), textposition='outside', orientation = 'h',
                         marker = list(color = ifelse(data2[[6]] < 0, couleurs[1], couleurs[2]))) %>%
             layout(xaxis = list(title = "Pression_PS", showticklabels=FALSE),
                    yaxis = list(showticklabels=FALSE))
           
           p3 <- plot_ly(data3,
                         y = as.character(data3$indicateurs), x = data3[[6]],
-                        type = 'bar', text = paste(data3[[5]], gsub("[ABC]", "*", data3[[4]])), textposition='auto', orientation = 'h',
+                        type = 'bar', text = paste(data3[[5]], gsub("[ABC]", "*", data3[[4]])), textposition='outside', orientation = 'h',
                         marker = list(color = ifelse(data3[[6]] < 0, couleurs[1], couleurs[2]))) %>%
             layout(xaxis = list(title = "Connectivité", showticklabels=FALSE),
                    yaxis = list(showticklabels=FALSE))
           
           p4 <- plot_ly(data4,
                         y = as.character(data4$indicateurs), x = data4[[6]],
-                        type = 'bar', text = paste(data4[[5]], gsub("[ABC]", "*", data4[[4]])), textposition='auto', orientation = 'h',
+                        type = 'bar', text = paste(data4[[5]], gsub("[ABC]", "*", data4[[4]])), textposition='outside', orientation = 'h',
                         marker = list(color = ifelse(data4[[6]] < 0, couleurs[1], couleurs[2]))) %>%
             layout(xaxis = list(title = "Représentativité", showticklabels=FALSE),
                    yaxis = list(showticklabels=FALSE))
@@ -988,28 +988,28 @@ output$plot_pertes <- renderPlotly({
                         "positive" ="#7FDD4C")
           p1 <- plot_ly(data1,
                         y = as.character(data1$indicateurs), x = data1[[6]],
-                        type = 'bar', text = paste(data1[[5]], gsub("[ABC]", "*", data1[[4]])), textposition='auto', orientation = 'h',
+                        type = 'bar', text = paste(data1[[5]], gsub("[ABC]", "*", data1[[4]])), textposition='outside', orientation = 'h',
                         marker = list(color = ifelse(data1[[6]] < 0, couleurs[1], couleurs[2]))) %>%
             layout(xaxis = list(title = "Fonctionnalité", showticklabels=FALSE),
                    yaxis = list(showticklabels=FALSE))
           
           p2 <- plot_ly(data2,
                         y = as.character(data2$indicateurs), x = data2[[6]],
-                        type = 'bar', text = paste(data2[[5]], gsub("[ABC]", "*", data2[[4]])), textposition='auto', orientation = 'h',
+                        type = 'bar', text = paste(data2[[5]], gsub("[ABC]", "*", data2[[4]])), textposition='outside', orientation = 'h',
                         marker = list(color = ifelse(data2[[6]] < 0, couleurs[1], couleurs[2]))) %>%
             layout(xaxis = list(title = "Pression_PS", showticklabels=FALSE),
                    yaxis = list(showticklabels=FALSE))
           
           p3 <- plot_ly(data3,
                         y = as.character(data3$indicateurs), x = data3[[6]],
-                        type = 'bar', text = paste(data3[[5]], gsub("[ABC]", "*", data3[[4]])), textposition='auto', orientation = 'h',
+                        type = 'bar', text = paste(data3[[5]], gsub("[ABC]", "*", data3[[4]])), textposition='outside', orientation = 'h',
                         marker = list(color = ifelse(data3[[6]] < 0, couleurs[1], couleurs[2]))) %>%
             layout(xaxis = list(title = "Connectivité", showticklabels=FALSE),
                    yaxis = list(showticklabels=FALSE))
           
           p4 <- plot_ly(data4,
                         y = as.character(data4$indicateurs), x = data4[[6]],
-                        type = 'bar', text = paste(data4[[5]], gsub("[ABC]", "*", data4[[4]])), textposition='auto', orientation = 'h',
+                        type = 'bar', text = paste(data4[[5]], gsub("[ABC]", "*", data4[[4]])), textposition='outside', orientation = 'h',
                         marker = list(color = ifelse(data4[[6]] < 0, couleurs[1], couleurs[2]))) %>%
             layout(xaxis = list(title = "Représentativité", showticklabels=FALSE),
                    yaxis = list(showticklabels=FALSE))
