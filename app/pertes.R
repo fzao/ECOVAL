@@ -759,7 +759,6 @@ output$plot_pertes <- renderPlotly({
       }else{
         shinyjs::hide("dwnlpertes")
         dat1 <- NULL
-        # p <- ggplot() + theme_void()
         p <- plotly_empty(type = "scatter", mode = "markers")
       }
     }else if(input$selectniveauperte == '3'){
@@ -1016,14 +1015,12 @@ output$plot_pertes <- renderPlotly({
       }else{
         shinyjs::hide("dwnlpertes")
         dat1 <- NULL
-        #p <- ggplot() + theme_void()
         p <- plotly_empty(type = "scatter", mode = "markers")
       }
     }
     dat1[['colour']] <- NULL
     pertes$tableau <- dat1
   }else{
-    # p <- ggplot() + theme_void()
     p <- plotly_empty(type = "scatter", mode = "markers")
     pertes$tableau <- NULL
   }
