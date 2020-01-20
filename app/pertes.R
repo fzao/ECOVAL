@@ -299,6 +299,7 @@ output$plot_pertes <- renderPlotly({
         dat1[[5]][is.nan(dat1[[5]])] <- 0
         dat1[[6]][is.na(dat1[[6]])] <- 0
         dat1[[6]][is.nan(dat1[[6]])] <- 0
+        dat1[[6]][is.infinite(dat1[[6]])] <- 0
         
         data1 <- dat1[1:13,]
         data2 <- dat1[14:24,]
@@ -395,6 +396,7 @@ output$plot_pertes <- renderPlotly({
         dat1[[5]][is.nan(dat1[[5]])] <- 0
         dat1[[6]][is.na(dat1[[6]])] <- 0
         dat1[[6]][is.nan(dat1[[6]])] <- 0
+        dat1[[6]][is.infinite(dat1[[6]])] <- 0
         
         data1 <- dat1[1:13,]
         data2 <- dat1[14:24,]
@@ -617,6 +619,7 @@ output$plot_pertes <- renderPlotly({
           dat1[[5]][is.nan(dat1[[5]])] <- 0
           dat1[[6]][is.na(dat1[[6]])] <- 0
           dat1[[6]][is.nan(dat1[[6]])] <- 0
+          dat1[[6]][is.infinite(dat1[[6]])] <- 0
           
           couleurs <- c("negative" = "#C67677",
                         "positive" ="#7FDD4C")
@@ -700,6 +703,7 @@ output$plot_pertes <- renderPlotly({
           dat1[[5]][is.nan(dat1[[5]])] <- 0
           dat1[[6]][is.na(dat1[[6]])] <- 0
           dat1[[6]][is.nan(dat1[[6]])] <- 0
+          dat1[[6]][is.infinite(dat1[[6]])] <- 0
           
           couleurs <- c("negative" = "#C67677",
                         "positive" ="#7FDD4C")
@@ -898,6 +902,7 @@ output$plot_pertes <- renderPlotly({
           dat1[[5]][is.nan(dat1[[5]])] <- 0
           dat1[[6]][is.na(dat1[[6]])] <- 0
           dat1[[6]][is.nan(dat1[[6]])] <- 0
+          dat1[[6]][is.infinite(dat1[[6]])] <- 0
           
           data1 <- dat1[which(dat1$criteres == "Fonctionnalité"),]
           data2 <- dat1[which(dat1$criteres == "Pression_PS"),]
@@ -964,7 +969,6 @@ output$plot_pertes <- renderPlotly({
             perimetres = tabsp[[1]],
             indicateurs = tabsp[[3]],
             criteres = factor(tabsp[[2]], levels=c("Diversité habitat","Diversité espèce","Patrimonialité_PS","Fonctionnalité","Pression_PS","Connectivité","Représentativité","Patrimonialité_PE","Pression_PE", "Structure")),
-            #valeurs = as.numeric(tabsp[[4]],
             incertitudes <- gsub("[ABC]", "*", tabsp[[10]]),
             pertes_brutes <- as.numeric(tabsp[[11]]) - as.numeric(tabsp[[4]]),
             pertes_relatives <- (as.numeric(tabsp[[11]]) - as.numeric(tabsp[[4]])) * 100 / as.numeric(tabsp[[4]])
@@ -973,6 +977,7 @@ output$plot_pertes <- renderPlotly({
           dat1[[5]][is.nan(dat1[[5]])] <- 0
           dat1[[6]][is.na(dat1[[6]])] <- 0
           dat1[[6]][is.nan(dat1[[6]])] <- 0
+          dat1[[6]][is.infinite(dat1[[6]])] <- 0
           
           data1 <- dat1[which(dat1$criteres == "Fonctionnalité"),]
           data2 <- dat1[which(dat1$criteres == "Pression_PS"),]

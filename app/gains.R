@@ -299,6 +299,7 @@ output$plot_gains <- renderPlotly({
         dat1[[5]][is.nan(dat1[[5]])] <- 0
         dat1[[6]][is.na(dat1[[6]])] <- 0
         dat1[[6]][is.nan(dat1[[6]])] <- 0
+        dat1[[6]][is.infinite(dat1[[6]])] <- 0
         
         data1 <- dat1[1:13,]
         data2 <- dat1[14:24,]
@@ -395,6 +396,7 @@ output$plot_gains <- renderPlotly({
         dat1[[5]][is.nan(dat1[[5]])] <- 0
         dat1[[6]][is.na(dat1[[6]])] <- 0
         dat1[[6]][is.nan(dat1[[6]])] <- 0
+        dat1[[6]][is.infinite(dat1[[6]])] <- 0
         
         data1 <- dat1[1:13,]
         data2 <- dat1[14:24,]
@@ -617,6 +619,7 @@ output$plot_gains <- renderPlotly({
           dat1[[5]][is.nan(dat1[[5]])] <- 0
           dat1[[6]][is.na(dat1[[6]])] <- 0
           dat1[[6]][is.nan(dat1[[6]])] <- 0
+          dat1[[6]][is.infinite(dat1[[6]])] <- 0
           
           couleurs <- c("negative" = "#C67677",
                         "positive" ="#7FDD4C")
@@ -701,6 +704,7 @@ output$plot_gains <- renderPlotly({
           dat1[[5]][is.nan(dat1[[5]])] <- 0
           dat1[[6]][is.na(dat1[[6]])] <- 0
           dat1[[6]][is.nan(dat1[[6]])] <- 0
+          dat1[[6]][is.infinite(dat1[[6]])] <- 0
           
           couleurs <- c("negative" = "#C67677",
                         "positive" ="#7FDD4C")
@@ -900,6 +904,7 @@ output$plot_gains <- renderPlotly({
           dat1[[5]][is.nan(dat1[[5]])] <- 0
           dat1[[6]][is.na(dat1[[6]])] <- 0
           dat1[[6]][is.nan(dat1[[6]])] <- 0
+          dat1[[6]][is.infinite(dat1[[6]])] <- 0
           
           data1 <- dat1[which(dat1$criteres == "Fonctionnalité"),]
           data2 <- dat1[which(dat1$criteres == "Pression_PS"),]
@@ -975,6 +980,7 @@ output$plot_gains <- renderPlotly({
           dat1[[5]][is.nan(dat1[[5]])] <- 0
           dat1[[6]][is.na(dat1[[6]])] <- 0
           dat1[[6]][is.nan(dat1[[6]])] <- 0
+          dat1[[6]][is.infinite(dat1[[6]])] <- 0
           
           data1 <- dat1[which(dat1$criteres == "Fonctionnalité"),]
           data2 <- dat1[which(dat1$criteres == "Pression_PS"),]
