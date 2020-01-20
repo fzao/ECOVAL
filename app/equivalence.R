@@ -264,7 +264,7 @@ output$plot_equivalence <- renderPlot({
         dat1 <- data.frame(
           perimetres = ecoval[[nameImp]][[1]],
           indicateurs = shortindicnames, #ecoval[[nameImp]][[3]],
-          criteres = factor(ecoval[[nameImp]][[2]], levels=c("Diversité habitat","Diversité Espèce","Patrimonialité_PS","Fonctionnalité","Pression_PS","Connectivité","Représentativité","Patrimonialité_PE","Pression_PE")),
+          criteres = factor(ecoval[[nameImp]][[2]], levels=c("Diversité habitat","Diversité espèce","Patrimonialité_PS","Fonctionnalité","Pression_PS","Connectivité","Représentativité","Patrimonialité_PE","Pression_PE")),
           equivalence = equivalCT)
         dat1$colour <- ifelse(dat1$equivalence < 0, "negative","positive")
         p <- ggplot(data=dat1, aes(x=indicateurs, y= equivalence)) +
@@ -295,7 +295,7 @@ output$plot_equivalence <- renderPlot({
         dat1 <- data.frame(
           perimetres = ecoval[[nameImp]][[1]],
           indicateurs = shortindicnames, #ecoval[[nameImp]][[3]],
-          criteres = factor(ecoval[[nameImp]][[2]], levels=c("Diversité habitat","Diversité Espèce","Patrimonialité_PS","Fonctionnalité","Pression_PS","Connectivité","Représentativité","Patrimonialité_PE","Pression_PE")),
+          criteres = factor(ecoval[[nameImp]][[2]], levels=c("Diversité habitat","Diversité espèce","Patrimonialité_PS","Fonctionnalité","Pression_PS","Connectivité","Représentativité","Patrimonialité_PE","Pression_PE")),
           equivalence = equivalLT)
         dat1$colour <- ifelse(dat1$equivalence < 0, "negative","positive")
         p <- ggplot(data=dat1, aes(x=indicateurs, y= equivalence)) +

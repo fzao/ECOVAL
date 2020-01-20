@@ -198,7 +198,7 @@ output$plot_pertes <- renderPlotly({
         dat1 <- data.frame(
           perimetres = ecoval[[name]][[1]],
           indicateurs = shortindicnames,
-          criteres = factor(ecoval[[name]][[2]], levels=c("Diversité habitat","Diversité Espèce","Patrimonialité_PS","Fonctionnalité","Pression_PS","Connectivité","Représentativité","Patrimonialité_PE","Pression_PE", "Structure")),
+          criteres = factor(ecoval[[name]][[2]], levels=c("Diversité habitat","Diversité espèce","Patrimonialité_PS","Fonctionnalité","Pression_PS","Connectivité","Représentativité","Patrimonialité_PE","Pression_PE", "Structure")),
           valeurs = as.numeric(ecoval[[name]][[4]]))
 
         couleurs <- c("Diversité habitat" = "#83D072",
@@ -289,7 +289,7 @@ output$plot_pertes <- renderPlotly({
         dat1 <- data.frame(
           perimetres = ecoval[[name]][[1]],
           indicateurs = shortindicnames,
-          criteres = factor(ecoval[[name]][[2]], levels=c("Diversité habitat","Diversité Espèce","Patrimonialité_PS","Fonctionnalité","Pression_PS","Connectivité","Représentativité","Patrimonialité_PE","Pression_PE", "Structure")),
+          criteres = factor(ecoval[[name]][[2]], levels=c("Diversité habitat","Diversité espèce","Patrimonialité_PS","Fonctionnalité","Pression_PS","Connectivité","Représentativité","Patrimonialité_PE","Pression_PE", "Structure")),
           incertitudes <- gsub("[ABC]", "*", ecoval[[name]][[6]]),
           pertes_brutes <- as.numeric(ecoval[[name]][[7]]) - as.numeric(ecoval[[name]][[4]]),
           pertes_relatives <- (as.numeric(ecoval[[name]][[7]]) - as.numeric(ecoval[[name]][[4]])) * 100 / as.numeric(ecoval[[name]][[4]])
@@ -385,7 +385,7 @@ output$plot_pertes <- renderPlotly({
         dat1 <- data.frame(
           perimetres = ecoval[[name]][[1]],
           indicateurs = shortindicnames,
-          criteres = factor(ecoval[[name]][[2]], levels=c("Diversité habitat","Diversité Espèce","Patrimonialité_PS","Fonctionnalité","Pression_PS","Connectivité","Représentativité","Patrimonialité_PE","Pression_PE", "Structure")),
+          criteres = factor(ecoval[[name]][[2]], levels=c("Diversité habitat","Diversité espèce","Patrimonialité_PS","Fonctionnalité","Pression_PS","Connectivité","Représentativité","Patrimonialité_PE","Pression_PE", "Structure")),
           incertitudes <- gsub("[ABC]", "*", ecoval[[name]][[9]]),
           pertes_brutes <- as.numeric(ecoval[[name]][[10]]) - as.numeric(ecoval[[name]][[4]]),
           pertes_relatives <- (as.numeric(ecoval[[name]][[10]]) - as.numeric(ecoval[[name]][[4]])) * 100 / as.numeric(ecoval[[name]][[4]])
@@ -815,7 +815,7 @@ output$plot_pertes <- renderPlotly({
           dat1 <- data.frame(
             perimetres = tabsp[[1]],
             indicateurs = tabsp[[3]],
-            criteres = factor(tabsp[[2]], levels=c("Diversité habitat","Diversité Espèce","Patrimonialité_PS","Fonctionnalité","Pression_PS","Connectivité","Représentativité","Patrimonialité_PE","Pression_PE", "Structure")),
+            criteres = factor(tabsp[[2]], levels=c("Diversité habitat","Diversité espèce","Patrimonialité_PS","Fonctionnalité","Pression_PS","Connectivité","Représentativité","Patrimonialité_PE","Pression_PE", "Structure")),
             valeurs = as.numeric(tabsp[[4]])
           )
           dat1$valeurs[is.na(dat1$valeurs)] <- 0
@@ -890,7 +890,7 @@ output$plot_pertes <- renderPlotly({
           dat1 <- data.frame(
             perimetres = tabsp[[1]],
             indicateurs = tabsp[[3]],
-            criteres = factor(tabsp[[2]], levels=c("Diversité habitat","Diversité Espèce","Patrimonialité_PS","Fonctionnalité","Pression_PS","Connectivité","Représentativité","Patrimonialité_PE","Pression_PE", "Structure")),
+            criteres = factor(tabsp[[2]], levels=c("Diversité habitat","Diversité espèce","Patrimonialité_PS","Fonctionnalité","Pression_PS","Connectivité","Représentativité","Patrimonialité_PE","Pression_PE", "Structure")),
             incertitudes <- gsub("[ABC]", "*", tabsp[[7]]),
             pertes_brutes <- as.numeric(tabsp[[8]]) - as.numeric(tabsp[[4]]),
             pertes_relatives <- (as.numeric(tabsp[[8]]) - as.numeric(tabsp[[4]])) * 100 / as.numeric(tabsp[[4]])
@@ -964,7 +964,7 @@ output$plot_pertes <- renderPlotly({
           dat1 <- data.frame(
             perimetres = tabsp[[1]],
             indicateurs = tabsp[[3]],
-            criteres = factor(tabsp[[2]], levels=c("Diversité habitat","Diversité Espèce","Patrimonialité_PS","Fonctionnalité","Pression_PS","Connectivité","Représentativité","Patrimonialité_PE","Pression_PE", "Structure")),
+            criteres = factor(tabsp[[2]], levels=c("Diversité habitat","Diversité espèce","Patrimonialité_PS","Fonctionnalité","Pression_PS","Connectivité","Représentativité","Patrimonialité_PE","Pression_PE", "Structure")),
             #valeurs = as.numeric(tabsp[[4]],
             incertitudes <- gsub("[ABC]", "*", tabsp[[10]]),
             pertes_brutes <- as.numeric(tabsp[[11]]) - as.numeric(tabsp[[4]]),

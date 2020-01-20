@@ -113,7 +113,7 @@ _Rapport généré le_ `r format(Sys.time(), "%a %d %b %Y %H:%M:%S")`
                            "% zones arti_PE",
                            "Surf EEE prox")
         couleurs <- c("Diversité habitat" = "#83D072",
-                      "Diversité Espèce" ="#1E6218",
+                      "Diversité espèce" ="#1E6218",
                       "Patrimonialité_PS" = "#9D403E",
                       "Fonctionnalité" = "#4894DC",
                       "Pression_PS" = "#E6A936",
@@ -125,7 +125,7 @@ _Rapport généré le_ `r format(Sys.time(), "%a %d %b %Y %H:%M:%S")`
         dat1 <- data.frame(
                           perimetres = ecoval[[name]][[1]][1:24],
                           indicateurs = shortindicnames[1:24],
-                          criteres = factor(ecoval[[name]][[2]][1:24], levels=c("Diversité habitat", "Diversité Espèce")),
+                          criteres = factor(ecoval[[name]][[2]][1:24], levels=c("Diversité habitat", "Diversité espèce")),
                           valeurs = as.numeric(ecoval[[name]][[4]][1:24]))
         dat2 <- data.frame(
                           perimetres = ecoval[[name]][[1]][25:45],
@@ -378,7 +378,7 @@ _Rapport généré le_ `r format(Sys.time(), "%a %d %b %Y %H:%M:%S")`
                              "Surf hab favorable connecté _ PE",
                              "Nb zones connectées entre elles")
         couleurs <- c("Diversité habitat" = "#83D072",
-                        "Diversité Espèce" ="#1E6218",
+                        "Diversité espèce" ="#1E6218",
                         "Patrimonialité_PS" = "#9D403E",
                         "Fonctionnalité" = "#4894DC",
                         "Pression_PS" = "#E6A936",
@@ -414,7 +414,7 @@ _Rapport généré le_ `r format(Sys.time(), "%a %d %b %Y %H:%M:%S")`
               dat1 <- data.frame(
                 perimetres = tabsp[[1]],
                 indicateurs = tabsp[[3]],
-                criteres = factor(tabsp[[2]], levels=c("Diversité habitat","Diversité Espèce","Patrimonialité_PS",
+                criteres = factor(tabsp[[2]], levels=c("Diversité habitat","Diversité espèce","Patrimonialité_PS",
                                                        "Fonctionnalité","Pression_PS","Connectivité","Représentativité",
                                                        "Patrimonialité_PE","Pression_PE", "Structure")),
                 valeurs = as.numeric(tabsp[[4]]))
@@ -534,7 +534,7 @@ _Rapport généré le_ `r format(Sys.time(), "%a %d %b %Y %H:%M:%S")`
          perimetres = ecoval[[name]][[1]],
          indicateurs = shortindicnames, # ecoval[[name]][[3]],
          criteres = factor(ecoval[[name]][[2]], levels=c("Diversité habitat",
-            "Diversité Espèce",
+            "Diversité espèce",
             "Patrimonialité_PS",
             "Fonctionnalité",
             "Pression_PS",
@@ -634,7 +634,7 @@ _Rapport généré le_ `r format(Sys.time(), "%a %d %b %Y %H:%M:%S")`
          perimetres = ecoval[[name]][[1]],
          indicateurs = shortindicnames, # ecoval[[name]][[3]],
          criteres = factor(ecoval[[name]][[2]], levels=c("Diversité habitat",
-                                                        "Diversité Espèce",
+                                                        "Diversité espèce",
                                                         "Patrimonialité_PS",
                                                         "Fonctionnalité",
                                                         "Pression_PS",
@@ -856,7 +856,7 @@ if(nbhabitat > 0){
             dat1 <- data.frame(
               perimetres = tabsp[[1]],
               indicateurs = tabsp[[3]],
-              criteres = factor(tabsp[[2]], levels=c("Diversité habitat","Diversité Espèce","Patrimonialité_PS","Fonctionnalité","Pression_PS","Connectivité","Représentativité","Patrimonialité_PE","Pression_PE", "Structure")),
+              criteres = factor(tabsp[[2]], levels=c("Diversité habitat","Diversité espèce","Patrimonialité_PS","Fonctionnalité","Pression_PS","Connectivité","Représentativité","Patrimonialité_PE","Pression_PE", "Structure")),
               # valeurs = as.numeric(tabsp[[4]]),
               incertitudes <- gsub("[ABC]", "*", tabsp[[7]]),
               pertes_brutes <- as.numeric(tabsp[[8]]) - as.numeric(tabsp[[4]]),
@@ -880,7 +880,7 @@ if(nbhabitat > 0){
             dat1 <- data.frame(
               perimetres = tabsp[[1]],
               indicateurs = tabsp[[3]],
-              criteres = factor(tabsp[[2]], levels=c("Diversité habitat","Diversité Espèce","Patrimonialité_PS","Fonctionnalité","Pression_PS","Connectivité","Représentativité","Patrimonialité_PE","Pression_PE", "Structure")),
+              criteres = factor(tabsp[[2]], levels=c("Diversité habitat","Diversité espèce","Patrimonialité_PS","Fonctionnalité","Pression_PS","Connectivité","Représentativité","Patrimonialité_PE","Pression_PE", "Structure")),
               # valeurs = as.numeric(tabsp[[4]]),
               incertitudes <- gsub("[ABC]", "*", tabsp[[10]]),
               pertes_brutes <- as.numeric(tabsp[[11]]) - as.numeric(tabsp[[4]]),
@@ -996,7 +996,7 @@ if(nbhabitat > 0){
                 "% zones arti_PE",
                 "Surf EEE prox")
         couleurs <- c("Diversité habitat" = "#83D072",
-                              "Diversité Espèce" ="#1E6218",
+                              "Diversité espèce" ="#1E6218",
                               "Patrimonialité_PS" = "#9D403E",
                               "Fonctionnalité" = "#4894DC",
                               "Pression_PS" = "#E6A936",
@@ -1008,7 +1008,7 @@ if(nbhabitat > 0){
         dat1 <- data.frame(
                           perimetres = ecoval[[name]][[1]][1:24],
                           indicateurs = shortindicnames[1:24],
-                          criteres = factor(ecoval[[name]][[2]][1:24], levels=c("Diversité habitat", "Diversité Espèce")),
+                          criteres = factor(ecoval[[name]][[2]][1:24], levels=c("Diversité habitat", "Diversité espèce")),
                           valeurs = as.numeric(ecoval[[name]][[4]][1:24]))
         dat2 <- data.frame(
                           perimetres = ecoval[[name]][[1]][25:45],
@@ -1264,7 +1264,7 @@ if(nbhabitat > 0){
                              "Surf hab favorable connecté _ PE",
                              "Nb zones connectées entre elles")
         couleurs <- c("Diversité habitat" = "#83D072",
-                        "Diversité Espèce" ="#1E6218",
+                        "Diversité espèce" ="#1E6218",
                         "Patrimonialité_PS" = "#9D403E",
                         "Fonctionnalité" = "#4894DC",
                         "Pression_PS" = "#E6A936",
@@ -1300,7 +1300,7 @@ if(nbhabitat > 0){
               dat1 <- data.frame(
                 perimetres = tabsp[[1]],
                 indicateurs = tabsp[[3]],
-                criteres = factor(tabsp[[2]], levels=c("Diversité habitat","Diversité Espèce","Patrimonialité_PS",
+                criteres = factor(tabsp[[2]], levels=c("Diversité habitat","Diversité espèce","Patrimonialité_PS",
                                                        "Fonctionnalité","Pression_PS","Connectivité","Représentativité",
                                                        "Patrimonialité_PE","Pression_PE", "Structure")),
                 valeurs = as.numeric(tabsp[[4]]))
@@ -1419,7 +1419,7 @@ if(nbhabitat > 0){
       dat1 <- data.frame(
           perimetres = ecoval[[name]][[1]],
           indicateurs = shortindicnames, # ecoval[[name]][[3]],
-          criteres = factor(ecoval[[name]][[2]], levels=c("Diversité habitat","Diversité Espèce","Patrimonialité_PS","Fonctionnalité","Pression_PS","Connectivité","Représentativité","Patrimonialité_PE","Pression_PE", "Structure")),
+          criteres = factor(ecoval[[name]][[2]], levels=c("Diversité habitat","Diversité espèce","Patrimonialité_PS","Fonctionnalité","Pression_PS","Connectivité","Représentativité","Patrimonialité_PE","Pression_PE", "Structure")),
           # valeurs = as.numeric(ecoval[[name]][[7]]),
           incertitudes <- gsub("[ABC]", "*", ecoval[[name]][[6]]),
           gains_bruts <- as.numeric(ecoval[[name]][[7]]) - as.numeric(ecoval[[name]][[4]]),
@@ -1510,7 +1510,7 @@ if(nbhabitat > 0){
     dat1 <- data.frame(
             perimetres = ecoval[[name]][[1]],
             indicateurs = shortindicnames, # ecoval[[name]][[3]],
-            criteres = factor(ecoval[[name]][[2]], levels=c("Diversité habitat","Diversité Espèce","Patrimonialité_PS","Fonctionnalité","Pression_PS","Connectivité","Représentativité","Patrimonialité_PE","Pression_PE", "Structure")),
+            criteres = factor(ecoval[[name]][[2]], levels=c("Diversité habitat","Diversité espèce","Patrimonialité_PS","Fonctionnalité","Pression_PS","Connectivité","Représentativité","Patrimonialité_PE","Pression_PE", "Structure")),
             # valeurs = as.numeric(ecoval[[name]][[7]]),
             incertitudes <- gsub("[ABC]", "*", ecoval[[name]][[9]]),
             gains_bruts <- as.numeric(ecoval[[name]][[10]]) - as.numeric(ecoval[[name]][[4]]),
@@ -1863,7 +1863,7 @@ shortindicnames <- c("Nb hab forestier",
         dat1 <- data.frame(
           perimetres = ecoval[[nameImp]][[1]],
           indicateurs = shortindicnames, #ecoval[[nameImp]][[3]],
-          criteres = factor(ecoval[[nameImp]][[2]], levels=c("Diversité habitat","Diversité Espèce","Patrimonialité_PS","Fonctionnalité","Pression_PS","Connectivité","Représentativité","Patrimonialité_PE","Pression_PE")),
+          criteres = factor(ecoval[[nameImp]][[2]], levels=c("Diversité habitat","Diversité espèce","Patrimonialité_PS","Fonctionnalité","Pression_PS","Connectivité","Représentativité","Patrimonialité_PE","Pression_PE")),
           equivalence = equivalCT)
         dat1$colour <- ifelse(dat1$equivalence < 0, "negative","positive")
         p <- ggplot(data=dat1, aes(x=indicateurs, y= equivalence)) +
@@ -1954,7 +1954,7 @@ shortindicnames <- c("Nb hab forestier",
         dat1 <- data.frame(
           perimetres = ecoval[[nameImp]][[1]],
           indicateurs = shortindicnames, #ecoval[[nameImp]][[3]],
-          criteres = factor(ecoval[[nameImp]][[2]], levels=c("Diversité habitat","Diversité Espèce","Patrimonialité_PS","Fonctionnalité","Pression_PS","Connectivité","Représentativité","Patrimonialité_PE","Pression_PE")),
+          criteres = factor(ecoval[[nameImp]][[2]], levels=c("Diversité habitat","Diversité espèce","Patrimonialité_PS","Fonctionnalité","Pression_PS","Connectivité","Représentativité","Patrimonialité_PE","Pression_PE")),
           equivalence = equivalLT)
         dat1$colour <- ifelse(dat1$equivalence < 0, "negative","positive")
         p <- ggplot(data=dat1, aes(x=indicateurs, y= equivalence)) +

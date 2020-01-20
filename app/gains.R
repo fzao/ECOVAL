@@ -198,11 +198,11 @@ output$plot_gains <- renderPlot({
         dat1 <- data.frame(
           perimetres = ecoval[[name]][[1]],
           indicateurs = shortindicnames, #ecoval[[name]][[3]]
-          criteres = factor(ecoval[[name]][[2]], levels=c("Diversité habitat","Diversité Espèce","Patrimonialité_PS","Fonctionnalité","Pression_PS","Connectivité","Représentativité","Patrimonialité_PE","Pression_PE")),
+          criteres = factor(ecoval[[name]][[2]], levels=c("Diversité habitat","Diversité espèce","Patrimonialité_PS","Fonctionnalité","Pression_PS","Connectivité","Représentativité","Patrimonialité_PE","Pression_PE")),
           valeurs = as.numeric(ecoval[[name]][[4]])
         )
         couleurs <- c("Diversité habitat" = "#83D072",
-                      "Diversité Espèce" ="#1E6218",
+                      "Diversité espèce" ="#1E6218",
                       "Patrimonialité_PS" = "#9D403E",
                       "Fonctionnalité" = "#4894DC",
                       "Pression_PS" = "#E6A936",
@@ -229,7 +229,7 @@ output$plot_gains <- renderPlot({
         dat1 <- data.frame(
           perimetres = ecoval[[name]][[1]],
           indicateurs = shortindicnames, # ecoval[[name]][[3]],
-          criteres = factor(ecoval[[name]][[2]], levels=c("Diversité habitat","Diversité Espèce","Patrimonialité_PS","Fonctionnalité","Pression_PS","Connectivité","Représentativité","Patrimonialité_PE","Pression_PE", "Structure")),
+          criteres = factor(ecoval[[name]][[2]], levels=c("Diversité habitat","Diversité espèce","Patrimonialité_PS","Fonctionnalité","Pression_PS","Connectivité","Représentativité","Patrimonialité_PE","Pression_PE", "Structure")),
           # valeurs = as.numeric(ecoval[[name]][[7]]),
           incertitudes <- gsub("[ABC]", "*", ecoval[[name]][[6]]),
           gains_bruts <- as.numeric(ecoval[[name]][[7]]) - as.numeric(ecoval[[name]][[4]]),
@@ -256,7 +256,7 @@ output$plot_gains <- renderPlot({
         dat1 <- data.frame(
           perimetres = ecoval[[name]][[1]],
           indicateurs = shortindicnames, # ecoval[[name]][[3]],
-          criteres = factor(ecoval[[name]][[2]], levels=c("Diversité habitat","Diversité Espèce","Patrimonialité_PS","Fonctionnalité","Pression_PS","Connectivité","Représentativité","Patrimonialité_PE","Pression_PE", "Structure")),
+          criteres = factor(ecoval[[name]][[2]], levels=c("Diversité habitat","Diversité espèce","Patrimonialité_PS","Fonctionnalité","Pression_PS","Connectivité","Représentativité","Patrimonialité_PE","Pression_PE", "Structure")),
           # valeurs = as.numeric(ecoval[[name]][[7]]),
           incertitudes <- gsub("[ABC]", "*", ecoval[[name]][[9]]),
           gains_bruts <- as.numeric(ecoval[[name]][[10]]) - as.numeric(ecoval[[name]][[4]]),
