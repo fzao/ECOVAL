@@ -113,7 +113,7 @@ _Rapport généré le_ `r format(Sys.time(), "%a %d %b %Y %H:%M:%S")`
                            "% zones arti_PE",
                            "Surf EEE prox")
         couleurs <- c("Diversité habitat" = "#83D072",
-                      "Diversité Espèce" ="#1E6218",
+                      "Diversité espèce" ="#1E6218",
                       "Patrimonialité_PS" = "#9D403E",
                       "Fonctionnalité" = "#4894DC",
                       "Pression_PS" = "#E6A936",
@@ -125,7 +125,7 @@ _Rapport généré le_ `r format(Sys.time(), "%a %d %b %Y %H:%M:%S")`
         dat1 <- data.frame(
                           perimetres = ecoval[[name]][[1]][1:24],
                           indicateurs = shortindicnames[1:24],
-                          criteres = factor(ecoval[[name]][[2]][1:24], levels=c("Diversité habitat", "Diversité Espèce")),
+                          criteres = factor(ecoval[[name]][[2]][1:24], levels=c("Diversité habitat", "Diversité espèce")),
                           valeurs = as.numeric(ecoval[[name]][[4]][1:24]))
         dat2 <- data.frame(
                           perimetres = ecoval[[name]][[1]][25:45],
@@ -137,6 +137,12 @@ _Rapport généré le_ `r format(Sys.time(), "%a %d %b %Y %H:%M:%S")`
                           indicateurs = shortindicnames[46:61],
                           criteres = factor(ecoval[[name]][[2]][46:61], levels=c("Connectivité","Représentativité","Patrimonialité_PE","Pression_PE", "Structure")),
                           valeurs = as.numeric(ecoval[[name]][[4]][46:61]))
+        dat1$valeurs[is.na(dat1$valeurs)] <- 0
+        dat1$valeurs[is.nan(dat1$valeurs)] <- 0
+        dat2$valeurs[is.na(dat2$valeurs)] <- 0
+        dat2$valeurs[is.nan(dat2$valeurs)] <- 0
+        dat3$valeurs[is.na(dat3$valeurs)] <- 0
+        dat3$valeurs[is.nan(dat3$valeurs)] <- 0
         ggplot(data=dat1, aes(x=indicateurs, y=valeurs)) +
           geom_bar(stat="identity", width=0.5, aes(fill=criteres))+
           theme_bw()+
@@ -318,6 +324,8 @@ _Rapport généré le_ `r format(Sys.time(), "%a %d %b %Y %H:%M:%S")`
                                                     "Connectivité","Représentativité","Patrimonialité_PE","Pression_PE", "Structure")),
             valeurs = as.numeric(tabhab[[4]])
           )
+          dat1$valeurs[is.na(dat1$valeurs)] <- 0
+          dat1$valeurs[is.nan(dat1$valeurs)] <- 0
           p <- ggplot(data=dat1, aes(x=indicateurs, y=valeurs)) +
             geom_bar(stat="identity", width=0.5, aes(fill=criteres))+
             theme_bw()+
@@ -378,7 +386,7 @@ _Rapport généré le_ `r format(Sys.time(), "%a %d %b %Y %H:%M:%S")`
                              "Surf hab favorable connecté _ PE",
                              "Nb zones connectées entre elles")
         couleurs <- c("Diversité habitat" = "#83D072",
-                        "Diversité Espèce" ="#1E6218",
+                        "Diversité espèce" ="#1E6218",
                         "Patrimonialité_PS" = "#9D403E",
                         "Fonctionnalité" = "#4894DC",
                         "Pression_PS" = "#E6A936",
@@ -414,10 +422,12 @@ _Rapport généré le_ `r format(Sys.time(), "%a %d %b %Y %H:%M:%S")`
               dat1 <- data.frame(
                 perimetres = tabsp[[1]],
                 indicateurs = tabsp[[3]],
-                criteres = factor(tabsp[[2]], levels=c("Diversité habitat","Diversité Espèce","Patrimonialité_PS",
+                criteres = factor(tabsp[[2]], levels=c("Diversité habitat","Diversité espèce","Patrimonialité_PS",
                                                        "Fonctionnalité","Pression_PS","Connectivité","Représentativité",
                                                        "Patrimonialité_PE","Pression_PE", "Structure")),
                 valeurs = as.numeric(tabsp[[4]]))
+              dat1$valeurs[is.na(dat1$valeurs)] <- 0
+              dat1$valeurs[is.nan(dat1$valeurs)] <- 0
               p <- ggplot(data=dat1, aes(x=indicateurs, y=valeurs)) +
                 geom_bar(stat="identity", width=0.5, aes(fill=criteres))+
                 theme_bw()+
@@ -534,7 +544,7 @@ _Rapport généré le_ `r format(Sys.time(), "%a %d %b %Y %H:%M:%S")`
          perimetres = ecoval[[name]][[1]],
          indicateurs = shortindicnames, # ecoval[[name]][[3]],
          criteres = factor(ecoval[[name]][[2]], levels=c("Diversité habitat",
-            "Diversité Espèce",
+            "Diversité espèce",
             "Patrimonialité_PS",
             "Fonctionnalité",
             "Pression_PS",
@@ -548,6 +558,11 @@ _Rapport généré le_ `r format(Sys.time(), "%a %d %b %Y %H:%M:%S")`
          pertes_brutes <- as.numeric(ecoval[[name]][[7]]) - as.numeric(ecoval[[name]][[4]]),
          pertes_relatives <- (as.numeric(ecoval[[name]][[7]]) - as.numeric(ecoval[[name]][[4]])) * 100 / as.numeric(ecoval[[name]][[4]])
       )
+      dat1[[5]][is.na(dat1[[5]])] <- 0
+      dat1[[5]][is.nan(dat1[[5]])] <- 0
+      dat1[[6]][is.na(dat1[[6]])] <- 0
+      dat1[[6]][is.nan(dat1[[6]])] <- 0
+      dat1[[6]][is.infinite(dat1[[6]])] <- 0
       dat1$colour <- ifelse(dat1$pertes_relatives < 0, "negative","positive")
       p <- ggplot(data=dat1, aes(x=indicateurs, y=pertes_relatives)) +
          geom_bar(stat="identity",  width=0.5, aes(fill=colour))+
@@ -634,7 +649,7 @@ _Rapport généré le_ `r format(Sys.time(), "%a %d %b %Y %H:%M:%S")`
          perimetres = ecoval[[name]][[1]],
          indicateurs = shortindicnames, # ecoval[[name]][[3]],
          criteres = factor(ecoval[[name]][[2]], levels=c("Diversité habitat",
-                                                        "Diversité Espèce",
+                                                        "Diversité espèce",
                                                         "Patrimonialité_PS",
                                                         "Fonctionnalité",
                                                         "Pression_PS",
@@ -648,6 +663,11 @@ _Rapport généré le_ `r format(Sys.time(), "%a %d %b %Y %H:%M:%S")`
          pertes_brutes <- as.numeric(ecoval[[name]][[10]]) - as.numeric(ecoval[[name]][[4]]),
          pertes_relatives <- (as.numeric(ecoval[[name]][[10]]) - as.numeric(ecoval[[name]][[4]])) * 100 / as.numeric(ecoval[[name]][[4]])
       )
+      dat1[[5]][is.na(dat1[[5]])] <- 0
+      dat1[[5]][is.nan(dat1[[5]])] <- 0
+      dat1[[6]][is.na(dat1[[6]])] <- 0
+      dat1[[6]][is.nan(dat1[[6]])] <- 0
+      dat1[[6]][is.infinite(dat1[[6]])] <- 0
       dat1$colour <- ifelse(dat1$pertes_relatives < 0, "negative","positive")
       p <- ggplot(data=dat1, aes(x=indicateurs, y=pertes_relatives)) +
          geom_bar(stat="identity",  width=0.5, aes(fill=colour))+
@@ -739,6 +759,11 @@ if(nbhabitat > 0){
           pertes_brutes <- as.numeric(tabhab[[8]]) - as.numeric(tabhab[[4]]),
           pertes_relatives <- (as.numeric(tabhab[[8]]) - as.numeric(tabhab[[4]])) * 100 / as.numeric(tabhab[[4]])
         )
+        dat1[[5]][is.na(dat1[[5]])] <- 0
+        dat1[[5]][is.nan(dat1[[5]])] <- 0
+        dat1[[6]][is.na(dat1[[6]])] <- 0
+        dat1[[6]][is.nan(dat1[[6]])] <- 0
+        dat1[[6]][is.infinite(dat1[[6]])] <- 0
         dat1$colour <- ifelse(dat1$pertes_relatives < 0, "negative","positive")
         p <- ggplot(data=dat1, aes(x=indicateurs, y=pertes_relatives)) +
           geom_bar(stat="identity",  width=0.5, aes(fill=colour))+
@@ -763,6 +788,11 @@ if(nbhabitat > 0){
          pertes_brutes <- as.numeric(tabhab[[11]]) - as.numeric(tabhab[[4]]),
          pertes_relatives <- (as.numeric(tabhab[[11]]) - as.numeric(tabhab[[4]])) * 100 / as.numeric(tabhab[[4]])
        )
+       dat1[[5]][is.na(dat1[[5]])] <- 0
+       dat1[[5]][is.nan(dat1[[5]])] <- 0
+       dat1[[6]][is.na(dat1[[6]])] <- 0
+       dat1[[6]][is.nan(dat1[[6]])] <- 0
+       dat1[[6]][is.infinite(dat1[[6]])] <- 0
        dat1$colour <- ifelse(dat1$pertes_relatives < 0, "negative","positive")
        p <- ggplot(data=dat1, aes(x=indicateurs, y=pertes_relatives)) +
          geom_bar(stat="identity",  width=0.5, aes(fill=colour))+
@@ -856,12 +886,17 @@ if(nbhabitat > 0){
             dat1 <- data.frame(
               perimetres = tabsp[[1]],
               indicateurs = tabsp[[3]],
-              criteres = factor(tabsp[[2]], levels=c("Diversité habitat","Diversité Espèce","Patrimonialité_PS","Fonctionnalité","Pression_PS","Connectivité","Représentativité","Patrimonialité_PE","Pression_PE", "Structure")),
+              criteres = factor(tabsp[[2]], levels=c("Diversité habitat","Diversité espèce","Patrimonialité_PS","Fonctionnalité","Pression_PS","Connectivité","Représentativité","Patrimonialité_PE","Pression_PE", "Structure")),
               # valeurs = as.numeric(tabsp[[4]]),
               incertitudes <- gsub("[ABC]", "*", tabsp[[7]]),
               pertes_brutes <- as.numeric(tabsp[[8]]) - as.numeric(tabsp[[4]]),
               pertes_relatives <- (as.numeric(tabsp[[8]]) - as.numeric(tabsp[[4]])) * 100 / as.numeric(tabsp[[4]])
             )
+            dat1[[5]][is.na(dat1[[5]])] <- 0
+            dat1[[5]][is.nan(dat1[[5]])] <- 0
+            dat1[[6]][is.na(dat1[[6]])] <- 0
+            dat1[[6]][is.nan(dat1[[6]])] <- 0
+            dat1[[6]][is.infinite(dat1[[6]])] <- 0
             dat1$colour <- ifelse(dat1$pertes_relatives < 0, "negative","positive")
             p <- ggplot(data=dat1, aes(x=indicateurs, y=pertes_relatives)) +
               geom_bar(stat="identity",  width=0.5, aes(fill=colour))+
@@ -880,12 +915,17 @@ if(nbhabitat > 0){
             dat1 <- data.frame(
               perimetres = tabsp[[1]],
               indicateurs = tabsp[[3]],
-              criteres = factor(tabsp[[2]], levels=c("Diversité habitat","Diversité Espèce","Patrimonialité_PS","Fonctionnalité","Pression_PS","Connectivité","Représentativité","Patrimonialité_PE","Pression_PE", "Structure")),
+              criteres = factor(tabsp[[2]], levels=c("Diversité habitat","Diversité espèce","Patrimonialité_PS","Fonctionnalité","Pression_PS","Connectivité","Représentativité","Patrimonialité_PE","Pression_PE", "Structure")),
               # valeurs = as.numeric(tabsp[[4]]),
               incertitudes <- gsub("[ABC]", "*", tabsp[[10]]),
               pertes_brutes <- as.numeric(tabsp[[11]]) - as.numeric(tabsp[[4]]),
               pertes_relatives <- (as.numeric(tabsp[[11]]) - as.numeric(tabsp[[4]])) * 100 / as.numeric(tabsp[[4]])
             )
+            dat1[[5]][is.na(dat1[[5]])] <- 0
+            dat1[[5]][is.nan(dat1[[5]])] <- 0
+            dat1[[6]][is.na(dat1[[6]])] <- 0
+            dat1[[6]][is.nan(dat1[[6]])] <- 0
+            dat1[[6]][is.infinite(dat1[[6]])] <- 0
             dat1$colour <- ifelse(dat1$pertes_relatives < 0, "negative","positive")
             p <- ggplot(data=dat1, aes(x=indicateurs, y=pertes_relatives)) +
               geom_bar(stat="identity",  width=0.5, aes(fill=colour))+
@@ -996,7 +1036,7 @@ if(nbhabitat > 0){
                 "% zones arti_PE",
                 "Surf EEE prox")
         couleurs <- c("Diversité habitat" = "#83D072",
-                              "Diversité Espèce" ="#1E6218",
+                              "Diversité espèce" ="#1E6218",
                               "Patrimonialité_PS" = "#9D403E",
                               "Fonctionnalité" = "#4894DC",
                               "Pression_PS" = "#E6A936",
@@ -1008,7 +1048,7 @@ if(nbhabitat > 0){
         dat1 <- data.frame(
                           perimetres = ecoval[[name]][[1]][1:24],
                           indicateurs = shortindicnames[1:24],
-                          criteres = factor(ecoval[[name]][[2]][1:24], levels=c("Diversité habitat", "Diversité Espèce")),
+                          criteres = factor(ecoval[[name]][[2]][1:24], levels=c("Diversité habitat", "Diversité espèce")),
                           valeurs = as.numeric(ecoval[[name]][[4]][1:24]))
         dat2 <- data.frame(
                           perimetres = ecoval[[name]][[1]][25:45],
@@ -1020,6 +1060,12 @@ if(nbhabitat > 0){
                           indicateurs = shortindicnames[46:61],
                           criteres = factor(ecoval[[name]][[2]][46:61], levels=c("Connectivité","Représentativité","Patrimonialité_PE","Pression_PE", "Structure")),
                           valeurs = as.numeric(ecoval[[name]][[4]][46:61]))
+        dat1$valeurs[is.na(dat1$valeurs)] <- 0
+        dat1$valeurs[is.nan(dat1$valeurs)] <- 0
+        dat2$valeurs[is.na(dat2$valeurs)] <- 0
+        dat2$valeurs[is.nan(dat2$valeurs)] <- 0
+        dat3$valeurs[is.na(dat3$valeurs)] <- 0
+        dat3$valeurs[is.nan(dat3$valeurs)] <- 0
         ggplot(data=dat1, aes(x=indicateurs, y=valeurs)) +
           geom_bar(stat="identity", width=0.5, aes(fill=criteres))+
           theme_bw()+
@@ -1204,6 +1250,8 @@ if(nbhabitat > 0){
                                                     "Connectivité","Représentativité","Patrimonialité_PE","Pression_PE", "Structure")),
             valeurs = as.numeric(tabhab[[4]])
           )
+          dat1$valeurs[is.na(dat1$valeurs)] <- 0
+          dat1$valeurs[is.nan(dat1$valeurs)] <- 0
           p <- ggplot(data=dat1, aes(x=indicateurs, y=valeurs)) +
             geom_bar(stat="identity", width=0.5, aes(fill=criteres))+
             theme_bw()+
@@ -1264,7 +1312,7 @@ if(nbhabitat > 0){
                              "Surf hab favorable connecté _ PE",
                              "Nb zones connectées entre elles")
         couleurs <- c("Diversité habitat" = "#83D072",
-                        "Diversité Espèce" ="#1E6218",
+                        "Diversité espèce" ="#1E6218",
                         "Patrimonialité_PS" = "#9D403E",
                         "Fonctionnalité" = "#4894DC",
                         "Pression_PS" = "#E6A936",
@@ -1300,10 +1348,12 @@ if(nbhabitat > 0){
               dat1 <- data.frame(
                 perimetres = tabsp[[1]],
                 indicateurs = tabsp[[3]],
-                criteres = factor(tabsp[[2]], levels=c("Diversité habitat","Diversité Espèce","Patrimonialité_PS",
+                criteres = factor(tabsp[[2]], levels=c("Diversité habitat","Diversité espèce","Patrimonialité_PS",
                                                        "Fonctionnalité","Pression_PS","Connectivité","Représentativité",
                                                        "Patrimonialité_PE","Pression_PE", "Structure")),
                 valeurs = as.numeric(tabsp[[4]]))
+              dat1$valeurs[is.na(dat1$valeurs)] <- 0
+              dat1$valeurs[is.nan(dat1$valeurs)] <- 0
               p <- ggplot(data=dat1, aes(x=indicateurs, y=valeurs)) +
                 geom_bar(stat="identity", width=0.5, aes(fill=criteres))+
                 theme_bw()+
@@ -1419,12 +1469,17 @@ if(nbhabitat > 0){
       dat1 <- data.frame(
           perimetres = ecoval[[name]][[1]],
           indicateurs = shortindicnames, # ecoval[[name]][[3]],
-          criteres = factor(ecoval[[name]][[2]], levels=c("Diversité habitat","Diversité Espèce","Patrimonialité_PS","Fonctionnalité","Pression_PS","Connectivité","Représentativité","Patrimonialité_PE","Pression_PE", "Structure")),
+          criteres = factor(ecoval[[name]][[2]], levels=c("Diversité habitat","Diversité espèce","Patrimonialité_PS","Fonctionnalité","Pression_PS","Connectivité","Représentativité","Patrimonialité_PE","Pression_PE", "Structure")),
           # valeurs = as.numeric(ecoval[[name]][[7]]),
           incertitudes <- gsub("[ABC]", "*", ecoval[[name]][[6]]),
           gains_bruts <- as.numeric(ecoval[[name]][[7]]) - as.numeric(ecoval[[name]][[4]]),
           gains_relatifs <- (as.numeric(ecoval[[name]][[7]]) - as.numeric(ecoval[[name]][[4]])) * 100 / as.numeric(ecoval[[name]][[4]])
         )
+      dat1[[5]][is.na(dat1[[5]])] <- 0
+      dat1[[5]][is.nan(dat1[[5]])] <- 0
+      dat1[[6]][is.na(dat1[[6]])] <- 0
+      dat1[[6]][is.nan(dat1[[6]])] <- 0
+      dat1[[6]][is.infinite(dat1[[6]])] <- 0
       dat1$colour <- ifelse(dat1$gains_relatifs < 0, "negative","positive")
       p <- ggplot(data=dat1, aes(x=indicateurs, y=gains_relatifs)) +
           geom_bar(stat="identity",  width=0.5, aes(fill=colour))+
@@ -1510,12 +1565,17 @@ if(nbhabitat > 0){
     dat1 <- data.frame(
             perimetres = ecoval[[name]][[1]],
             indicateurs = shortindicnames, # ecoval[[name]][[3]],
-            criteres = factor(ecoval[[name]][[2]], levels=c("Diversité habitat","Diversité Espèce","Patrimonialité_PS","Fonctionnalité","Pression_PS","Connectivité","Représentativité","Patrimonialité_PE","Pression_PE", "Structure")),
+            criteres = factor(ecoval[[name]][[2]], levels=c("Diversité habitat","Diversité espèce","Patrimonialité_PS","Fonctionnalité","Pression_PS","Connectivité","Représentativité","Patrimonialité_PE","Pression_PE", "Structure")),
             # valeurs = as.numeric(ecoval[[name]][[7]]),
             incertitudes <- gsub("[ABC]", "*", ecoval[[name]][[9]]),
             gains_bruts <- as.numeric(ecoval[[name]][[10]]) - as.numeric(ecoval[[name]][[4]]),
             gains_relatifs <- (as.numeric(ecoval[[name]][[10]]) - as.numeric(ecoval[[name]][[4]])) * 100 / as.numeric(ecoval[[name]][[4]])
           )
+    dat1[[5]][is.na(dat1[[5]])] <- 0
+    dat1[[5]][is.nan(dat1[[5]])] <- 0
+    dat1[[6]][is.na(dat1[[6]])] <- 0
+    dat1[[6]][is.nan(dat1[[6]])] <- 0
+    dat1[[6]][is.infinite(dat1[[6]])] <- 0
     dat1$colour <- ifelse(dat1$gains_relatifs < 0, "negative","positive")
     p <- ggplot(data=dat1, aes(x=indicateurs, y=gains_relatifs)) +
             geom_bar(stat="identity",  width=0.5, aes(fill=colour))+
@@ -1609,6 +1669,11 @@ if(nbhabitat > 0){
           gains_bruts <- as.numeric(tabhab[[8]]) - as.numeric(tabhab[[4]]),
           gains_relatifs <- (as.numeric(tabhab[[8]]) - as.numeric(tabhab[[4]])) * 100 / as.numeric(tabhab[[4]])
         )
+        dat1[[5]][is.na(dat1[[5]])] <- 0
+        dat1[[5]][is.nan(dat1[[5]])] <- 0
+        dat1[[6]][is.na(dat1[[6]])] <- 0
+        dat1[[6]][is.nan(dat1[[6]])] <- 0
+        dat1[[6]][is.infinite(dat1[[6]])] <- 0
         dat1$colour <- ifelse(dat1$gains_relatifs < 0, "negative","positive")
         p <- ggplot(data=dat1, aes(x=indicateurs, y=gains_relatifs)) +
           geom_bar(stat="identity",  width=0.5, aes(fill=colour))+
@@ -1634,6 +1699,11 @@ if(nbhabitat > 0){
             gains_bruts <- as.numeric(tabhab[[11]]) - as.numeric(tabhab[[4]]),
             gains_relatifs <- (as.numeric(tabhab[[11]]) - as.numeric(tabhab[[4]])) * 100 / as.numeric(tabhab[[4]])
           )
+        dat1[[5]][is.na(dat1[[5]])] <- 0
+        dat1[[5]][is.nan(dat1[[5]])] <- 0
+        dat1[[6]][is.na(dat1[[6]])] <- 0
+        dat1[[6]][is.nan(dat1[[6]])] <- 0
+        dat1[[6]][is.infinite(dat1[[6]])] <- 0
         dat1$colour <- ifelse(dat1$gains_relatifs < 0, "negative","positive")
         p <- ggplot(data=dat1, aes(x=indicateurs, y=gains_relatifs)) +
             geom_bar(stat="identity",  width=0.5, aes(fill=colour))+
@@ -1733,6 +1803,11 @@ if(nbhabitat > 0){
             gains_bruts <- as.numeric(tabsp[[8]]) - as.numeric(tabsp[[4]]),
             gains_relatifs <- (as.numeric(tabsp[[8]]) - as.numeric(tabsp[[4]])) * 100 / as.numeric(tabsp[[4]])
             )
+            dat1[[5]][is.na(dat1[[5]])] <- 0
+            dat1[[5]][is.nan(dat1[[5]])] <- 0
+            dat1[[6]][is.na(dat1[[6]])] <- 0
+            dat1[[6]][is.nan(dat1[[6]])] <- 0
+            dat1[[6]][is.infinite(dat1[[6]])] <- 0
             dat1$colour <- ifelse(dat1$gains_relatifs < 0, "negative","positive")
             p <- ggplot(data=dat1, aes(x=indicateurs, y=gains_relatifs)) +
               geom_bar(stat="identity",  width=0.5, aes(fill=colour)) +
@@ -1758,6 +1833,11 @@ if(nbhabitat > 0){
             gains_bruts <- as.numeric(tabsp[[11]]) - as.numeric(tabsp[[4]]),
             gains_relatifs <- (as.numeric(tabsp[[11]]) - as.numeric(tabsp[[4]])) * 100 / as.numeric(tabsp[[4]])
             )
+            dat1[[5]][is.na(dat1[[5]])] <- 0
+            dat1[[5]][is.nan(dat1[[5]])] <- 0
+            dat1[[6]][is.na(dat1[[6]])] <- 0
+            dat1[[6]][is.nan(dat1[[6]])] <- 0
+            dat1[[6]][is.infinite(dat1[[6]])] <- 0
             dat1$colour <- ifelse(dat1$gains_relatifs < 0, "negative","positive")
             p <- ggplot(data=dat1, aes(x=indicateurs, y=gains_relatifs)) +
               geom_bar(stat="identity",  width=0.5, aes(fill=colour))+
@@ -1863,8 +1943,9 @@ shortindicnames <- c("Nb hab forestier",
         dat1 <- data.frame(
           perimetres = ecoval[[nameImp]][[1]],
           indicateurs = shortindicnames, #ecoval[[nameImp]][[3]],
-          criteres = factor(ecoval[[nameImp]][[2]], levels=c("Diversité habitat","Diversité Espèce","Patrimonialité_PS","Fonctionnalité","Pression_PS","Connectivité","Représentativité","Patrimonialité_PE","Pression_PE")),
+          criteres = factor(ecoval[[nameImp]][[2]], levels=c("Diversité habitat","Diversité espèce","Patrimonialité_PS","Fonctionnalité","Pression_PS","Connectivité","Représentativité","Patrimonialité_PE","Pression_PE")),
           equivalence = equivalCT)
+        dat1[[4]][is.na(dat1[[4]])] <- 0
         dat1$colour <- ifelse(dat1$equivalence < 0, "negative","positive")
         p <- ggplot(data=dat1, aes(x=indicateurs, y= equivalence)) +
         geom_bar(stat="identity",  width=0.5, aes(fill=colour))+
@@ -1954,8 +2035,9 @@ shortindicnames <- c("Nb hab forestier",
         dat1 <- data.frame(
           perimetres = ecoval[[nameImp]][[1]],
           indicateurs = shortindicnames, #ecoval[[nameImp]][[3]],
-          criteres = factor(ecoval[[nameImp]][[2]], levels=c("Diversité habitat","Diversité Espèce","Patrimonialité_PS","Fonctionnalité","Pression_PS","Connectivité","Représentativité","Patrimonialité_PE","Pression_PE")),
+          criteres = factor(ecoval[[nameImp]][[2]], levels=c("Diversité habitat","Diversité espèce","Patrimonialité_PS","Fonctionnalité","Pression_PS","Connectivité","Représentativité","Patrimonialité_PE","Pression_PE")),
           equivalence = equivalLT)
+        dat1[[4]][is.na(dat1[[4]])] <- 0
         dat1$colour <- ifelse(dat1$equivalence < 0, "negative","positive")
         p <- ggplot(data=dat1, aes(x=indicateurs, y= equivalence)) +
         geom_bar(stat="identity",  width=0.5, aes(fill=colour))+
@@ -2070,6 +2152,7 @@ shortindicnames <- c("Nb hab forestier",
           indicateurs = tabhab[[3]],
           criteres = factor(tabhab[[2]], levels=c("Diversité espèce", "Fonctionnalité", "Structure", "Pression_PS", "Connectivité", "Représentativité")),
           equivalence = equival)
+        dat1[[4]][is.na(dat1[[4]])] <- 0
         dat1$colour <- ifelse(dat1$equivalence < 0, "negative","positive")
         p <- ggplot(data=dat1, aes(x=indicateurs, y= equivalence)) +
              geom_bar(stat="identity",  width=0.5, aes(fill=colour))+
@@ -2113,6 +2196,7 @@ shortindicnames <- c("Nb hab forestier",
           indicateurs = tabhab[[3]],
           criteres = factor(tabhab[[2]], levels=c("Diversité espèce", "Fonctionnalité", "Structure", "Pression_PS", "Connectivité", "Représentativité")),
           equivalence = equival)
+        dat1[[4]][is.na(dat1[[4]])] <- 0
         dat1$colour <- ifelse(dat1$equivalence < 0, "negative","positive")
         p <- ggplot(data=dat1, aes(x=indicateurs, y= equivalence)) +
              geom_bar(stat="identity",  width=0.5, aes(fill=colour))+
@@ -2231,6 +2315,7 @@ shortindicnames <- c("Nb hab forestier",
           indicateurs = tabsp[[3]],
           criteres = factor(tabsp[[2]], levels=c("Diversité espèce", "Fonctionnalité", "Pression_PS", "Connectivité", "Représentativité")),
           equivalence = equival)
+        dat1[[4]][is.na(dat1[[4]])] <- 0
         dat1$colour <- ifelse(dat1$equivalence < 0, "negative","positive")
         p <- ggplot(data=dat1, aes(x=indicateurs, y= equivalence)) +
              geom_bar(stat="identity",  width=0.5, aes(fill=colour))+
@@ -2274,6 +2359,7 @@ shortindicnames <- c("Nb hab forestier",
           indicateurs = tabsp[[3]],
           criteres = factor(tabsp[[2]], levels=c("Diversité espèce", "Fonctionnalité", "Pression_PS", "Connectivité", "Représentativité")),
           equivalence = equival)
+        dat1[[4]][is.na(dat1[[4]])] <- 0
         dat1$colour <- ifelse(dat1$equivalence < 0, "negative","positive")
         p <- ggplot(data=dat1, aes(x=indicateurs, y= equivalence)) +
         geom_bar(stat="identity",  width=0.5, aes(fill=colour))+

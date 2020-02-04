@@ -44,8 +44,8 @@ shinyUI(fluidPage(HTML("<!DOCTYPE html>
                            HTML('<h4 style="color: #A5C226; background-color: #FFFFFF;"><b>Cadre méthodologique pour le calcul de l\'équivalence écologique dans le contexte de la séquence ERC en France</b></h5>'),
                            HTML('<h5 style="color: #FF0000; background-color: #FFFFFF;"><b>Version beta</b></h1>')),
                     column(2, align="right",
-                           img(height=40, width=80, src="edf.jpg"),
-                           img(height=80, width=77, src="Irstea.png"))
+                           img(height=40, width=80, src="edf.jpg"), HTML('<h4> </h4>'),
+                           img(height=30, width=114, src="Inrae.jpg"))
                   ),
                   tabsetPanel(id="tabs",
                               # ACCUEIL ---------------------------------------------------
@@ -320,7 +320,7 @@ shinyUI(fluidPage(HTML("<!DOCTYPE html>
                                                                      column(2, align="left", selectInput("selecthabitatSI2", label = "HABITAT", choices = list("-" = 0), selected = 0)),
                                                                      column(2, align="left", selectInput("selectspeciesSI2", label = "ESPECE", choices = list("-" = 0), selected = 0))),
                                                             tabsetPanel(id="resultpertes",
-                                                                       tabPanel(value="graphe"," Graphe", fluidRow(column(12, align="center", br(), uiOutput('plot_pertes_ui')))),
+                                                                       tabPanel(value="graphe"," Graphe", fluidRow(column(12, align="center", br(), uiOutput('plot_pertes_ui'), br(),br(),br(),br(),br()))),
                                                                        tabPanel(value="tableau", "Tableau", fluidRow(column(8, align="left", br(), DT::dataTableOutput("SIcalcul")), column(4, align="left", br(), downloadButton("dwnlpertes", "TELECHARGER LA TABLE"))))
                                                             )
                                                    ),
@@ -331,7 +331,7 @@ shinyUI(fluidPage(HTML("<!DOCTYPE html>
                                                                      column(2, align="left", selectInput("selecthabitatSC2", label = "HABITAT", choices = list("-" = 0), selected = 0)),
                                                                      column(2, align="left", selectInput("selectspeciesSC2", label = "ESPECE", choices = list("-" = 0), selected = 0))),
                                                             tabsetPanel(id="resultgains",
-                                                                        tabPanel(value="graphe", "Graphe", fluidRow(column(12, align="center", br(), uiOutput('plot_gains_ui')))),
+                                                                        tabPanel(value="graphe", "Graphe", fluidRow(column(12, align="center", br(), uiOutput('plot_gains_ui'),br(),br(),br(),br(),br()))),
                                                                         tabPanel(value="tableau", "Tableau", fluidRow(column(8, align="left", br(), DT::dataTableOutput("SCcalcul")), column(4, align="left", br(), downloadButton("dwnlgains", "TELECHARGER LA TABLE"))))
                                                             )
                                                    ),
@@ -343,7 +343,7 @@ shinyUI(fluidPage(HTML("<!DOCTYPE html>
                                                                      column(2, align="left", selectInput("selecthabitatSE", label = "HABITAT", choices = list("-" = 0), selected = 0)),
                                                                      column(2, align="left", selectInput("selectspeciesSE", label = "ESPECE", choices = list("-" = 0), selected = 0))),
                                                             tabsetPanel(id="resultequivalence",
-                                                                        tabPanel(value="graphe", "Graphe", fluidRow(column(12, align="center", br(), uiOutput('plot_equivalence_ui')))),
+                                                                        tabPanel(value="graphe", "Graphe", fluidRow(column(12, align="center", br(), uiOutput('plot_equivalence_ui'),br(),br(),br(),br(),br()))),
                                                                         tabPanel(value="tableau", "Tableau", fluidRow(column(8, align="left", br(), DT::dataTableOutput("SEcalcul")), column(4, align="left", br(), downloadButton("dwnlequivalence", "TELECHARGER LA TABLE"))))
                                                             )
                                                    )
