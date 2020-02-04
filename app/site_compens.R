@@ -8,7 +8,7 @@
 #
 # Cadre methodologique pour le calcul de l'equivalence ecologique dans le contexte de la sequence ERC en France
 #
-# # Copyright (c) EDF-IRSTEA 2019
+# # Copyright (c) EDF-INRAE 2019-2020
 #
 # Auteurs : Fabrice Zaoui - Lucie Bezombes
 #

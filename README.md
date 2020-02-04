@@ -6,8 +6,8 @@ et les gains de biodiversité apportés par les mesures compensatoires associée
 
 
 Il a été développé dans le cadre d’une thèse CIFRE en partenariat avec EDF R&D,
-Irstea (LESSEM) et le Museum National d’Histoire Naturelle (CESCO),
-et testé dans le cadre d’un postdoc en partenariat avec EDF R&D, Irstea (LESSEM)
+INRAE (LESSEM) et le Museum National d’Histoire Naturelle (CESCO),
+et testé dans le cadre d’un postdoc en partenariat avec EDF R&D, INRAE (LESSEM)
 et également par l’UMS PatriNat dans le cadre de ses partenariats.
 
 

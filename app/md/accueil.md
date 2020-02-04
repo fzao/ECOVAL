@@ -13,8 +13,8 @@ output: html_document
 entre les pertes de biodiversité engendrées par les projets d’aménagements,
 et les gains de biodiversité apportés par les mesures compensatoires associées.
 Il a été développé dans le cadre <span style="color:#00B057">**d’une thèse**</span> CIFRE en partenariat avec EDF R&D,
-Irstea (LESSEM) et le Museum National d’Histoire Naturelle (CESCO),
-et testé dans le cadre d’un postdoc en partenariat avec EDF R&D, Irstea (LESSEM)
+INRAE (LESSEM) et le Museum National d’Histoire Naturelle (CESCO),
+et testé dans le cadre d’un postdoc en partenariat avec EDF R&D, INRAE (LESSEM)
 et également par l’UMS PatriNat dans le cadre de ses partenariats.
 Cette <span style="color:#00B057">**interface**</span> a été développée par EDF R&D pour <span style="color:#00B057">**faciliter l’utilisation d’ECOVAL**</span>
 en permettant l’import et la saisie des données, le calcul automatisé des indicateurs,

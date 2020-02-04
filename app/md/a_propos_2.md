@@ -13,7 +13,7 @@ output: html_document
 
 ### **Remerciements**
 <font size="4">
-    IRSTEA - EDF - MNHN
+    INRAE - EDF - MNHN
 </font>
 
 ### **Licence**
