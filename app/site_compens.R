@@ -68,7 +68,6 @@ observeEvent(input$selectsitecompens, {
     name <- paste("SCB no.", input$selectsitecompens)
     tableau$B <- ecoval[[name]]
   }
-  if(input$tabs == "compens") updateSelectInput(session, "selectsiteimpact", selected = "0")
 })
 
 ## SC A1

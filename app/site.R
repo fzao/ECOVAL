@@ -33,6 +33,11 @@ observeEvent(input$date, {
   ecoval$General[3,2] <<- format(input$date)
 })
 
+observeEvent(input$tabs, { 
+  if(input$tabs == "impact") updateSelectInput(session, "selectsitecompens", selected = "0")
+  if(input$tabs == "compens") updateSelectInput(session, "selectsiteimpact", selected = "0")
+})
+
 output$btn_telecharger <- downloadHandler(
   filename = function() {
     if(input$projectname == ""){

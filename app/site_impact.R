@@ -52,6 +52,12 @@ updateListSpeciesSiteImpact <- function(){
   updateSelectInput(session, "selectspeciesSI", choices = showlistspeciesimpact, selected = showlistspeciesimpact[[length(showlistspeciesimpact)]])
 }
 
+#cfzxx
+observeEvent(input$tabs, { 
+  if(input$tabs == "impact") updateSelectInput(session, "selectsitecompens", selected = "0")
+  if(input$tabs == "compens") updateSelectInput(session, "selectsiteimpact", selected = "0")
+})
+
 observeEvent(input$selectsiteimpact, {
   if(input$selectsiteimpact != '0'){
     # habitat
@@ -68,7 +74,6 @@ observeEvent(input$selectsiteimpact, {
     name <- paste("SIB no.", input$selectsiteimpact)
     tableau$B <- ecoval[[name]]
   }
-  if(input$tabs == "siteimpact") updateSelectInput(session, "selectsitecompens", selected = "0")
 })
 
 ## SI A1
