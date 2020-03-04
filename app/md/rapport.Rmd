@@ -350,7 +350,7 @@ _Rapport généré le_ `r format(Sys.time(), "%a %d %b %Y %H:%M:%S")`
 ### <span style='color:#C0504D'>*Niveau Espèce*</span>
 
 ```{r echo=FALSE, warning=FALSE, fig.align='left', results='asis'}
-      # liste les especes du site impacte
+# liste les especes du site impacte
       name <- paste("Site no.", input$selectsiteimpact4)
       species <- list()
       nbspecies <- dim(listspecies)[1] - 1
@@ -460,15 +460,15 @@ _Rapport généré le_ `r format(Sys.time(), "%a %d %b %Y %H:%M:%S")`
 
 #### **Durée**
 
-`r duree[ecoval[[paste("Site no.", input$selectsiteimpact4)]][9,2]]`
+`r if(ecoval[[paste("Site no.", input$selectsiteimpact4)]][9,2] > 0) duree[ecoval[[paste("Site no.", input$selectsiteimpact4)]][9,2]]`
 
 #### **Intensité**
 
-`r intensite[ecoval[[paste("Site no.", input$selectsiteimpact4)]][10,2]]`
+`r if(ecoval[[paste("Site no.", input$selectsiteimpact4)]][10,2] > 0) intensite[ecoval[[paste("Site no.", input$selectsiteimpact4)]][10,2]]`
 
 #### **Portée spatiale**
 
-`r portee[ecoval[[paste("Site no.", input$selectsiteimpact4)]][11,2]]`
+`r if(ecoval[[paste("Site no.", input$selectsiteimpact4)]][11,2] > 0) portee[ecoval[[paste("Site no.", input$selectsiteimpact4)]][11,2]]`
 
 ## <span style='color:#C0504D'>Pertes</span>
 
@@ -1386,15 +1386,15 @@ if(nbhabitat > 0){
 
 #### **Durée**
 
-`r duree[ecoval[[paste("Site no.", input$selectsitecompens4)]][9,2]]`
+`r if(ecoval[[paste("Site no.", input$selectsitecompens4)]][9,2] > 0) duree[ecoval[[paste("Site no.", input$selectsitecompens4)]][9,2]]`
 
 #### **Intensité**
 
-`r intensite[ecoval[[paste("Site no.", input$selectsitecompens4)]][10,2]]`
+`r if(ecoval[[paste("Site no.", input$selectsitecompens4)]][10,2] > 0) intensite[ecoval[[paste("Site no.", input$selectsitecompens4)]][10,2]]`
 
 #### **Portée spatiale**
 
-`r portee[ecoval[[paste("Site no.", input$selectsitecompens4)]][11,2]]`
+`r if(ecoval[[paste("Site no.", input$selectsitecompens4)]][11,2] > 0) portee[ecoval[[paste("Site no.", input$selectsitecompens4)]][11,2]]`
 
 ## <span style='color:#9BBB59'>Gains</span>
 
