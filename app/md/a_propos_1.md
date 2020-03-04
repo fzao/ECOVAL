@@ -26,8 +26,8 @@ Vous aurez à renseigner de 2 à 4 étapes selon les cas :
 </font>
 
 <font size="4">
-Pour chaque niveau les indicateurs sont classés en deux échelles :
-**le site** (PS), qui correspond soit au projet d’aménagement, soit aux mesures compensatoires ;
+Pour chaque niveau les indicateurs sont classés en deux échelles :
+**le site** (PS), qui correspond soit au projet d’aménagement, soit aux mesures compensatoires ;
 et **le périmètre élargi** (PE), qui permet d’évaluer la manière dont le site s’insère dans son contexte paysager.
 Son rayon est défini au cas par cas grâce à différents paramètres (capacité de dispersion pour les espèces à enjeu par exemple).
 </font>
@@ -46,7 +46,7 @@ L’interface vous permet de garder une trace de vos réflexions et également d
 
 <font size="4">
 Les pertes et les gains sont calculés automatiquement en valeur «brutes»
-(ex : gain de 3 ha de prairie) et «relatives» (ex : perte de 70% de la surface en prairie)
+(ex.: gain de 3 ha de prairie) et «relatives» (ex.: perte de 70% de la surface en prairie)
 et sont visualisables via un graphique synthétique (voir plus bas).
 Par abus de langage les deltas observés sur le site impacté sont nommés «pertes» et
 ceux sur le site compensatoire «gains» mais il peut y avoir à la fois des diminutions (deltas négatifs)
