@@ -97,7 +97,7 @@ myA1sc <- function(rs){
   # test validation 2
   name <- paste("Site no.", input$selectsitecompens)
   surfacesite <- 0.
-  if(ecoval[[name]][3,2] != "NA") surfacesite <- as.numeric(ecoval[[name]][3,2])
+  if(is.numeric(ecoval[[name]][3,2])) surfacesite <- ecoval[[name]][3,2]
   surfsomme <- 0.
   name <- paste("SCA1 no.", input$selectsitecompens)
   dimrow <- dim(ecoval[[name]])[1]
