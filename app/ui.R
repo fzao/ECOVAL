@@ -313,9 +313,9 @@ shinyUI(fluidPage(HTML("<!DOCTYPE html>
                               # EQUIVALENCE ----------------------------------------------
                               tabPanel(value="calculs", HTML('<h4 style="color: #005BBB; "><b>Calculs</b></h4>'),
                                        tabsetPanel(id="descrcalculs",
-                                                   tabPanel(HTML('<h4 style="color: #005BBB; ">Pertes</h4>'), br(),
-                                                            fluidRow(column(2, align="left", selectInput("selectsiteimpact2", label = "SITE IMPACT\u00C9", choices = list("-" = 0), selected = 0)),
-                                                                     column(2, align="left", selectInput("selecttypegraphperte", label = "TYPE DE GRAPHE", choices = list("Etat initial" = 1, "Pertes CT" = 2, "Pertes LT" = 3), selected = 1)),
+                                                   tabPanel(HTML('<h4 style="color: #005BBB; ">Site impacté</h4>'), br(),
+                                                            fluidRow(column(2, align="left", selectInput("selectsiteimpact2", label = "SITE", choices = list("-" = 0), selected = 0)),
+                                                                     column(2, align="left", selectInput("selecttypegraphperte", label = "TYPE DE CALCUL", choices = list("Etat initial" = 1, "Pertes CT" = 2, "Pertes LT" = 3), selected = 1)),
                                                                      column(2, align="left", selectInput("selectniveauperte", label = "NIVEAU", choices = list("Général" = 1, "Habitat" = 2, "Espèce" = 3), selected = 1)),
                                                                      column(2, align="left", selectInput("selecthabitatSI2", label = "HABITAT", choices = list("-" = 0), selected = 0)),
                                                                      column(2, align="left", selectInput("selectspeciesSI2", label = "ESPECE", choices = list("-" = 0), selected = 0))),
@@ -324,9 +324,9 @@ shinyUI(fluidPage(HTML("<!DOCTYPE html>
                                                                        tabPanel(value="tableau", "Tableau", fluidRow(column(8, align="left", br(), DT::dataTableOutput("SIcalcul")), column(4, align="left", br(), downloadButton("dwnlpertes", "TELECHARGER LA TABLE"))))
                                                             )
                                                    ),
-                                                   tabPanel(HTML('<h4 style="color: #005BBB; ">Gains</h4>'), br(),
-                                                            fluidRow(column(2, align="left", selectInput("selectsitecompens2", label = "SITE COMPENSATOIRE", choices = list("-" = 0), selected = 0)),
-                                                                     column(2, align="left", selectInput("selecttypegraphgain", label = "TYPE DE GRAPHE", choices = list("Etat initial" = 1, "Gains CT" = 2, "Gains LT" = 3), selected = 1)),
+                                                   tabPanel(HTML('<h4 style="color: #005BBB; ">Site compensatoire</h4>'), br(),
+                                                            fluidRow(column(2, align="left", selectInput("selectsitecompens2", label = "SITE", choices = list("-" = 0), selected = 0)),
+                                                                     column(2, align="left", selectInput("selecttypegraphgain", label = "TYPE DE CALCUL", choices = list("Etat initial" = 1, "Gains CT" = 2, "Gains LT" = 3), selected = 1)),
                                                                      column(2, align="left", selectInput("selectniveaugain", label = "NIVEAU", choices = list("Général" = 1, "Habitat" = 2, "Espèce" = 3), selected = 1)),
                                                                      column(2, align="left", selectInput("selecthabitatSC2", label = "HABITAT", choices = list("-" = 0), selected = 0)),
                                                                      column(2, align="left", selectInput("selectspeciesSC2", label = "ESPECE", choices = list("-" = 0), selected = 0))),
