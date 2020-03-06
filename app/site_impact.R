@@ -674,7 +674,7 @@ output$SItable4<- DT::renderDataTable({
   dat1[, 2] <- as.factor(dat1[, 2])
   dat1[, 3] <- as.factor(dat1[, 3])
   dat <- datatable(dat1, rownames = TRUE,
-                   colnames = c("Valeur à l'état initial" = 5, "Justification de l'estimation CT" = 6, "Degré d'incertitude CT" = 7, "Valeur après impact CT" = 8, "Justification de l'estimation LT" = 9, "Degré d'incertitude LT" = 10, "Valeur après impact LT" = 11),
+                   colnames = c("(\u03A3) Valeur à l'état initial" = 5, "Justification de l'estimation CT" = 6, "(\u03A3) Degré d'incertitude CT" = 7, "(\u03A3) Valeur après impact CT" = 8, "Justification de l'estimation LT" = 9, "(\u03A3) Degré d'incertitude LT" = 10, "(\u03A3) Valeur après impact LT" = 11),
                    selection = 'single', options = list(scrollY='300px', scrollCollapse=TRUE, pageLength = dim.data.frame(tableau$B)[1], searching = TRUE, dom = 'ft', ordering = FALSE), filter = "top") %>%
                    formatStyle(4, 3, backgroundColor = styleEqual(colistcol, c(rep('#EBE491', 52))))
 
