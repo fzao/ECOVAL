@@ -640,6 +640,7 @@ descrIncertI <- function(){
   text6 <- h5("Définition de l'emprise de l'impact : l'emprise impactée est-elle en lien direct avec la valeur prédite de l'indicateur ?")
   showModal(modalDialog(
     h4("SOURCE DES INCERTITUDES"), hr(), text0, text1, text2, text3, text4, text5, text6, easyClose = TRUE, footer = NULL))
+
 }
 
 observeEvent(input$linkI1, descrIncertI())
