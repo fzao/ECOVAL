@@ -409,6 +409,33 @@ observeEvent(input$renseigner,{
 updateTabB <- function(){
   # from A1
   n1 <- dim(tableau$A1)[1]
+  val1 <- NA # Nombre d'habitat forestier
+  val2 <- NA # Surface (ha) d'habitat forestier
+  val3 <- NA # Nombre d'habitat ouvert
+  val4 <- NA # Surface (ha) d'habitat ouvert
+  val5 <- NA # Nombre d'habitat buissonnant
+  val6 <- NA # Surface (ha) d'habitat buissonnant
+  val7 <- NA # Nombre d'habitat rocheux
+  val8 <- NA # Surface (ha) d'habitat rocheux
+  val9 <- NA # Nombre de zone humide
+  val10 <- NA # Surface (ha) de zone humide
+  val11 <- NA # Nombre d'habitat aquatique
+  val12 <- NA # Surface (ha) d'habitat aquatique
+  val25 <- NA # Proportion surfacique des habitat menacés/en danger localement
+  val26 <- NA # Proportion surfacique des habitats d'interet communautaire
+  valsurf1 <- NA # Surface global
+  val40num <- NA
+  val40den <- NA
+  val41num <- NA
+  val41den <- NA
+  val42num <- NA
+  val42den <- NA
+  val50num <- NA
+  val51num <- NA
+  val52num <- NA
+  val53num <- NA
+  val54num <- NA
+  val55num <- NA
   if(n1 > 0){
     val1 <- 0 # Nombre d'habitat forestier
     val2 <- 0. # Surface (ha) d'habitat forestier
@@ -476,6 +503,45 @@ updateTabB <- function(){
   }
   # from A2
   n2 <- dim(tableau$A2)[1]
+  val14 <- NA # Diversité avifaune
+  val15 <- NA # Diversité chiroptères 
+  val16 <- NA # Diversité reptiles
+  val17 <- NA # Diversité amphibiens
+  val18 <- NA # Diversité mammifères
+  val19 <- NA # Diversité insectes
+  val20 <- NA # Diversité lépidoptères
+  val21 <- NA # Diversité odonates
+  val22 <- NA # Diversité orthoptères
+  val23 <- NA # Diversité coléoptères
+  val24 <- NA # Diversité flore totale
+  val27num <- NA
+  val27den <- NA
+  val28num <- NA
+  val28den <- NA
+  val29num <- NA
+  val29den <- NA
+  val30num <- NA
+  val30den <- NA
+  val31num <- NA
+  val31den <- NA
+  val32num <- NA
+  val32den <- NA
+  val33num <- NA
+  val33den <- NA
+  val34num <- NA
+  val34den <- NA
+  val35num <- NA
+  val35den <- NA
+  val36num <- NA
+  val36den <- NA
+  val37num <- NA
+  val37den <- NA
+  val38num <- NA
+  val38den <- NA
+  val43 <- NA
+  val49 <- NA
+  val57 <- NA
+  val58 <- NA
   if(n2 > 0){
     val14 <- 0 # Diversité avifaune
     val15 <- 0 # Diversité chiroptères 
@@ -585,6 +651,15 @@ updateTabB <- function(){
   }
   # from A3
   n3 <- dim(tableau$A3)[1]
+  val59 <- NA
+  val60 <- NA
+  val50den <- NA
+  val51den <- NA
+  val52den <- NA
+  val53den <- NA
+  val54den <- NA
+  val55den <- NA
+  valsurf3 <- NA # Surface global
   if(n3 > 0){
     val59 <- 0.
     val60 <- 0.
