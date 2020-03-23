@@ -97,7 +97,7 @@ myA1sc <- function(rs){
   # test validation 2
   name <- paste("Site no.", input$selectsitecompens)
   surfacesite <- 0.
-  if(is.numeric(ecoval[[name]][3,2])) surfacesite <- ecoval[[name]][3,2]
+  if(!is.na(ecoval[[name]][3,2])) surfacesite <- as.numeric(ecoval[[name]][3,2])
   surfsomme <- 0.
   name <- paste("SCA1 no.", input$selectsitecompens)
   dimrow <- dim(ecoval[[name]])[1]
@@ -300,6 +300,11 @@ cleanwidgetsA3sc <- function(){
 }
 
 myA3sc <- function(rs){
+  # test validation 0
+  if(is.na(input$SCpersurf)){
+    showModal(modalDialog(h5("ERREUR SUR LA SURFACE"), hr(), "Une valeur numérique n'est pas correcte", easyClose = TRUE, footer = NULL))
+    return(-1)
+  }
   # data
   newDF <- data.frame(
     "Type"=as.character(A3listtype[input$SCpertype]),
