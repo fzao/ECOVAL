@@ -298,6 +298,11 @@ observeEvent(input$SItype1,{
   updateSelectInput(session, "SItype2", choices = ltype2, selected = type2selection)
 })
 
+observeEvent(input$linkinfoIS1, {
+  showModal(modalDialog(
+    h5("CLIQUEZ SUR L'ESP\u00C8CE CONCERN\u00C9E"), h5("l'indice de spécialisation apparaîtra automatiquement dans le tableau"), hr(), easyClose = TRUE, footer = NULL))
+})
+
 ## SI A3
 cleanwidgetsA3 <- function(){
   updateSelectInput(session, "SIpertype", selected = "1")

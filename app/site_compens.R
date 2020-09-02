@@ -291,6 +291,11 @@ observeEvent(input$SCtype1,{
   updateSelectInput(session, "SCtype2", choices = ltype2, selected = type2selection)
 })
 
+observeEvent(input$linkinfoIS2, {
+  showModal(modalDialog(
+    h5("CLIQUEZ SUR L'ESP\u00C8CE CONCERN\u00C9E"), h5("l'indice de spécialisation apparaîtra automatiquement dans le tableau"), hr(), easyClose = TRUE, footer = NULL))
+})
+
 ## SC A3
 cleanwidgetsA3sc <- function(){
   updateSelectInput(session, "SCpertype", selected = "1")

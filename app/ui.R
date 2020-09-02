@@ -90,7 +90,7 @@ shinyUI(fluidPage(HTML("<!DOCTYPE html>
                                                                ),
                                                       fluidRow(column(4, align = "left", selectInput("duree", label = NULL, choices = list("-" = 0, "Temporaire Courte Durée" = 1, "Temporaire Longue Durée" = 2, "Permanent" = 3))),
                                                                column(4, align = "left", selectInput("intensite", label = NULL, choices = list("-" = 0, "Peu Intense" = 1, "Intense" = 2, "Très Intense" = 3))),
-                                                               column(4, align = "left",    selectInput("portee", label = NULL, choices = list("-" = 0, "Ponctuelle Faible Surface" = 1, "Ponctuelle Surface Importante" = 2, "Linéaire" = 3))))
+                                                               column(4, align = "left", selectInput("portee", label = NULL, choices = list("-" = 0, "Ponctuelle Faible Surface" = 1, "Ponctuelle Surface Importante" = 2, "Linéaire" = 3))))
                                              ),
                                              tabPanel(HTML('<h4 style="color: #005BBB; ">Identification des enjeux</h4>'), value="identification", br(),
                                                       fluidRow(column(12, align="center", htmlOutput("enjeusiteno", inline = TRUE))), br(),
@@ -164,7 +164,8 @@ shinyUI(fluidPage(HTML("<!DOCTYPE html>
                                                                        column(2, align="left", selectInput("SIexo", label = "(\u03A3) Espèce Exotique Envahissante", choices = list("Non" = 1, "Oui" = 2))),
                                                                        column(2, align="left", selectInput("SItvb", label = "(\u03A3) TVB", choices = list("Non" = 1, "Oui" = 2))),
                                                                        column(2, align="left", selectInput("SIdet", label = "(\u03A3) Déterminant Znieff dans le PE", choices = list("Non" = 1, "Oui" = 2)))),
-                                                              fluidRow(column(2, align="left", selectInput("SIindssi", label = "(\u03A3) Indice spécialisation", choices = split(seq_along(Species), Species)))),
+                                                              fluidRow(column(2, align="left", tags$div(style="display:inline-block",title="Aide disponible", actionLink(inputId = "linkinfoIS1", label=HTML('<h5><b>(\u03A3) Indice spécialisation</b></h5>'))))),
+                                                              fluidRow(column(2, align="left", selectInput("SIindssi", label = NULL, choices = split(seq_along(Species), Species)))),
                                                               fluidRow(column(4, align="right", actionButton("addlistesp", "AJOUTER")), column(4, align="center", actionButton("chglistesp", "MODIFIER")), column(4, align="left", actionButton("dellistesp", "SUPPRIMER"))), br(),
                                                               DT::dataTableOutput("SItable2"), DT::dataTableOutput("SItable2rowselected"), br(), br(), br(), hr(), br(), br(), br(),
                                                               fluidRow(column(12, align="center", HTML('<h4 style="color: #A5C226; ">P\u00C9RIM\u00C8TRE \u00C9LARGI (PE)</h4>'))), br(),
@@ -253,7 +254,8 @@ shinyUI(fluidPage(HTML("<!DOCTYPE html>
                                                                                      column(2, align="left", selectInput("SCexo", label = "(\u03A3) Espèce Exotique Envahissante", choices = list("Non" = 1, "Oui" = 2))),
                                                                                      column(2, align="left", selectInput("SCtvb", label = "(\u03A3) TVB", choices = list("Non" = 1, "Oui" = 2))),
                                                                                      column(2, align="left", selectInput("SCdet", label = "(\u03A3) Déterminant Znieff dans le PE", choices = list("Non" = 1, "Oui" = 2)))),
-                                                                            fluidRow(column(2, align="left", selectInput("SCindssi", label = "(\u03A3) Indice spécialisation", choices = split(seq_along(Species), Species)))),
+                                                                            fluidRow(column(2, align="left", tags$div(style="display:inline-block",title="Aide disponible", actionLink(inputId = "linkinfoIS2", label=HTML('<h5><b>(\u03A3) Indice spécialisation</b></h5>'))))),
+                                                                            fluidRow(column(2, align="left", selectInput("SCindssi", label = NULL, choices = split(seq_along(Species), Species)))),
                                                                             fluidRow(column(4, align="right", actionButton("addlistesp2", "AJOUTER")), column(4, align="center", actionButton("chglistesp2", "MODIFIER")), column(4, align="left", actionButton("dellistesp2", "SUPPRIMER"))), br(),
                                                                             DT::dataTableOutput("SCtable2"), DT::dataTableOutput("SCtable2rowselected"), br(), br(), br(), hr(), br(), br(), br(),
                                                                             fluidRow(column(12, align="center", HTML('<h4 style="color: #A5C226; ">P\u00C9RIM\u00C8TRE \u00C9LARGI (PE)</h4>'))), br(),
