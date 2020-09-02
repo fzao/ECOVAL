@@ -17,7 +17,11 @@
 
 output$genere <- downloadHandler(
   filename = function() {
-    paste('my-report', sep = '.', 'html')
+    if(input$projectname == ""){
+      paste('Rapport de synthèse_', 'Ecoval-', Sys.Date(), '.html', sep='')
+    }else{
+      paste('Rapport de synthèse_', input$projectname,  '.html', sep = '')
+    }
   },
   
   content = function(file) {
