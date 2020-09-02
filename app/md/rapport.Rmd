@@ -28,6 +28,7 @@ _Rapport généré le_ `r format(Sys.time(), "%a %d %b %Y %H:%M:%S")`
 [Site Impacté](#link1)
 [Site Compensatoire](#link2)
 [Equivalence](#link3)
+[Conclusion](#link4)
 --------------------------------------
 
 # <span style='color:#C0504D'>**Site Impacté --> `r listsite$name[as.numeric(input$selectsiteimpact4)+1]`**</span> {#link1}
@@ -2384,5 +2385,15 @@ shortindicnames <- c("Nb hab forestier",
 <form>
   <label>Commentaires :</label><br>
   <textarea id="txt_comment1" name="txt_comment1" rows="10" cols="110">
+  </textarea>
+</form>
+
+--------------------------------------
+
+# <span style='color:#B2A1C7'>**Conclusion**</span> {#link4}
+
+<form>
+  <label>Commentaires :</label><br>
+  <textarea id="txt_comment1" name="txt_comment1" rows="20" cols="110">
   </textarea>
 </form>
