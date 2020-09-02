@@ -206,6 +206,7 @@ _Rapport généré le_ `r format(Sys.time(), "%a %d %b %Y %H:%M:%S")`
         name <- paste("Habitat", habitat[i])
         if(exists(name, where = ecoval)){
             dat1[[name]] <- ecoval[[name]][c(2:5,9), 2]
+            dat1[[name]][3] <- as.character(A1listtype[dat1[[name]][3]])
             colnames(dat1)[i+1] <- ecoval[[name]][1, 2]
         }
       }
@@ -239,6 +240,7 @@ _Rapport généré le_ `r format(Sys.time(), "%a %d %b %Y %H:%M:%S")`
         name <- paste("Espece", species[i])
         if(exists(name, where = ecoval)){
             dat1[[name]] <- ecoval[[name]][c(1,3:4,8), 2]
+            dat1[[name]][2] <- as.character(A2listtype1[dat1[[name]][2]])
             colnames(dat1)[i+1] <- ecoval[[name]][2, 2]
         }
       }
@@ -1131,6 +1133,7 @@ if(nbhabitat > 0){
             dat1[[name]] <- ecoval[[name]][c(2:6,9), 2]
             if(dat1[[name]][5] == 1) dat1[[name]][5] = 'Oui'
             else dat1[[name]][5] = 'Non'
+            dat1[[name]][3] <- as.character(A1listtype[dat1[[name]][3]])
             colnames(dat1)[i+1] <- ecoval[[name]][1, 2]
         }
       }
@@ -1166,6 +1169,7 @@ if(nbhabitat > 0){
             dat1[[name]] <- ecoval[[name]][c(1,3:5,8), 2]
             if(dat1[[name]][4] == 1) dat1[[name]][4] = 'Oui'
             else dat1[[name]][4] = 'Non'
+            dat1[[name]][2] <- as.character(A2listtype1[dat1[[name]][2]])
             colnames(dat1)[i+1] <- ecoval[[name]][2, 2]
         }
       }
