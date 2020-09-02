@@ -93,7 +93,8 @@ shinyUI(fluidPage(HTML("<!DOCTYPE html>
                                                                column(4, align = "left",    selectInput("portee", label = NULL, choices = list("-" = 0, "Ponctuelle Faible Surface" = 1, "Ponctuelle Surface Importante" = 2, "Linéaire" = 3))))
                                              ),
                                              tabPanel(HTML('<h4 style="color: #005BBB; ">Identification des enjeux</h4>'), value="identification", br(),
-                                                      fluidRow(column(12, align="center", htmlOutput("enjeusiteno", inline = TRUE))),
+                                                      fluidRow(column(12, align="center", htmlOutput("enjeusiteno", inline = TRUE))), br(),
+                                                      fluidRow(column(12, align="center", HTML('<h4 style="color: #005BBB; ">Les espèces et habitats considérés "à enjeux" dans ECOVAL sont ceux qui seront évalués plus précisément au Niveau Espèce ou Niveau Habitat car ils représentent un intérêt réglementaire, patrimonial ou fonctionnel, et pour lesquels un focus est nécessaire</h4>'))), br(),
                                                       fluidRow(column(6, align="center", HTML('<h4 style="color: #878F99; "><b>ESP\u00C8CE(S) \u00C0 ENJEUX</b></h4>')), column(6, align="center", HTML('<h4 style="color: #878F99; "><b>HABITAT(S) \u00C0 ENJEUX</b></h4>'))), br(),
                                                       fluidPage(
                                                         column(6, align="center",
