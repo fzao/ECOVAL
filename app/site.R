@@ -594,7 +594,7 @@ observeEvent(input$link3, {
 })
 
 descrIncertC <- function(){
-  text0 <- h4("Choisir parmi les trois sources d’incertitude suivantes celles qui correspondent à votre estimation (aucune, une, deux ou trois) :")
+  text0 <- h4("Veuillez cocher les sources des incertitudes pour lesquelles la réponse aux questions posées est affirmative. Vous pouvez cocher aucune, une, deux ou trois cases :")
   text1 <- h5(strong("-- Source A --\n"))
   text2 <- h5("Influence du projet : la prédiction de la valeur de l'indicateur dépend-elle essentiellement des actions réalisées par le maître d'ouvrage ? Y a-t-il une part qu'il ne peut pas maîtriser ?")
   text3 <- h5(strong("-- Source B --\n"))
@@ -629,7 +629,7 @@ observeEvent(input$linkJC5, descrJustC())
 observeEvent(input$linkJC6, descrJustC())
 
 descrIncertI <- function(){
-  text0 <- h4("Choisir parmi les trois sources d’incertitude suivantes celles qui correspondent à votre estimation (aucune, une, deux ou trois) :")
+  text0 <- h4("Veuillez cocher les sources des incertitudes pour lesquelles la réponse aux questions posées est affirmative. Vous pouvez cocher aucune, une, deux ou trois cases :")
   text1 <- h5(strong("-- Source A --\n"))
   text2 <- h5("Influence du projet : la prédiction de la valeur de l'indicateur dépend-elle essentiellement des actions réalisées par le maître d'ouvrage ? Y a-t-il une part qu'il ne peut pas maîtriser ?")
   text3 <- h5(strong("-- Source B --\n"))
