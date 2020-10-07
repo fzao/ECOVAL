@@ -95,24 +95,6 @@ output$btn_telecharger <- downloadHandler(
         s <- s + 1
       }
     }
-    nbspecies <- dim(listspecies)[1] - 1
-    if(nbspecies > 0){
-      for(i in 1:nbspecies){
-        index <- listspecies[1+i,2]
-        name <- paste("Espece", as.character(e))
-        write.xlsx2(ecoval[[listspecies[1+i,1]]], con, sheetName = name, row.names = FALSE, col.names = FALSE, append = TRUE)
-        type <- ecoval[[listspecies[1+i,1]]][7,2]
-        if(type == '1' | type == '3'){
-          sdname <- paste("DI no.", as.character(index))
-          write.xlsx2(ecoval[[sdname]], con, sheetName = paste("DI no.", as.character(e)), row.names = FALSE, col.names = TRUE, append = TRUE)
-        }
-        if(type == '2' | type == '3'){
-          sdname <- paste("DC no.", as.character(index))
-          write.xlsx2(ecoval[[sdname]], con, sheetName = paste("DC no.", as.character(e)), row.names = FALSE, col.names = TRUE, append = TRUE)
-        }
-        e <- e + 1
-      }
-    }
     nbhabitat <- dim(listhabitat)[1] - 1
     if(nbhabitat > 0){
       for(i in 1:nbhabitat){
@@ -129,6 +111,24 @@ output$btn_telecharger <- downloadHandler(
           write.xlsx2(ecoval[[scname]], con, sheetName = paste("CC no.", as.character(h)), row.names = FALSE, col.names = TRUE, append = TRUE)
         }
         h <- h + 1
+      }
+    }
+    nbspecies <- dim(listspecies)[1] - 1
+    if(nbspecies > 0){
+      for(i in 1:nbspecies){
+        index <- listspecies[1+i,2]
+        name <- paste("Espece", as.character(e))
+        write.xlsx2(ecoval[[listspecies[1+i,1]]], con, sheetName = name, row.names = FALSE, col.names = FALSE, append = TRUE)
+        type <- ecoval[[listspecies[1+i,1]]][7,2]
+        if(type == '1' | type == '3'){
+          sdname <- paste("DI no.", as.character(index))
+          write.xlsx2(ecoval[[sdname]], con, sheetName = paste("DI no.", as.character(e)), row.names = FALSE, col.names = TRUE, append = TRUE)
+        }
+        if(type == '2' | type == '3'){
+          sdname <- paste("DC no.", as.character(index))
+          write.xlsx2(ecoval[[sdname]], con, sheetName = paste("DC no.", as.character(e)), row.names = FALSE, col.names = TRUE, append = TRUE)
+        }
+        e <- e + 1
       }
     }
   }
