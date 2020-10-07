@@ -612,22 +612,6 @@ observeEvent(input$linkC4, descrIncertC())
 observeEvent(input$linkC5, descrIncertC())
 observeEvent(input$linkC6, descrIncertC())
 
-descrJustC <- function(){
-  text1 <- h5("Pour vous aider dans l'estimation de la valeur des indicateurs après compensation vous pouvez vous référer au document :\n")
-  text2 <- h5(em("Développement d'un cadre méthodologique pour l'évaluation de l'équivalence écologique"))
-  text3 <- h5("à télécharger dans l'onglet :")
-  text4 <- h5(em("A propos --> ECOVAL"))
-  showModal(modalDialog(
-    h5("JUSTIFICATION"), hr(), text1, text2, text3, text4, easyClose = TRUE, footer = NULL))
-}
-
-observeEvent(input$linkJC1, descrJustC())
-observeEvent(input$linkJC2, descrJustC())
-observeEvent(input$linkJC3, descrJustC())
-observeEvent(input$linkJC4, descrJustC())
-observeEvent(input$linkJC5, descrJustC())
-observeEvent(input$linkJC6, descrJustC())
-
 descrIncertI <- function(){
   text0 <- h4("Veuillez cocher les sources des incertitudes pour lesquelles la réponse aux questions posées est affirmative. Vous pouvez cocher aucune, une, deux ou trois cases :")
   text1 <- h5(strong("-- Source A --\n"))
@@ -646,22 +630,6 @@ observeEvent(input$linkI3, descrIncertI())
 observeEvent(input$linkI4, descrIncertI())
 observeEvent(input$linkI5, descrIncertI())
 observeEvent(input$linkI6, descrIncertI())
-
-descrJustI <- function(){
-  text1 <- h5("Pour vous aider dans l'estimation de la valeur des indicateurs après impact vous pouvez vous référer au document :\n")
-  text2 <- h5(em("Développement d'un cadre méthodologique pour l'évaluation de l'équivalence écologique"))
-  text3 <- h5("à télécharger dans l'onglet :")
-  text4 <- h5(em("A propos --> ECOVAL"))
-  showModal(modalDialog(
-    h5("JUSTIFICATION"), hr(), text1, text2, text3, text4, easyClose = TRUE, footer = NULL))
-}
-
-observeEvent(input$linkJ1, descrJustI())
-observeEvent(input$linkJ2, descrJustI())
-observeEvent(input$linkJ3, descrJustI())
-observeEvent(input$linkJ4, descrJustI())
-observeEvent(input$linkJ5, descrJustI())
-observeEvent(input$linkJ6, descrJustI())
 
 descrJustICT <- function(){
   text1 <- h5("Le délai correspondant aux estimations des indicateurs après impacts à court terme est à déterminer par l'utilisateur mais doit refléter l'effet court terme des impacts. Il peut correspondre à l'année après travaux, ou bien la phase chantier si les impacts sont temporaires. Attention, le délai court terme doit être le même pour le site impacté et compensatoire.\n")
