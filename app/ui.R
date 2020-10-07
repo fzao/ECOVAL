@@ -95,22 +95,8 @@ shinyUI(fluidPage(HTML("<!DOCTYPE html>
                                              tabPanel(HTML('<h4 style="color: #005BBB; ">Identification des enjeux</h4>'), value="identification", br(),
                                                       fluidRow(column(12, align="center", htmlOutput("enjeusiteno", inline = TRUE))), br(),
                                                       fluidRow(column(12, align="center", HTML('<h4 style="color: #005BBB; ">Les espèces et habitats considérés "à enjeux" dans ECOVAL sont ceux qui seront évalués plus précisément au Niveau Espèce ou Niveau Habitat car ils représentent un intérêt réglementaire, patrimonial ou fonctionnel, et pour lesquels un focus est nécessaire. Généralement, le nombre d\'espèces ou d\'habitats à enjeu va de 0 à 6 (voire une dizaine au maximum), n\'hésitez pas à regrouper les espèces à enjeu en communauté de mêmes besoins écologiques.</h4>'))), br(),
-                                                      fluidRow(column(6, align="center", HTML('<h4 style="color: #878F99; "><b>ESP\u00C8CE(S) \u00C0 ENJEUX</b></h4>')), column(6, align="center", HTML('<h4 style="color: #878F99; "><b>HABITAT(S) \u00C0 ENJEUX</b></h4>'))), br(),
+                                                      fluidRow(column(6, align="center", HTML('<h4 style="color: #878F99; "><b>HABITAT(S) \u00C0 ENJEUX</b></h4>')), column(6, align="center", HTML('<h4 style="color: #878F99; "><b>ESP\u00C8CE(S) \u00C0 ENJEUX</b></h4>'))), br(),
                                                       fluidPage(
-                                                        column(6, align="center",
-                                                               selectInput("selectspecies", label = NULL,
-                                                                           choices = list("-" = 0),
-                                                                           selected = 0),
-                                                               fluidRow(column(4, align="right", tags$div(title="Créer une nouvelle espèce", actionButton("newspecies", "AJOUTER"))),
-                                                                        column(4, align="center", tags$div(title="Effacer le contenu de l'espèce en cours", actionButton("deletespecies", "EFFACER"))),
-                                                                        column(4, align="left", tags$div(title="Supprime définitivement l'espèce en cours", actionButton("destroyspecies", "ENLEVER")))), br(), br(),
-                                                               fluidRow(column(4, align="left", textInput("latinnamespecies", "Nom Latin")),
-                                                                        column(4, align="left", textInput("frenchnamespecies", "Nom Français")),
-                                                                        column(4, align="left", selectInput("typespecies", label = "Type", choices = list("Avifaune" = 1, "Chiroptère" = 2, "Mammifère" = 3, "Amphibien" = 4, "Reptile" = 5, "Insecte" = 6, "Flore" = 7, "Poisson" = 8, "Crustacé/Mollusque" = 9, "Communauté faunistique" = 10)))), br(),
-                                                               fluidRow(column(4, align="left", textAreaInput("justifyspecies", label = "Justification de l'enjeu", height='200px')),
-                                                                        column(4, align="left", selectInput("presencespecies", label = "Présence sur site impacté", choices = list("Oui" = 1, "Non" = 2))),
-                                                                        column(4, align="left", numericInput("perimelargsp", "Périmètre élargi (km)", value = 0., min = 0., max = 1e6, step = 1.)))
-                                                               ),
                                                         column(6, align="center",
                                                                selectInput("selecthabitat", label = NULL,
                                                                            choices = list("-" = 0),
@@ -125,6 +111,20 @@ shinyUI(fluidPage(HTML("<!DOCTYPE html>
                                                                fluidRow(column(4, align="left", textAreaInput("justifyhabitat", label = "Justification de l'enjeu", height='200px')),
                                                                         column(4, align="left", selectInput("presencehabitat", label = "Présence sur site impacté", choices = list("Oui" = 1, "Non" = 2))),
                                                                         column(4, align="left", numericInput("perimelarghab", "Périmètre élargi (km)", value = 0., min = 0., max = 1e6, step = 1.)))
+                                                        ),
+                                                        column(6, align="center",
+                                                               selectInput("selectspecies", label = NULL,
+                                                                           choices = list("-" = 0),
+                                                                           selected = 0),
+                                                               fluidRow(column(4, align="right", tags$div(title="Créer une nouvelle espèce", actionButton("newspecies", "AJOUTER"))),
+                                                                        column(4, align="center", tags$div(title="Effacer le contenu de l'espèce en cours", actionButton("deletespecies", "EFFACER"))),
+                                                                        column(4, align="left", tags$div(title="Supprime définitivement l'espèce en cours", actionButton("destroyspecies", "ENLEVER")))), br(), br(),
+                                                               fluidRow(column(4, align="left", textInput("latinnamespecies", "Nom Latin")),
+                                                                        column(4, align="left", textInput("frenchnamespecies", "Nom Français")),
+                                                                        column(4, align="left", selectInput("typespecies", label = "Type", choices = list("Avifaune" = 1, "Chiroptère" = 2, "Mammifère" = 3, "Amphibien" = 4, "Reptile" = 5, "Insecte" = 6, "Flore" = 7, "Poisson" = 8, "Crustacé/Mollusque" = 9, "Communauté faunistique" = 10)))), br(),
+                                                               fluidRow(column(4, align="left", textAreaInput("justifyspecies", label = "Justification de l'enjeu", height='200px')),
+                                                                        column(4, align="left", selectInput("presencespecies", label = "Présence sur site impacté", choices = list("Oui" = 1, "Non" = 2))),
+                                                                        column(4, align="left", numericInput("perimelargsp", "Périmètre élargi (km)", value = 0., min = 0., max = 1e6, step = 1.)))
                                                                )
                                                       )
                                              )
