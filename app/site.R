@@ -601,8 +601,9 @@ descrIncertC <- function(){
   text4 <- h5("Comportement de l'espèce faune ou flore : le comportement (capacité de recolonisation) des espèces sur lesquelles porte l'indicateur est-il bien connu ?")
   text5 <- h5(strong("-- Source C --\n"))
   text6 <- h5("Risque d'échec associé à la mesure compensatoire : les résultats de l'action de compensation sont-ils bien maîtrisés?")
+  text7 <- HTML('<a href="Sources_incertitude_SC.pdf" target="_blank"><img src="aide.png" alt="sources"></a>')
   showModal(modalDialog(
-    h4("SOURCE DES INCERTITUDES"), hr(), text0, text1, text2, text3, text4, text5, text6, easyClose = TRUE, footer = NULL))
+    h4("SOURCES D'INCERTITUDE"), hr(), text0, text1, text2, text3, text4, text5, text6, text7, easyClose = TRUE, footer = NULL))
 }
 
 observeEvent(input$linkC1, descrIncertC())
@@ -620,8 +621,9 @@ descrIncertI <- function(){
   text4 <- h5("Comportement de l'espèce faune ou flore : le comportement (capacité de recolonisation) des espèces sur lesquelles porte l'indicateur est-il bien connu ?")
   text5 <- h5(strong("-- Source C --\n"))
   text6 <- h5("Définition de l'emprise de l'impact : l'emprise impactée est-elle en lien direct avec la valeur prédite de l'indicateur ?")
+  text7 <- HTML('<a href="Sources_incertitude_SI.pdf" target="_blank"><img src="aide.png" alt="sources"></a>')
   showModal(modalDialog(
-    h4("SOURCE DES INCERTITUDES"), hr(), text0, text1, text2, text3, text4, text5, text6, easyClose = TRUE, footer = NULL))
+    h4("SOURCES D'INCERTITUDE"), hr(), text0, text1, text2, text3, text4, text5, text6, text7, easyClose = TRUE, footer = NULL))
 }
 
 observeEvent(input$linkI1, descrIncertI())
