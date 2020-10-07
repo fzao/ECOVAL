@@ -613,6 +613,34 @@ observeEvent(input$linkC4, descrIncertC())
 observeEvent(input$linkC5, descrIncertC())
 observeEvent(input$linkC6, descrIncertC())
 
+descrJustC_NG <- function(){
+  text1 <- h5("Veuillez préciser, de manière la plus détaillée possible, les éléments qui justifient l'estimation de la valeur de l'indicateur après compensation")
+  text2 <- HTML('<a href="Aide_estimation_SC_NG.pdf" target="_blank"><img src="aide.png" alt="Justification_NG"></a>')
+  showModal(modalDialog(
+    h5("JUSTIFICATION"), hr(), text1, text2, easyClose = TRUE, footer = NULL))
+}
+
+descrJustC_NH <- function(){
+  text1 <- h5("Veuillez préciser, de manière la plus détaillée possible, les éléments qui justifient l'estimation de la valeur de l'indicateur après compensation")
+  text2 <- HTML('<a href="Aide_estimation_SC_NH.pdf" target="_blank"><img src="aide.png" alt="Justification_NH"></a>')
+  showModal(modalDialog(
+    h5("JUSTIFICATION"), hr(), text1, text2, easyClose = TRUE, footer = NULL))
+}
+
+descrJustC_NSp <- function(){
+  text1 <- h5("Veuillez préciser, de manière la plus détaillée possible, les éléments qui justifient l'estimation de la valeur de l'indicateur après compensation")
+  text2 <- HTML('<a href="Aide_estimation_SC_NSp.pdf" target="_blank"><img src="aide.png" alt="Justification_NSp"></a>')
+  showModal(modalDialog(
+    h5("JUSTIFICATION"), hr(), text1, text2, easyClose = TRUE, footer = NULL))
+}
+
+observeEvent(input$linkJC1, descrJustC_NG())
+observeEvent(input$linkJC2, descrJustC_NG())
+observeEvent(input$linkJC3, descrJustC_NH())
+observeEvent(input$linkJC4, descrJustC_NH())
+observeEvent(input$linkJC5, descrJustC_NSp())
+observeEvent(input$linkJC6, descrJustC_NSp())
+
 descrIncertI <- function(){
   text0 <- h4("Veuillez cocher les sources des incertitudes pour lesquelles la réponse aux questions posées est affirmative. Vous pouvez cocher aucune, une, deux ou trois cases :")
   text1 <- h5(strong("-- Source A --\n"))
@@ -632,6 +660,34 @@ observeEvent(input$linkI3, descrIncertI())
 observeEvent(input$linkI4, descrIncertI())
 observeEvent(input$linkI5, descrIncertI())
 observeEvent(input$linkI6, descrIncertI())
+
+descrJustI_NG <- function(){
+  text1 <- h5("Veuillez préciser, de manière la plus détaillée possible, les éléments qui justifient l'estimation de la valeur de l'indicateur après impact")
+  text2 <- HTML('<a href="Aide_estimation_SI_NG.pdf" target="_blank"><img src="aide.png" alt="Justification_NG"></a>')
+  showModal(modalDialog(
+    h5("JUSTIFICATION"), hr(), text1, text2, easyClose = TRUE, footer = NULL))
+}
+
+descrJustI_NH <- function(){
+  text1 <- h5("Veuillez préciser, de manière la plus détaillée possible, les éléments qui justifient l'estimation de la valeur de l'indicateur après impact")
+  text2 <- HTML('<a href="Aide_estimation_SI_NH.pdf" target="_blank"><img src="aide.png" alt="Justification_NH"></a>')
+  showModal(modalDialog(
+    h5("JUSTIFICATION"), hr(), text1, text2, easyClose = TRUE, footer = NULL))
+}
+
+descrJustI_NSp <- function(){
+  text1 <- h5("Veuillez préciser, de manière la plus détaillée possible, les éléments qui justifient l'estimation de la valeur de l'indicateur après impact")
+  text2 <- HTML('<a href="Aide_estimation_SI_NSp.pdf" target="_blank"><img src="aide.png" alt="Justification_NSp"></a>')
+  showModal(modalDialog(
+    h5("JUSTIFICATION"), hr(), text1, text2, easyClose = TRUE, footer = NULL))
+}
+
+observeEvent(input$linkJ1, descrJustI_NG())
+observeEvent(input$linkJ2, descrJustI_NG())
+observeEvent(input$linkJ3, descrJustI_NH())
+observeEvent(input$linkJ4, descrJustI_NH())
+observeEvent(input$linkJ5, descrJustI_NSp())
+observeEvent(input$linkJ6, descrJustI_NSp())
 
 descrJustICT <- function(){
   text1 <- h5("Le délai correspondant aux estimations des indicateurs après impacts à court terme est à déterminer par l'utilisateur mais doit refléter l'effet court terme des impacts. Il peut correspondre à l'année après travaux, ou bien la phase chantier si les impacts sont temporaires. Attention, le délai court terme doit être le même pour le site impacté et compensatoire.\n")
