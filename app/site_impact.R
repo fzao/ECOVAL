@@ -282,9 +282,11 @@ output$SItable2rowselected <- DT::renderDataTable({
 
 observeEvent(input$SItype1,{
   shinyjs::hide("SIindssi")
+  shinyjs::hide("linkinfoIS1")
   if(input$SItype1 == "1"){
     ltype2 <- list("-"=0, "Cortège généraliste"=1, "Cortège forestier"=2, "Cortège agricole ou ouvert"=3, "Cortège zone humide"=4, "Cortège du bâti"=5)
     shinyjs::show("SIindssi")
+    shinyjs::show("linkinfoIS1")
   }
   else if(input$SItype1 == "6") ltype2 <- list("-"=0, "Odonate"=6,"Lépidoptère"=7,"Orthoptère"=8,"Coléoptère"=9)
   else ltype2 <- list("-" = 0)

@@ -275,9 +275,11 @@ output$SCtable2rowselected <- DT::renderDataTable({
 
 observeEvent(input$SCtype1,{
   shinyjs::hide("SCindssi")
+  shinyjs::hide("linkinfoIS2")
   if(input$SCtype1 == "1"){
     ltype2 <- list("-"=0, "Cortège généraliste"=1, "Cortège forestier"=2, "Cortège agricole ou ouvert"=3, "Cortège zone humide"=4, "Cortège du bâti"=5)
     shinyjs::show("SCindssi")
+    shinyjs::show("linkinfoIS2")
   }
   else if(input$SCtype1 == "6") ltype2 <- list("-"=0, "Odonate"=6, "Lépidoptère"=7, "Orthoptère"=8, "Coléoptère"=9)
   else ltype2 <- list("-" = 0)
