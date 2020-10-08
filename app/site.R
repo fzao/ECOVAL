@@ -764,6 +764,27 @@ observeEvent(input$linkLT4, descrJustCLT())
 observeEvent(input$linkLT5, descrJustCLT())
 observeEvent(input$linkLT6, descrJustCLT())
 
+descrperimelagNH <- function(){
+  text1 <- h5("Le périmètre élargi pour ce niveau doit permettre l'évaluation de l’insertion d’un habitat naturel dans le paysage environnant")
+  text2 <- h5("L’étendue du périmètre élargi doit donc être fixée sur la base de critères écologiques liés à la nature de l'habitat concerné, par exemple l’hydrologie pour une zone humide")
+  text3 <- h5("Par défaut, vous pouvez garder le même périmètre qu'au Niveau Général")
+  showModal(modalDialog(
+    h5("PERIMETRE ELARGI"), hr(), text1, text2, text3, easyClose = TRUE, footer = NULL))
+}
+
+observeEvent(input$perimnh, descrperimelagNH())
+
+descrperimelagNSp <- function(){
+  text1 <- h5("La taille du périmètre élargi doit être pertinente pour prendre en compte les mouvements des individus de l'espèce considérée")
+  text2 <- h5("Le paramètre retenu pour choisir le périmètre élargi est la capacité de dispersion des espèces")
+  text3 <- h5("Vous pouvez utiliser la documentation ci-dessous pour vous aider dans le choix du périmètre élargi")
+  text4 <- HTML('<a href="Choix_perim_nsp.pdf" target="_blank"><img src="aide.png" alt="perimetre"></a>')
+  showModal(modalDialog(
+    h5("PERIMETRE ELARGI"), hr(), text1, text2, text3, text4, easyClose = TRUE, footer = NULL))
+}
+
+observeEvent(input$perimnsp, descrperimelagNSp())
+
 observeEvent(input$new, {
   numsite <<- numsite + 1
   newname <- paste("Site no.", as.character(numsite))

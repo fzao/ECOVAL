@@ -110,7 +110,7 @@ shinyUI(fluidPage(HTML("<!DOCTYPE html>
                                                                         column(3, align="left", selectInput("typehabitat", label = "Type", choices = list("Fermé" = 1, "Ouvert" = 2, "Buissonnant" = 3, "Zone humide" = 4, "Aquatique" = 5, "Rocheux" = 6, "Cultivé" = 7, "Imperméabilisé" = 8)))), br(),
                                                                fluidRow(column(4, align="left", textAreaInput("justifyhabitat", label = "Justification de l'enjeu", height='200px')),
                                                                         column(4, align="left", selectInput("presencehabitat", label = "Présence sur site impacté", choices = list("Oui" = 1, "Non" = 2))),
-                                                                        column(4, align="left", numericInput("perimelarghab", "Périmètre élargi (km)", value = 0., min = 0., max = 1e6, step = 1.)))
+                                                                        column(4, align="left", numericInput("perimelarghab", tags$div(style="display:inline-block",title="Aide disponible", actionLink(inputId = "perimnh", label=HTML('<h5><b>Périmètre élargi (km)</b></h5>'))), value = 0., min = 0., max = 1e6, step = 1.)))
                                                         ),
                                                         column(6, align="center",
                                                                selectInput("selectspecies", label = NULL,
@@ -124,7 +124,7 @@ shinyUI(fluidPage(HTML("<!DOCTYPE html>
                                                                         column(4, align="left", selectInput("typespecies", label = "Type", choices = list("Avifaune" = 1, "Chiroptère" = 2, "Mammifère" = 3, "Amphibien" = 4, "Reptile" = 5, "Insecte" = 6, "Flore" = 7, "Poisson" = 8, "Crustacé/Mollusque" = 9, "Communauté faunistique" = 10)))), br(),
                                                                fluidRow(column(4, align="left", textAreaInput("justifyspecies", label = "Justification de l'enjeu", height='200px')),
                                                                         column(4, align="left", selectInput("presencespecies", label = "Présence sur site impacté", choices = list("Oui" = 1, "Non" = 2))),
-                                                                        column(4, align="left", numericInput("perimelargsp", "Périmètre élargi (km)", value = 0., min = 0., max = 1e6, step = 1.)))
+                                                                        column(4, align="left", numericInput("perimelargsp", tags$div(style="display:inline-block",title="Aide disponible", actionLink(inputId = "perimnsp", label=HTML('<h5><b>Périmètre élargi (km)</b></h5>'))), value = 0., min = 0., max = 1e6, step = 1.)))
                                                                )
                                                       )
                                              )
