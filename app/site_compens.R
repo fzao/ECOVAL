@@ -149,7 +149,7 @@ observeEvent(input$dellisthab2,{
 
 output$SCtable1 <- DT::renderDataTable({
   dat <- datatable(tableau$A1, rownames = TRUE,
-                   colnames = c("Nom habitat" = 2, "Code Corine" = 3, "Code Eunis" = 4, "Etat conservation" = 7, "Intérêt communautaire" = 8, "En danger ou menacé localement" = 9, "Surface dégradée" = 10),
+                   colnames = c("Nom habitat" = 2, "Code Corine" = 3, "Code Eunis" = 4, "Etat conservation" = 7, "Intérêt communautaire" = 8, "En danger ou menacé localement" = 9),
                    selection = 'single',
                    options = list(scrollY='300px', scrollCollapse=TRUE, pageLength = dim.data.frame(tableau$A1)[1], searching = FALSE, dom = 'ft', ordering = FALSE))
   return(dat)
