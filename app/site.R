@@ -699,6 +699,41 @@ observeEvent(input$linkCT1, descrJustICT())
 observeEvent(input$linkCT2, descrJustICT())
 observeEvent(input$linkCT3, descrJustICT())
 
+descrJustIETNH <- function(){
+  text1 <- h5("Veuillez renseigner les indicateurs et ajoutez quelques détails sur la valeur saisie")
+  text2 <- h5("Une documentation sur les indicateurs est disponible ci-dessous")
+  text3 <- HTML('<a href="Lot_indicateurs_NH.pdf" target="_blank"><img src="aide.png" alt="Etat initial indicateurs"></a>')
+  showModal(modalDialog(
+    h5("ETAT INITIAL"), hr(), text1, text2, text3, easyClose = TRUE, footer = NULL))
+}
+
+observeEvent(input$linkET2, descrJustIETNH())
+observeEvent(input$linkET5, descrJustIETNH())
+
+descrJustIETNSp <- function(){
+  text1 <- h5("Veuillez renseigner les indicateurs et ajoutez quelques détails sur la valeur saisie")
+  text2 <- h5("Une documentation sur les indicateurs est disponible ci-dessous")
+  text3 <- HTML('<a href="Lot_indicateurs_NSp.pdf" target="_blank"><img src="aide.png" alt="Etat initial indicateurs"></a>')
+  showModal(modalDialog(
+    h5("ETAT INITIAL"), hr(), text1, text2, text3, easyClose = TRUE, footer = NULL))
+}
+
+observeEvent(input$linkET3, descrJustIETNSp())
+observeEvent(input$linkET6, descrJustIETNSp())
+
+
+descrJustIETNG <- function(){
+  text1 <- h5("Veuillez renseigner les indicateurs qui ne sont pas calculés automatiquement (cases blanches)")
+  text2 <- h5("Une documentation sur les indicateurs est disponible ci-dessous")
+  text3 <- HTML('<a href="Lot_indicateurs_NG.pdf" target="_blank"><img src="aide.png" alt="Etat initial indicateurs"></a>')
+  showModal(modalDialog(
+    h5("ETAT INITIAL"), hr(), text1, text2, text3, easyClose = TRUE, footer = NULL))
+}
+
+observeEvent(input$linkET1, descrJustIETNG())
+observeEvent(input$linkET4, descrJustIETNG())
+
+
 descrJustCCT <- function(){
   text1 <- h5("Le délai correspondant aux estimations des indicateurs après compensation à court terme est à déterminer par l'utilisateur mais doit refléter l'effet court terme des mesures compensatoires. Il peut correspondre au délai fixé pour les premiers suivis après mise en place des mesures. Attention, le délai court terme doit être le même pour le site impacté et compensatoire.\n")
   showModal(modalDialog(

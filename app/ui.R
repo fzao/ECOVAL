@@ -178,7 +178,7 @@ shinyUI(fluidPage(HTML("<!DOCTYPE html>
                                                                        fluidRow(column(4, align="right", actionButton("addlistper", "AJOUTER")), column(4, align="center", actionButton("chglistper", "MODIFIER")), column(4, align="left", actionButton("dellistper", "SUPPRIMER"))), br(),
                                                                        DT::dataTableOutput("SItable3"), DT::dataTableOutput("SItable3rowselected")),
                                                               tabPanel(HTML('<h4 style="color: #005BBB; ">Tableau des indicateurs</h4>'), value="impactindic", br(),
-                                                                  fluidRow(column(12, align="center", HTML('<h4 style="color: #A5C226; ">ETAT INITIAL</h4>'))), br(),
+                                                                  fluidRow(column(12, align="center", tags$div(style="display:inline-block",title="Aide disponible", actionLink(inputId = "linkET1", label=HTML('<h4 style="color: #A5C226; ">ETAT INITIAL</h4>'))))), br(),
                                                                   fluidRow(column(12, align="center", numericInput("Manuel", NULL, value = 0.))),
                                                                   fluidRow(column(6, align="center", tags$div(style="display:inline-block",title="Aide disponible", actionLink(inputId = "linkCT1", label=HTML('<h4 style="color: #A5C226; ">ESTIMATION COURT TERME</h4>')))), column(6, align="center", tags$div(style="display:inline-block",title="Aide disponible", actionLink(inputId = "linkLT1", label=HTML('<h4 style="color: #A5C226; ">ESTIMATION LONG TERME</h4>'))))), br(),
                                                                   fluidRow(column(2, align="left", tags$div(style="display:inline-block",title="Aide disponible", actionLink(inputId = "linkJ1", label=HTML('<h5><b>Justification de l\'estimation</b></h5>')), textAreaInput("SIjustifCT", NULL, height='125px', placeholder = "justification de l'estimation faite"))),
@@ -188,12 +188,11 @@ shinyUI(fluidPage(HTML("<!DOCTYPE html>
                                                                            column(2, align="center", tags$div(style="display:inline-block",title="Aide disponible",actionLink(inputId = "linkI2", label=HTML('<h5><b>Sources d\'incertitude</b></h5>'))), checkboxGroupInput("SIdegincLT", NULL, c("A", "B", "C"), inline = TRUE)),
                                                                            column(2, align="left", numericInput("SIvalLT", "Valeur après impact", value = 0.))), br(),
                                                                   fluidRow(column(12, align="center", actionButton("renseigner", "RENSEIGNER"))),
-                                                                  fluidRow(column(12, align="left", HTML('<a href="Lot_indicateurs_NG.pdf" target="_blank"><img src="aide.png" alt="TVB"></a>'))),
                                                                   DT::dataTableOutput("SItable4"), DT::dataTableOutput("SItable4rowselected"), br()))
                                                      ),
                                                      tabPanel(HTML('<h4 style="color: #005BBB; ">Niveau Habitat</h4>'), value="impactindicnh", br(),
                                                               selectInput("selecthabitatSI", label = "HABITAT", choices = list("-" = 0), selected = 0), br(),
-                                                              fluidRow(column(12, align="center", HTML('<h4 style="color: #A5C226; ">ETAT INITIAL</h4>'))), br(),
+                                                              fluidRow(column(12, align="center", tags$div(style="display:inline-block",title="Aide disponible", actionLink(inputId = "linkET2", label=HTML('<h4 style="color: #A5C226; ">ETAT INITIAL</h4>'))))), br(),
                                                               fluidRow(column(6, align="right", numericInput("ManuelNH", NULL, value = 0.)),
                                                                        column(6, align="left", textInput("justifySINH", NULL, placeholder = "détail"))), br(),
                                                               fluidRow(column(6, align="center", tags$div(style="display:inline-block",title="Aide disponible", actionLink(inputId = "linkCT2", label=HTML('<h4 style="color: #A5C226; ">ESTIMATION COURT TERME</h4>')))), column(6, align="center", tags$div(style="display:inline-block",title="Aide disponible", actionLink(inputId = "linkLT2", label=HTML('<h4 style="color: #A5C226; ">ESTIMATION LONG TERME</h4>'))))), br(),
@@ -204,12 +203,11 @@ shinyUI(fluidPage(HTML("<!DOCTYPE html>
                                                                        column(2, align="center", tags$div(style="display:inline-block",title="Aide disponible", actionLink(inputId = "linkI4", label=HTML('<h5><b>Sources d\'incertitude</b></h5>'))), checkboxGroupInput("SIdegincLTNH", NULL, c("A", "B", "C"), inline = TRUE)),
                                                                        column(2, align="left", numericInput("SIvalLTNH", "Valeur après impact LT", value = 0.))), br(),
                                                               fluidRow(column(12, align="center", actionButton("renseignerNH", "RENSEIGNER"))),
-                                                              fluidRow(column(12, align="left", HTML('<a href="Lot_indicateurs_NH.pdf" target="_blank"><img src="aide.png" alt="TVB"></a>'))),
                                                               DT::dataTableOutput("SItable5"), DT::dataTableOutput("SItable5rowselected"), br()
                                                      ),
                                                      tabPanel(HTML('<h4 style="color: #005BBB; ">Niveau Espèce</h4>'), value="impactindicnsp", br(),
                                                               selectInput("selectspeciesSI", label = "ESPECE", choices = list("-" = 0), selected = 0), br(),
-                                                              fluidRow(column(12, align="center", HTML('<h4 style="color: #A5C226; ">ETAT INITIAL</h4>'))), br(),
+                                                              fluidRow(column(12, align="center", tags$div(style="display:inline-block",title="Aide disponible", actionLink(inputId = "linkET3", label=HTML('<h4 style="color: #A5C226; ">ETAT INITIAL</h4>'))))), br(),
                                                               fluidRow(column(6, align="right", numericInput("ManuelNSP", NULL, value = 0.)),
                                                                        column(6, align="left", textInput("justifySINSP", NULL, placeholder = "détail"))), br(),
                                                               fluidRow(column(6, align="center", tags$div(style="display:inline-block",title="Aide disponible", actionLink(inputId = "linkCT3", label=HTML('<h4 style="color: #A5C226; ">ESTIMATION COURT TERME</h4>')))), column(6, align="center", tags$div(style="display:inline-block",title="Aide disponible", actionLink(inputId = "linkLT3", label=HTML('<h4 style="color: #A5C226; ">ESTIMATION LONG TERME</h4>'))))), br(),
@@ -220,7 +218,6 @@ shinyUI(fluidPage(HTML("<!DOCTYPE html>
                                                                        column(2, align="center", tags$div(style="display:inline-block",title="Aide disponible", actionLink(inputId = "linkI6", label=HTML('<h5><b>Sources d\'incertitude</b></h5>'))), checkboxGroupInput("SIdegincLTNSP", NULL, c("A", "B", "C"), inline = TRUE)),
                                                                        column(2, align="left", numericInput("SIvalLTNSP", "Valeur après impact LT", value = 0.))), br(),
                                                               fluidRow(column(12, align="center", actionButton("renseignerNSP", "RENSEIGNER"))),
-                                                              fluidRow(column(12, align="left", HTML('<a href="Lot_indicateurs_NSp.pdf" target="_blank"><img src="aide.png" alt="TVB"></a>'))),
                                                               DT::dataTableOutput("SItable6"), DT::dataTableOutput("SItable6rowselected"), br()
 
                                                      )
@@ -272,7 +269,7 @@ shinyUI(fluidPage(HTML("<!DOCTYPE html>
                                                                                      fluidRow(column(4, align="right", actionButton("addlistper2", "AJOUTER")), column(4, align="center", actionButton("chglistper2", "MODIFIER")), column(4, align="left", actionButton("dellistper2", "SUPPRIMER"))), br(),
                                                                                      DT::dataTableOutput("SCtable3"), DT::dataTableOutput("SCtable3rowselected")),
                                                                             tabPanel(HTML('<h4 style="color: #005BBB; ">Tableau des indicateurs</h4>'), value="compensindic", br(),
-                                                                                fluidRow(column(12, align="center", HTML('<h4 style="color: #A5C226; ">ETAT INITIAL</h4>'))), br(),
+                                                                                fluidRow(column(12, align="center", tags$div(style="display:inline-block",title="Aide disponible", actionLink(inputId = "linkET4", label=HTML('<h4 style="color: #A5C226; ">ETAT INITIAL</h4>'))))), br(),
                                                                                 fluidRow(column(12, align="center", numericInput("Manuel2", NULL, value = 0.))),
                                                                                 fluidRow(column(6, align="center", tags$div(style="display:inline-block",title="Aide disponible", actionLink(inputId = "linkCT4", label=HTML('<h4 style="color: #A5C226; ">ESTIMATION COURT TERME</h4>')))), column(6, align="center", tags$div(style="display:inline-block",title="Aide disponible", actionLink(inputId = "linkLT4", label=HTML('<h4 style="color: #A5C226; ">ESTIMATION LONG TERME</h4>'))))), br(),
                                                                                 fluidRow(column(2, align="left", tags$div(style="display:inline-block",title="Aide disponible", actionLink(inputId = "linkJC1", label=HTML('<h5><b>Justification de l\'estimation</b></h5>')), textAreaInput("SCjustifCT", NULL, height='125px', placeholder = "justification de l'estimation faite"))),
@@ -282,12 +279,11 @@ shinyUI(fluidPage(HTML("<!DOCTYPE html>
                                                                                          column(2, align="center", tags$div(style="display:inline-block",title="Aide disponible", actionLink(inputId = "linkC2", label=HTML('<h5><b>Sources d\'incertitude</b></h5>'))), checkboxGroupInput("SCdegincLT", NULL, c("A", "B", "C"), inline = TRUE)),
                                                                                          column(2, align="left", numericInput("SCvalLT", "Valeur après compensation", value = 0.))), br(),
                                                                                 fluidRow(column(12, align="center", actionButton("renseigner2", "RENSEIGNER"))),
-                                                                                fluidRow(column(12, align="left", HTML('<a href="Lot_indicateurs_NG.pdf" target="_blank"><img src="aide.png" alt="TVB"></a>'))),
                                                                                 DT::dataTableOutput("SCtable4"), DT::dataTableOutput("SCtable4rowselected"), br()))
                                                                    ),
                                                                    tabPanel(HTML('<h4 style="color: #005BBB; ">Niveau Habitat</h4>'), value="compensindicnh", br(),
                                                                             selectInput("selecthabitatSC", label = "HABITAT", choices = list("-" = 0), selected = 0), br(),
-                                                                            fluidRow(column(12, align="center", HTML('<h4 style="color: #A5C226; ">ETAT INITIAL</h4>'))), br(),
+                                                                            fluidRow(column(12, align="center", tags$div(style="display:inline-block",title="Aide disponible", actionLink(inputId = "linkET5", label=HTML('<h4 style="color: #A5C226; ">ETAT INITIAL</h4>'))))), br(),
                                                                             fluidRow(column(6, align="right", numericInput("ManuelNH2", NULL, value = 0.)),
                                                                                      column(6, align="left", textInput("justifySCNH", NULL, placeholder = "détail"))), br(),
                                                                             fluidRow(column(6, align="center", tags$div(style="display:inline-block",title="Aide disponible", actionLink(inputId = "linkCT5", label=HTML('<h4 style="color: #A5C226; ">ESTIMATION COURT TERME</h4>')))), column(6, align="center", tags$div(style="display:inline-block",title="Aide disponible", actionLink(inputId = "linkLT5", label=HTML('<h4 style="color: #A5C226; ">ESTIMATION LONG TERME</h4>'))))), br(),
@@ -298,12 +294,11 @@ shinyUI(fluidPage(HTML("<!DOCTYPE html>
                                                                                      column(2, align="center", tags$div(style="display:inline-block",title="Aide disponible", actionLink(inputId = "linkC4", label=HTML('<h5><b>Sources d\'incertitude</b></h5>'))), checkboxGroupInput("SCdegincLTNH", NULL, c("A", "B", "C"), inline = TRUE)),
                                                                                      column(2, align="left", numericInput("SCvalLTNH", "Valeur après compensation LT", value = 0.))), br(),
                                                                             fluidRow(column(12, align="center", actionButton("renseignerNH2", "RENSEIGNER"))),
-                                                                            fluidRow(column(12, align="left", HTML('<a href="Lot_indicateurs_NH.pdf" target="_blank"><img src="aide.png" alt="TVB"></a>'))),
                                                                             DT::dataTableOutput("SCtable5"), DT::dataTableOutput("SCtable5rowselected"), br()
                                                                    ),
                                                                    tabPanel(HTML('<h4 style="color: #005BBB; ">Niveau Espèce</h4>'), value="compensindicnsp", br(),
                                                                             selectInput("selectspeciesSC", label = "ESPECE", choices = list("-" = 0), selected = 0), br(),
-                                                                            fluidRow(column(12, align="center", HTML('<h4 style="color: #A5C226; ">ETAT INITIAL</h4>'))), br(),
+                                                                            fluidRow(column(12, align="center", tags$div(style="display:inline-block",title="Aide disponible", actionLink(inputId = "linkET6", label=HTML('<h4 style="color: #A5C226; ">ETAT INITIAL</h4>'))))), br(),
                                                                             fluidRow(column(6, align="right", numericInput("ManuelNSP2", NULL, value = 0.)),
                                                                                      column(6, align="left", textInput("justifySCNSP", NULL, placeholder = "détail"))), br(),
                                                                             fluidRow(column(6, align="center", tags$div(style="display:inline-block",title="Aide disponible", actionLink(inputId = "linkCT6", label=HTML('<h4 style="color: #A5C226; ">ESTIMATION COURT TERME</h4>')))), column(6, align="center", tags$div(style="display:inline-block",title="Aide disponible", actionLink(inputId = "linkLT6", label=HTML('<h4 style="color: #A5C226; ">ESTIMATION LONG TERME</h4>'))))), br(),
@@ -314,7 +309,6 @@ shinyUI(fluidPage(HTML("<!DOCTYPE html>
                                                                                      column(2, align="center", tags$div(style="display:inline-block",title="Aide disponible", actionLink(inputId = "linkC6", label=HTML('<h5><b>Sources d\'incertitude</b></h5>'))), checkboxGroupInput("SCdegincLTNSP", NULL, c("A", "B", "C"), inline = TRUE)),
                                                                                      column(2, align="left", numericInput("SCvalLTNSP", "Valeur après compensation LT", value = 0.))), br(),
                                                                             fluidRow(column(12, align="center", actionButton("renseignerNSP2", "RENSEIGNER"))),
-                                                                            fluidRow(column(12, align="left", HTML('<a href="Lot_indicateurs_NSp.pdf" target="_blank"><img src="aide.png" alt="TVB"></a>'))),
                                                                             DT::dataTableOutput("SCtable6"), DT::dataTableOutput("SCtable6rowselected"), br()
 
                                                                    )

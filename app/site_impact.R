@@ -811,6 +811,9 @@ observeEvent(input$selecthabitatSI, {
     shinyjs::show("linkI4")
     shinyjs::show("linkJ3")
     shinyjs::show("linkJ4")
+    shinyjs::show("linkET2")
+    shinyjs::show("linkCT2")
+    shinyjs::show("linkLT2")
   }else{
     shinyjs::hide("SIjustifCTNH")
     shinyjs::hide("SIdegincCTNH")
@@ -826,6 +829,9 @@ observeEvent(input$selecthabitatSI, {
     shinyjs::hide("linkI4")
     shinyjs::hide("linkJ3")
     shinyjs::hide("linkJ4")
+    shinyjs::hide("linkET2")
+    shinyjs::hide("linkCT2")
+    shinyjs::hide("linkLT2")
   }
   if(input$descrimpact == "impactindicnh") updateSelectInput(session, "selecthabitatSC", selected = "0")
 })
@@ -950,6 +956,9 @@ observeEvent(input$selectspeciesSI, {
     shinyjs::show("linkI6")
     shinyjs::show("linkJ5")
     shinyjs::show("linkJ6")
+    shinyjs::show("linkCT3")
+    shinyjs::show("linkLT3")
+    shinyjs::show("linkET3")
   }else{
     shinyjs::hide("SIjustifCTNSP")
     shinyjs::hide("SIdegincCTNSP")
@@ -965,6 +974,9 @@ observeEvent(input$selectspeciesSI, {
     shinyjs::hide("linkI6")
     shinyjs::hide("linkJ5")
     shinyjs::hide("linkJ6")
+    shinyjs::hide("linkCT3")
+    shinyjs::hide("linkLT3")
+    shinyjs::hide("linkET3")
   }
   if(input$descrimpact == "impactindicnsp") updateSelectInput(session, "selectspeciesSC", selected = "0")
 })
