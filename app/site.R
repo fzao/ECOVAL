@@ -785,6 +785,13 @@ descrperimelagNSp <- function(){
 
 observeEvent(input$perimnsp, descrperimelagNSp())
 
+descrperimelagNG <- function(){
+  text1 <- h5("Veuillez fixer un périmètre élargi qui soit proportionnel à la surface du site concerné, avec une limite minimale de 1 Km qui permette d’évaluer le rôle du site dans la matrice environnante, et une limite maximale de 30 Km pour que l'évaluation reste réalisable")
+  showModal(modalDialog(
+    h5("PERIMETRE ELARGI"), hr(), text1, easyClose = TRUE, footer = NULL))
+}
+observeEvent(input$perimdescr, descrperimelagNG())
+
 observeEvent(input$new, {
   numsite <<- numsite + 1
   newname <- paste("Site no.", as.character(numsite))
@@ -877,6 +884,7 @@ observeEvent(input$selectsite, {
       if(ecoval[[name]][9,2] != "NA") updateSelectInput(session, "duree", selected = ecoval[[name]][9,2])
       if(ecoval[[name]][10,2] != "NA") updateSelectInput(session, "intensite", selected = ecoval[[name]][10,2])
       if(ecoval[[name]][11,2] != "NA") updateSelectInput(session, "portee", selected = ecoval[[name]][11,2])
+      if(ecoval[[name]][13,2] != "NA") updateSelectInput(session, "perimelargi", selected = ecoval[[name]][13,2])
       updateListSpecies(name)
       updateListHabitat(name)
       sitetype <- as.numeric(ecoval[[name]][2,2])
@@ -960,6 +968,7 @@ observeEvent(input$tempo, {saveSite(input$selectsite)})
 observeEvent(input$duree, {saveSite(input$selectsite)})
 observeEvent(input$intensite, {saveSite(input$selectsite)})
 observeEvent(input$portee, {saveSite(input$selectsite)})
+observeEvent(input$perimelargi, {saveSite(input$selectsite)})
 
 saveSite <- function(numero){
   if(numero > 0){
@@ -975,6 +984,7 @@ saveSite <- function(numero){
     ecoval[[name]][9,2] <<- input$duree
     ecoval[[name]][10,2] <<- input$intensite
     ecoval[[name]][11,2] <<- input$portee
+    ecoval[[name]][13,2] <<- input$perimelargi
   }
 }
 
@@ -990,6 +1000,7 @@ cleanWindow <- function(){
   updateSelectInput(session, "duree", selected = "0")
   updateSelectInput(session, "intensite", selected = "0")
   updateSelectInput(session, "portee", selected = "0")
+  updateNumericInput(session, "perimelargi", value = 0.)
 }
 
 updateSiteName <- function(numero, sitename){

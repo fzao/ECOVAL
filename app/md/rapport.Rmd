@@ -42,6 +42,10 @@ _Rapport généré le_ `r format(Sys.time(), "%a %d %b %Y %H:%M:%S")`
 
 `r ecoval[[paste("Site no.", input$selectsiteimpact4)]][3,2]` ha
 
+### **Périmètre élargi**
+
+`r ecoval[[paste("Site no.", input$selectsiteimpact4)]][13,2]` km
+
 #### **Contexte**
 
 `r ecoval[[paste("Site no.", input$selectsiteimpact4)]][6,2]`
@@ -966,6 +970,10 @@ if(nbhabitat > 0){
 #### **Surface**
 
 `r ecoval[[paste("Site no.", input$selectsitecompens4)]][3,2]` ha
+
+### **Périmètre élargi**
+
+`r ecoval[[paste("Site no.", input$selectsitecompens4)]][13,2]` km
 
 #### **Contexte**
 
