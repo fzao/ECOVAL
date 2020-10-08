@@ -80,21 +80,16 @@ cleanwidgetsA1sc <- function(){
   updateSelectInput(session, "SCetat", selected = "0")
   updateSelectInput(session, "SCinteret", selected = "1")
   updateSelectInput(session, "SCmenace", selected = "1")
-  updateNumericInput(session, "SCsurfacedeg", value = 0.)
 }
 
 myA1sc <- function(rs){
   # test validation 0
-  if(is.na(input$SIsurface) | is.na(input$SIsurfacedeg)){
+  if(is.na(input$SIsurface)){
     showModal(modalDialog(h5("ERREUR SUR LES SURFACES"), hr(), "Une valeur numérique n'est pas correcte", easyClose = TRUE, footer = NULL))
     return(-1)
   }
+  
   # test validation 1
-  if(input$SCsurfacedeg > input$SCsurface){
-    showModal(modalDialog(h5("ERREUR SUR LES SURFACES"), hr(), "La surface dégradée ne peut pas être plus grande que la surface initiale", easyClose = TRUE, footer = NULL))
-    return(-1)
-  }
-  # test validation 2
   name <- paste("Site no.", input$selectsitecompens)
   surfacesite <- 0.
   if(!is.na(ecoval[[name]][3,2])) surfacesite <- as.numeric(ecoval[[name]][3,2])
@@ -120,8 +115,7 @@ myA1sc <- function(rs){
     "Type"=as.character(A1listtype[input$SCtype]),
     "Etat.conservation"=as.character(A1listetat[input$SCetat]),
     "Intérêt.communautaire"=as.character(A1listinter[input$SCinteret]),
-    "En.danger.ou.menacé.localement"=as.character(A1listinter[input$SCmenace]),
-    "Surface.dégradée"=as.character(input$SCsurfacedeg), stringsAsFactors=FALSE)
+    "En.danger.ou.menacé.localement"=as.character(A1listinter[input$SCmenace]), stringsAsFactors=FALSE)
   # array visu
   if(rs == 0) tableau$A1 <- rbind(tableau$A1, newDF)
   else tableau$A1[rs,] <- newDF
@@ -172,7 +166,6 @@ output$SCtable1rowselected <- DT::renderDataTable({
     updateSelectInput(session, "SCetat", selected = names(A1listetat)[match(tableau$A1[rs, 6], A1listetat)])
     updateSelectInput(session, "SCinteret", selected = names(A1listinter)[match(tableau$A1[rs, 7], A1listinter)])
     updateSelectInput(session, "SCmenace", selected = names(A1listinter)[match(tableau$A1[rs, 8], A1listinter)])
-    updateNumericInput(session, "SCsurfacedeg", value = as.numeric(tableau$A1[rs, 9]))
   }else cleanwidgetsA1sc()
   return(NULL)
 })
