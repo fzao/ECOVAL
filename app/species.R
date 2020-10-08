@@ -22,6 +22,7 @@ cleanSpecies <- function(){
   updateTextAreaInput(session, "justifyspecies", value = "")
   updateSelectInput(session, "presencespecies", selected = 1)
   updateNumericInput(session, "perimelargsp", value = 0)
+  updateSelectInput(session, "commfaun", selected = 1)
 }
 
 updateListSpecies <- function(name, inplace=FALSE){
@@ -121,12 +122,14 @@ observeEvent(input$selectspecies, {
     shinyjs::hide("justifyspecies")
     shinyjs::hide("presencespecies")
     shinyjs::hide("perimelargsp")
+    shinyjs::hide("commfaun")
   }else{
     shinyjs::show("latinnamespecies")
     shinyjs::show("frenchnamespecies")
     shinyjs::show("typespecies")
     shinyjs::show("justifyspecies")
     shinyjs::show("perimelargsp")
+    shinyjs::show("commfaun")
     if(input$sitetype == 2) shinyjs::show("presencespecies")
     name  <- paste("Espece", as.character(numero))
     if(exists(name, where = ecoval)){
@@ -137,6 +140,7 @@ observeEvent(input$selectspecies, {
       if(ecoval[[name]][4,2] != "NA") updateTextAreaInput(session, "justifyspecies", value = ecoval[[name]][4,2])
       if(ecoval[[name]][5,2] != "NA") updateSelectInput(session, "presencespecies", selected = as.integer(ecoval[[name]][5,2]))
       if(ecoval[[name]][8,2] != "NA") updateNumericInput(session, "perimelargsp", value = as.numeric(ecoval[[name]][8,2]))
+      if(ecoval[[name]][9,2] != "NA") updateSelectInput(session, "commfaun", selected = as.integer(ecoval[[name]][9,2]))
     }
   }
 })
@@ -157,6 +161,7 @@ observeEvent(input$typespecies, {saveSpecies(as.integer(input$selectspecies))})
 observeEvent(input$justifyspecies, {saveSpecies(as.integer(input$selectspecies))})
 observeEvent(input$presencespecies, {saveSpecies(as.integer(input$selectspecies))})
 observeEvent(input$perimelargsp, {saveSpecies(as.integer(input$selectspecies))})
+observeEvent(input$commfaun, {saveSpecies(as.integer(input$selectspecies))})
 
 saveSpecies <- function(numero){
   if(numero > 0){
@@ -167,5 +172,6 @@ saveSpecies <- function(numero){
     ecoval[[name]][4,2] <<- input$justifyspecies
     ecoval[[name]][5,2] <<- input$presencespecies
     ecoval[[name]][8,2] <<- input$perimelargsp
+    ecoval[[name]][9,2] <<- input$commfaun
   }
 }

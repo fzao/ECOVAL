@@ -984,7 +984,8 @@ observeEvent(input$renseignerNSP2,{
       partial_select <- c(partial_select, c(11))
     }else if(ecoval[[name]][3,2] == "7"){ # Flore
       partial_select <- c(partial_select, c(12))
-    }else if(ecoval[[name]][3,2] == "10"){ # Communaute faunistique
+    }
+    if(ecoval[[name]][9,2] == "2"){ # Communaute faunistique
       partial_select <- c(partial_select, c(13,14))
     }
     pointer2row <- list()
@@ -1032,7 +1033,8 @@ output$SCtable6<- DT::renderDataTable({
       partial_select <- c(partial_select, c(11))
     }else if(ecoval[[name]][3,2] == "7"){ # Flore
       partial_select <- c(partial_select, c(12))
-    }else if(ecoval[[name]][3,2] == "10"){ # Communaute faunistique
+    }
+    if(ecoval[[name]][9,2] == "2"){ # Communaute faunistique
       partial_select <- c(partial_select, c(13,14))
     }
     viewTabD <- tableau$D[partial_select,]
