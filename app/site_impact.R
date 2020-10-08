@@ -475,7 +475,7 @@ updateTabB <- function(){
     val54num <- 0.
     val55num <- 0.
     for(i in 1:n1){
-      if(tableau$A1[i,5] == "Fermé"){
+      if(tableau$A1[i,5] == "Forestier"){
         val1 <-val1 + 1
         val2 <- val2 + as.numeric(tableau$A1[i,4])
       }else if(tableau$A1[i,5] == "Ouvert"){
@@ -503,7 +503,7 @@ updateTabB <- function(){
       if(tableau$A1[i,5] != "Cultivé") val41num <- val41num + as.numeric(tableau$A1[i,4])
       val42den <- val40den
       if(tableau$A1[i,5] != "Imperméabilisé") val42num <- val42num + as.numeric(tableau$A1[i,4])
-      if(tableau$A1[i,5] == "Fermé") val50num <- val50num + as.numeric(tableau$A1[i,4])
+      if(tableau$A1[i,5] == "Forestier") val50num <- val50num + as.numeric(tableau$A1[i,4])
       if(tableau$A1[i,5] == "Ouvert") val51num <- val51num + as.numeric(tableau$A1[i,4])
       if(tableau$A1[i,5] == "Buissonnant") val52num <- val52num + as.numeric(tableau$A1[i,4])
       if(tableau$A1[i,5] == "Rocheux") val53num <- val53num + as.numeric(tableau$A1[i,4])
@@ -684,7 +684,7 @@ updateTabB <- function(){
       valsurf3 <- valsurf3 + as.numeric(tableau$A3[i,4]) # surface totale
       if(tableau$A3[i,1] == "Cultivé") val59 <- val59 + as.numeric(tableau$A3[i,4])
       if(tableau$A3[i,1] == "Imperméabilisé") val60 <- val60 + as.numeric(tableau$A3[i,4])
-      if(tableau$A3[i,1] == "Fermé") val50den <- val50den + as.numeric(tableau$A3[i,4])
+      if(tableau$A3[i,1] == "Forestier") val50den <- val50den + as.numeric(tableau$A3[i,4])
       if(tableau$A3[i,1] == "Ouvert") val51den <- val51den + as.numeric(tableau$A3[i,4])
       if(tableau$A3[i,1] == "Buissonnant") val52den <- val52den + as.numeric(tableau$A3[i,4])
       if(tableau$A3[i,1] == "Rocheux") val53den <- val53den + as.numeric(tableau$A3[i,4])
@@ -841,7 +841,7 @@ observeEvent(input$renseignerNH,{
   if(length(rs) == 1){
     partial_select <- c(1,2,3,4,5,6,7,8,9,16,17,18,19,20,24,25,26)
     name  <- paste("Habitat", input$selecthabitatSI)
-    if(ecoval[[name]][4,2] == "1"){ # Fermé
+    if(ecoval[[name]][4,2] == "1"){ # Forestier
       partial_select <- c(partial_select, c(10,11,12,13,14,21))
     }else if(ecoval[[name]][4,2] == "2"){ # Ouvert
       partial_select <- c(partial_select, c(15, 22))
@@ -880,7 +880,7 @@ output$SItable5<- DT::renderDataTable({
   if(input$selecthabitatSI != "0"){
     partial_select <- c(1,2,3,4,5,6,7,8,9,16,17,18,19,20,24,25,26)
     name  <- paste("Habitat", input$selecthabitatSI)
-    if(ecoval[[name]][4,2] == "1"){ # Fermé
+    if(ecoval[[name]][4,2] == "1"){ # Forestier
       partial_select <- c(partial_select, c(10,11,12,13,14,21))
     }else if(ecoval[[name]][4,2] == "2"){ # Ouvert
       partial_select <- c(partial_select, c(15, 22))
@@ -903,7 +903,7 @@ output$SItable5rowselected <- DT::renderDataTable({
   if(length(rs) > 0){ # update contents of widgets
     partial_select <- c(1,2,3,4,5,6,7,8,9,16,17,18,19,20,24,25,26)
     name  <- paste("Habitat", input$selecthabitatSI)
-    if(ecoval[[name]][4,2] == "1"){ # Fermé
+    if(ecoval[[name]][4,2] == "1"){ # Forestier
       partial_select <- c(partial_select, c(10,11,12,13,14,21))
     }else if(ecoval[[name]][4,2] == "2"){ # Ouvert
       partial_select <- c(partial_select, c(15, 22))

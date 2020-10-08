@@ -535,7 +535,7 @@ output$plot_equivalence <- renderPlotly({
         natzero[natzero==FALSE] <- ''
         namehab <- paste("Habitat", input$selecthabitatSE)
         partial_select <- c(1,2,3,4,5,6,7,8,9,16,17,18,19,20,24,25,26)
-        if(ecoval[[namehab]][4,2] == "1"){ # Fermé
+        if(ecoval[[namehab]][4,2] == "1"){ # Forestier
           partial_select <- c(partial_select, c(10,11,12,13,14,21))
         }else if(ecoval[[namehab]][4,2] == "2"){ # Ouvert
           partial_select <- c(partial_select, c(15, 22))
