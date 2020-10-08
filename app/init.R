@@ -40,8 +40,8 @@ A1listtype <- list("1"="Forestier" , "2"="Ouvert", "3"="Buissonnant", "4"="Zone 
 A1listetat <- list("0"="", "1"="Bon", "2"="Mauvais", "3"="Moyen")
 A1listinter <- list("1"="Non", "2"="Oui", "-" = 3)
 tableau$A2 <- model_A2
-A2listtype1 <- list("1"="Avifaune","2"="Chiroptère","3"="Mammifère","4"="Amphibien","5"="Reptile","6"="Insecte","7"="Flore","8"="Poisson","9"="Crustacé/Mollusque")
-A2listtype2 <- list("0"="-", "1"="Cortège généraliste", "2"="Cortège forestier", "3"="Cortège agricole ou ouvert", "4"="Cortège zone humide", "5"="Cortège du bâti", "6"="Odonate", "7"="Lépidoptère", "8"="Orthoptère", "9"="Coléoptère")
+A2listtype1 <- list("1"="Avifaune","3"="Mammifère","4"="Amphibien","5"="Reptile","6"="Insecte","7"="Flore","8"="Poisson","9"="Crustacé/Mollusque")
+A2listtype2 <- list("0"="-", "1"="Cortège généraliste", "2"="Cortège forestier", "3"="Cortège agricole ou ouvert", "4"="Cortège zone humide", "5"="Cortège du bâti", "6"="Odonate", "7"="Lépidoptère", "8"="Orthoptère", "9"="Coléoptère", "10"="Chiroptère", "11"="Autre")
 type2selection <- "0"
 A2listprot <- list("1"="Non", "2"="Oui")
 A2listdir <- list("0"="Non","1"="Annexe II DFFH","2"="Annexe I DO")

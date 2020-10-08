@@ -175,7 +175,7 @@ cleanwidgetsA2sc <- function(){
   updateTextInput(session, "SClatinnamespecies", value = "")
   updateTextInput(session, "SCfrenchnamespecies", value = "")
   updateSelectInput(session, "SCtype1", selected = "1")
-  type2selection <<- "0"
+  type2selection <<- NULL
   updateSelectInput(session, "SCtype2", selected = type2selection)
   updateSelectInput(session, "SCprotect", selected = "1")
   updateSelectInput(session, "SCrougeF", selected = "1")
@@ -282,6 +282,7 @@ observeEvent(input$SCtype1,{
     shinyjs::show("linkinfoIS2")
   }
   else if(input$SCtype1 == "6") ltype2 <- list("-"=0, "Odonate"=6, "Lépidoptère"=7, "Orthoptère"=8, "Coléoptère"=9)
+  else if(input$SCtype1 == "3") ltype2 <- list("Chiroptère"=10, "Autre"=11)
   else ltype2 <- list("-" = 0)
   updateSelectInput(session, "SCtype2", choices = ltype2, selected = type2selection)
 })
@@ -581,12 +582,12 @@ updateTabB2 <- function(){
     val58 <- 0
     for(i in 1:n2){
       if(tableau$A2[i,3] == "Avifaune") val14 <- val14 + 1
-      else if(tableau$A2[i,3] == "Chiroptère") val15 <- val15 + 1
       else if(tableau$A2[i,3] == "Reptile") val16 <- val16 + 1
       else if(tableau$A2[i,3] == "Amphibien") val17 <- val17 + 1
-      else if(tableau$A2[i,3] == "Mammifère") val18 <- val18 + 1
       else if(tableau$A2[i,3] == "Insecte") val19 <- val19 + 1
       else if(tableau$A2[i,3] == "Flore") val24 <- val24 + 1
+      if(tableau$A2[i,4] == "Chiroptère") val15 <- val15 + 1
+      if(tableau$A2[i,4] == "Autre") val18 <- val18 + 1
       if(tableau$A2[i,4] == "Lépidoptère") val20 <- val20 + 1
       if(tableau$A2[i,4] == "Odonate") val21 <- val21 + 1
       if(tableau$A2[i,4] == "Orthoptère") val22 <- val22 + 1
