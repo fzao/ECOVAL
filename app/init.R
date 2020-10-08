@@ -44,7 +44,7 @@ A2listtype1 <- list("1"="Avifaune","2"="Chiroptère","3"="Mammifère","4"="Amphi
 A2listtype2 <- list("0"="-", "1"="Cortège généraliste", "2"="Cortège forestier", "3"="Cortège agricole ou ouvert", "4"="Cortège zone humide", "5"="Cortège du bâti", "6"="Odonate", "7"="Lépidoptère", "8"="Orthoptère", "9"="Coléoptère")
 type2selection <- "0"
 A2listprot <- list("1"="Non", "2"="Oui")
-A2listdir <- list("0"="-","1"="Annexe II DFFH","2"="Annexe I DO")
+A2listdir <- list("0"="Non","1"="Annexe II DFFH","2"="Annexe I DO")
 A2listrepro <- list("0"="Non","1"="Certaine","2"="Possible", "3"="-")
 tableau$A3 <- model_A3
 A3listtype <- list("1"="Forestier", "2"="Ouvert", "3"="Buissonnant", "4"="Zone humide", "5"="Aquatique", "6"="Rocheux", "7"="Cultivé", "8"="Imperméabilisé")
