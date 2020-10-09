@@ -224,7 +224,7 @@ output$plot_equivalence <- renderPlotly({
                            "% sp faune DFFH",
                            "% sp flore DFFH",
                            "% avifaune DO",
-                           "% oiseaux nicheurs",
+                           "% oiseaux nichant sur site",
                            "% sp repro site",
                            "Indice de spé avifaune",
                            "% chiroptères spécialistes",
