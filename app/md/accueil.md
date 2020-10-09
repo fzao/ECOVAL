@@ -57,4 +57,10 @@ ECOVAL est un outil <span style="color:#00B057">**d’aide à la décision**</sp
 
 * * *
 
-## Tutoriels vidéo
+## Fichier d'exemple
+
+<font size="4">
+Télécharger le fichier d'exemple au format Excel ci-dessous puis chargez le depuis l'onglet *Projet*.
+
+Il vous permet d'analylser une équivalence écologique sur un projet simple mais finalisé.
+</font>

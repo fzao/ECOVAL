@@ -51,6 +51,8 @@ shinyUI(fluidPage(HTML("<!DOCTYPE html>
                               # ACCUEIL ---------------------------------------------------
                               tabPanel(value="accueil", HTML('<h4 style="color: #005BBB; "><b>Accueil</b></h4>'), br(),
                                        includeMarkdown("md/accueil.md"), br(),
+                                       HTML('<a href="Projet_Exemple.xlsx" target="_blank"><img src="Excel_logo.png" alt="Fichier projet ECOVAL"></a>'),
+                                       includeMarkdown("md/accueil_2.md"), br(),
                                        fluidRow(column(6, align="center", HTML('<h4 style="color: #005BBB; "><b>Tuto #1</b>   (version beta - juillet 2019)</h4>'), HTML('<iframe width="560" height="315" src="https://www.youtube.com/embed/sktibtPlT9o" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>')),
                                                 column(6, align="center", HTML('<h4 style="color: #005BBB; "><b>Tuto #2</b>   (version beta - juillet 2019)</h4>'), HTML('<iframe width="560" height="315" src="https://www.youtube.com/embed/DmwFXCOCAsA" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>')))),
                               # PROJET ----------------------------------------------------
