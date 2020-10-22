@@ -785,6 +785,15 @@ descrperimelagNSp <- function(){
 
 observeEvent(input$perimnsp, descrperimelagNSp())
 
+descrregrNSp <- function(){
+  text1 <- h5("Vous pouvez évaluer un groupe d’espèces (au sein d’un même taxon) ayant les même besoins écologiques, par exemple, l’avifaune forestière")
+  showModal(modalDialog(
+    h5("REGROUPEMENT D'ESPECES"), hr(), text1, easyClose = TRUE, footer = NULL))
+}
+
+observeEvent(input$regrpsp, descrregrNSp())
+
+
 descrperimelagNG <- function(){
   text1 <- h5("Veuillez fixer un périmètre élargi qui soit proportionnel à la surface du site concerné, avec une limite minimale de 1 Km qui permette d’évaluer le rôle du site dans la matrice environnante, et une limite maximale de 30 Km pour que l'évaluation reste réalisable")
   showModal(modalDialog(
