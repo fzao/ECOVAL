@@ -65,4 +65,15 @@ shinyServer(function(input, output, session) {
         addMarkers(lat=park[pk, 2] , lng = park[pk,3], popup = park[pk,1])
     }
   })
+  
+  observe({  click = input$projectmap_click
+    if(is.null(click))
+      return()
+    else{
+      click= data.frame(click[1:2])
+      updateNumericInput(session, "latitude", value = click[[1]])
+      updateNumericInput(session, "longitude", value = click[[2]])
+    }
+  })
+
 })
