@@ -53,10 +53,14 @@ shinyServer(function(input, output, session) {
   })
   
   output$projectmap <- renderLeaflet({
-    if(input$latitude != 0 | input$longitude != 0){
+    if(!is.numeric(input$latitude)) lat = 0
+    else lat = input$latitude
+    if(!is.numeric(input$longitude)) long = 0
+    else long = input$longitude
+    if(lat != 0 | long != 0){
         m <- leaflet() %>%
           addTiles() %>%
-          addMarkers(lat = input$latitude, lng = input$longitude, popup = paste("Surface", toString(input$surface), "ha"),  label = paste("Site", input$sitename))
+          addMarkers(lat = lat, lng =long, popup = paste("Surface", toString(input$surface), "ha"),  label = paste("Site", input$sitename))
         m
     }else{
       pk <- sample(1:dim(park)[1], 1) 
