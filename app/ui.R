@@ -37,6 +37,7 @@ shinyUI(fluidPage(HTML("<!DOCTYPE html>
                     </body>
                     </html>"),
                   title="ECOVAL",
+                  tags$head(tags$link(rel="shortcut icon", href="Ecoval_icon.png")),
                   useShinyjs(),
                   fluidRow(
                     column(10, align="left",
